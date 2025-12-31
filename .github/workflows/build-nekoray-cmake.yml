@@ -1,6 +1,9 @@
 name: Nekoray build matrix - cmake
 
 on:
+  push:
+    tags:
+      - "*"
   workflow_dispatch:
     inputs:
       tag:
@@ -152,6 +155,8 @@ jobs:
     needs:
       - build-cpp
       - build-go
+    env:
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - name: Checking out sources
         uses: actions/checkout@v3
@@ -185,7 +190,7 @@ jobs:
           cd deployment
           cp -r public_res/* linux64
           ####
-          bash ../libs/package_debian.sh ${{ github.event.inputs.tag }}
+          bash ../libs/package_debian.sh ${{ env.RELEASE_TAG }}
           mv nekoray.deb $version_standalone-debian-x64.deb
           sudo rm -rf nekoray
       - name: Pack AppImage
@@ -212,4 +217,4 @@ jobs:
       - name: Release
         if: github.event.inputs.publish != 'y'
         run: |
-          ./ghr -delete -t "${{ github.token }}" -n "${{ github.event.inputs.tag }}" "${{ github.event.inputs.tag }}" deployment
+          ./ghr -delete -t "${{ github.token }}" -n "${{ env.RELEASE_TAG }}" "${{ env.RELEASE_TAG }}" deployment
