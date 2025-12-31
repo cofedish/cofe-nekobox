@@ -28,7 +28,21 @@ chmod +x nekobox.AppDir/AppRun
 
 # build
 
-curl -fLSO https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage
+appimage_urls=(
+    "https://github.com/AppImage/AppImageKit/releases/download/continuous/appimagetool-x86_64.AppImage"
+    "https://github.com/AppImage/AppImageKit/releases/latest/download/appimagetool-x86_64.AppImage"
+)
+
+for url in "${appimage_urls[@]}"; do
+    if curl -fLSO "$url"; then
+        break
+    fi
+done
+
+if [ ! -f appimagetool-x86_64.AppImage ]; then
+    echo "Failed to download appimagetool-x86_64.AppImage"
+    exit 1
+fi
 chmod +x appimagetool-x86_64.AppImage
 ./appimagetool-x86_64.AppImage nekobox.AppDir
 
