@@ -143,6 +143,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             neko_stop();
         }
     });
+    connect(ui->home_select_server, &QToolButton::clicked, this, [=] {
+        auto group = NekoGui::profileManager->CurrentGroup();
+        if (group == nullptr) {
+            return;
+        }
+        QMenu menu(this);
+        int active_count = 0;
+        for (const auto &pf: group->ProfilesWithOrder()) {
+            auto action = menu.addAction(pf->bean->DisplayTypeAndName());
+            action->setCheckable(true);
+            action->setChecked(NekoGui::dataStore->started_id == pf->id);
+            connect(action, &QAction::triggered, this, [=] {
+                if (NekoGui::dataStore->started_id == pf->id) {
+                    neko_stop();
+                } else {
+                    neko_start(pf->id);
+                }
+            });
+            if (++active_count == 100) break;
+        }
+        menu.exec(ui->home_select_server->mapToGlobal(QPoint(0, ui->home_select_server->height())));
+    });
 
 
 
