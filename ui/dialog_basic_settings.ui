@@ -261,17 +261,12 @@
               </item>
               <item>
                <property name="text">
-                <string notr="true">flatgray</string>
+                <string>Light</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">lightblue</string>
-               </property>
-              </item>
-              <item>
-               <property name="text">
-                <string notr="true">blacksoft</string>
+                <string>Dark</string>
                </property>
               </item>
              </widget>
@@ -431,6 +426,7 @@
               </property>
              </widget>
             </item>
+            
            </layout>
           </widget>
          </item>

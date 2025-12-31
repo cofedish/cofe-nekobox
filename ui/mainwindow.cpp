@@ -44,6 +44,9 @@
 #include <QInputDialog>
 #include <QThread>
 #include <QTimer>
+#include <QSignalBlocker>
+#include <QParallelAnimationGroup>
+#include <QPropertyAnimation>
 #include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
@@ -64,6 +67,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // Setup misc UI
     themeManager->ApplyTheme(NekoGui::dataStore->theme);
     ui->setupUi(this);
+    ui->drawer_app_name->setText(software_name);
+    ui->about_title->setText(software_name);
+    ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(NKR_VERSION));
     //
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
@@ -77,7 +83,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     });
     ui->label_running->installEventFilter(this);
     ui->label_inbound->installEventFilter(this);
-    ui->splitter->installEventFilter(this);
     //
     RegisterHotkey(false);
     //
@@ -95,18 +100,64 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         QFile::copy(":/neko/dashboard-notice.html", "dashboard/index.html");
     }
 
-    // top bar
-    ui->toolButton_program->setMenu(ui->menu_program);
-    ui->toolButton_preferences->setMenu(ui->menu_preferences);
-    ui->toolButton_server->setMenu(ui->menu_server);
+    // drawer + navigation
     ui->menubar->setVisible(false);
-    connect(ui->toolButton_document, &QToolButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
-    connect(ui->toolButton_ads, &QToolButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://neko-box.pages.dev/喵")); });
-    connect(ui->toolButton_update, &QToolButton::clicked, this, [=] { runOnNewThread([=] { CheckUpdate(); }); });
+    ui->drawer_nav->setCurrentRow(0);
+    auto sync_drawer_theme = [=] {
+        QString themeValue = NekoGui::dataStore->theme;
+        if (themeValue == "0") themeValue = "system";
+        if (themeValue == "1") themeValue = "light";
+        if (themeValue == "2") themeValue = "dark";
+        int index = 0;
+        if (themeValue == "light") index = 1;
+        if (themeValue == "dark") index = 2;
+        QSignalBlocker blocker(ui->drawer_theme);
+        ui->drawer_theme->setCurrentIndex(index);
+    };
+    sync_drawer_theme();
+    connect(ui->drawer_theme, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
+        QString themeKey = "system";
+        if (index == 1) themeKey = "light";
+        if (index == 2) themeKey = "dark";
+        themeManager->ApplyTheme(themeKey);
+        NekoGui::dataStore->theme = themeKey;
+        NekoGui::dataStore->Save();
+    });
+    connect(ui->drawer_nav, &QListWidget::currentRowChanged, this, [=](int row) {
+        ui->stacked_pages->setCurrentIndex(row);
+        if (auto item = ui->drawer_nav->item(row)) {
+            ui->topbar_title->setText(item->text());
+        }
+    });
+    connect(ui->drawer_quick_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
+    connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
 
+
+    auto drawer_anim = new QParallelAnimationGroup(this);
+    auto drawer_anim_max = new QPropertyAnimation(ui->drawer_container, "maximumWidth");
+    auto drawer_anim_min = new QPropertyAnimation(ui->drawer_container, "minimumWidth");
+    drawer_anim->addAnimation(drawer_anim_max);
+    drawer_anim->addAnimation(drawer_anim_min);
+    drawer_anim_max->setDuration(180);
+    drawer_anim_min->setDuration(180);
+    drawer_anim_max->setEasingCurve(QEasingCurve::InOutCubic);
+    drawer_anim_min->setEasingCurve(QEasingCurve::InOutCubic);
+    connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
+        const int expanded = 240;
+        const int collapsed = 72;
+        const bool isCollapsed = ui->drawer_container->maximumWidth() <= collapsed;
+        const int target = isCollapsed ? expanded : collapsed;
+        drawer_anim_max->stop();
+        drawer_anim_min->stop();
+        drawer_anim_max->setStartValue(ui->drawer_container->maximumWidth());
+        drawer_anim_min->setStartValue(ui->drawer_container->minimumWidth());
+        drawer_anim_max->setEndValue(target);
+        drawer_anim_min->setEndValue(target);
+        drawer_anim->start();
+    });
+
     // Setup log UI
-    ui->splitter->restoreState(DecodeB64IfValid(NekoGui::dataStore->splitter_state));
     qvLogDocument->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setUndoRedoEnabled(false);
     ui->masterLogBrowser->setDocument(qvLogDocument);
@@ -530,6 +581,17 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             suggestRestartProxy = false;
         }
         refresh_proxy_list();
+        {
+            QString themeValue = NekoGui::dataStore->theme;
+            if (themeValue == "0") themeValue = "system";
+            if (themeValue == "1") themeValue = "light";
+            if (themeValue == "2") themeValue = "dark";
+            int index = 0;
+            if (themeValue == "light") index = 1;
+            if (themeValue == "dark") index = 2;
+            QSignalBlocker blocker(ui->drawer_theme);
+            ui->drawer_theme->setCurrentIndex(index);
+        }
         if (info.contains("VPNChanged") && NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));
         }
@@ -634,8 +696,6 @@ void MainWindow::on_commitDataRequest() {
             NekoGui::dataStore->mw_size = news;
         }
     }
-    //
-    NekoGui::dataStore->splitter_state = ui->splitter->saveState().toBase64();
     //
     auto last_id = NekoGui::dataStore->started_id;
     if (NekoGui::dataStore->remember_enable && last_id >= 0) {
@@ -931,6 +991,7 @@ void MainWindow::refresh_groups() {
 
     NekoGui::dataStore->refreshing_group_list = false;
 }
+
 
 void MainWindow::refresh_proxy_list(const int &id) {
     refresh_proxy_list_impl(id, {});
@@ -1625,11 +1686,6 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
         } else if (obj == ui->label_inbound && mouseEvent->button() == Qt::LeftButton) {
             on_menu_basic_settings_triggered();
             return true;
-        }
-    } else if (event->type() == QEvent::MouseButtonDblClick) {
-        if (obj == ui->splitter) {
-            auto size = ui->splitter->size();
-            ui->splitter->setSizes({size.height() / 2, size.height() / 2});
         }
     }
     return QMainWindow::eventFilter(obj, event);

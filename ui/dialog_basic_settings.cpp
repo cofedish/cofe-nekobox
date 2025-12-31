@@ -122,18 +122,24 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
     int built_in_len = ui->theme->count();
     ui->theme->addItems(QStyleFactory::keys());
     //
-    bool ok;
-    auto themeId = NekoGui::dataStore->theme.toInt(&ok);
-    if (ok) {
-        ui->theme->setCurrentIndex(themeId);
+    auto themeValue = NekoGui::dataStore->theme;
+    if (themeValue == "0") themeValue = "system";
+    if (themeValue == "1") themeValue = "light";
+    if (themeValue == "2") themeValue = "dark";
+    auto themeIndex = ui->theme->findText(themeValue, Qt::MatchFixedString);
+    if (themeIndex >= 0) {
+        ui->theme->setCurrentIndex(themeIndex);
     } else {
         ui->theme->setCurrentText(NekoGui::dataStore->theme);
     }
     //
     connect(ui->theme, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
-        if (index + 1 <= built_in_len) {
-            themeManager->ApplyTheme(Int2String(index));
-            NekoGui::dataStore->theme = Int2String(index);
+        if (index < built_in_len) {
+            QString themeKey = "system";
+            if (index == 1) themeKey = "light";
+            if (index == 2) themeKey = "dark";
+            themeManager->ApplyTheme(themeKey);
+            NekoGui::dataStore->theme = themeKey;
         } else {
             themeManager->ApplyTheme(ui->theme->currentText());
             NekoGui::dataStore->theme = ui->theme->currentText();
