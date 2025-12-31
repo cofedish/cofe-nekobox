@@ -111,7 +111,7 @@ namespace {
     }
 
     QString BuildThemeQss(const ThemeTokens &t) {
-        return QString(
+        QString qss = QString(
                    "QWidget { font-family: %1; color: %2; }"
                    "QWidget#centralwidget { background: %3; }"
                    "QFrame#drawer_container { background: %4; border-right: 1px solid %5; }"
@@ -143,21 +143,22 @@ namespace {
                    "background: %9; border: 1px solid %5; border-radius: 10px; padding: 6px 10px; }"
                    "QWidget#page_profiles QPushButton:hover, QWidget#page_subscriptions QPushButton:hover, QWidget#page_rules QPushButton:hover, "
                    "QWidget#page_settings QPushButton:hover, QWidget#page_about QPushButton:hover {"
-                   "background: %7; }")
-            .arg(t.font_family,
-                 t.text,
-                 t.window,
-                 t.surface,
-                 t.border,
-                 t.text,
-                 t.accent_soft,
-                 t.text,
-                 t.surface_alt,
-                 t.text_muted,
-                 t.accent,
-                 t.text_on_accent,
-                 t.accent_hover,
-                 t.accent_press);
+                   "background: %7; }");
+        qss = qss.arg(t.font_family);
+        qss = qss.arg(t.text);
+        qss = qss.arg(t.window);
+        qss = qss.arg(t.surface);
+        qss = qss.arg(t.border);
+        qss = qss.arg(t.text);
+        qss = qss.arg(t.accent_soft);
+        qss = qss.arg(t.text);
+        qss = qss.arg(t.surface_alt);
+        qss = qss.arg(t.text_muted);
+        qss = qss.arg(t.accent);
+        qss = qss.arg(t.text_on_accent);
+        qss = qss.arg(t.accent_hover);
+        qss = qss.arg(t.accent_press);
+        return qss;
     }
 } // namespace
 
