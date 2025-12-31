@@ -139,6 +139,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->drawer_quick_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
+    connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->home_connect_button, &QPushButton::clicked, this, [=] {
         if (running == nullptr) {
             neko_start();
@@ -212,6 +213,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             UI_update_all_groups();
         }
     });
+    connect(ui->rules_open, &QPushButton::clicked, this, &MainWindow::on_menu_routing_settings_triggered);
+    connect(ui->settings_basic, &QPushButton::clicked, this, &MainWindow::on_menu_basic_settings_triggered);
+    connect(ui->settings_vpn, &QPushButton::clicked, this, &MainWindow::on_menu_vpn_settings_triggered);
+    connect(ui->settings_hotkey, &QPushButton::clicked, this, &MainWindow::on_menu_hotkey_settings_triggered);
+    connect(ui->settings_open_config, &QPushButton::clicked, ui->menu_open_config_folder, &QAction::trigger);
+    connect(ui->settings_restart_proxy, &QPushButton::clicked, ui->actionRestart_Proxy, &QAction::trigger);
+    connect(ui->settings_restart_app, &QPushButton::clicked, ui->actionRestart_Program, &QAction::trigger);
+    connect(ui->about_docs, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
+    connect(ui->about_repo, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://github.com/MatsuriDayo/nekoray")); });
 
 
 
@@ -997,6 +1007,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     auto display_socks = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_socks_port);
     auto inbound_txt = QStringLiteral("Mixed: %1").arg(display_socks);
     ui->label_inbound->setText(inbound_txt);
+    ui->rules_active_label->setText(tr("Active routing: %1").arg(NekoGui::dataStore->active_routing));
     //
     ui->checkBox_VPN->setChecked(NekoGui::dataStore->spmode_vpn);
     ui->checkBox_SystemProxy->setChecked(NekoGui::dataStore->spmode_system_proxy);
