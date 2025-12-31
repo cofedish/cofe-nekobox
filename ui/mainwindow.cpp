@@ -14,6 +14,7 @@
 #include "ui/widget/ConnectButton.h"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
+#include "main/AppInfo.hpp"
 #include "ui/dialog_manage_groups.h"
 #include "ui/dialog_manage_routes.h"
 #include "ui/dialog_vpn_settings.h"
@@ -78,7 +79,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     ui->drawer_app_name->setText(software_name);
     ui->about_title->setText(software_name);
-    ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(NKR_VERSION));
+    ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
     if (ui->homeCenterLayout != nullptr) {
         ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
     }
@@ -952,7 +953,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                     }
 #endif
 #ifdef Q_OS_WIN
-                    auto n = QMessageBox::warning(GetMessageBoxParent(), software_name, tr("Please run NekoBox as admin"), QMessageBox::Yes | QMessageBox::No);
+                    auto n = QMessageBox::warning(GetMessageBoxParent(), software_name, tr("Please run CofeBox as admin"), QMessageBox::Yes | QMessageBox::No);
                     if (n == QMessageBox::Yes) {
                         this->exit_reason = 3;
                         on_menu_exit_triggered();
@@ -1076,7 +1077,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (!NekoGui::dataStore->spmode_vpn && NekoGui::dataStore->spmode_system_proxy) tt << "[" + tr("System Proxy") + "]";
         if (NekoGui::dataStore->spmode_vpn && NekoGui::dataStore->spmode_system_proxy) tt << "[Tun+" + tr("System Proxy") + "]";
         tt << software_name;
-        if (!isTray) tt << "(" + QString(NKR_VERSION) + ")";
+        if (!isTray) tt << "(" + AppInfo::Version() + ")";
         if (!NekoGui::dataStore->active_routing.isEmpty() && NekoGui::dataStore->active_routing != "Default") {
             tt << "[" + NekoGui::dataStore->active_routing + "]";
         }

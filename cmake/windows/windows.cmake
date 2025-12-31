@@ -2,14 +2,33 @@ set(PLATFORM_SOURCES 3rdparty/WinCommander.cpp sys/windows/guihelper.cpp sys/win
 set(PLATFORM_LIBRARIES wininet wsock32 ws2_32 user32 rasapi32 iphlpapi)
 
 include(cmake/windows/generate_product_version.cmake)
+
+set(_app_version "${APP_VERSION_STR}")
+if (NOT _app_version OR "${_app_version}" STREQUAL "")
+    set(_app_version "1.0.0")
+endif ()
+string(REGEX MATCH "^([0-9]+)\\.([0-9]+)\\.([0-9]+)" _ver_match "${_app_version}")
+set(_ver_major "${CMAKE_MATCH_1}")
+set(_ver_minor "${CMAKE_MATCH_2}")
+set(_ver_patch "${CMAKE_MATCH_3}")
+if (NOT _ver_major OR "${_ver_major}" STREQUAL "")
+    set(_ver_major 1)
+    set(_ver_minor 0)
+    set(_ver_patch 0)
+endif ()
+
 generate_product_version(
         QV2RAY_RC
         ICON "${CMAKE_SOURCE_DIR}/res/nekobox.ico"
-        NAME "nekobox"
-        BUNDLE "nekobox"
-        COMPANY_NAME "nekobox"
-        COMPANY_COPYRIGHT "nekobox"
-        FILE_DESCRIPTION "nekobox"
+        NAME "${APP_DISPLAY_NAME}"
+        BUNDLE "${APP_DISPLAY_NAME}"
+        COMPANY_NAME "${APP_DISPLAY_NAME}"
+        COMPANY_COPYRIGHT "${APP_DISPLAY_NAME}"
+        FILE_DESCRIPTION "${APP_DISPLAY_NAME}"
+        VERSION_MAJOR ${_ver_major}
+        VERSION_MINOR ${_ver_minor}
+        VERSION_PATCH ${_ver_patch}
+        VERSION_REVISION 0
 )
 add_definitions(-DUNICODE -D_UNICODE -DNOMINMAX)
 set(GUI_TYPE WIN32)

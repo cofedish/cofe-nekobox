@@ -11,6 +11,7 @@
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoGui.hpp"
+#include "main/AppInfo.hpp"
 
 #include "ui/mainwindow_interface.h"
 
@@ -101,7 +102,7 @@ int main(int argc, char* argv[]) {
     // dirs & clean
     auto wd = QDir(QApplication::applicationDirPath());
     if (NekoGui::dataStore->flag_use_appdata) {
-        QApplication::setApplicationName("nekoray");
+        QCoreApplication::setApplicationName(AppInfo::ConfigAppId());
         if (!NekoGui::dataStore->appdataDir.isEmpty()) {
             wd.setPath(NekoGui::dataStore->appdataDir);
         } else {
@@ -116,6 +117,9 @@ int main(int argc, char* argv[]) {
     // init QApplication
     delete preQApp;
     QApplication a(argc, argv);
+    QCoreApplication::setApplicationName(AppInfo::AppId());
+    QCoreApplication::setApplicationDisplayName(AppInfo::DisplayName());
+    QCoreApplication::setApplicationVersion(AppInfo::Version());
 
     // dispatchers
     DS_cores = new QThread;
@@ -140,7 +144,7 @@ int main(int argc, char* argv[]) {
             return 0;
         }
         // Some Bad System
-        QMessageBox::warning(nullptr, "NekoGui", "RunGuard disallow to run, use -many to force start.");
+        QMessageBox::warning(nullptr, AppInfo::DisplayName(), "RunGuard disallow to run, use -many to force start.");
         return 0;
     }
     MF_release_runguard = [&] { guard.release(); };

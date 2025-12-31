@@ -20,6 +20,7 @@ permissions:
 env:
   APP_NAME: cofe-nekobox
   TAG: ${{ github.event.inputs.tag || github.ref_name }}
+  APP_VERSION_STR: ${{ github.event.inputs.tag || github.ref_name }}
 jobs:
   build-go:
     strategy:

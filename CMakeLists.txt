@@ -30,6 +30,9 @@ if (NKR_CROSS)
 endif ()
 
 #### Platform Variables ####
+include("cmake/print.cmake")
+include("cmake/nkr.cmake")
+
 if (WIN32)
     include("cmake/windows/windows.cmake")
 else ()
@@ -57,9 +60,6 @@ list(APPEND CMAKE_FIND_ROOT_PATH ${CMAKE_PREFIX_PATH})
 message("[CMAKE_FIND_ROOT_PATH] ${CMAKE_FIND_ROOT_PATH}")
 
 #### NKR ####
-
-include("cmake/print.cmake")
-include("cmake/nkr.cmake")
 
 find_package(Threads)
 

@@ -12,6 +12,8 @@
 #include <QDateTime>
 #include <QMessageBox>
 
+#include "main/AppInfo.hpp"
+
 typedef BOOL(WINAPI *MINIDUMPWRITEDUMP)(
     HANDLE hProcess,
     DWORD dwPid,
@@ -61,7 +63,7 @@ LONG __stdcall CreateCrashHandler(EXCEPTION_POINTERS *pException) {
                                      .arg(errAddr)
                                      .arg(errFlag)
                                      .arg(errPara)
-                                     .arg(NKR_VERSION)
+                                     .arg(AppInfo::Version())
                                      .arg(dumpText),
                                  QMessageBox::Ok);
         }

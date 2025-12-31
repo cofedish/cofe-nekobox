@@ -9,6 +9,8 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
+#include "main/AppInfo.hpp"
+
 #ifdef Q_OS_WIN
 #include "sys/windows/guihelper.h"
 #else
@@ -302,9 +304,9 @@ namespace NekoGui {
             isDefault = true;
         }
         if (isDefault) {
-            QString version = SubStrBefore(NKR_VERSION, "-");
-            if (!version.contains(".")) version = "2.0";
-            return "NekoBox/PC/" + version + " (Prefer ClashMeta Format)";
+            QString version = SubStrBefore(AppInfo::Version(), "-");
+            if (!version.contains(".")) version = "1.0";
+            return AppInfo::DisplayName() + "/PC/" + version + " (Prefer ClashMeta Format)";
         }
         return user_agent;
     }

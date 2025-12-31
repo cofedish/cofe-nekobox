@@ -90,7 +90,7 @@
           <item>
            <widget class="QLabel" name="drawer_app_name">
             <property name="text">
-             <string>NekoRay</string>
+             <string>CofeBox</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignLeft|Qt::AlignVCenter</set>
@@ -1306,7 +1306,7 @@ Direct: -</string>
            <item>
             <widget class="QLabel" name="about_title">
              <property name="text">
-              <string>NekoRay</string>
+              <string>CofeBox</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignHCenter|Qt::AlignVCenter</set>

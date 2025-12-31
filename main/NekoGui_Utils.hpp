@@ -6,9 +6,11 @@
 #include <QString>
 #include <QDebug>
 
+#include "main/AppInfo.hpp"
+
 //
 
-inline QString software_name = "NekoBox";
+inline QString software_name = AppInfo::DisplayName();
 inline QString software_core_name = "sing-box";
 
 // Main Functions
