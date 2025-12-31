@@ -1154,7 +1154,8 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         }
     }
 
-    if (animated && drawer_anim_max != nullptr && drawer_anim_min != nullptr) {
+    const bool allow_animation = animated && !NekoGui::dataStore->reduce_motion;
+    if (allow_animation && drawer_anim_max != nullptr && drawer_anim_min != nullptr) {
         drawer_anim_max->setStartValue(ui->drawer_container->maximumWidth());
         drawer_anim_min->setStartValue(ui->drawer_container->minimumWidth());
         drawer_anim_max->setEndValue(target);

@@ -1,14 +1,15 @@
 # Manual Test Checklist
 
-- [ ] Launch app; drawer toggle animates and navigation switches pages.
-- [ ] Home: Connect/Disconnect toggles existing start/stop logic.
-- [ ] Home: Select server menu starts/stops a profile.
-- [ ] Home: Select profile switches group and opens Servers page.
-- [ ] Servers: group tabs work, proxy list loads, search filters, URL Test runs.
-- [ ] Profiles: New/Edit/Clone/Delete/Import/Export actions work.
-- [ ] Subscriptions: group list renders; Update All runs; per-group update works.
-- [ ] Rules: active routing label updates; Routing Settings dialog opens.
-- [ ] Logs: log output updates; connection list updates when enabled.
-- [ ] Settings: Basic/VPN/Hotkey dialogs open; open config folder; restart proxy/program.
-- [ ] Theme: Light/Dark/System apply correctly via drawer and settings.
-- [ ] Reduce motion: disables background animation (static gradient stays).
+- [ ] Connect/Disconnect работает (OK — нужен прогон).
+- [ ] Drawer полностью скрывается, открывается по бургеру, закрывается по клику вне и по Esc (OK — нужен прогон).
+- [ ] Home по центру при разных размерах окна (OK — нужен прогон).
+- [ ] Add profile from URL: paste + Enter/Add создаёт профиль/подписку (OK — нужен прогон).
+- [ ] Reduce motion выключает анимации (фон + кнопка) (OK — нужен прогон).
+- [ ] Release workflow: ассеты именуются по TAG (OK — нужен прогон).
+- [ ] Servers: tabs/список/поиск/URL Test (OK — нужен прогон).
+- [ ] Profiles: New/Edit/Clone/Delete/Import/Export (OK — нужен прогон).
+- [ ] Subscriptions: список + Update All (OK — нужен прогон).
+- [ ] Rules: активный routing + Routing Settings (OK — нужен прогон).
+- [ ] Logs: вывод и список соединений (OK — нужен прогон).
+- [ ] Settings: Basic/VPN/Hotkey, open config folder, restart proxy/program (OK — нужен прогон).
+- [ ] Theme: Light/Dark/System применяются корректно (OK — нужен прогон).
