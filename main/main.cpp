@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
     delete preQApp;
     QApplication a(argc, argv);
     QCoreApplication::setApplicationName(AppInfo::AppId());
-    QCoreApplication::setApplicationDisplayName(AppInfo::DisplayName());
+    QGuiApplication::setApplicationDisplayName(AppInfo::DisplayName());
     QCoreApplication::setApplicationVersion(AppInfo::Version());
     {
         QFont baseFont = a.font();
