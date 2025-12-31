@@ -177,7 +177,7 @@ jobs:
         if: matrix.allow == 'true' && github.event.inputs.source != 'true'
         shell: bash
         run: |
-          curl -fLso "srslist.json" "https://github.com/cofedish/ruleset/raw/refs/heads/rule-set/srslist.json"
+          curl -fLso "srslist.json" "https://github.com/qr243vbi/ruleset/raw/refs/heads/rule-set/srslist.json"
           mkdir build
 
       - name: Install Qt
@@ -297,7 +297,7 @@ jobs:
         if: matrix.allow == 'true' && github.event.inputs.source != 'true'
         shell: bash
         run: |
-          curl -fLso "srslist.json" "https://github.com/cofedish/ruleset/raw/refs/heads/rule-set/srslist.json"
+          curl -fLso "srslist.json" "https://github.com/qr243vbi/ruleset/raw/refs/heads/rule-set/srslist.json"
           mkdir build
 
       - name: Linux - Install apt dependencies
