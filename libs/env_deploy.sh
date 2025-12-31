@@ -1,4 +1,6 @@
 SRC_ROOT="$PWD"
 DEPLOYMENT="$SRC_ROOT/deployment"
 BUILD="$SRC_ROOT/build"
-version_standalone="nekoray-"$(cat nekoray_version.txt) # 下次改
+APP_NAME="${APP_NAME:-nekoray}"
+TAG="${TAG:-$(cat nekoray_version.txt)}"
+version_standalone="${APP_NAME}-${TAG}"

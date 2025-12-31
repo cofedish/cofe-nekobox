@@ -17,6 +17,9 @@ on:
         required: false
 permissions:
   contents: write
+env:
+  APP_NAME: cofe-nekobox
+  TAG: ${{ github.event.inputs.tag || github.ref_name }}
 jobs:
   build-go:
     strategy:
@@ -58,7 +61,7 @@ jobs:
       - name: Uploading Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NekoRay-${{ github.sha }}-Common-${{ matrix.cross_os }}-${{ matrix.cross_arch }}
+          name: ${{ env.APP_NAME }}-${{ env.TAG }}-Common-${{ matrix.cross_os }}-${{ matrix.cross_arch }}
           path: artifacts.tgz
   build-cpp:
     strategy:
@@ -148,7 +151,7 @@ jobs:
       - name: Uploading Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: NekoRay-${{ github.sha }}-${{ matrix.platform }}-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
+          name: ${{ env.APP_NAME }}-${{ env.TAG }}-${{ matrix.platform }}-${{ matrix.arch }}-Qt${{ matrix.qt_version }}
           path: artifacts.tgz
   publish:
     name: Pack & Publish Release
@@ -157,8 +160,6 @@ jobs:
     needs:
       - build-cpp
       - build-go
-    env:
-      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
     steps:
       - name: Checking out sources
         uses: actions/checkout@v3
@@ -179,11 +180,11 @@ jobs:
           rm -rf public_res *.pdb
           ####
           mv linux64 nekoray
-          zip -r $version_standalone-linux64.zip nekoray
+          zip -r $version_standalone-linux-x64.zip nekoray
           rm -rf nekoray
           ####
           mv windows64 nekoray
-          zip -r $version_standalone-windows64.zip nekoray
+          zip -r $version_standalone-windows-x64.zip nekoray
           rm -rf nekoray
       - name: Pack Debian
         run: |
@@ -192,7 +193,7 @@ jobs:
           cd deployment
           cp -r public_res/* linux64
           ####
-          bash ../libs/package_debian.sh ${{ env.RELEASE_TAG }}
+          bash ../libs/package_debian.sh ${{ env.TAG }}
           mv nekoray.deb $version_standalone-debian-x64.deb
           sudo rm -rf nekoray
       - name: Pack AppImage
@@ -219,4 +220,4 @@ jobs:
       - name: Release
         if: github.event.inputs.publish != 'y'
         run: |
-          ./ghr -delete -t "${{ github.token }}" -n "${{ env.RELEASE_TAG }}" "${{ env.RELEASE_TAG }}" deployment
+          ./ghr -delete -t "${{ github.token }}" -n "${{ env.TAG }}" "${{ env.TAG }}" deployment
