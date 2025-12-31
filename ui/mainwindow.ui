@@ -482,9 +482,9 @@
                   <height>16777215</height>
                  </size>
                 </property>
-                <layout class="QVBoxLayout" name="homeCenterLayout">
+                 <layout class="QVBoxLayout" name="homeCenterLayout">
                  <property name="spacing">
-                  <number>12</number>
+                  <number>16</number>
                  </property>
                  <property name="leftMargin">
                   <number>0</number>
@@ -540,6 +540,19 @@ Direct: -</string>
                   </widget>
                  </item>
                  <item>
+                  <spacer name="home_button_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>12</height>
+                    </size>
+                   </property>
+                  </spacer>
+                 </item>
+                 <item>
                   <widget class="ConnectButton" name="home_connect_button">
                    <property name="text">
                     <string>Connect</string>
@@ -557,6 +570,19 @@ Direct: -</string>
                     </size>
                    </property>
                   </widget>
+                 </item>
+                 <item>
+                  <spacer name="home_actions_spacer">
+                   <property name="orientation">
+                    <enum>Qt::Vertical</enum>
+                   </property>
+                   <property name="sizeHint" stdset="0">
+                    <size>
+                     <width>20</width>
+                     <height>10</height>
+                    </size>
+                   </property>
+                  </spacer>
                  </item>
                  <item>
                  <widget class="QWidget" name="home_actions" native="true">
