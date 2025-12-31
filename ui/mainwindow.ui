@@ -540,9 +540,6 @@ Direct: -</string>
                   </widget>
                  </item>
                  <item>
-                  <property name="alignment">
-                   <set>Qt::AlignHCenter</set>
-                  </property>
                   <widget class="ConnectButton" name="home_connect_button">
                    <property name="text">
                     <string>Connect</string>
@@ -560,6 +557,9 @@ Direct: -</string>
                     </size>
                    </property>
                   </widget>
+                  <property name="alignment">
+                   <set>Qt::AlignHCenter</set>
+                  </property>
                  </item>
                  <item>
                  <widget class="QWidget" name="home_actions" native="true">
