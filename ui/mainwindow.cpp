@@ -132,6 +132,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->drawer_quick_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
+    connect(ui->home_connect_button, &QPushButton::clicked, this, [=] {
+        if (running == nullptr) {
+            neko_start();
+        } else {
+            neko_stop();
+        }
+    });
+
 
 
     auto drawer_anim = new QParallelAnimationGroup(this);
@@ -894,6 +902,19 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         auto txt = running == nullptr ? tr("Not Running")
                                       : QStringLiteral("[%1] %2").arg(group_name, running->bean->DisplayName()).left(30);
         ui->label_running->setText(txt);
+    }
+    if (running == nullptr) {
+        ui->drawer_status->setText(tr("Disconnected"));
+        ui->drawer_profile->setText(tr("Profile: -"));
+        ui->home_connect_button->setText(tr("Connect"));
+    } else {
+        auto profile_label = running->bean->DisplayTypeAndName();
+        if (!group_name.isEmpty()) {
+            profile_label = QStringLiteral("%1 / %2").arg(group_name, profile_label);
+        }
+        ui->drawer_status->setText(tr("Connected"));
+        ui->drawer_profile->setText(tr("Profile: %1").arg(profile_label));
+        ui->home_connect_button->setText(tr("Disconnect"));
     }
     //
     auto display_socks = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_socks_port);
