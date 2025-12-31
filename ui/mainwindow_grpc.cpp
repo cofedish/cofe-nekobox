@@ -358,6 +358,7 @@ void MainWindow::neko_start(int _id) {
         return;
     }
     mu_stopping.unlock();
+    set_connect_state(ConnectState::Connecting);
 
     // check core state
     if (!NekoGui::dataStore->core_running) {
@@ -388,6 +389,7 @@ void MainWindow::neko_start(int _id) {
         MW_show_log(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
         if (!neko_start_stage2()) {
             MW_show_log("<<<<<<<< " + tr("Failed to start profile %1").arg(ent->bean->DisplayTypeAndName()));
+            runOnUiThread([=] { set_connect_state(ConnectState::Disconnected); });
         }
         mu_starting.unlock();
         // cancel timeout
@@ -411,6 +413,7 @@ void MainWindow::neko_stop(bool crash, bool sem) {
         if (sem) sem_stopped.release();
         return;
     }
+    set_connect_state(ConnectState::Disconnecting);
 
     auto neko_stop_stage2 = [=] {
         runOnUiThread(

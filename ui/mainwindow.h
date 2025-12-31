@@ -136,6 +136,12 @@ private slots:
     void on_tabWidget_currentChanged(int index);
 
 private:
+    enum class ConnectState {
+        Disconnected,
+        Connecting,
+        Connected,
+        Disconnecting
+    };
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray;
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
@@ -160,6 +166,7 @@ private:
     QMutex mu_exit;
     QSemaphore sem_stopped;
     int exit_reason = 0;
+    ConnectState connect_state = ConnectState::Disconnected;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
@@ -172,6 +179,9 @@ private:
     void refresh_proxy_list_impl_refresh_data(const int &id = -1);
 
     void refresh_subscriptions_list();
+
+    void set_connect_state(ConnectState state);
+    void update_connect_button();
 
     void keyPressEvent(QKeyEvent *event) override;
 

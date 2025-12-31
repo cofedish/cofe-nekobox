@@ -11,6 +11,7 @@
 #include "ui/ThemeManager.hpp"
 #include "ui/Icon.hpp"
 #include "ui/widget/WaveBackground.h"
+#include "ui/widget/ConnectButton.h"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
@@ -80,6 +81,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
         wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
     }
+    if (auto connectButton = qobject_cast<ConnectButton *>(ui->home_connect_button)) {
+        connectButton->setReduceMotion(NekoGui::dataStore->reduce_motion);
+    }
     //
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
@@ -144,6 +148,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
     connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->home_connect_button, &QPushButton::clicked, this, [=] {
+        if (connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting) {
+            return;
+        }
         if (running == nullptr) {
             neko_start();
         } else {
@@ -689,6 +696,9 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
             wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
         }
+        if (auto connectButton = qobject_cast<ConnectButton *>(ui->home_connect_button)) {
+            connectButton->setReduceMotion(NekoGui::dataStore->reduce_motion);
+        }
         if (info.contains("VPNChanged") && NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));
         }
@@ -988,24 +998,35 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (group != nullptr) group_name = group->name;
     }
 
-    if (last_test_time.addSecs(2) < QTime::currentTime()) {
+    if (connect_state == ConnectState::Connecting) {
+        ui->label_running->setText(tr("Connecting"));
+    } else if (connect_state == ConnectState::Disconnecting) {
+        ui->label_running->setText(tr("Disconnecting"));
+    } else if (last_test_time.addSecs(2) < QTime::currentTime()) {
         auto txt = running == nullptr ? tr("Not Running")
                                       : QStringLiteral("[%1] %2").arg(group_name, running->bean->DisplayName()).left(30);
         ui->label_running->setText(txt);
     }
     if (running == nullptr) {
-        ui->drawer_status->setText(tr("Disconnected"));
+        QString statusText = connect_state == ConnectState::Connecting ? tr("Connecting") : tr("Disconnected");
+        ui->drawer_status->setText(statusText);
         ui->drawer_profile->setText(tr("Profile: -"));
-        ui->home_connect_button->setText(tr("Connect"));
+        if (connect_state != ConnectState::Connecting) {
+            connect_state = ConnectState::Disconnected;
+        }
     } else {
         auto profile_label = running->bean->DisplayTypeAndName();
         if (!group_name.isEmpty()) {
             profile_label = QStringLiteral("%1 / %2").arg(group_name, profile_label);
         }
-        ui->drawer_status->setText(tr("Connected"));
+        QString statusText = connect_state == ConnectState::Disconnecting ? tr("Disconnecting") : tr("Connected");
+        ui->drawer_status->setText(statusText);
         ui->drawer_profile->setText(tr("Profile: %1").arg(profile_label));
-        ui->home_connect_button->setText(tr("Disconnect"));
+        if (connect_state != ConnectState::Disconnecting) {
+            connect_state = ConnectState::Connected;
+        }
     }
+    update_connect_button();
     //
     auto display_socks = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_socks_port);
     auto inbound_txt = QStringLiteral("Mixed: %1").arg(display_socks);
@@ -1061,6 +1082,39 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
 
     icon_status = icon_status_new;
+}
+
+void MainWindow::set_connect_state(MainWindow::ConnectState state) {
+    if (connect_state == state) return;
+    connect_state = state;
+    update_connect_button();
+    if (state == ConnectState::Connecting || state == ConnectState::Disconnecting) {
+        refresh_status();
+    }
+}
+
+void MainWindow::update_connect_button() {
+    auto button = qobject_cast<ConnectButton *>(ui->home_connect_button);
+    if (button == nullptr) return;
+
+    ConnectButton::State state = ConnectButton::State::Disconnected;
+    switch (connect_state) {
+        case ConnectState::Disconnected:
+            state = ConnectButton::State::Disconnected;
+            break;
+        case ConnectState::Connecting:
+            state = ConnectButton::State::Connecting;
+            break;
+        case ConnectState::Connected:
+            state = ConnectButton::State::Connected;
+            break;
+        case ConnectState::Disconnecting:
+            state = ConnectButton::State::Disconnecting;
+            break;
+    }
+    button->setState(state);
+    const bool busy = connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting;
+    button->setEnabled(!busy);
 }
 
 // table显示
