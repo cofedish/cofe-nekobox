@@ -54,7 +54,7 @@ namespace {
         t.accent_press = "#235E55";
         t.accent_soft = "#D7EAE6";
         t.text_on_accent = "#FFFFFF";
-        t.font_family = "\"IBM Plex Sans\",\"Source Sans 3\",\"Noto Sans\"";
+        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
 
@@ -71,7 +71,7 @@ namespace {
         t.accent_press = "#2F8F83";
         t.accent_soft = "#1C3A38";
         t.text_on_accent = "#0C1114";
-        t.font_family = "\"IBM Plex Sans\",\"Source Sans 3\",\"Noto Sans\"";
+        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
 
@@ -92,7 +92,7 @@ namespace {
         t.accent_press = accent.darker(115).name();
         t.accent_soft = ToRgba(accent, 36);
         t.text_on_accent = pal.color(QPalette::HighlightedText).name();
-        t.font_family = "\"IBM Plex Sans\",\"Source Sans 3\",\"Noto Sans\"";
+        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
 

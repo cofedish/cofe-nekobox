@@ -8,6 +8,7 @@
 #include <QLocalSocket>
 #include <QLocalServer>
 #include <QThread>
+#include <QFontDatabase>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoGui.hpp"
@@ -120,6 +121,24 @@ int main(int argc, char* argv[]) {
     QCoreApplication::setApplicationName(AppInfo::AppId());
     QCoreApplication::setApplicationDisplayName(AppInfo::DisplayName());
     QCoreApplication::setApplicationVersion(AppInfo::Version());
+    {
+        QFont baseFont = a.font();
+        const QStringList families = {
+            "Segoe UI Variable",
+            "Segoe UI",
+            "Inter",
+            "Noto Sans",
+            "Arial"
+        };
+        for (const auto &family : families) {
+            if (QFontDatabase::hasFamily(family)) {
+                baseFont.setFamily(family);
+                break;
+            }
+        }
+        baseFont.setPointSize(10);
+        a.setFont(baseFont);
+    }
 
     // dispatchers
     DS_cores = new QThread;
