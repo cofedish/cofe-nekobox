@@ -1039,6 +1039,7 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (connect_state != ConnectState::Connecting) {
             connect_state = ConnectState::Disconnected;
         }
+        ui->drawer_status->setProperty("state", "disconnected");
     } else {
         auto profile_label = running->bean->DisplayTypeAndName();
         if (!group_name.isEmpty()) {
@@ -1050,7 +1051,10 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (connect_state != ConnectState::Disconnecting) {
             connect_state = ConnectState::Connected;
         }
+        ui->drawer_status->setProperty("state", "connected");
     }
+    ui->drawer_status->style()->unpolish(ui->drawer_status);
+    ui->drawer_status->style()->polish(ui->drawer_status);
     update_connect_button();
     //
     auto display_socks = DisplayAddress(NekoGui::dataStore->inbound_address, NekoGui::dataStore->inbound_socks_port);
@@ -1148,7 +1152,7 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         drawer_anim->stop();
     }
 
-    const int target = open ? 280 : 0;
+    const int target = open ? 300 : 0;
     if (open) {
         ui->drawer_container->setVisible(true);
         if (drawer_scrim) {
