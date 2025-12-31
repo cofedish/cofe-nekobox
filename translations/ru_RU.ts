@@ -56,6 +56,30 @@
         <translation>Тема</translation>
     </message>
     <message>
+        <source>Language</source>
+        <translation>Язык</translation>
+    </message>
+    <message>
+        <source>System language</source>
+        <translation>Системный</translation>
+    </message>
+    <message>
+        <source>English</source>
+        <translation>Английский</translation>
+    </message>
+    <message>
+        <source>Chinese (Simplified)</source>
+        <translation>Китайский (упрощенный)</translation>
+    </message>
+    <message>
+        <source>Persian (Iran)</source>
+        <translation>Персидский (Иран)</translation>
+    </message>
+    <message>
+        <source>Russian</source>
+        <translation>Русский</translation>
+    </message>
+    <message>
         <source>System</source>
         <translation>Системная</translation>
     </message>
@@ -116,8 +140,16 @@
         <translation>Мультиплексирование (mux)</translation>
     </message>
     <message>
+        <source>Log level</source>
+        <translation>Уровень логов</translation>
+    </message>
+    <message>
         <source>concurrency</source>
         <translation>многопоточность</translation>
+    </message>
+    <message>
+        <source>Padding</source>
+        <translation>Паддинг</translation>
     </message>
     <message>
         <source>Default On</source>
@@ -682,9 +714,9 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
     <message>
         <source>Add a tun inbound to the profile startup, instead of using two processes.
-This needs to be run NekoBox with administrator privileges.</source>
+This needs to be run CofeBox with administrator privileges.</source>
         <translation>Добавить inbound c Tun в конфигурацию профиля вместо того, чтобы использовать два отдельных процесса.
-Для этого необходимо запускать NekoBox c правами администратора.</translation>
+Для этого необходимо запускать CofeBox c правами администратора.</translation>
     </message>
     <message>
         <source>Internal Tun</source>
@@ -1178,6 +1210,122 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Основные настройки</translation>
     </message>
     <message>
+        <source>Home</source>
+        <translation>Главная</translation>
+    </message>
+    <message>
+        <source>Servers</source>
+        <translation>Серверы</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Профили</translation>
+    </message>
+    <message>
+        <source>Subscriptions</source>
+        <translation>Подписки</translation>
+    </message>
+    <message>
+        <source>Rules</source>
+        <translation>Правила</translation>
+    </message>
+    <message>
+        <source>Logs</source>
+        <translation>Логи</translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Настройки</translation>
+    </message>
+    <message>
+        <source>About</source>
+        <translation>О программе</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <source>System</source>
+        <translation>Системная</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translation>Светлая</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Темная</translation>
+    </message>
+    <message>
+        <source>Disconnected</source>
+        <translation>Отключено</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Подключено</translation>
+    </message>
+    <message>
+        <source>Connecting</source>
+        <translation>Подключение...</translation>
+    </message>
+    <message>
+        <source>Disconnecting</source>
+        <translation>Отключение...</translation>
+    </message>
+    <message>
+        <source>Profile: -</source>
+        <translation>Профиль: -</translation>
+    </message>
+    <message>
+        <source>Profile: %1</source>
+        <translation>Профиль: %1</translation>
+    </message>
+    <message>
+        <source>Select server</source>
+        <translation>Выбрать сервер</translation>
+    </message>
+    <message>
+        <source>Select profile</source>
+        <translation>Выбрать профиль</translation>
+    </message>
+    <message>
+        <source>Open logs</source>
+        <translation>Открыть логи</translation>
+    </message>
+    <message>
+        <source>Paste subscription URL</source>
+        <translation>Вставьте ссылку подписки</translation>
+    </message>
+    <message>
+        <source>Add</source>
+        <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Add from clipboard</source>
+        <translation>Добавить из буфера обмена</translation>
+    </message>
+    <message>
+        <source>Tip: select profiles in Servers to edit, clone, or export.</source>
+        <translation>Подсказка: выберите профили на вкладке «Серверы» для редактирования, клонирования или экспорта.</translation>
+    </message>
+    <message>
+        <source>Qt-based proxy manager for sing-box.\nVersion: %1</source>
+        <translation>Менеджер прокси на Qt для sing-box.\nВерсия: %1</translation>
+    </message>
+    <message>
+        <source>Invalid input</source>
+        <translation>Некорректный ввод</translation>
+    </message>
+    <message>
+        <source>Please paste a subscription URL.</source>
+        <translation>Пожалуйста, вставьте ссылку подписки.</translation>
+    </message>
+    <message>
+        <source>Please paste a valid URL.</source>
+        <translation>Пожалуйста, вставьте корректную ссылку.</translation>
+    </message>
+    <message>
         <source>New profile</source>
         <translation>Новый профиль</translation>
     </message>
@@ -1359,8 +1507,8 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Импортирован(ы) %1 профиль(ей)</translation>
     </message>
     <message>
-        <source>Please run NekoBox as admin</source>
-        <translation>Пожалуйста, запустите NekoBox с правами администратора</translation>
+        <source>Please run CofeBox as admin</source>
+        <translation>Пожалуйста, запустите CofeBox с правами администратора</translation>
     </message>
     <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
@@ -1659,6 +1807,29 @@ Release note:
     <message>
         <source>You can not input space characters here.</source>
         <translation>Сюда нельзя вводить пробелы.</translation>
+    </message>
+</context>
+<context>
+    <name>ConnectButton</name>
+    <message>
+        <source>Disconnected</source>
+        <translation>Отключено</translation>
+    </message>
+    <message>
+        <source>Connecting</source>
+        <translation>Подключение...</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Подключено</translation>
+    </message>
+    <message>
+        <source>Disconnecting</source>
+        <translation>Отключение...</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>Подключиться</translation>
     </message>
 </context>
 </TS>

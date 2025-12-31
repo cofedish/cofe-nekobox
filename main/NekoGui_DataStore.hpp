@@ -107,7 +107,7 @@ namespace NekoGui {
         int mux_concurrency = 8;
         bool mux_default_on = false;
         QString theme = "0";
-        int language = 0;
+        int language = 4;
         QString mw_size = "";
         bool check_include_pre = false;
         bool reduce_motion = false;
