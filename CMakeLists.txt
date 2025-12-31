@@ -229,6 +229,8 @@ set(PROJECT_SOURCES
         ui/widget/GroupItem.cpp
         ui/widget/GroupItem.h
         ui/widget/GroupItem.ui
+        ui/widget/WaveBackground.cpp
+        ui/widget/WaveBackground.h
 
         res/neko.qrc
         res/theme/feiyangqingyun/qss.qrc

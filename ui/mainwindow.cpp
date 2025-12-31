@@ -10,6 +10,7 @@
 
 #include "ui/ThemeManager.hpp"
 #include "ui/Icon.hpp"
+#include "ui/widget/WaveBackground.h"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
 #include "ui/dialog_manage_groups.h"
@@ -70,6 +71,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->drawer_app_name->setText(software_name);
     ui->about_title->setText(software_name);
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(NKR_VERSION));
+    if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
+        wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
+    }
     //
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
     connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
@@ -599,6 +603,9 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             if (themeValue == "dark") index = 2;
             QSignalBlocker blocker(ui->drawer_theme);
             ui->drawer_theme->setCurrentIndex(index);
+        }
+        if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
+            wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
         }
         if (info.contains("VPNChanged") && NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));

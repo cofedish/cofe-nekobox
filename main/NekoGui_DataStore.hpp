@@ -110,6 +110,7 @@ namespace NekoGui {
         int language = 0;
         QString mw_size = "";
         bool check_include_pre = false;
+        bool reduce_motion = false;
         QString system_proxy_format = "";
         QStringList log_ignore = {};
         bool start_minimal = false;
