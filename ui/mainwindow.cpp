@@ -17,6 +17,8 @@
 #include "ui/dialog_manage_routes.h"
 #include "ui/dialog_vpn_settings.h"
 #include "ui/dialog_hotkey.h"
+#include "ui/edit/dialog_edit_group.h"
+#include "ui/widget/GroupItem.h"
 
 #include "3rdparty/fix_old_qt.h"
 #include "3rdparty/qrcodegen.hpp"
@@ -38,6 +40,7 @@
 
 #include <QClipboard>
 #include <QLabel>
+#include <QListWidgetItem>
 #include <QTextBlock>
 #include <QScrollBar>
 #include <QScreen>
@@ -164,6 +167,50 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             if (++active_count == 100) break;
         }
         menu.exec(ui->home_select_server->mapToGlobal(QPoint(0, ui->home_select_server->height())));
+    });
+    connect(ui->home_select_profile, &QToolButton::clicked, this, [=] {
+        QMenu menu(this);
+        for (const auto &gid: NekoGui::profileManager->groupsTabOrder) {
+            auto group = NekoGui::profileManager->GetGroup(gid);
+            if (group == nullptr) continue;
+            auto action = menu.addAction(group->name);
+            action->setCheckable(true);
+            action->setChecked(NekoGui::dataStore->current_group == gid);
+            connect(action, &QAction::triggered, this, [=] {
+                ui->drawer_nav->setCurrentRow(1);
+                ui->tabWidget->setCurrentIndex(groupId2TabIndex(gid));
+                show_group(gid);
+            });
+        }
+        menu.exec(ui->home_select_profile->mapToGlobal(QPoint(0, ui->home_select_profile->height())));
+    });
+    connect(ui->profiles_new, &QPushButton::clicked, this, &MainWindow::on_menu_add_from_input_triggered);
+    connect(ui->profiles_clone, &QPushButton::clicked, this, &MainWindow::on_menu_clone_triggered);
+    connect(ui->profiles_delete, &QPushButton::clicked, this, &MainWindow::on_menu_delete_triggered);
+    connect(ui->profiles_import_clipboard, &QPushButton::clicked, this, &MainWindow::on_menu_add_from_clipboard_triggered);
+    connect(ui->profiles_export, &QPushButton::clicked, this, &MainWindow::on_menu_export_config_triggered);
+    connect(ui->profiles_open_servers, &QPushButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(1); });
+    connect(ui->profiles_edit, &QPushButton::clicked, this, [=] {
+        auto items = ui->proxyListTable->selectedItems();
+        if (items.isEmpty()) return;
+        auto id = items.first()->data(114514).toInt();
+        auto dialog = new DialogEditProfile("", id, this);
+        connect(dialog, &QDialog::finished, dialog, &QDialog::deleteLater);
+    });
+    connect(ui->subscriptions_new, &QPushButton::clicked, this, [=] {
+        auto ent = NekoGui::ProfileManager::NewGroup();
+        auto dialog = new DialogEditGroup(ent, this);
+        if (dialog->exec() == QDialog::Accepted) {
+            NekoGui::profileManager->AddGroup(ent);
+            refresh_groups();
+            refresh_subscriptions_list();
+        }
+        dialog->deleteLater();
+    });
+    connect(ui->subscriptions_update_all, &QPushButton::clicked, this, [=] {
+        if (QMessageBox::question(this, tr("Confirmation"), tr("Update all subscriptions?")) == QMessageBox::StandardButton::Yes) {
+            UI_update_all_groups();
+        }
     });
 
 
@@ -672,6 +719,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
     } else if (sender == "SubUpdater") {
         if (info.startsWith("finish")) {
             refresh_proxy_list();
+            refresh_subscriptions_list();
             if (!info.contains("dingyue")) {
                 show_log_impl(tr("Imported %1 profile(s)").arg(NekoGui::dataStore->imported_count));
             }
@@ -1040,6 +1088,20 @@ void MainWindow::refresh_groups() {
     }
 
     NekoGui::dataStore->refreshing_group_list = false;
+    refresh_subscriptions_list();
+}
+
+void MainWindow::refresh_subscriptions_list() {
+    if (ui->subscriptions_list == nullptr) return;
+    ui->subscriptions_list->clear();
+    for (const auto &gid: NekoGui::profileManager->groupsTabOrder) {
+        auto group = NekoGui::profileManager->GetGroup(gid);
+        if (group == nullptr) continue;
+        auto item = new QListWidgetItem(ui->subscriptions_list);
+        auto widget = new GroupItem(this, group, item);
+        ui->subscriptions_list->addItem(item);
+        ui->subscriptions_list->setItemWidget(item, widget);
+    }
 }
 
 

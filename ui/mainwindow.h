@@ -136,6 +136,7 @@ private slots:
     void on_tabWidget_currentChanged(int index);
 
 private:
+    void refresh_subscriptions_list();
     Ui::MainWindow *ui;
     QSystemTrayIcon *tray;
     QShortcut *shortcut_ctrl_f = new QShortcut(QKeySequence("Ctrl+F"), this);
@@ -170,6 +171,8 @@ private:
     void refresh_proxy_list_impl(const int &id = -1, GroupSortAction groupSortAction = {});
 
     void refresh_proxy_list_impl_refresh_data(const int &id = -1);
+
+    void refresh_subscriptions_list();
 
     void keyPressEvent(QKeyEvent *event) override;
 
