@@ -2,13 +2,13 @@
 
 sudo apt-get install fuse -y
 
-cp -r linux64 nekobox.AppDir
+cp -r linux64 CofeBox.AppDir
 
 # The file for Appimage
 
-rm nekobox.AppDir/launcher
+rm CofeBox.AppDir/launcher
 
-cat >nekobox.AppDir/nekobox.desktop <<-EOF
+cat >CofeBox.AppDir/CofeBox.desktop <<-EOF
 [Desktop Entry]
 Name=CofeBox
 Exec=echo "nekobox started"
@@ -17,14 +17,14 @@ Type=Application
 Categories=Network
 EOF
 
-cat >nekobox.AppDir/AppRun <<-EOF
+cat >CofeBox.AppDir/AppRun <<-EOF
 #!/bin/bash
 echo "PATH: \${PATH}"
 echo "nekobox runing on: \$APPDIR"
 LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/nekobox -appdata "\$@"
 EOF
 
-chmod +x nekobox.AppDir/AppRun
+chmod +x CofeBox.AppDir/AppRun
 
 # build
 
@@ -44,9 +44,9 @@ if [ ! -f appimagetool-x86_64.AppImage ]; then
     exit 1
 fi
 chmod +x appimagetool-x86_64.AppImage
-./appimagetool-x86_64.AppImage nekobox.AppDir
+./appimagetool-x86_64.AppImage CofeBox.AppDir
 
 # clean
 
 rm appimagetool-x86_64.AppImage
-rm -rf nekobox.AppDir
+rm -rf CofeBox.AppDir
