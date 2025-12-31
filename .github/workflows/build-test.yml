@@ -1,0 +1,124 @@
+name: Test Build - UI Redesign
+on:
+  push:
+    branches:
+      - ui-redesign
+  workflow_dispatch:
+
+jobs:
+  build-windows-x64:
+    runs-on: windows-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+    steps:
+      - name: Checkout sources
+        uses: actions/checkout@v4.2.2
+        with:
+          submodules: "recursive"
+
+      - name: Setup vcpkg and build Thrift
+        uses: johnwason/vcpkg-action@v7
+        id: vcpkg
+        with:
+          pkgs: thrift
+          triplet: x64-windows
+          token: ${{ github.token }}
+
+      - name: Install Qt 6.10.1
+        uses: jurplel/install-qt-action@v4.3.0
+        with:
+          version: 6.10.1
+          setup-python: true
+          cache: true
+          modules: qtcharts
+          cache-key-prefix: QtCache-windows-x64
+
+      - name: Install MSVC compiler
+        uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: x86_64
+
+      - name: Setup Go
+        uses: actions/setup-go@v5.5.0
+        with:
+          go-version: "1.25.0"
+          cache-dependency-path: |
+            core/server/go.sum
+            core/updater/go.sum
+
+      - name: Install Thrift compiler
+        shell: bash
+        run: |
+          # Download latest Apache Thrift binary for Windows
+          curl -L -o thrift.exe https://github.com/apache/thrift/releases/download/v0.21.0/thrift-0.21.0.exe
+          mkdir -p /c/thrift/bin
+          mv thrift.exe /c/thrift/bin/thrift.exe
+          echo "C:\thrift\bin" >> $GITHUB_PATH
+
+      - name: Generate Thrift code
+        shell: bash
+        run: |
+          cd core/server/gen
+          rm -rf ../gen/*.go
+          /c/thrift/bin/thrift.exe --gen go -out .. libcore.thrift
+
+      - name: Build Go components
+        shell: bash
+        run: |
+          export GOOS=windows
+          export GOARCH=amd64
+          ./script/build_go.sh
+
+      - name: Download srslist
+        shell: bash
+        run: |
+          curl -fLso "srslist.json" "https://github.com/cofedish/ruleset/raw/refs/heads/rule-set/srslist.json"
+
+      - name: Configure CMake
+        shell: bash
+        run: |
+          cmake -DCMAKE_TOOLCHAIN_FILE='${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake' \
+                -DVCPKG_TARGET_TRIPLET=x64-windows \
+                -DVCPKG_MANIFEST_MODE=OFF \
+                -DSKIP_UPDATE_BUTTON=OFF \
+                -DCMAKE_BUILD_TYPE=Release \
+                -S . -B build
+
+      - name: Build
+        shell: bash
+        run: |
+          cmake --build build --config Release --verbose
+
+      - name: Package artifacts
+        shell: bash
+        run: |
+          mkdir -p artifacts
+          cp build/Release/nekobox.exe artifacts/ || cp build/nekobox.exe artifacts/
+          cp -r res/public artifacts/
+          cp check_routeprofiles.js artifacts/
+          cp srslist.json artifacts/
+          # Copy Qt DLLs
+          windeployqt artifacts/nekobox.exe --release --no-translations
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4.6.2
+        with:
+          name: nekobox-ui-redesign-windows-x64
+          path: artifacts/
+          retention-days: 7
+
+      - name: Create release info
+        shell: bash
+        run: |
+          echo "# NekoBox UI Redesign Test Build" > artifacts/README.txt
+          echo "" >> artifacts/README.txt
+          echo "Branch: ui-redesign" >> artifacts/README.txt
+          echo "Commit: ${{ github.sha }}" >> artifacts/README.txt
+          echo "Built: $(date)" >> artifacts/README.txt
+          echo "" >> artifacts/README.txt
+          echo "Features:" >> artifacts/README.txt
+          echo "- Premium Light/Dark themes" >> artifacts/README.txt
+          echo "- Modern design system" >> artifacts/README.txt
+          echo "- Process whitelist bugfix" >> artifacts/README.txt
+          echo "" >> artifacts/README.txt
+          echo "To test themes: Settings -> Theme -> Light/Dark" >> artifacts/README.txt

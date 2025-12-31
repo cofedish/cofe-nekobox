@@ -1,0 +1,137 @@
+# This file is used to ignore files which are generated
+# ----------------------------------------------------------------------------
+core/server/gen/libcore_service-remote
+core/server/gen/*.go
+SingBox.Version
+version.txt
+/config
+/updater
+/vcpkg*
+/versions
+/run.cmd
+/vcpkg_installed
+nekobox_core
+/deployment
+/libcore*.qpb.h
+compile_commands.json
+*~
+*.autosave
+*.a
+*.core
+*.moc
+*.o
+*.obj
+*.orig
+*.rej
+*.so
+*.so.*
+*_pch.h.cpp
+*_resource.rc
+.#*
+*.*#
+core
+!core/
+tags
+.DS_Store
+.directory
+*.debug
+/Makefile*
+*.prl
+*.app
+moc_*.cpp
+ui_*.h
+qrc_*.cpp
+Thumbs.db
+*.res
+/.qmake.cache
+/.qmake.stash
+/.cache
+# qtcreator generated files
+*.pro.user*
+
+# xemacs temporary files
+*.flc
+
+# Vim temporary files
+.*.swp
+
+# Visual Studio generated files
+*.ib_pdb_index
+*.idb
+*.ilk
+*.pdb
+*.sln
+*.suo
+*.vcproj
+*vcproj.*.*.user
+*.ncb
+*.sdf
+*.opensdf
+*.vcxproj
+*vcxproj.*
+
+# MinGW generated files
+*.Debug
+*.Release
+
+# Python byte code
+*.pyc
+
+# Binaries
+# --------
+*.dll
+*.exe
+
+# Custom
+srslist.h
+srslist
+
+/nekobox
+/build
+/temp
+CMakeLists.txt.user*
+/cmake-build-*
+/build-*
+.vscode
+.idea
+
+# Deploy
+/deployment
+/neko*.sh
+/qtsdk
+
+.vs
+out
+/libs
+/core/server/vendor
+/core/server/gen/*.go
+/core/server/gen/libcore_server-remote
+/core/server/Core
+*.AppImage
+download-artifact
+deployment
+srslist.json
+runtime-*
+
+# Claude Code files
+.claude/
+
+# Build logs
+*.log
+build*.log
+
+# Docker files (for development only, not needed in repo)
+Dockerfile
+docker-build.bat
+docker-build.sh
+docker-compose.yml
+
+# Extra documentation (keep only main README.md)
+DOCKER_BUILD.md
+FINAL_SUMMARY.md
+REDESIGN_REPORT.md
+BUILD_INSTRUCTIONS.md
+UI_REDESIGN_README.md
+
+# Build output directory
+build-output/

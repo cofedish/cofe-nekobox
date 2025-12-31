@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1200</width>
+    <height>800</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>900</width>
+    <height>600</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string notr="true">NekoBox</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="mainHorizontalLayout" stretch="0,1">
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+
+    <!-- Left Sidebar Navigation -->
+    <item>
+     <widget class="QFrame" name="sidebarFrame">
+      <property name="minimumSize">
+       <size>
+        <width>240</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>240</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <layout class="QVBoxLayout" name="sidebarLayout">
+       <property name="spacing">
+        <number>8</number>
+       </property>
+       <property name="leftMargin">
+        <number>16</number>
+       </property>
+       <property name="topMargin">
+        <number>16</number>
+       </property>
+       <property name="rightMargin">
+        <number>8</number>
+       </property>
+       <property name="bottomMargin">
+        <number>16</number>
+       </property>
+
+       <!-- Brand/Logo Section -->
+       <item>
+        <widget class="QLabel" name="brandLabel">
+         <property name="text">
+          <string>NekoBox</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeft|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="Line" name="line">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+
+       <!-- Navigation Buttons -->
+       <item>
+        <widget class="QPushButton" name="navDashboard">
+         <property name="text">
+          <string>Dashboard</string>
+         </property>
+         <property name="icon">
+          <iconset theme="view-dashboard"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navProfiles">
+         <property name="text">
+          <string>Profiles</string>
+         </property>
+         <property name="icon">
+          <iconset theme="b-network-server"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navGroups">
+         <property name="text">
+          <string>Groups</string>
+         </property>
+         <property name="icon">
+          <iconset theme="folder-network"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navRouting">
+         <property name="text">
+          <string>Routing</string>
+         </property>
+         <property name="icon">
+          <iconset theme="b-network-routing"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navLogs">
+         <property name="text">
+          <string>Logs</string>
+         </property>
+         <property name="icon">
+          <iconset theme="text-x-log"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navConnections">
+         <property name="text">
+          <string>Connections</string>
+         </property>
+         <property name="icon">
+          <iconset theme="network-connect"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+
+       <!-- Bottom Actions -->
+       <item>
+        <widget class="Line" name="line_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navSettings">
+         <property name="text">
+          <string>Settings</string>
+         </property>
+         <property name="icon">
+          <iconset theme="b-preferences"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+
+       <item>
+        <widget class="QPushButton" name="navUpdate">
+         <property name="text">
+          <string>Updates</string>
+         </property>
+         <property name="icon">
+          <iconset theme="b-system-software-update"/>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>20</width>
+           <height>20</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+    </item>
+
+    <!-- Main Content Area -->
+    <item>
+     <widget class="QFrame" name="contentFrame">
+      <property name="frameShape">
+       <enum>QFrame::NoFrame</enum>
+      </property>
+      <layout class="QVBoxLayout" name="contentLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+
+       <!-- Top Status Bar -->
+       <item>
+        <widget class="QFrame" name="topStatusBar">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>64</height>
+          </size>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <layout class="QHBoxLayout" name="topStatusLayout">
+          <property name="spacing">
+           <number>16</number>
+          </property>
+          <property name="leftMargin">
+           <number>24</number>
+          </property>
+          <property name="topMargin">
+           <number>12</number>
+          </property>
+          <property name="rightMargin">
+           <number>24</number>
+          </property>
+          <property name="bottomMargin">
+           <number>12</number>
+          </property>
+
+          <!-- Connection Status Card -->
+          <item>
+           <widget class="QFrame" name="statusCard">
+            <property name="frameShape">
+             <enum>QFrame::StyledPanel</enum>
+            </property>
+            <layout class="QHBoxLayout" name="statusCardLayout">
+             <property name="spacing">
+              <number>12</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="statusIcon">
+               <property name="minimumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>32</width>
+                 <height>32</height>
+                </size>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <layout class="QVBoxLayout" name="statusTextLayout">
+               <property name="spacing">
+                <number>2</number>
+               </property>
+               <item>
+                <widget class="QLabel" name="label_running">
+                 <property name="text">
+                  <string>Disconnected</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="statusSubtext">
+                 <property name="text">
+                  <string>No active profile</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </widget>
+          </item>
+
+          <!-- Search Input -->
+          <item>
+           <widget class="QLineEdit" name="search_input">
+            <property name="minimumSize">
+             <size>
+              <width>300</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="placeholderText">
+             <string>Search profiles...</string>
+            </property>
+           </widget>
+          </item>
+
+          <item>
+           <spacer name="topSpacer">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+
+          <!-- Quick Toggle Cards -->
+          <item>
+           <widget class="QCheckBox" name="checkBox_SystemProxy">
+            <property name="text">
+             <string>System Proxy</string>
+            </property>
+           </widget>
+          </item>
+
+          <item>
+           <widget class="QCheckBox" name="checkBox_VPN">
+            <property name="text">
+             <string>Tun Mode</string>
+            </property>
+           </widget>
+          </item>
+
+          <item>
+           <widget class="QCheckBox" name="system_dns">
+            <property name="text">
+             <string>System DNS</string>
+            </property>
+           </widget>
+          </item>
+
+          <!-- Menu Button -->
+          <item>
+           <widget class="QToolButton" name="toolButton_program">
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset theme="application-menu"/>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+           </widget>
+          </item>
+
+         </layout>
+        </widget>
+       </item>
+
+       <!-- Stacked Widget for Different Views -->
+       <item>
+        <widget class="QStackedWidget" name="stackedWidget">
+
+         <!-- Dashboard Page -->
+         <widget class="QWidget" name="pageDashboard">
+          <layout class="QVBoxLayout" name="dashboardLayout">
+           <property name="spacing">
+            <number>24</number>
+           </property>
+           <property name="leftMargin">
+            <number>24</number>
+           </property>
+           <property name="topMargin">
+            <number>24</number>
+           </property>
+           <property name="rightMargin">
+            <number>24</number>
+           </property>
+           <property name="bottomMargin">
+            <number>24</number>
+           </property>
+
+           <!-- Quick Stats Row -->
+           <item>
+            <layout class="QHBoxLayout" name="statsRowLayout">
+             <property name="spacing">
+              <number>16</number>
+             </property>
+
+             <item>
+              <widget class="QFrame" name="trafficCard">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="trafficCardLayout">
+                <item>
+                 <widget class="QLabel" name="trafficLabel">
+                  <property name="text">
+                   <string>Traffic</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_inbound">
+                  <property name="text">
+                   <string>↓ 0 B | ↑ 0 B</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+             <item>
+              <widget class="QFrame" name="speedCard">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="speedCardLayout">
+                <item>
+                 <widget class="QLabel" name="speedLabel">
+                  <property name="text">
+                   <string>Speed</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_speed">
+                  <property name="text">
+                   <string>↓ 0 KB/s | ↑ 0 KB/s</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+             <item>
+              <widget class="QFrame" name="uptimeCard">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="uptimeCardLayout">
+                <item>
+                 <widget class="QLabel" name="uptimeLabel">
+                  <property name="text">
+                   <string>Uptime</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_uptime">
+                  <property name="text">
+                   <string>--:--:--</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+             <item>
+              <widget class="QFrame" name="activeCard">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="activeCardLayout">
+                <item>
+                 <widget class="QLabel" name="activeLabel">
+                  <property name="text">
+                   <string>Active Profile</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QLabel" name="label_active_profile">
+                  <property name="text">
+                   <string>None</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+            </layout>
+           </item>
+
+           <!-- Graph Area -->
+           <item>
+            <widget class="QFrame" name="graphCard">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>200</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <layout class="QVBoxLayout" name="graphLayout">
+              <item>
+               <widget class="QLabel" name="graphTitle">
+                <property name="text">
+                 <string>Traffic Graph</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="graph_tab" native="true"/>
+              </item>
+             </layout>
+            </widget>
+           </item>
+
+           <!-- Recent Activity / Quick Actions -->
+           <item>
+            <layout class="QHBoxLayout" name="bottomRowLayout">
+             <property name="spacing">
+              <number>16</number>
+             </property>
+
+             <item>
+              <widget class="QFrame" name="recentCard">
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="recentCardLayout">
+                <item>
+                 <widget class="QLabel" name="recentLabel">
+                  <property name="text">
+                   <string>Recent Logs</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QTextBrowser" name="data_view">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>100</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>150</height>
+                   </size>
+                  </property>
+                  <property name="verticalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAsNeeded</enum>
+                  </property>
+                  <property name="horizontalScrollBarPolicy">
+                   <enum>Qt::ScrollBarAlwaysOff</enum>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+             <item>
+              <widget class="QFrame" name="quickActionsCard">
+               <property name="minimumSize">
+                <size>
+                 <width>300</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="frameShape">
+                <enum>QFrame::StyledPanel</enum>
+               </property>
+               <layout class="QVBoxLayout" name="quickActionsLayout">
+                <item>
+                 <widget class="QLabel" name="actionsLabel">
+                  <property name="text">
+                   <string>Quick Actions</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="toolButton_server">
+                  <property name="text">
+                   <string>Manage Profiles</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="b-network-server"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="toolButton_routing">
+                  <property name="text">
+                   <string>Configure Routing</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="b-network-routing"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="toolButton_preferences">
+                  <property name="text">
+                   <string>Open Settings</string>
+                  </property>
+                  <property name="icon">
+                   <iconset theme="b-preferences"/>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <spacer name="actionsSpacer">
+                  <property name="orientation">
+                   <enum>Qt::Vertical</enum>
+                  </property>
+                  <property name="sizeHint" stdset="0">
+                   <size>
+                    <width>20</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                 </spacer>
+                </item>
+               </layout>
+              </widget>
+             </item>
+
+            </layout>
+           </item>
+
+          </layout>
+         </widget>
+
+         <!-- Profiles Page -->
+         <widget class="QWidget" name="pageProfiles">
+          <layout class="QVBoxLayout" name="profilesLayout">
+           <property name="spacing">
+            <number>16</number>
+           </property>
+           <property name="leftMargin">
+            <number>24</number>
+           </property>
+           <property name="topMargin">
+            <number>24</number>
+           </property>
+           <property name="rightMargin">
+            <number>24</number>
+           </property>
+           <property name="bottomMargin">
+            <number>24</number>
+           </property>
+
+           <!-- Tab Widget for Groups -->
+           <item>
+            <widget class="QTabWidget" name="tabWidget">
+             <widget class="QWidget" name="widget1">
+              <attribute name="title">
+               <string/>
+              </attribute>
+              <layout class="QVBoxLayout" name="profileTabLayout">
+               <item>
+                <widget class="MyTableWidget" name="proxyListTable">
+                 <property name="contextMenuPolicy">
+                  <enum>Qt::CustomContextMenu</enum>
+                 </property>
+                 <property name="editTriggers">
+                  <set>QAbstractItemView::NoEditTriggers</set>
+                 </property>
+                 <property name="alternatingRowColors">
+                  <bool>true</bool>
+                 </property>
+                 <property name="selectionMode">
+                  <enum>QAbstractItemView::ExtendedSelection</enum>
+                 </property>
+                 <property name="selectionBehavior">
+                  <enum>QAbstractItemView::SelectRows</enum>
+                 </property>
+                 <column>
+                  <property name="text">
+                   <string>Type</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Address</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Name</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Test Result</string>
+                  </property>
+                 </column>
+                 <column>
+                  <property name="text">
+                   <string>Traffic</string>
+                  </property>
+                 </column>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+
+          </layout>
+         </widget>
+
+         <!-- Logs Page -->
+         <widget class="QWidget" name="pageLogs">
+          <layout class="QVBoxLayout" name="logsLayout">
+           <property name="spacing">
+            <number>16</number>
+           </property>
+           <property name="leftMargin">
+            <number>24</number>
+           </property>
+           <property name="topMargin">
+            <number>24</number>
+           </property>
+           <property name="rightMargin">
+            <number>24</number>
+           </property>
+           <property name="bottomMargin">
+            <number>24</number>
+           </property>
+
+           <item>
+            <widget class="QFrame" name="logsCard">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <layout class="QVBoxLayout" name="logsCardLayout">
+              <item>
+               <widget class="QLabel" name="logsTitle">
+                <property name="text">
+                 <string>System Logs</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTextBrowser" name="masterLogBrowser">
+                <property name="contextMenuPolicy">
+                 <enum>Qt::CustomContextMenu</enum>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+
+          </layout>
+         </widget>
+
+         <!-- Connections Page -->
+         <widget class="QWidget" name="pageConnections">
+          <layout class="QVBoxLayout" name="connectionsLayout">
+           <property name="spacing">
+            <number>16</number>
+           </property>
+           <property name="leftMargin">
+            <number>24</number>
+           </property>
+           <property name="topMargin">
+            <number>24</number>
+           </property>
+           <property name="rightMargin">
+            <number>24</number>
+           </property>
+           <property name="bottomMargin">
+            <number>24</number>
+           </property>
+
+           <item>
+            <widget class="QFrame" name="connectionsCard">
+             <property name="frameShape">
+              <enum>QFrame::StyledPanel</enum>
+             </property>
+             <layout class="QVBoxLayout" name="connectionsCardLayout">
+              <item>
+               <widget class="QLabel" name="connectionsTitle">
+                <property name="text">
+                 <string>Active Connections</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTableWidget" name="connections">
+                <property name="contextMenuPolicy">
+                 <enum>Qt::CustomContextMenu</enum>
+                </property>
+                <property name="editTriggers">
+                 <set>QAbstractItemView::NoEditTriggers</set>
+                </property>
+                <property name="alternatingRowColors">
+                 <bool>true</bool>
+                </property>
+                <property name="sortingEnabled">
+                 <bool>true</bool>
+                </property>
+                <column>
+                 <property name="text">
+                  <string>Destination (Domain)</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Process</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Protocol</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Outbound</string>
+                 </property>
+                </column>
+                <column>
+                 <property name="text">
+                  <string>Traffic</string>
+                 </property>
+                </column>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+
+          </layout>
+         </widget>
+
+        </widget>
+       </item>
+
+      </layout>
+     </widget>
+    </item>
+
+   </layout>
+  </widget>
+
+  <!-- Menu Bar (preserved from original) -->
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1200</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+
+ </widget>
+
+ <customwidgets>
+  <customwidget>
+   <class>MyTableWidget</class>
+   <extends>QTableWidget</extends>
+   <header>nekobox/ui/utils/MyTableWidget.h</header>
+  </customwidget>
+ </customwidgets>
+
+ <resources/>
+ <connections/>
+</ui>
