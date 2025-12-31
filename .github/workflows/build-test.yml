@@ -49,8 +49,9 @@ jobs:
       - name: Install Thrift compiler
         shell: bash
         run: |
-          # Download latest Apache Thrift binary for Windows
-          curl -L -o thrift.exe https://github.com/apache/thrift/releases/download/v0.21.0/thrift-0.21.0.exe
+          # Download Apache Thrift 0.21.0 binary for Windows
+          curl -L -o thrift.exe https://downloads.apache.org/thrift/0.21.0/thrift-0.21.0.exe
+          chmod +x thrift.exe
           mkdir -p /c/thrift/bin
           mv thrift.exe /c/thrift/bin/thrift.exe
           echo "C:\thrift\bin" >> $GITHUB_PATH
