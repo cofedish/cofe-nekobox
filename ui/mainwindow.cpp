@@ -59,6 +59,9 @@ void UI_InitMainWindow() {
     mainwindow = new MainWindow;
 }
 
+inline int tabIndex2GroupId(int index);
+inline int groupId2TabIndex(int gid);
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
     MW_dialog_message = [=](const QString &a, const QString &b) {
