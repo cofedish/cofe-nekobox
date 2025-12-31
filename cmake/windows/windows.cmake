@@ -19,7 +19,7 @@ endif ()
 
 generate_product_version(
         QV2RAY_RC
-        ICON "${CMAKE_SOURCE_DIR}/res/nekobox.ico"
+        ICON "${CMAKE_SOURCE_DIR}/res/cofebox.ico"
         NAME "${APP_DISPLAY_NAME}"
         BUNDLE "${APP_DISPLAY_NAME}"
         COMPANY_NAME "${APP_DISPLAY_NAME}"
