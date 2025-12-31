@@ -130,8 +130,9 @@ int main(int argc, char* argv[]) {
             "Noto Sans",
             "Arial"
         };
+        QFontDatabase fontDb;
         for (const auto &family : families) {
-            if (QFontDatabase::hasFamily(family)) {
+            if (fontDb.hasFamily(family)) {
                 baseFont.setFamily(family);
                 break;
             }
