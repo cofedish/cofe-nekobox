@@ -40,6 +40,7 @@
 #endif
 
 #include <QClipboard>
+#include <QIcon>
 #include <QLabel>
 #include <QListWidgetItem>
 #include <QTextBlock>
@@ -142,6 +143,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         if (auto item = ui->drawer_nav->item(row)) {
             ui->topbar_title->setText(item->text());
         }
+        if (drawer_open) {
+            set_drawer_open(false);
+        }
     });
     connect(ui->drawer_quick_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
@@ -233,30 +237,35 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->about_docs, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
     connect(ui->about_repo, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://github.com/MatsuriDayo/nekoray")); });
 
+    drawer_scrim = new QWidget(ui->centralwidget);
+    drawer_scrim->setObjectName("drawer_scrim");
+    drawer_scrim->setVisible(false);
+    drawer_scrim->setAttribute(Qt::WA_NoSystemBackground, false);
+    drawer_scrim->installEventFilter(this);
+    update_drawer_scrim();
 
+    ui->drawer_toggle->setIcon(QIcon(Icon::GetMaterialIcon("menu")));
+    ui->drawer_toggle->setIconSize(QSize(20, 20));
 
-    auto drawer_anim = new QParallelAnimationGroup(this);
-    auto drawer_anim_max = new QPropertyAnimation(ui->drawer_container, "maximumWidth");
-    auto drawer_anim_min = new QPropertyAnimation(ui->drawer_container, "minimumWidth");
+    drawer_anim = new QParallelAnimationGroup(this);
+    drawer_anim_max = new QPropertyAnimation(ui->drawer_container, "maximumWidth");
+    drawer_anim_min = new QPropertyAnimation(ui->drawer_container, "minimumWidth");
     drawer_anim->addAnimation(drawer_anim_max);
     drawer_anim->addAnimation(drawer_anim_min);
-    drawer_anim_max->setDuration(180);
-    drawer_anim_min->setDuration(180);
+    drawer_anim_max->setDuration(220);
+    drawer_anim_min->setDuration(220);
     drawer_anim_max->setEasingCurve(QEasingCurve::InOutCubic);
     drawer_anim_min->setEasingCurve(QEasingCurve::InOutCubic);
-    connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
-        const int expanded = 240;
-        const int collapsed = 72;
-        const bool isCollapsed = ui->drawer_container->maximumWidth() <= collapsed;
-        const int target = isCollapsed ? expanded : collapsed;
-        drawer_anim_max->stop();
-        drawer_anim_min->stop();
-        drawer_anim_max->setStartValue(ui->drawer_container->maximumWidth());
-        drawer_anim_min->setStartValue(ui->drawer_container->minimumWidth());
-        drawer_anim_max->setEndValue(target);
-        drawer_anim_min->setEndValue(target);
-        drawer_anim->start();
+    connect(drawer_anim, &QParallelAnimationGroup::finished, this, [=] {
+        if (!drawer_open) {
+            ui->drawer_container->setVisible(false);
+            if (drawer_scrim) drawer_scrim->setVisible(false);
+        }
     });
+    connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
+        set_drawer_open(!drawer_open);
+    });
+    set_drawer_open(false, false);
 
     // Setup log UI
     qvLogDocument->setUndoRedoEnabled(false);
@@ -349,6 +358,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         ui->search->setFocus();
     });
     connect(shortcut_esc, &QShortcut::activated, this, [=] {
+        if (drawer_open) {
+            set_drawer_open(false);
+            return;
+        }
         if (ui->search->isVisible()) {
             ui->search->setText("");
             ui->search->textChanged("");
@@ -599,6 +612,12 @@ void MainWindow::closeEvent(QCloseEvent *event) {
         event->ignore(); // 忽略事件
     }
 }
+
+void MainWindow::resizeEvent(QResizeEvent *event) {
+    QMainWindow::resizeEvent(event);
+    update_drawer_scrim();
+}
+
 
 MainWindow::~MainWindow() {
     delete ui;
@@ -1115,6 +1134,44 @@ void MainWindow::update_connect_button() {
     button->setState(state);
     const bool busy = connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting;
     button->setEnabled(!busy);
+}
+
+void MainWindow::set_drawer_open(bool open, bool animated) {
+    drawer_open = open;
+    if (drawer_anim != nullptr) {
+        drawer_anim->stop();
+    }
+
+    const int target = open ? 280 : 0;
+    if (open) {
+        ui->drawer_container->setVisible(true);
+        if (drawer_scrim) {
+            drawer_scrim->setVisible(true);
+            update_drawer_scrim();
+        }
+    }
+
+    if (animated && drawer_anim_max != nullptr && drawer_anim_min != nullptr) {
+        drawer_anim_max->setStartValue(ui->drawer_container->maximumWidth());
+        drawer_anim_min->setStartValue(ui->drawer_container->minimumWidth());
+        drawer_anim_max->setEndValue(target);
+        drawer_anim_min->setEndValue(target);
+        drawer_anim->start();
+    } else {
+        ui->drawer_container->setMaximumWidth(target);
+        ui->drawer_container->setMinimumWidth(target);
+        if (!open) {
+            ui->drawer_container->setVisible(false);
+            if (drawer_scrim) drawer_scrim->setVisible(false);
+        }
+    }
+}
+
+void MainWindow::update_drawer_scrim() {
+    if (drawer_scrim == nullptr) return;
+    drawer_scrim->setGeometry(ui->centralwidget->rect());
+    drawer_scrim->raise();
+    ui->drawer_container->raise();
 }
 
 // table显示
@@ -1860,6 +1917,10 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
     if (event->type() == QEvent::MouseButtonPress) {
         auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
+        if (obj == drawer_scrim && mouseEvent->button() == Qt::LeftButton) {
+            set_drawer_open(false);
+            return true;
+        }
         if (obj == ui->label_running && mouseEvent->button() == Qt::LeftButton && running != nullptr) {
             speedtest_current();
             return true;

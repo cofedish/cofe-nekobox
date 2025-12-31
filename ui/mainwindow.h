@@ -27,6 +27,10 @@ namespace NekoGui_sys {
     class CoreProcess;
 }
 
+class QParallelAnimationGroup;
+class QPropertyAnimation;
+class QResizeEvent;
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
     class MainWindow;
@@ -167,6 +171,11 @@ private:
     QSemaphore sem_stopped;
     int exit_reason = 0;
     ConnectState connect_state = ConnectState::Disconnected;
+    bool drawer_open = false;
+    QWidget *drawer_scrim = nullptr;
+    QParallelAnimationGroup *drawer_anim = nullptr;
+    QPropertyAnimation *drawer_anim_max = nullptr;
+    QPropertyAnimation *drawer_anim_min = nullptr;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
@@ -182,10 +191,13 @@ private:
 
     void set_connect_state(ConnectState state);
     void update_connect_button();
+    void set_drawer_open(bool open, bool animated = true);
+    void update_drawer_scrim();
 
     void keyPressEvent(QKeyEvent *event) override;
 
     void closeEvent(QCloseEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
     //
 
