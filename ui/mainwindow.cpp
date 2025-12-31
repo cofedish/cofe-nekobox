@@ -151,6 +151,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
     connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
+    connect(ui->home_sub_add, &QPushButton::clicked, this, [=] { submit_home_subscription(); });
+    connect(ui->home_sub_url, &QLineEdit::returnPressed, this, [=] { submit_home_subscription(); });
+    ui->home_sub_url->installEventFilter(this);
     connect(ui->home_connect_button, &QPushButton::clicked, this, [=] {
         if (connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting) {
             return;
@@ -1174,6 +1177,23 @@ void MainWindow::update_drawer_scrim() {
     ui->drawer_container->raise();
 }
 
+void MainWindow::submit_home_subscription() {
+    auto text = ui->home_sub_url->text().trimmed();
+    if (text.isEmpty()) {
+        MessageBoxWarning(tr("Invalid input"), tr("Please paste a subscription URL."));
+        return;
+    }
+
+    QUrl url(text);
+    if (!url.isValid() || url.scheme().isEmpty()) {
+        MessageBoxWarning(tr("Invalid input"), tr("Please paste a valid URL."));
+        return;
+    }
+
+    NekoGui_sub::groupUpdater->AsyncUpdate(text);
+    ui->home_sub_url->clear();
+}
+
 // table显示
 
 // refresh_groups -> show_group -> refresh_proxy_list
@@ -1915,6 +1935,19 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
 // eventFilter
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
+    if (event->type() == QEvent::KeyPress && obj == ui->home_sub_url) {
+        auto keyEvent = dynamic_cast<QKeyEvent *>(event);
+        if (keyEvent != nullptr && keyEvent->matches(QKeySequence::Paste)) {
+            if (ui->home_sub_url->text().trimmed().isEmpty()) {
+                auto clipboardText = QApplication::clipboard()->text().trimmed();
+                if (!clipboardText.isEmpty()) {
+                    ui->home_sub_url->setText(clipboardText);
+                    submit_home_subscription();
+                    return true;
+                }
+            }
+        }
+    }
     if (event->type() == QEvent::MouseButtonPress) {
         auto mouseEvent = dynamic_cast<QMouseEvent *>(event);
         if (obj == drawer_scrim && mouseEvent->button() == Qt::LeftButton) {

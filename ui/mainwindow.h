@@ -193,6 +193,7 @@ private:
     void update_connect_button();
     void set_drawer_open(bool open, bool animated = true);
     void update_drawer_scrim();
+    void submit_home_subscription();
 
     void keyPressEvent(QKeyEvent *event) override;
 
