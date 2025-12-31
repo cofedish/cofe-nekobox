@@ -299,7 +299,7 @@
                </sizepolicy>
               </property>
               <property name="text">
-               <string notr="true">Language</string>
+               <string>Language</string>
               </property>
              </widget>
             </item>
@@ -307,27 +307,27 @@
              <widget class="QComboBox" name="language">
               <item>
                <property name="text">
-                <string notr="true">System</string>
+                <string>System language</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">English</string>
+                <string>English</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">简体中文</string>
+                <string>Chinese (Simplified)</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">فارسی</string>
+                <string>Persian (Iran)</string>
                </property>
               </item>
               <item>
                <property name="text">
-                <string notr="true">Русский</string>
+                <string>Russian</string>
                </property>
               </item>
              </widget>
@@ -594,7 +594,7 @@
              <item row="0" column="0">
               <widget class="QLabel" name="label_3">
                <property name="text">
-                <string notr="true">Loglevel</string>
+                <string>Log level</string>
                </property>
               </widget>
              </item>
@@ -616,7 +616,7 @@
                <item>
                 <widget class="QCheckBox" name="mux_padding">
                  <property name="text">
-                  <string notr="true">Padding</string>
+                  <string>Padding</string>
                  </property>
                 </widget>
                </item>
