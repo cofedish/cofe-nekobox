@@ -79,6 +79,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->drawer_app_name->setText(software_name);
     ui->about_title->setText(software_name);
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(NKR_VERSION));
+    if (ui->homeCenterLayout != nullptr) {
+        ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
+    }
     if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
         wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
     }
