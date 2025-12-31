@@ -251,8 +251,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     drawer_scrim->installEventFilter(this);
     update_drawer_scrim();
 
-    ui->drawer_toggle->setIcon(QIcon(Icon::GetMaterialIcon("menu")));
-    ui->drawer_toggle->setIconSize(QSize(20, 20));
+    ui->drawer_toggle->setIcon(QIcon());
 
     drawer_anim = new QParallelAnimationGroup(this);
     drawer_anim_max = new QPropertyAnimation(ui->drawer_container, "maximumWidth");

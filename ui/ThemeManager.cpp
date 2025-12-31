@@ -120,7 +120,7 @@ namespace {
                    "QListWidget#drawer_nav::item { padding: 10px 12px; border-radius: 10px; color: %6; }"
                    "QListWidget#drawer_nav::item:selected { background: %7; color: %8; }"
                    "QFrame#topbar { background: %9; border: 1px solid %5; border-radius: 12px; padding: 6px; }"
-                   "QToolButton#drawer_toggle { background: %9; border: 1px solid %5; border-radius: 12px; }"
+                   "QToolButton#drawer_toggle { background: %9; border: 1px solid %5; border-radius: 12px; font-size: 18px; font-weight: 600; }"
                    "QToolButton#drawer_toggle:hover { background: %7; }"
                    "QToolButton#drawer_toggle:pressed { background: %13; }"
                    "QLabel#drawer_app_name { font-size: 16px; font-weight: 600; color: %2; }"
