@@ -233,6 +233,8 @@ set(PROJECT_SOURCES
         ui/widget/WaveBackground.h
         ui/widget/ConnectButton.cpp
         ui/widget/ConnectButton.h
+        ui/widget/ToastWidget.cpp
+        ui/widget/ToastWidget.h
 
         res/neko.qrc
         res/theme/feiyangqingyun/qss.qrc

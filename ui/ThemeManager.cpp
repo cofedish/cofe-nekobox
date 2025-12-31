@@ -23,6 +23,12 @@ namespace {
         QString accent_press;
         QString accent_soft;
         QString text_on_accent;
+        QString success;
+        QString success_text;
+        QString warning;
+        QString warning_text;
+        QString error;
+        QString error_text;
         QString font_family;
     };
 
@@ -54,6 +60,12 @@ namespace {
         t.accent_press = "#235E55";
         t.accent_soft = "#D7EAE6";
         t.text_on_accent = "#FFFFFF";
+        t.success = "#2F7D70";
+        t.success_text = "#FFFFFF";
+        t.warning = "#C08B2E";
+        t.warning_text = "#1C1914";
+        t.error = "#C44C4C";
+        t.error_text = "#FFFFFF";
         t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
@@ -71,6 +83,12 @@ namespace {
         t.accent_press = "#2F8F83";
         t.accent_soft = "#1C3A38";
         t.text_on_accent = "#0C1114";
+        t.success = "#4CC2B2";
+        t.success_text = "#0C1114";
+        t.warning = "#D1A14A";
+        t.warning_text = "#0C1114";
+        t.error = "#D16060";
+        t.error_text = "#0C1114";
         t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
@@ -92,6 +110,12 @@ namespace {
         t.accent_press = accent.darker(115).name();
         t.accent_soft = ToRgba(accent, 36);
         t.text_on_accent = pal.color(QPalette::HighlightedText).name();
+        t.success = accent.name();
+        t.success_text = pal.color(QPalette::HighlightedText).name();
+        t.warning = accent.lighter(120).name();
+        t.warning_text = pal.color(QPalette::WindowText).name();
+        t.error = accent.darker(120).name();
+        t.error_text = pal.color(QPalette::HighlightedText).name();
         t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
         return t;
     }
@@ -143,6 +167,15 @@ namespace {
                    "QTabBar::tab { background: %9; border: 1px solid %5; border-radius: 10px; padding: 6px 10px; margin-right: 6px; }"
                    "QTabBar::tab:selected { background: %7; color: %8; }"
                    "QTextBrowser, QTableWidget { background: %9; border: 1px solid %5; border-radius: 12px; }"
+                   "QMenu { background: %4; color: %2; border: 1px solid %5; padding: 4px; }"
+                   "QMenu::item { padding: 6px 16px; border-radius: 6px; }"
+                   "QMenu::item:selected { background: %7; color: %8; }"
+                   "QMenu::separator { height: 1px; background: %5; margin: 4px 8px; }"
+                   "QFrame#toast_widget { background: %4; border: 1px solid %5; border-radius: 10px; }"
+                   "QFrame#toast_widget QLabel { color: %2; }"
+                   "QFrame#toast_widget[level=\"success\"] { background: %15; color: %16; border-color: %15; }"
+                   "QFrame#toast_widget[level=\"warning\"] { background: %17; color: %18; border-color: %17; }"
+                   "QFrame#toast_widget[level=\"error\"] { background: %19; color: %20; border-color: %19; }"
                    "QToolButton#drawer_quick_logs, QToolButton#drawer_quick_settings, "
                    "QToolButton#home_select_server, QToolButton#home_select_profile, QToolButton#home_open_logs {"
                    "background: %9; border: 1px solid %5; border-radius: 10px; padding: 6px 12px; min-height: 36px; }"
@@ -169,6 +202,12 @@ namespace {
         qss = qss.arg(t.text_on_accent);
         qss = qss.arg(t.accent_hover);
         qss = qss.arg(t.accent_press);
+        qss = qss.arg(t.success);
+        qss = qss.arg(t.success_text);
+        qss = qss.arg(t.warning);
+        qss = qss.arg(t.warning_text);
+        qss = qss.arg(t.error);
+        qss = qss.arg(t.error_text);
         return qss;
     }
 } // namespace

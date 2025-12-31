@@ -1507,6 +1507,22 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Импортирован(ы) %1 профиль(ей)</translation>
     </message>
     <message>
+        <source>Added: %1</source>
+        <translation>Добавлено: %1</translation>
+    </message>
+    <message>
+        <source>No new items</source>
+        <translation>Нет новых элементов</translation>
+    </message>
+    <message>
+        <source>Adding...</source>
+        <translation>Добавление...</translation>
+    </message>
+    <message>
+        <source>Clipboard is empty.</source>
+        <translation>Буфер обмена пуст.</translation>
+    </message>
+    <message>
         <source>Please run CofeBox as admin</source>
         <translation>Пожалуйста, запустите CofeBox с правами администратора</translation>
     </message>

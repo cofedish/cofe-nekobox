@@ -30,6 +30,8 @@ namespace NekoGui_sys {
 class QParallelAnimationGroup;
 class QPropertyAnimation;
 class QResizeEvent;
+class QTimer;
+class ToastWidget;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -176,6 +178,10 @@ private:
     QParallelAnimationGroup *drawer_anim = nullptr;
     QPropertyAnimation *drawer_anim_max = nullptr;
     QPropertyAnimation *drawer_anim_min = nullptr;
+    ToastWidget *toast = nullptr;
+    QTimer *add_debounce_timer = nullptr;
+    bool add_in_progress = false;
+    int add_base_count = 0;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
@@ -194,6 +200,12 @@ private:
     void set_drawer_open(bool open, bool animated = true);
     void update_drawer_scrim();
     void submit_home_subscription();
+    void show_toast(const QString &text, int durationMs = 2500);
+    void show_toast_success(const QString &text);
+    void show_toast_error(const QString &text);
+    bool can_start_add() const;
+    void set_add_controls_enabled(bool enabled);
+    void finish_add_operation();
 
     void keyPressEvent(QKeyEvent *event) override;
 

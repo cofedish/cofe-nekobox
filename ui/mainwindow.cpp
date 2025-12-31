@@ -41,6 +41,7 @@
 #endif
 
 #include <QClipboard>
+#include <QAbstractButton>
 #include <QIcon>
 #include <QLabel>
 #include <QListWidgetItem>
@@ -57,6 +58,8 @@
 #include <QMessageBox>
 #include <QDir>
 #include <QFileInfo>
+
+#include "ui/widget/ToastWidget.h"
 
 void UI_InitMainWindow() {
     mainwindow = new MainWindow;
@@ -77,6 +80,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // Setup misc UI
     themeManager->ApplyTheme(NekoGui::dataStore->theme);
     ui->setupUi(this);
+    toast = new ToastWidget(ui->centralwidget);
+    toast->setAnchorRect(ui->centralwidget->rect());
+    add_debounce_timer = new QTimer(this);
+    add_debounce_timer->setSingleShot(true);
     ui->drawer_app_name->setText(software_name);
     ui->about_title->setText(software_name);
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
@@ -102,6 +109,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     });
     ui->label_running->installEventFilter(this);
     ui->label_inbound->installEventFilter(this);
+    ui->proxyListTable->installEventFilter(this);
     //
     RegisterHotkey(false);
     //
@@ -622,6 +630,9 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
     update_drawer_scrim();
+    if (toast != nullptr) {
+        toast->setAnchorRect(ui->centralwidget->rect());
+    }
 }
 
 
@@ -1186,20 +1197,85 @@ void MainWindow::update_drawer_scrim() {
 }
 
 void MainWindow::submit_home_subscription() {
+    if (!can_start_add()) return;
     auto text = ui->home_sub_url->text().trimmed();
     if (text.isEmpty()) {
-        MessageBoxWarning(tr("Invalid input"), tr("Please paste a subscription URL."));
+        show_toast_error(tr("Please paste a subscription URL."));
         return;
     }
 
     QUrl url(text);
     if (!url.isValid() || url.scheme().isEmpty()) {
-        MessageBoxWarning(tr("Invalid input"), tr("Please paste a valid URL."));
+        show_toast_error(tr("Please paste a valid URL."));
         return;
     }
 
-    NekoGui_sub::groupUpdater->AsyncUpdate(text);
+    add_in_progress = true;
+    add_base_count = NekoGui::profileManager->profiles.count();
+    set_add_controls_enabled(false);
+    if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
+    NekoGui_sub::groupUpdater->AsyncUpdate(text, -1, [=] {
+        runOnUiThread([=] { finish_add_operation(); });
+    });
     ui->home_sub_url->clear();
+}
+
+void MainWindow::show_toast(const QString &text, int durationMs) {
+    if (toast == nullptr) return;
+    toast->setAnchorRect(ui->centralwidget->rect());
+    toast->showMessage(text, ToastWidget::Level::Info, durationMs);
+}
+
+void MainWindow::show_toast_success(const QString &text) {
+    if (toast == nullptr) return;
+    toast->setAnchorRect(ui->centralwidget->rect());
+    toast->showMessage(text, ToastWidget::Level::Success, 2500);
+}
+
+void MainWindow::show_toast_error(const QString &text) {
+    if (toast == nullptr) return;
+    toast->setAnchorRect(ui->centralwidget->rect());
+    toast->showMessage(text, ToastWidget::Level::Error, 3000);
+}
+
+bool MainWindow::can_start_add() const {
+    if (add_in_progress) return false;
+    if (add_debounce_timer != nullptr && add_debounce_timer->isActive()) return false;
+    return true;
+}
+
+void MainWindow::set_add_controls_enabled(bool enabled) {
+    const auto busyText = tr("Adding...");
+    const auto updateButton = [&](QAbstractButton *button) {
+        if (button == nullptr) return;
+        if (!enabled) {
+            if (!button->property("text_backup").isValid()) {
+                button->setProperty("text_backup", button->text());
+            }
+            button->setText(busyText);
+        } else if (button->property("text_backup").isValid()) {
+            button->setText(button->property("text_backup").toString());
+            button->setProperty("text_backup", {});
+        }
+        button->setEnabled(enabled);
+    };
+
+    updateButton(ui->home_sub_add);
+    if (ui->menu_add_from_clipboard != nullptr) ui->menu_add_from_clipboard->setEnabled(enabled);
+}
+
+void MainWindow::finish_add_operation() {
+    if (!add_in_progress) return;
+    add_in_progress = false;
+    set_add_controls_enabled(true);
+
+    const int afterCount = NekoGui::profileManager->profiles.count();
+    const int added = afterCount - add_base_count;
+    if (added > 0) {
+        show_toast_success(tr("Added: %1").arg(added));
+    } else {
+        show_toast(tr("No new items"));
+    }
 }
 
 // table显示
@@ -1423,8 +1499,19 @@ void MainWindow::on_menu_add_from_input_triggered() {
 }
 
 void MainWindow::on_menu_add_from_clipboard_triggered() {
-    auto clipboard = QApplication::clipboard()->text();
-    NekoGui_sub::groupUpdater->AsyncUpdate(clipboard);
+    if (!can_start_add()) return;
+    auto clipboard = QApplication::clipboard()->text().trimmed();
+    if (clipboard.isEmpty()) {
+        show_toast_error(tr("Clipboard is empty."));
+        return;
+    }
+    add_in_progress = true;
+    add_base_count = NekoGui::profileManager->profiles.count();
+    set_add_controls_enabled(false);
+    if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
+    NekoGui_sub::groupUpdater->AsyncUpdate(clipboard, -1, [=] {
+        runOnUiThread([=] { finish_add_operation(); });
+    });
 }
 
 void MainWindow::on_menu_clone_triggered() {
@@ -1954,6 +2041,13 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event) {
                     return true;
                 }
             }
+        }
+    }
+    if (event->type() == QEvent::KeyPress && obj == ui->proxyListTable) {
+        auto keyEvent = dynamic_cast<QKeyEvent *>(event);
+        if (keyEvent != nullptr && keyEvent->key() == Qt::Key_Delete) {
+            on_menu_delete_triggered();
+            return true;
         }
     }
     if (event->type() == QEvent::MouseButtonPress) {
