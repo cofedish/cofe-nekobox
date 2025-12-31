@@ -23,10 +23,10 @@ cat >nekoray/DEBIAN/postinst <<-EOF
 if [ ! -s /usr/share/applications/nekoray.desktop ]; then
     cat >/usr/share/applications/nekoray.desktop<<-END
 [Desktop Entry]
-Name=nekoray
+Name=CofeBox
 Comment=Qt based cross-platform GUI proxy configuration manager (backend: sing-box)
 Exec=sh -c "PATH=/opt/nekoray:\$PATH /opt/nekoray/nekobox -appdata"
-Icon=/opt/nekoray/nekobox.png
+Icon=/opt/nekoray/cofebox.png
 Terminal=false
 Type=Application
 Categories=Network;Application;

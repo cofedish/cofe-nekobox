@@ -10,9 +10,9 @@ rm nekobox.AppDir/launcher
 
 cat >nekobox.AppDir/nekobox.desktop <<-EOF
 [Desktop Entry]
-Name=nekobox
+Name=CofeBox
 Exec=echo "nekobox started"
-Icon=nekobox
+Icon=cofebox
 Type=Application
 Categories=Network
 EOF
