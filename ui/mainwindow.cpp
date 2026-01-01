@@ -53,10 +53,12 @@
 #include <QThread>
 #include <QTimer>
 #include <QSignalBlocker>
-#include <QButtonGroup>
+#include <QActionGroup>
+#include <QMenu>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QMessageBox>
+#include <QPainter>
 #include <QDir>
 #include <QFileInfo>
 
@@ -92,6 +94,47 @@ namespace {
         if (key == "dark") return 2;
         if (key == "lucifer") return 3;
         return 0;
+    }
+
+    QIcon BuildThemeSwatchIcon(const ThemeOption &option) {
+        const int dot = 10;
+        const int gap = 6;
+        const int count = 4;
+        const int width = count * dot + (count - 1) * gap;
+        const int height = dot;
+
+        QPixmap pixmap(width, height);
+        pixmap.fill(Qt::transparent);
+
+        QPainter painter(&pixmap);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+
+        QColor border = option.text;
+        border.setAlpha(60);
+        const QList<QColor> colors = {option.window, option.surface, option.accent, option.text};
+
+        int x = 0;
+        for (const auto &color : colors) {
+            painter.setPen(border);
+            painter.setBrush(color);
+            painter.drawEllipse(QRectF(x, 0, dot, dot));
+            x += dot + gap;
+        }
+        return QIcon(pixmap);
+    }
+
+    QIcon BuildThemeButtonIcon(const ThemeOption &option) {
+        const int size = 12;
+        QPixmap pixmap(size, size);
+        pixmap.fill(Qt::transparent);
+        QPainter painter(&pixmap);
+        painter.setRenderHint(QPainter::Antialiasing, true);
+        QColor border = option.text;
+        border.setAlpha(70);
+        painter.setPen(border);
+        painter.setBrush(option.accent);
+        painter.drawEllipse(QRectF(1, 1, size - 2, size - 2));
+        return QIcon(pixmap);
     }
 } // namespace
 
@@ -162,19 +205,28 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // drawer + navigation
     ui->menubar->setVisible(false);
     ui->drawer_nav->setCurrentRow(0);
-    drawer_theme_group = new QButtonGroup(this);
-    drawer_theme_group->setExclusive(true);
-    drawer_theme_group->addButton(ui->drawer_theme_system, 0);
-    drawer_theme_group->addButton(ui->drawer_theme_light, 1);
-    drawer_theme_group->addButton(ui->drawer_theme_dark, 2);
-    drawer_theme_group->addButton(ui->drawer_theme_lucifer, 3);
+    drawer_theme_menu = new QMenu(this);
+    drawer_theme_menu->setObjectName("drawer_theme_menu");
+    drawer_theme_menu->setIconSize(QSize(64, 12));
+    drawer_theme_actions = new QActionGroup(this);
+    drawer_theme_actions->setExclusive(true);
+    for (const auto &option : themeManager->AvailableThemes()) {
+        auto action = new QAction(option.displayName, drawer_theme_actions);
+        action->setCheckable(true);
+        action->setData(option.id);
+        action->setIcon(BuildThemeSwatchIcon(option));
+        drawer_theme_menu->addAction(action);
+    }
+    ui->drawer_theme_button->setMenu(drawer_theme_menu);
+    ui->drawer_theme_button->setPopupMode(QToolButton::MenuButtonPopup);
+    ui->drawer_theme_button->setText(tr("Theme"));
+    connect(ui->drawer_theme_button, &QToolButton::clicked, ui->drawer_theme_button, &QToolButton::showMenu);
     sync_drawer_theme(NekoGui::dataStore->theme);
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
         sync_drawer_theme(themeKey);
     });
-    connect(drawer_theme_group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, [=](QAbstractButton *button) {
-        const int index = drawer_theme_group->id(button);
-        const auto themeKey = ThemeKeyFromIndex(index);
+    connect(drawer_theme_actions, &QActionGroup::triggered, this, [=](QAction *action) {
+        const auto themeKey = action->data().toString();
         themeManager->ApplyTheme(themeKey);
         NekoGui::dataStore->theme = themeKey;
         NekoGui::dataStore->Save();
@@ -674,12 +726,16 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void MainWindow::sync_drawer_theme(const QString &themeKey) {
-    if (drawer_theme_group == nullptr) return;
-    const int index = ThemeIndexFromKey(themeKey);
-    if (auto button = drawer_theme_group->button(index)) {
-        QSignalBlocker blocker(button);
-        button->setChecked(true);
+    if (drawer_theme_actions == nullptr || ui->drawer_theme_button == nullptr) return;
+    const auto normalized = NormalizeThemeKey(themeKey);
+    for (auto action : drawer_theme_actions->actions()) {
+        const bool isActive = action->data().toString() == normalized;
+        QSignalBlocker blocker(action);
+        action->setChecked(isActive);
+        action->setIcon(BuildThemeSwatchIcon(themeManager->ThemeOptionFor(action->data().toString())));
     }
+    const auto option = themeManager->ThemeOptionFor(normalized);
+    ui->drawer_theme_button->setIcon(BuildThemeButtonIcon(option));
 }
 
 MainWindow::~MainWindow() {

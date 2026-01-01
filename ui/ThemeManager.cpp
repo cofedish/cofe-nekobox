@@ -3,6 +3,7 @@
 #include <QStyleFactory>
 #include <QPalette>
 #include <QColor>
+#include <QCoreApplication>
 
 #include "ThemeManager.hpp"
 
@@ -194,17 +195,22 @@ namespace {
                    "QMenu { background: %4; color: %2; border: 1px solid %5; padding: 4px; }"
                    "QMenu::item { padding: 6px 16px; border-radius: 6px; }"
                    "QMenu::item:selected { background: %11; color: %12; }"
+                   "QMenu::item:checked { background: %7; }"
                    "QMenu::item:disabled { color: %10; }"
                    "QMenu::separator { height: 1px; background: %5; margin: 4px 8px; }"
+                   "QMenu#drawer_theme_menu { border-radius: 12px; padding: 6px; }"
+                   "QMenu#drawer_theme_menu::item { padding: 8px 12px; border-radius: 8px; }"
+                   "QMenu#drawer_theme_menu::item:selected { background: %7; color: %2; }"
+                   "QMenu#drawer_theme_menu::item:checked { background: %7; color: %2; }"
                    "QFrame#toast_widget { background: %4; border: 1px solid %5; border-radius: 10px; }"
                    "QFrame#toast_widget QLabel { color: %2; }"
                    "QFrame#toast_widget[level=\"success\"] { background: %15; color: %16; border-color: %15; }"
                    "QFrame#toast_widget[level=\"warning\"] { background: %17; color: %18; border-color: %17; }"
                    "QFrame#toast_widget[level=\"error\"] { background: %19; color: %20; border-color: %19; }"
-                   "QWidget#drawer_theme_buttons QToolButton { background: %9; border: 1px solid %5; border-radius: 10px; padding: 6px 10px; min-height: 32px; font-size: 12px; }"
-                   "QWidget#drawer_theme_buttons QToolButton:hover { background: %7; }"
-                   "QWidget#drawer_theme_buttons QToolButton:pressed { background: %13; }"
-                   "QWidget#drawer_theme_buttons QToolButton:checked { background: %11; color: %12; border-color: %11; }"
+                   "QToolButton#drawer_theme_button { background: %9; border: 1px solid %5; border-radius: 12px; padding: 8px 12px; min-height: 36px; font-size: 13px; font-weight: 600; }"
+                   "QToolButton#drawer_theme_button:hover { background: %7; }"
+                   "QToolButton#drawer_theme_button:pressed { background: %13; }"
+                   "QToolButton#drawer_theme_button::menu-indicator { subcontrol-origin: padding; subcontrol-position: right center; width: 12px; }"
                    "QToolButton#drawer_quick_logs, QToolButton#drawer_quick_settings, "
                    "QToolButton#home_select_server, QToolButton#home_select_profile, QToolButton#home_open_logs, "
                    "QToolButton#servers_add_button, QToolButton#servers_add_paste {"
@@ -342,4 +348,47 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     } else {
         qApp->setStyleSheet(qApp->styleSheet().append("\n").append(nekoray_css));
     }
+}
+
+ThemeOption ThemeManager::ThemeOptionFor(const QString &theme) const {
+    const auto normalized = NormalizeThemeKey(theme);
+    ThemeTokens tokens = TokensLight();
+    if (normalized == "system") {
+        auto palette = qApp->style() ? qApp->style()->standardPalette() : qApp->palette();
+        tokens = TokensFromPalette(palette);
+    } else if (normalized == "dark") {
+        tokens = TokensDark();
+    } else if (normalized == "lucifer") {
+        tokens = TokensLucifer();
+    } else {
+        tokens = TokensLight();
+    }
+
+    ThemeOption option;
+    option.id = normalized;
+    if (normalized == "system") {
+        option.displayName = QCoreApplication::translate("MainWindow", "System");
+    } else if (normalized == "light") {
+        option.displayName = QCoreApplication::translate("MainWindow", "Light");
+    } else if (normalized == "dark") {
+        option.displayName = QCoreApplication::translate("MainWindow", "Dark");
+    } else if (normalized == "lucifer") {
+        option.displayName = QCoreApplication::translate("MainWindow", "Lucifer");
+    } else {
+        option.displayName = normalized;
+    }
+    option.window = QColor(tokens.window);
+    option.surface = QColor(tokens.surface);
+    option.accent = QColor(tokens.accent);
+    option.text = QColor(tokens.text);
+    return option;
+}
+
+QVector<ThemeOption> ThemeManager::AvailableThemes() const {
+    return {
+        ThemeOptionFor("system"),
+        ThemeOptionFor("light"),
+        ThemeOptionFor("dark"),
+        ThemeOptionFor("lucifer")
+    };
 }

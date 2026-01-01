@@ -31,7 +31,8 @@ class QParallelAnimationGroup;
 class QPropertyAnimation;
 class QResizeEvent;
 class QTimer;
-class QButtonGroup;
+class QMenu;
+class QActionGroup;
 class ToastWidget;
 
 QT_BEGIN_NAMESPACE
@@ -179,7 +180,8 @@ private:
     QParallelAnimationGroup *drawer_anim = nullptr;
     QPropertyAnimation *drawer_anim_max = nullptr;
     QPropertyAnimation *drawer_anim_min = nullptr;
-    QButtonGroup *drawer_theme_group = nullptr;
+    QMenu *drawer_theme_menu = nullptr;
+    QActionGroup *drawer_theme_actions = nullptr;
     ToastWidget *toast = nullptr;
     QTimer *add_debounce_timer = nullptr;
     bool add_in_progress = false;
