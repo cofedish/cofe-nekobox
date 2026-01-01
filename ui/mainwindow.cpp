@@ -149,7 +149,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->drawer_app_name->setText(software_name);
     ui->about_title->setText(software_name);
     if (ui->about_logo != nullptr) {
-        const int logoSize = 180;
+        const int logoSize = 200;
         QPixmap logo(":/neko/cofebox.png");
         ui->about_logo->setPixmap(logo.scaled(logoSize, logoSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }

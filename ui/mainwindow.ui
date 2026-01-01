@@ -1372,6 +1372,12 @@ Direct: -</string>
           </property>
           <item>
            <widget class="QLabel" name="about_logo">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="minimumSize">
              <size>
               <width>160</width>
@@ -1380,8 +1386,8 @@ Direct: -</string>
             </property>
             <property name="maximumSize">
              <size>
-              <width>220</width>
-              <height>220</height>
+              <width>260</width>
+              <height>260</height>
              </size>
             </property>
             <property name="alignment">
