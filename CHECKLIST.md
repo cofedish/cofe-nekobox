@@ -16,3 +16,7 @@
 - [x] Settings: RU, нет английских кнопок на странице настроек - OK (code).
 - [x] Sidebar: пункты кликабельные визуально, активный пункт выделен - OK (code).
 - [x] Sidebar theme: новый селектор аккуратный и синхронизирован - OK (code).
+- [x] Settings: английские кнопки/лейблы отсутствуют (RU) - OK (code).
+- [x] Theme picker: кнопка + popup со swatches и названиями - OK (code).
+- [x] Dropdowns: combobox/menu имеют рамки и hover/selected - OK (code).
+- [x] About: логотип отображается, инструкции по замене есть - OK (code).

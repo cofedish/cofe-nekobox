@@ -30,6 +30,11 @@
 - Логика в `ui/Icon.cpp`: берётся `:/neko/cofebox.png`, поверх рисуется статус.
 - Для замены обновите `res/public/cofebox.png` и `res/neko.qrc`, затем пересоберите.
 
+## Логотип на странице «О программе»
+- Используется тот же ресурс `:/neko/cofebox.png`.
+- Отображение настраивается в `ui/mainwindow.ui` (виджет `about_logo`) и в `ui/mainwindow.cpp`.
+- Рекомендуемые размеры исходника: 256x256 или 512x512 PNG.
+
 ## Иконки меню/кнопок
 - SVG находятся в `res/icon/*.svg` и `res/icon/material/*.svg`.
 - Используются через `Icon::GetMaterialIcon("имя")` в `ui/Icon.cpp`.
