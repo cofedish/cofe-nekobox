@@ -59,7 +59,7 @@
       <property name="frameShape">
        <enum>QFrame::NoFrame</enum>
       </property>
-      <layout class="QVBoxLayout" name="drawerLayout">
+      <layout class="QVBoxLayout" name="drawerLayout" stretch="0,1,0,0">
        <property name="leftMargin">
         <number>12</number>
        </property>
@@ -193,22 +193,6 @@
           </property>
          </item>
         </widget>
-       </item>
-       <item>
-       <spacer name="drawer_spacer">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-        <property name="sizeType">
-         <enum>QSizePolicy::Expanding</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QWidget" name="drawer_quick" native="true">
