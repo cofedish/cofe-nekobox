@@ -3,7 +3,7 @@
 ### git clone 源码
 
 ```
-git clone https://github.com/MatsuriDayo/nekoray.git --recursive
+git clone https://github.com/cofedish/cofe-nekobox.git --recursive
 ```
 
 ### 安装 Visual Studio
@@ -22,7 +22,7 @@ git clone https://github.com/MatsuriDayo/nekoray.git --recursive
 
 #### Release 编译用到的 Qt 包下载 (MSVC2019 x86_64)
 
-https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
+https://github.com/cofedish/cofe-nekobox_qt_runtime/releases/download/20220503/Qt6.5.0-Windows-x86_64-VS2022-17.5.5-20230507.7z
 
 #### 官方签名版 Qt 5.15.2 （可选，已知有内存泄漏的BUG）
 
