@@ -9,6 +9,7 @@
 #include <QLocalServer>
 #include <QThread>
 #include <QFontDatabase>
+#include <QDebug>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoGui.hpp"
@@ -42,12 +43,18 @@ void loadTranslate(const QString& locale) {
     trans_qt = new QTranslator;
     QLocale::setDefault(QLocale(locale));
     //
-    if (trans->load(":/translations/" + locale + ".qm")) {
+    const auto appQmPath = QString(":/translations/%1.qm").arg(locale);
+    const bool appLoaded = trans->load(appQmPath);
+    if (appLoaded) {
         QCoreApplication::installTranslator(trans);
     }
-    if (trans_qt->load(QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm")) {
+    const auto qtQmPath = QApplication::applicationDirPath() + "/qtbase_" + locale + ".qm";
+    const bool qtLoaded = trans_qt->load(qtQmPath);
+    if (qtLoaded) {
         QCoreApplication::installTranslator(trans_qt);
     }
+    qDebug() << "[i18n] locale=" << locale << "app=" << appLoaded << appQmPath
+             << "qt=" << qtLoaded << qtQmPath;
 }
 
 #define LOCAL_SERVER_PREFIX "nekoraylocalserver-"
