@@ -124,7 +124,7 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
 
     QFont font = this->font();
     font.setBold(true);
-    font.setPointSizeF(qMax(10.0, size * 0.11));
+    font.setPointSizeF(qMax(9.0, size * 0.09));
     painter.setFont(font);
     painter.setPen(textColor);
     painter.drawText(circleRect, Qt::AlignCenter, stateText());
