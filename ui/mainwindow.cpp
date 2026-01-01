@@ -212,7 +212,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->drawer_nav->setCurrentRow(0);
     drawer_theme_menu = new QMenu(this);
     drawer_theme_menu->setObjectName("drawer_theme_menu");
-    drawer_theme_menu->setIconSize(QSize(64, 12));
     drawer_theme_actions = new QActionGroup(this);
     drawer_theme_actions->setExclusive(true);
     for (const auto &option : themeManager->AvailableThemes()) {

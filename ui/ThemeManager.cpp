@@ -198,7 +198,7 @@ namespace {
                    "QMenu::item:checked { background: %7; }"
                    "QMenu::item:disabled { color: %10; }"
                    "QMenu::separator { height: 1px; background: %5; margin: 4px 8px; }"
-                   "QMenu#drawer_theme_menu { border-radius: 12px; padding: 6px; }"
+                   "QMenu#drawer_theme_menu { border-radius: 12px; padding: 6px; icon-size: 64px 12px; }"
                    "QMenu#drawer_theme_menu::item { padding: 8px 12px; border-radius: 8px; }"
                    "QMenu#drawer_theme_menu::item:selected { background: %7; color: %2; }"
                    "QMenu#drawer_theme_menu::item:checked { background: %7; color: %2; }"
