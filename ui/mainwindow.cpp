@@ -1223,7 +1223,7 @@ void MainWindow::submit_home_subscription() {
     }
 
     add_in_progress = true;
-    add_base_count = NekoGui::profileManager->profiles.count();
+    add_base_count = static_cast<int>(NekoGui::profileManager->profiles.size());
     set_add_controls_enabled(false);
     if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
     NekoGui_sub::groupUpdater->AsyncUpdate(text, -1, [=] {
@@ -1241,7 +1241,7 @@ void MainWindow::submit_servers_subscription() {
     }
 
     add_in_progress = true;
-    add_base_count = NekoGui::profileManager->profiles.count();
+    add_base_count = static_cast<int>(NekoGui::profileManager->profiles.size());
     set_add_controls_enabled(false);
     if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
     NekoGui_sub::groupUpdater->AsyncUpdate(text, -1, [=] {
@@ -1301,7 +1301,7 @@ void MainWindow::finish_add_operation() {
     add_in_progress = false;
     set_add_controls_enabled(true);
 
-    const int afterCount = NekoGui::profileManager->profiles.count();
+    const int afterCount = static_cast<int>(NekoGui::profileManager->profiles.size());
     const int added = afterCount - add_base_count;
     if (added > 0) {
         show_toast_success(tr("Added: %1").arg(added));
@@ -1538,7 +1538,7 @@ void MainWindow::on_menu_add_from_clipboard_triggered() {
         return;
     }
     add_in_progress = true;
-    add_base_count = NekoGui::profileManager->profiles.count();
+    add_base_count = static_cast<int>(NekoGui::profileManager->profiles.size());
     set_add_controls_enabled(false);
     if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
     NekoGui_sub::groupUpdater->AsyncUpdate(clipboard, -1, [=] {
