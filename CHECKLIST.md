@@ -28,3 +28,6 @@
 - [x] Theme: кнопка открывает popover со swatches - OK (code).
 - [x] About: логотип по центру и крупнее - OK (code).
 - [x] Rules: RU без английских строк - OK (code).
+- [x] TUN/Proxy: чекбоксы используют цвета темы - OK (code).
+- [x] Sidebar: нет дублей кнопок Логи/Настройки - OK (code).
+- [x] Theme button: текст+стрелка центрированы, размер компактный - OK (code).
