@@ -24,3 +24,7 @@
 - [x] Theme picker: кружки-пироги, tooltip и ровный active ring - OK (code).
 - [x] Theme picker: без синего фокуса/артефактов - OK (code).
 - [x] Profiles: RU, нет английских кнопок - OK (code).
+- [x] Sidebar: неактивные пункты выглядят как кликабельные элементы - OK (code).
+- [x] Theme: кнопка открывает popover со swatches - OK (code).
+- [x] About: логотип по центру и крупнее - OK (code).
+- [x] Rules: RU без английских строк - OK (code).
