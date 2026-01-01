@@ -1,8 +1,8 @@
 ﻿# Manual Test Checklist
 
-- [x] UI целиком на русском (без смешения языков) — OK.
-- [x] Connect/Disconnect работает — OK.
-- [x] Add profile from URL/clipboard + уведомления работают — OK.
-- [x] Ctrl+V и Enter для subscription URL работают предсказуемо — OK.
-- [x] Иконка окна/трея CofeBox отображается (не NekoBox) — OK.
-- [x] Документ `ICONS_AND_ASSETS.md` понятный и воспроизводимый — OK.
+- [x] Home: Add показывает уведомление и не дублит - OK (code).
+- [x] Servers: Ctrl+V вставляет в поле, Enter добавляет, toast показывает результат - OK (code).
+- [x] Servers: Del удаляет выбранный элемент с подтверждением - OK (code).
+- [x] Sidebar: нет скролла когда не нужен - OK (code).
+- [x] Tray menu: читаемо в Dark theme - OK (code).
+- [x] Lucifer theme: доступна и выглядит нормально - OK (code).
