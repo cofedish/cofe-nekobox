@@ -2,6 +2,7 @@
 
 #include <QHBoxLayout>
 #include <QStyle>
+#include <QVariant>
 
 ToastWidget::ToastWidget(QWidget *parent)
     : QFrame(parent) {
@@ -43,7 +44,7 @@ void ToastWidget::updateStyle(Level level) {
     if (level == Level::Success) levelName = "success";
     if (level == Level::Warning) levelName = "warning";
     if (level == Level::Error) levelName = "error";
-    setProperty("level", levelName);
+    setProperty("level", QVariant(levelName));
     style()->unpolish(this);
     style()->polish(this);
 }
