@@ -8,6 +8,30 @@
         <translation>Основные настройки</translation>
     </message>
     <message>
+        <source>Basic settings</source>
+        <translation>Основные настройки</translation>
+    </message>
+    <message>
+        <source>Tun settings</source>
+        <translation>Настройки TUN</translation>
+    </message>
+    <message>
+        <source>Hotkey settings</source>
+        <translation>Настройки горячих клавиш</translation>
+    </message>
+    <message>
+        <source>Open config folder</source>
+        <translation>Открыть папку конфигурации</translation>
+    </message>
+    <message>
+        <source>Restart proxy</source>
+        <translation>Перезапустить прокси</translation>
+    </message>
+    <message>
+        <source>Restart program</source>
+        <translation>Перезапустить программу</translation>
+    </message>
+    <message>
         <source>Common</source>
         <translation>Общие</translation>
     </message>

@@ -53,6 +53,7 @@
 #include <QThread>
 #include <QTimer>
 #include <QSignalBlocker>
+#include <QButtonGroup>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
 #include <QMessageBox>
@@ -161,11 +162,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // drawer + navigation
     ui->menubar->setVisible(false);
     ui->drawer_nav->setCurrentRow(0);
+    drawer_theme_group = new QButtonGroup(this);
+    drawer_theme_group->setExclusive(true);
+    drawer_theme_group->addButton(ui->drawer_theme_system, 0);
+    drawer_theme_group->addButton(ui->drawer_theme_light, 1);
+    drawer_theme_group->addButton(ui->drawer_theme_dark, 2);
+    drawer_theme_group->addButton(ui->drawer_theme_lucifer, 3);
     sync_drawer_theme(NekoGui::dataStore->theme);
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
         sync_drawer_theme(themeKey);
     });
-    connect(ui->drawer_theme, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
+    connect(drawer_theme_group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, [=](int index) {
         const auto themeKey = ThemeKeyFromIndex(index);
         themeManager->ApplyTheme(themeKey);
         NekoGui::dataStore->theme = themeKey;
@@ -666,9 +673,12 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void MainWindow::sync_drawer_theme(const QString &themeKey) {
+    if (drawer_theme_group == nullptr) return;
     const int index = ThemeIndexFromKey(themeKey);
-    QSignalBlocker blocker(ui->drawer_theme);
-    ui->drawer_theme->setCurrentIndex(index);
+    if (auto button = drawer_theme_group->button(index)) {
+        QSignalBlocker blocker(button);
+        button->setChecked(true);
+    }
 }
 
 MainWindow::~MainWindow() {
