@@ -93,6 +93,29 @@ namespace {
         return t;
     }
 
+    ThemeTokens TokensLucifer() {
+        ThemeTokens t;
+        t.window = "#0B0B0E";
+        t.surface = "#141418";
+        t.surface_alt = "#1B1B21";
+        t.border = "#2A242C";
+        t.text = "#F1E9EA";
+        t.text_muted = "#B8A4A8";
+        t.accent = "#8B1E3F";
+        t.accent_hover = "#9E2447";
+        t.accent_press = "#741B35";
+        t.accent_soft = "#2A0F18";
+        t.text_on_accent = "#FCEFF1";
+        t.success = "#3E7C5A";
+        t.success_text = "#F1E9EA";
+        t.warning = "#B27E3C";
+        t.warning_text = "#0B0B0E";
+        t.error = "#B04646";
+        t.error_text = "#FCEFF1";
+        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
+        return t;
+    }
+
     ThemeTokens TokensFromPalette(const QPalette &pal) {
         ThemeTokens t;
         auto window = pal.color(QPalette::Window);
@@ -228,7 +251,7 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     bool handled = false;
     QString base_qss;
 
-    if (normalized == "system" || normalized == "light" || normalized == "dark") {
+    if (normalized == "system" || normalized == "light" || normalized == "dark" || normalized == "lucifer") {
         auto system_style = QStyleFactory::create(this->system_style_name);
         if (system_style != nullptr) {
             qApp->setStyle(system_style);
@@ -238,6 +261,9 @@ void ThemeManager::ApplyTheme(const QString &theme) {
             auto palette = system_style != nullptr ? system_style->standardPalette() : qApp->palette();
             tokens = TokensFromPalette(palette);
             qApp->setPalette(palette);
+        } else if (normalized == "lucifer") {
+            tokens = TokensLucifer();
+            qApp->setPalette(BuildPalette(tokens));
         } else if (normalized == "dark") {
             tokens = TokensDark();
             qApp->setPalette(BuildPalette(tokens));

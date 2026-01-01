@@ -139,6 +139,7 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
             QString themeKey = "system";
             if (index == 1) themeKey = "light";
             if (index == 2) themeKey = "dark";
+            if (index == 3) themeKey = "lucifer";
             themeManager->ApplyTheme(themeKey);
             NekoGui::dataStore->theme = themeKey;
         } else {

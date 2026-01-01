@@ -284,6 +284,11 @@
               <string>Dark</string>
              </property>
             </item>
+            <item>
+             <property name="text">
+              <string>Lucifer</string>
+             </property>
+            </item>
            </widget>
           </item>
          </layout>

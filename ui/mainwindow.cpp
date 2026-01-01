@@ -138,6 +138,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         int index = 0;
         if (themeValue == "light") index = 1;
         if (themeValue == "dark") index = 2;
+        if (themeValue == "lucifer") index = 3;
         QSignalBlocker blocker(ui->drawer_theme);
         ui->drawer_theme->setCurrentIndex(index);
     };
@@ -146,6 +147,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         QString themeKey = "system";
         if (index == 1) themeKey = "light";
         if (index == 2) themeKey = "dark";
+        if (index == 3) themeKey = "lucifer";
         themeManager->ApplyTheme(themeKey);
         NekoGui::dataStore->theme = themeKey;
         NekoGui::dataStore->Save();
@@ -735,6 +737,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             int index = 0;
             if (themeValue == "light") index = 1;
             if (themeValue == "dark") index = 2;
+            if (themeValue == "lucifer") index = 3;
             QSignalBlocker blocker(ui->drawer_theme);
             ui->drawer_theme->setCurrentIndex(index);
         }

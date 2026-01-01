@@ -84,6 +84,18 @@
         <translation>Системная</translation>
     </message>
     <message>
+        <source>Light</source>
+        <translation>Светлая</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Темная</translation>
+    </message>
+    <message>
+        <source>Lucifer</source>
+        <translation>Lucifer</translation>
+    </message>
+    <message>
         <source>Set custom icon</source>
         <translation>Задать иконку</translation>
     </message>
@@ -1256,6 +1268,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Dark</source>
         <translation>Темная</translation>
+    </message>
+    <message>
+        <source>Lucifer</source>
+        <translation>Lucifer</translation>
     </message>
     <message>
         <source>Disconnected</source>
