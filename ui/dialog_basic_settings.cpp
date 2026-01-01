@@ -8,7 +8,6 @@
 #include "main/GuiUtils.hpp"
 #include "main/NekoGui.hpp"
 
-#include <QStyleFactory>
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
@@ -120,32 +119,27 @@ DialogBasicSettings::DialogBasicSettings(QWidget *parent)
         CACHE.needRestart = true;
     });
     //
-    int built_in_len = ui->theme->count();
-    ui->theme->addItems(QStyleFactory::keys());
-    //
     auto themeValue = NekoGui::dataStore->theme;
     if (themeValue == "0") themeValue = "system";
     if (themeValue == "1") themeValue = "light";
     if (themeValue == "2") themeValue = "dark";
+    if (themeValue != "system" && themeValue != "light" && themeValue != "dark" && themeValue != "lucifer") {
+        themeValue = "system";
+    }
     auto themeIndex = ui->theme->findText(themeValue, Qt::MatchFixedString);
     if (themeIndex >= 0) {
         ui->theme->setCurrentIndex(themeIndex);
     } else {
-        ui->theme->setCurrentText(NekoGui::dataStore->theme);
+        ui->theme->setCurrentIndex(0);
     }
     //
     connect(ui->theme, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
-        if (index < built_in_len) {
-            QString themeKey = "system";
-            if (index == 1) themeKey = "light";
-            if (index == 2) themeKey = "dark";
-            if (index == 3) themeKey = "lucifer";
-            themeManager->ApplyTheme(themeKey);
-            NekoGui::dataStore->theme = themeKey;
-        } else {
-            themeManager->ApplyTheme(ui->theme->currentText());
-            NekoGui::dataStore->theme = ui->theme->currentText();
-        }
+        QString themeKey = "system";
+        if (index == 1) themeKey = "light";
+        if (index == 2) themeKey = "dark";
+        if (index == 3) themeKey = "lucifer";
+        themeManager->ApplyTheme(themeKey);
+        NekoGui::dataStore->theme = themeKey;
         repaint();
         mainwindow->repaint();
         NekoGui::dataStore->Save();
