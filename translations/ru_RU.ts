@@ -1298,8 +1298,16 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Вставьте ссылку подписки</translation>
     </message>
     <message>
+        <source>Paste link or subscription URL</source>
+        <translation>Вставьте ссылку или URL подписки</translation>
+    </message>
+    <message>
         <source>Add</source>
         <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Paste</source>
+        <translation>Вставить</translation>
     </message>
     <message>
         <source>Add from clipboard</source>
@@ -1324,6 +1332,10 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     <message>
         <source>Please paste a valid URL.</source>
         <translation>Пожалуйста, вставьте корректную ссылку.</translation>
+    </message>
+    <message>
+        <source>Please paste a link.</source>
+        <translation>Пожалуйста, вставьте ссылку.</translation>
     </message>
     <message>
         <source>New profile</source>

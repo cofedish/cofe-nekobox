@@ -756,16 +756,46 @@ Direct: -</string>
               <number>8</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="search">
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QToolButton" name="toolButton_url_test">
-               <property name="text">
-                <string>URL Test</string>
+             <widget class="QLineEdit" name="search">
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="servers_add_url">
+              <property name="placeholderText">
+               <string>Paste link or subscription URL</string>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>true</bool>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="servers_add_paste">
+              <property name="text">
+               <string>Paste</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="servers_add_button">
+              <property name="text">
+               <string>Add</string>
+              </property>
+              <property name="toolButtonStyle">
+               <enum>Qt::ToolButtonTextBesideIcon</enum>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QToolButton" name="toolButton_url_test">
+              <property name="text">
+               <string>URL Test</string>
                </property>
                <property name="popupMode">
                 <enum>QToolButton::InstantPopup</enum>
@@ -1597,7 +1627,7 @@ Direct: -</string>
     <string>Add profile from clipboard</string>
    </property>
    <property name="shortcut">
-    <string notr="true">Ctrl+V</string>
+    <string notr="true">Ctrl+Shift+V</string>
    </property>
   </action>
   <action name="menu_delete">

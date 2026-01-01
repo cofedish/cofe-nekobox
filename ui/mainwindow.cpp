@@ -166,6 +166,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->home_sub_add, &QPushButton::clicked, this, [=] { submit_home_subscription(); });
     connect(ui->home_sub_url, &QLineEdit::returnPressed, this, [=] { submit_home_subscription(); });
     ui->home_sub_url->installEventFilter(this);
+    connect(ui->servers_add_button, &QToolButton::clicked, this, [=] { submit_servers_subscription(); });
+    connect(ui->servers_add_url, &QLineEdit::returnPressed, this, [=] { submit_servers_subscription(); });
+    connect(ui->servers_add_paste, &QToolButton::clicked, this, [=] {
+        auto clipboardText = QApplication::clipboard()->text().trimmed();
+        if (!clipboardText.isEmpty()) {
+            ui->servers_add_url->setText(clipboardText);
+            ui->servers_add_url->setFocus();
+        }
+    });
     connect(ui->home_connect_button, &QPushButton::clicked, this, [=] {
         if (connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting) {
             return;
@@ -1220,6 +1229,24 @@ void MainWindow::submit_home_subscription() {
     ui->home_sub_url->clear();
 }
 
+void MainWindow::submit_servers_subscription() {
+    if (!can_start_add()) return;
+    auto text = ui->servers_add_url->text().trimmed();
+    if (text.isEmpty()) {
+        show_toast_error(tr("Please paste a link."));
+        return;
+    }
+
+    add_in_progress = true;
+    add_base_count = NekoGui::profileManager->profiles.count();
+    set_add_controls_enabled(false);
+    if (add_debounce_timer != nullptr) add_debounce_timer->start(400);
+    NekoGui_sub::groupUpdater->AsyncUpdate(text, -1, [=] {
+        runOnUiThread([=] { finish_add_operation(); });
+    });
+    ui->servers_add_url->clear();
+}
+
 void MainWindow::show_toast(const QString &text, int durationMs) {
     if (toast == nullptr) return;
     toast->setAnchorRect(ui->centralwidget->rect());
@@ -1261,6 +1288,8 @@ void MainWindow::set_add_controls_enabled(bool enabled) {
     };
 
     updateButton(ui->home_sub_add);
+    if (ui->servers_add_button != nullptr) updateButton(ui->servers_add_button);
+    if (ui->servers_add_paste != nullptr) ui->servers_add_paste->setEnabled(enabled);
     if (ui->menu_add_from_clipboard != nullptr) ui->menu_add_from_clipboard->setEnabled(enabled);
 }
 

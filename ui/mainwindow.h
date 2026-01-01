@@ -200,6 +200,7 @@ private:
     void set_drawer_open(bool open, bool animated = true);
     void update_drawer_scrim();
     void submit_home_subscription();
+    void submit_servers_subscription();
     void show_toast(const QString &text, int durationMs = 2500);
     void show_toast_success(const QString &text);
     void show_toast_error(const QString &text);
