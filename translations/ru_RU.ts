@@ -93,7 +93,7 @@
     </message>
     <message>
         <source>Lucifer</source>
-        <translation>Lucifer</translation>
+        <translation>Люцифер</translation>
     </message>
     <message>
         <source>Set custom icon</source>
@@ -125,7 +125,7 @@
     </message>
     <message>
         <source>User Agent</source>
-        <translation>User Agent</translation>
+        <translation>User-Agent</translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
@@ -261,7 +261,7 @@
     </message>
     <message>
         <source>Mixed (SOCKS+HTTP) Listen Port</source>
-        <translation type="unfinished"></translation>
+        <translation>Порт смешанного (SOCKS+HTTP)</translation>
     </message>
 </context>
 <context>
@@ -707,11 +707,13 @@
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation type="unfinished"></translation>
+        <translation>Это особенно важно — рекомендуется использовать значение по умолчанию «localhost».
+Если значение по умолчанию не работает, попробуйте заменить на «223.5.5.5».
+Подробнее см. документ «Configuration/DNS».</translation>
     </message>
     <message>
         <source>Final DNS Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Финальный DNS outbound</translation>
     </message>
 </context>
 <context>
@@ -879,15 +881,15 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>
-        <translation></translation>
+        <translation>Небезопасная параллельность</translation>
     </message>
     <message>
         <source>Disable logs</source>
-        <translation type="unfinished"></translation>
+        <translation>Отключить логи</translation>
     </message>
     <message>
         <source>Turn on this option if your connection is lost after a while</source>
-        <translation type="unfinished"></translation>
+        <translation>Включите этот параметр, если соединение пропадает через некоторое время</translation>
     </message>
 </context>
 <context>
@@ -902,7 +904,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Hop Interval (s)</source>
-        <translation></translation>
+        <translation>Интервал hop (с)</translation>
     </message>
     <message>
         <source>Certificate</source>
@@ -914,7 +916,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Hop Port</source>
-        <translation></translation>
+        <translation>Порт hop</translation>
     </message>
     <message>
         <source>Upload (Mbps)</source>
@@ -958,7 +960,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation type="unfinished"></translation>
+        <translation>Принудительно использовать внешний core</translation>
     </message>
 </context>
 <context>
@@ -1092,7 +1094,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>OK</translation>
+        <translation>ОК</translation>
     </message>
     <message>
         <source>Json Contains Syntax Errors</source>
@@ -1183,7 +1185,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Outbound</source>
-        <translation>Outbound</translation>
+        <translation>Исходящий</translation>
     </message>
     <message>
         <source>Destination</source>
@@ -1271,7 +1273,7 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
     </message>
     <message>
         <source>Lucifer</source>
-        <translation>Lucifer</translation>
+        <translation>Люцифер</translation>
     </message>
     <message>
         <source>Disconnected</source>
@@ -1700,11 +1702,11 @@ End: %2</source>
     </message>
     <message>
         <source>Stop Testing</source>
-        <translation type="unfinished"></translation>
+        <translation>Остановить тесты</translation>
     </message>
     <message>
         <source>URL Test</source>
-        <translation type="unfinished"></translation>
+        <translation>URL-тест</translation>
     </message>
 </context>
 <context>
@@ -1722,7 +1724,7 @@ End: %2</source>
     <name>QGuiApplication</name>
     <message>
         <source>QT_LAYOUT_DIRECTION</source>
-        <translation></translation>
+        <translation>LTR</translation>
     </message>
 </context>
 <context>
@@ -1855,7 +1857,7 @@ Release note:
     </message>
     <message>
         <source>The last speed test did not exit completely, please wait. If it persists, please restart the program.</source>
-        <translation type="unfinished"></translation>
+        <translation>Предыдущий тест скорости ещё не завершился, подождите. Если проблема сохраняется, перезапустите программу.</translation>
     </message>
 </context>
 <context>
