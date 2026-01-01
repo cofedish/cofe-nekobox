@@ -44,4 +44,12 @@ inline QString Version() {
     return v.isEmpty() ? QStringLiteral("0.0.0") : v;
 }
 
+inline QString RepoUrl() {
+    return QStringLiteral("https://github.com/cofedish/cofe-nekobox");
+}
+
+inline QString DocsUrl() {
+    return QStringLiteral("https://github.com/cofedish/cofe-nekobox/tree/main/docs");
+}
+
 } // namespace AppInfo

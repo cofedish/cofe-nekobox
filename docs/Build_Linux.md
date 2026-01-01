@@ -3,7 +3,7 @@
 ## git clone 源码
 
 ```
-git clone https://github.com/MatsuriDayo/nekoray.git --recursive
+git clone https://github.com/cofedish/cofe-nekobox.git --recursive
 ```
 
 ## 简单编译法
