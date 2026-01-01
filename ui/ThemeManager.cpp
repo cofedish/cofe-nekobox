@@ -329,6 +329,7 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     }
 
     current_theme = normalized;
+    emit themeChanged(normalized);
 
     auto nekoray_css = ReadFileText(":/neko/neko.css");
     if (handled) {

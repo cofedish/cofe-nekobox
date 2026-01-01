@@ -1,11 +1,19 @@
 #pragma once
 
-class ThemeManager {
+#include <QObject>
+#include <QString>
+
+class ThemeManager : public QObject {
+    Q_OBJECT
+
 public:
     QString system_style_name = "";
     QString current_theme = "0"; // int: 0:system 1+:builtin string: QStyleFactory
 
     void ApplyTheme(const QString &theme);
+
+signals:
+    void themeChanged(const QString &theme);
 };
 
 extern ThemeManager *themeManager;

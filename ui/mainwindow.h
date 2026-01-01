@@ -207,6 +207,7 @@ private:
     bool can_start_add() const;
     void set_add_controls_enabled(bool enabled);
     void finish_add_operation();
+    void sync_drawer_theme(const QString &themeKey);
 
     void keyPressEvent(QKeyEvent *event) override;
 
