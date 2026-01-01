@@ -63,6 +63,7 @@
 #include <QWidgetAction>
 #include <QHBoxLayout>
 #include <QStyle>
+#include <QSizePolicy>
 #include <QDir>
 #include <QFileInfo>
 
@@ -242,6 +243,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->drawer_theme_button->setLayoutDirection(Qt::RightToLeft);
     ui->drawer_theme_button->setIcon(style()->standardIcon(QStyle::SP_ArrowDown));
     ui->drawer_theme_button->setIconSize(QSize(10, 10));
+    ui->drawer_theme_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
     connect(ui->drawer_theme_button, &QToolButton::clicked, ui->drawer_theme_button, &QToolButton::showMenu);
     sync_drawer_theme(NekoGui::dataStore->theme);
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
