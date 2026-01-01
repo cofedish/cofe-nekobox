@@ -154,6 +154,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         QPixmap logo(":/neko/cofebox.png");
         ui->about_logo->setPixmap(logo.scaled(logoSize, logoSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
+    if (ui->aboutLayout != nullptr) {
+        if (ui->about_logo != nullptr) {
+            ui->aboutLayout->setAlignment(ui->about_logo, Qt::AlignHCenter);
+        }
+        if (ui->about_title != nullptr) {
+            ui->aboutLayout->setAlignment(ui->about_title, Qt::AlignHCenter);
+        }
+        if (ui->about_text != nullptr) {
+            ui->aboutLayout->setAlignment(ui->about_text, Qt::AlignHCenter);
+        }
+    }
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
     if (ui->homeCenterLayout != nullptr) {
         ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
