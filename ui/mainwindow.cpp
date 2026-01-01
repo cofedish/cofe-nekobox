@@ -68,6 +68,32 @@ void UI_InitMainWindow() {
 inline int tabIndex2GroupId(int index);
 inline int groupId2TabIndex(int gid);
 
+namespace {
+    QString NormalizeThemeKey(const QString &value) {
+        const auto key = value.trimmed().toLower();
+        if (key == "0" || key == "system") return "system";
+        if (key == "1" || key == "light") return "light";
+        if (key == "2" || key == "dark") return "dark";
+        if (key == "lucifer") return "lucifer";
+        return "system";
+    }
+
+    QString ThemeKeyFromIndex(int index) {
+        if (index == 1) return "light";
+        if (index == 2) return "dark";
+        if (index == 3) return "lucifer";
+        return "system";
+    }
+
+    int ThemeIndexFromKey(const QString &value) {
+        const auto key = NormalizeThemeKey(value);
+        if (key == "light") return 1;
+        if (key == "dark") return 2;
+        if (key == "lucifer") return 3;
+        return 0;
+    }
+} // namespace
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow) {
     mainwindow = this;
     MW_dialog_message = [=](const QString &a, const QString &b) {
@@ -78,7 +104,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     NekoGui::profileManager->LoadManager();
 
     // Setup misc UI
-    themeManager->ApplyTheme(NekoGui::dataStore->theme);
+    auto initialTheme = NormalizeThemeKey(NekoGui::dataStore->theme);
+    if (initialTheme != NekoGui::dataStore->theme) {
+        NekoGui::dataStore->theme = initialTheme;
+        NekoGui::dataStore->Save();
+    }
+    themeManager->ApplyTheme(initialTheme);
     ui->setupUi(this);
     toast = new ToastWidget(ui->centralwidget);
     toast->setAnchorRect(ui->centralwidget->rect());
@@ -130,24 +161,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // drawer + navigation
     ui->menubar->setVisible(false);
     ui->drawer_nav->setCurrentRow(0);
-    auto sync_drawer_theme = [=] {
-        QString themeValue = NekoGui::dataStore->theme;
-        if (themeValue == "0") themeValue = "system";
-        if (themeValue == "1") themeValue = "light";
-        if (themeValue == "2") themeValue = "dark";
-        int index = 0;
-        if (themeValue == "light") index = 1;
-        if (themeValue == "dark") index = 2;
-        if (themeValue == "lucifer") index = 3;
-        QSignalBlocker blocker(ui->drawer_theme);
-        ui->drawer_theme->setCurrentIndex(index);
-    };
-    sync_drawer_theme();
+    sync_drawer_theme(NekoGui::dataStore->theme);
+    connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
+        sync_drawer_theme(themeKey);
+    });
     connect(ui->drawer_theme, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, [=](int index) {
-        QString themeKey = "system";
-        if (index == 1) themeKey = "light";
-        if (index == 2) themeKey = "dark";
-        if (index == 3) themeKey = "lucifer";
+        const auto themeKey = ThemeKeyFromIndex(index);
         themeManager->ApplyTheme(themeKey);
         NekoGui::dataStore->theme = themeKey;
         NekoGui::dataStore->Save();
@@ -646,6 +665,11 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     }
 }
 
+void MainWindow::sync_drawer_theme(const QString &themeKey) {
+    const int index = ThemeIndexFromKey(themeKey);
+    QSignalBlocker blocker(ui->drawer_theme);
+    ui->drawer_theme->setCurrentIndex(index);
+}
 
 MainWindow::~MainWindow() {
     delete ui;
@@ -729,18 +753,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             suggestRestartProxy = false;
         }
         refresh_proxy_list();
-        {
-            QString themeValue = NekoGui::dataStore->theme;
-            if (themeValue == "0") themeValue = "system";
-            if (themeValue == "1") themeValue = "light";
-            if (themeValue == "2") themeValue = "dark";
-            int index = 0;
-            if (themeValue == "light") index = 1;
-            if (themeValue == "dark") index = 2;
-            if (themeValue == "lucifer") index = 3;
-            QSignalBlocker blocker(ui->drawer_theme);
-            ui->drawer_theme->setCurrentIndex(index);
-        }
+        sync_drawer_theme(NekoGui::dataStore->theme);
         if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
             wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
         }
