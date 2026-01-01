@@ -20,3 +20,7 @@
 - [x] Theme picker: кнопка + popup со swatches и названиями - OK (code).
 - [x] Dropdowns: combobox/menu имеют рамки и hover/selected - OK (code).
 - [x] About: логотип отображается, инструкции по замене есть - OK (code).
+- [x] Dropdowns: hover/selected/disabled видны во всех темах - OK (code).
+- [x] Theme picker: кружки-пироги, tooltip и ровный active ring - OK (code).
+- [x] Theme picker: без синего фокуса/артефактов - OK (code).
+- [x] Profiles: RU, нет английских кнопок - OK (code).

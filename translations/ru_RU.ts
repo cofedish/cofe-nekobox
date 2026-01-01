@@ -1284,6 +1284,14 @@ If still not working, see documentation for more information.
         <translation>Тема</translation>
     </message>
     <message>
+        <source>Theme: %1</source>
+        <translation>Тема: %1</translation>
+    </message>
+    <message>
+        <source>Theme: -</source>
+        <translation>Тема: —</translation>
+    </message>
+    <message>
         <source>System</source>
         <translation>Системная</translation>
     </message>
@@ -1346,6 +1354,18 @@ If still not working, see documentation for more information.
     <message>
         <source>Add</source>
         <translation>Добавить</translation>
+    </message>
+    <message>
+        <source>Edit selected</source>
+        <translation>Редактировать выбранное</translation>
+    </message>
+    <message>
+        <source>Export config</source>
+        <translation>Экспорт конфигурации</translation>
+    </message>
+    <message>
+        <source>Open servers list</source>
+        <translation>Открыть список серверов</translation>
     </message>
     <message>
         <source>Paste</source>
