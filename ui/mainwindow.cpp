@@ -1585,13 +1585,21 @@ void MainWindow::on_menu_move_triggered() {
 void MainWindow::on_menu_delete_triggered() {
     auto ents = get_now_selected_list();
     if (ents.count() == 0) return;
-    if (QMessageBox::question(this, tr("Confirmation"), QString(tr("Remove %1 item(s) ?")).arg(ents.count())) ==
-        QMessageBox::StandardButton::Yes) {
-        for (const auto &ent: ents) {
-            NekoGui::profileManager->DeleteProfile(ent->id);
-        }
-        refresh_proxy_list();
+
+    const QString prompt = ents.count() == 1
+        ? tr("Delete selected server?")
+        : tr("Delete selected items (%1)?").arg(ents.count());
+    QMessageBox msg(QMessageBox::Warning, tr("Confirmation"), prompt, QMessageBox::NoButton, this);
+    auto deleteBtn = msg.addButton(tr("Delete"), QMessageBox::AcceptRole);
+    msg.addButton(tr("Cancel"), QMessageBox::RejectRole);
+    msg.exec();
+    if (msg.clickedButton() != deleteBtn) return;
+
+    for (const auto &ent: ents) {
+        NekoGui::profileManager->DeleteProfile(ent->id);
     }
+    refresh_proxy_list();
+    show_toast_success(tr("Deleted: %1").arg(ents.count()));
 }
 
 void MainWindow::on_menu_reset_traffic_triggered() {

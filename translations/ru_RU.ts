@@ -1567,6 +1567,18 @@ https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
         <translation>Удалить %1 записей ?</translation>
     </message>
     <message>
+        <source>Delete selected server?</source>
+        <translation>Удалить выбранный сервер?</translation>
+    </message>
+    <message>
+        <source>Delete selected items (%1)?</source>
+        <translation>Удалить выбранные элементы (%1)?</translation>
+    </message>
+    <message>
+        <source>Deleted: %1</source>
+        <translation>Удалено: %1</translation>
+    </message>
+    <message>
         <source>Copied %1 item(s)</source>
         <translation>Скопировано %1 записей</translation>
     </message>
