@@ -172,7 +172,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
         sync_drawer_theme(themeKey);
     });
-    connect(drawer_theme_group, QOverload<int>::of(&QButtonGroup::buttonClicked), this, [=](int index) {
+    connect(drawer_theme_group, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, [=](QAbstractButton *button) {
+        const int index = drawer_theme_group->id(button);
         const auto themeKey = ThemeKeyFromIndex(index);
         themeManager->ApplyTheme(themeKey);
         NekoGui::dataStore->theme = themeKey;
