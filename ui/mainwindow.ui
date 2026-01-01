@@ -237,7 +237,7 @@
        </item>
        <item>
         <widget class="QWidget" name="drawer_theme_row" native="true">
-         <layout class="QVBoxLayout" name="drawerThemeLayout">
+         <layout class="QHBoxLayout" name="drawerThemeLayout">
           <property name="leftMargin">
            <number>0</number>
           </property>
@@ -251,10 +251,16 @@
            <number>0</number>
           </property>
           <property name="spacing">
-           <number>6</number>
+           <number>8</number>
           </property>
           <item>
            <widget class="QLabel" name="drawer_theme_label">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
             <property name="text">
              <string>Theme: -</string>
             </property>
@@ -264,24 +270,19 @@
            </widget>
           </item>
           <item>
-           <widget class="QWidget" name="drawer_theme_swatches" native="true">
-            <layout class="QHBoxLayout" name="drawer_theme_swatches_layout">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <property name="spacing">
-              <number>8</number>
-             </property>
-            </layout>
+           <widget class="QToolButton" name="drawer_theme_button">
+            <property name="text">
+             <string>Theme</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextBesideIcon</enum>
+            </property>
+            <property name="popupMode">
+             <enum>QToolButton::InstantPopup</enum>
+            </property>
+            <property name="autoRaise">
+             <bool>false</bool>
+            </property>
            </widget>
           </item>
          </layout>

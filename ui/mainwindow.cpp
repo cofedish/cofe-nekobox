@@ -60,6 +60,8 @@
 #include <QPropertyAnimation>
 #include <QMessageBox>
 #include <QPainter>
+#include <QWidgetAction>
+#include <QHBoxLayout>
 #include <QDir>
 #include <QFileInfo>
 
@@ -195,10 +197,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // drawer + navigation
     ui->menubar->setVisible(false);
     ui->drawer_nav->setCurrentRow(0);
+    drawer_theme_menu = new QMenu(this);
+    drawer_theme_menu->setObjectName("drawer_theme_menu");
+    auto themeMenuWidget = new QWidget(drawer_theme_menu);
+    auto themeMenuLayout = new QHBoxLayout(themeMenuWidget);
+    themeMenuLayout->setContentsMargins(8, 8, 8, 8);
+    themeMenuLayout->setSpacing(8);
     drawer_theme_group = new QButtonGroup(this);
     drawer_theme_group->setExclusive(true);
     for (const auto &option : themeManager->AvailableThemes()) {
-        auto button = new QToolButton(ui->drawer_theme_swatches);
+        auto button = new QToolButton(themeMenuWidget);
         button->setObjectName("drawer_theme_swatch");
         button->setCheckable(true);
         button->setAutoRaise(true);
@@ -207,13 +215,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         button->setIconSize(QSize(20, 20));
         button->setToolTip(option.displayName);
         button->setCursor(Qt::PointingHandCursor);
+        button->setFocusPolicy(Qt::NoFocus);
         button->setProperty("themeKey", option.id);
-        ui->drawer_theme_swatches_layout->addWidget(button);
+        themeMenuLayout->addWidget(button);
         drawer_theme_group->addButton(button);
     }
-    if (ui->drawer_theme_swatches_layout != nullptr) {
-        ui->drawer_theme_swatches_layout->addStretch();
-    }
+    auto themeMenuAction = new QWidgetAction(drawer_theme_menu);
+    themeMenuAction->setDefaultWidget(themeMenuWidget);
+    drawer_theme_menu->addAction(themeMenuAction);
+    ui->drawer_theme_button->setMenu(drawer_theme_menu);
+    ui->drawer_theme_button->setPopupMode(QToolButton::InstantPopup);
+    ui->drawer_theme_button->setText(tr("Theme"));
+    connect(ui->drawer_theme_button, &QToolButton::clicked, ui->drawer_theme_button, &QToolButton::showMenu);
     sync_drawer_theme(NekoGui::dataStore->theme);
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
         sync_drawer_theme(themeKey);
@@ -228,6 +241,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 themeManager->ApplyTheme(themeKey);
                 NekoGui::dataStore->theme = themeKey;
                 NekoGui::dataStore->Save();
+                if (drawer_theme_menu != nullptr) {
+                    drawer_theme_menu->close();
+                }
             });
     connect(ui->drawer_nav, &QListWidget::currentRowChanged, this, [=](int row) {
         ui->stacked_pages->setCurrentIndex(row);

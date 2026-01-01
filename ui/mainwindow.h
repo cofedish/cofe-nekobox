@@ -31,6 +31,7 @@ class QParallelAnimationGroup;
 class QPropertyAnimation;
 class QResizeEvent;
 class QTimer;
+class QMenu;
 class QButtonGroup;
 class ToastWidget;
 
@@ -179,6 +180,7 @@ private:
     QParallelAnimationGroup *drawer_anim = nullptr;
     QPropertyAnimation *drawer_anim_max = nullptr;
     QPropertyAnimation *drawer_anim_min = nullptr;
+    QMenu *drawer_theme_menu = nullptr;
     QButtonGroup *drawer_theme_group = nullptr;
     ToastWidget *toast = nullptr;
     QTimer *add_debounce_timer = nullptr;
