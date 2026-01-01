@@ -1268,6 +1268,18 @@ If still not working, see documentation for more information.
         <translation>Правила</translation>
     </message>
     <message>
+        <source>Active routing: %1</source>
+        <translation>Активная маршрутизация: %1</translation>
+    </message>
+    <message>
+        <source>Active routing: Default</source>
+        <translation>Активная маршрутизация: По умолчанию</translation>
+    </message>
+    <message>
+        <source>Open routing settings</source>
+        <translation>Открыть настройки маршрутизации</translation>
+    </message>
+    <message>
         <source>Logs</source>
         <translation>Логи</translation>
     </message>
