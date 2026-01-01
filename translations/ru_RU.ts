@@ -772,11 +772,11 @@ This needs to be run CofeBox with administrator privileges.</source>
         <source>If you have trouble starting VPN, you can force reset nekobox_core process here.
 
 If still not working, see documentation for more information.
-https://matsuridayo.github.io/n-configuration/#vpn-tun</source>
+%1</source>
         <translation>Если у вас проблемы с запуском VPN, можно принудительно перезапустить процесс nekobox-core.
 
 Если ничего по-прежнему не работает, ознакомьтесь с документацией:
-https://matsuridayo.github.io/n-configuration/#vpn-tun</translation>
+%1</translation>
     </message>
     <message>
         <source>Reset</source>

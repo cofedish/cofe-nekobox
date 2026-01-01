@@ -10,3 +10,6 @@
 - [x] Themes: только System/Light/Dark/Lucifer в селекторах - OK (code).
 - [x] Sidebar: заполняет всю высоту окна - OK (code).
 - [x] Theme selector: синхронизируется между Settings и Sidebar и сохраняется - OK (code).
+- [x] Sidebar: скролл корректный, без «полувысоты» - OK (code).
+- [x] i18n: RU переводы без остаточного английского в UI - OK (code).
+- [x] Docs: README + docs/* добавлены и ссылки на репозиторий обновлены - OK (code).

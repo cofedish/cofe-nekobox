@@ -2,6 +2,7 @@
 #include "ui_dialog_vpn_settings.h"
 
 #include "main/GuiUtils.hpp"
+#include "main/AppInfo.hpp"
 #include "main/NekoGui.hpp"
 #include "ui/mainwindow_interface.h"
 
@@ -69,10 +70,11 @@ void DialogVPNSettings::accept() {
 }
 
 void DialogVPNSettings::on_troubleshooting_clicked() {
+    const auto docsUrl = AppInfo::DocsUrl() + "/USAGE.md#tun";
     auto r = QMessageBox::information(this, tr("Troubleshooting"),
                                       tr("If you have trouble starting VPN, you can force reset nekobox_core process here.\n\n"
                                          "If still not working, see documentation for more information.\n"
-                                         "https://matsuridayo.github.io/n-configuration/#vpn-tun"),
+                                         "%1").arg(docsUrl),
                                       tr("Reset"), tr("Cancel"), "",
                                       1, 1);
     if (r == 0) {

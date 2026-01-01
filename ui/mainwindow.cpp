@@ -279,8 +279,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->settings_open_config, &QPushButton::clicked, ui->menu_open_config_folder, &QAction::trigger);
     connect(ui->settings_restart_proxy, &QPushButton::clicked, ui->actionRestart_Proxy, &QAction::trigger);
     connect(ui->settings_restart_app, &QPushButton::clicked, ui->actionRestart_Program, &QAction::trigger);
-    connect(ui->about_docs, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://matsuridayo.github.io/")); });
-    connect(ui->about_repo, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl("https://github.com/MatsuriDayo/nekoray")); });
+    connect(ui->about_docs, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl(AppInfo::DocsUrl())); });
+    connect(ui->about_repo, &QPushButton::clicked, this, [=] { QDesktopServices::openUrl(QUrl(AppInfo::RepoUrl())); });
 
     drawer_scrim = new QWidget(ui->centralwidget);
     drawer_scrim->setObjectName("drawer_scrim");
