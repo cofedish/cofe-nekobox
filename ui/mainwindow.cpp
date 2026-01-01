@@ -254,8 +254,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             set_drawer_open(false);
         }
     });
-    connect(ui->drawer_quick_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
-    connect(ui->drawer_quick_settings, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(6); });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
     connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
     connect(ui->home_sub_add, &QPushButton::clicked, this, [=] { submit_home_subscription(); });

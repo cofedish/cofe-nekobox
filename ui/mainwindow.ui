@@ -195,47 +195,6 @@
         </widget>
        </item>
        <item>
-        <widget class="QWidget" name="drawer_quick" native="true">
-         <layout class="QHBoxLayout" name="drawerQuickLayout">
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
-          <property name="topMargin">
-           <number>0</number>
-          </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
-          <property name="bottomMargin">
-           <number>0</number>
-          </property>
-          <property name="spacing">
-           <number>8</number>
-          </property>
-          <item>
-           <widget class="QToolButton" name="drawer_quick_logs">
-            <property name="text">
-             <string>Logs</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QToolButton" name="drawer_quick_settings">
-            <property name="text">
-             <string>Settings</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextBesideIcon</enum>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
-       <item>
         <widget class="QWidget" name="drawer_theme_row" native="true">
          <layout class="QHBoxLayout" name="drawerThemeLayout">
           <property name="leftMargin">
