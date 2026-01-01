@@ -1374,14 +1374,14 @@ Direct: -</string>
            <widget class="QLabel" name="about_logo">
             <property name="minimumSize">
              <size>
-              <width>72</width>
-              <height>72</height>
+              <width>160</width>
+              <height>160</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
-              <height>120</height>
+              <width>220</width>
+              <height>220</height>
              </size>
             </property>
             <property name="alignment">
