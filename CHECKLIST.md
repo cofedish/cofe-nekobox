@@ -31,3 +31,11 @@
 - [x] TUN/Proxy: чекбоксы используют цвета темы - OK (code).
 - [x] Sidebar: нет дублей кнопок Логи/Настройки - OK (code).
 - [x] Theme button: текст+стрелка центрированы, размер компактный - OK (code).
+
+## v1.2.0 Typography / Linux checklist
+
+- [x] Home: длинное имя профиля/сервера отображается корректно или элидится только при реальной нехватке места - OK (code).
+- [x] Connect button: текст помещается, вес/размер адекватны на Windows - OK (code).
+- [x] Linux (deb + AppImage): `Подключено` не жирный, не обрезается, круг соразмерный - OK (code).
+- [x] Другие страницы (Settings/Profiles/Servers/Rules/About) не ломаются по шрифтам - OK (code).
+- [x] Темы (Light/Dark/Lucifer/System) сохраняют контраст и типографику - OK (code).
