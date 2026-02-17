@@ -38,7 +38,7 @@ QFont MakeFont(int logicalPx, int weight, const QFont &fallback) {
     QFont font = fallback;
     font.setFamily(ResolveFamily());
     font.setPixelSize(qMax(8, qRound(logicalPx * DpiScale())));
-    font.setWeight(weight);
+    font.setWeight(static_cast<QFont::Weight>(weight));
     font.setHintingPreference(QFont::PreferFullHinting);
     return font;
 }
