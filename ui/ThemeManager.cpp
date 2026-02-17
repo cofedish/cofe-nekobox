@@ -3,9 +3,11 @@
 #include <QStyleFactory>
 #include <QPalette>
 #include <QColor>
+#include <QFont>
 #include <QCoreApplication>
 
 #include "ThemeManager.hpp"
+#include "Typography.hpp"
 
 ThemeManager *themeManager = new ThemeManager;
 
@@ -67,7 +69,7 @@ namespace {
         t.warning_text = "#1C1914";
         t.error = "#C44C4C";
         t.error_text = "#FFFFFF";
-        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
+        t.font_family = Typography::QssFamilyChain();
         return t;
     }
 
@@ -90,7 +92,7 @@ namespace {
         t.warning_text = "#0C1114";
         t.error = "#D16060";
         t.error_text = "#0C1114";
-        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
+        t.font_family = Typography::QssFamilyChain();
         return t;
     }
 
@@ -113,7 +115,7 @@ namespace {
         t.warning_text = "#0B0B0E";
         t.error = "#B04646";
         t.error_text = "#FCEFF1";
-        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
+        t.font_family = Typography::QssFamilyChain();
         return t;
     }
 
@@ -140,7 +142,7 @@ namespace {
         t.warning_text = pal.color(QPalette::WindowText).name();
         t.error = accent.darker(120).name();
         t.error_text = pal.color(QPalette::HighlightedText).name();
-        t.font_family = "\"Segoe UI Variable\",\"Segoe UI\",\"Inter\",\"Noto Sans\",\"Arial\"";
+        t.font_family = Typography::QssFamilyChain();
         return t;
     }
 
@@ -159,29 +161,40 @@ namespace {
     }
 
     QString BuildThemeQss(const ThemeTokens &t) {
+        const int body_font_px = Typography::ScalePx(13);
+        const int nav_font_px = Typography::ScalePx(14);
+        const int drawer_toggle_font_px = Typography::ScalePx(18);
+        const int drawer_title_font_px = Typography::ScalePx(16);
+        const int home_title_font_px = Typography::ScalePx(20);
+        const int home_status_font_px = Typography::ScalePx(16);
+        const int theme_font_px = Typography::ScalePx(12);
+        const int regular_weight = QFont::Normal;
+        const int medium_weight = QFont::Medium;
+        const int semibold_weight = QFont::DemiBold;
+
         QString qss = QString(
-                   "QWidget { font-family: %1; color: %2; }"
+                   "QWidget { font-family: %1; color: %2; font-size: %BODY_FONT_PX%px; font-weight: %WEIGHT_REGULAR%; }"
                    "QWidget#centralwidget { background: %3; }"
                    "QFrame#drawer_container { background: %4; border-right: 1px solid %5; }"
                    "QWidget#drawer_scrim { background: rgba(0,0,0,90); }"
                    "QListWidget#drawer_nav { background: transparent; border: none; }"
-                   "QListWidget#drawer_nav::item { padding: 10px 14px; margin: 2px 0; min-height: 42px; border-radius: 12px; color: %6; font-size: 14px; background: %9; border: 1px solid %5; }"
+                   "QListWidget#drawer_nav::item { padding: 10px 14px; margin: 2px 0; min-height: 42px; border-radius: 12px; color: %6; font-size: %NAV_FONT_PX%px; background: %9; border: 1px solid %5; }"
                    "QListWidget#drawer_nav::item:hover { background: %7; border-color: %11; }"
                    "QListWidget#drawer_nav::item:pressed { background: %13; border-color: %11; }"
-                   "QListWidget#drawer_nav::item:selected { background: %7; color: %6; border: 1px solid %11; border-left: 3px solid %11; padding-left: 11px; font-weight: 600; }"
+                   "QListWidget#drawer_nav::item:selected { background: %7; color: %6; border: 1px solid %11; border-left: 3px solid %11; padding-left: 11px; font-weight: %WEIGHT_SEMIBOLD%; }"
                    "QFrame#topbar { background: %9; border: 1px solid %5; border-radius: 12px; padding: 6px; }"
-                   "QToolButton#drawer_toggle { background: %9; border: 1px solid %5; border-radius: 12px; font-size: 18px; font-weight: 600; }"
+                   "QToolButton#drawer_toggle { background: %9; border: 1px solid %5; border-radius: 12px; font-size: %DRAWER_TOGGLE_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
                    "QToolButton#drawer_toggle:hover { background: %7; }"
                    "QToolButton#drawer_toggle:pressed { background: %13; }"
-                   "QLabel#drawer_app_name { font-size: 16px; font-weight: 600; color: %2; }"
+                   "QLabel#drawer_app_name { font-size: %DRAWER_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %2; }"
                    "QLabel#drawer_status, QLabel#drawer_profile { color: %10; }"
                    "QLabel#drawer_status { border-radius: 10px; padding: 2px 8px; }"
                    "QLabel#drawer_status[state=\"connected\"] { background: %7; color: %2; }"
                    "QLabel#drawer_status[state=\"disconnected\"] { background: %9; color: %10; border: 1px solid %5; }"
-                   "QLabel#home_title { font-size: 20px; font-weight: 600; }"
-                   "QLabel#label_running { font-size: 16px; font-weight: 600; }"
+                   "QLabel#home_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; }"
+                   "QLabel#label_running { font-size: %HOME_STATUS_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
                    "QLabel#label_inbound, QLabel#label_speed { color: %10; }"
-                   "QPushButton#home_connect_button { background: %11; color: %12; border: none; border-radius: 18px; padding: 14px 20px; font-size: 16px; font-weight: 600; }"
+                   "QPushButton#home_connect_button { background: %11; color: %12; border: none; border-radius: 18px; padding: 14px 20px; font-size: %HOME_STATUS_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
                    "QPushButton#home_connect_button:hover { background: %13; }"
                    "QPushButton#home_connect_button:pressed { background: %14; }"
                    "QCheckBox { spacing: 8px; }"
@@ -219,8 +232,8 @@ namespace {
                    "QFrame#toast_widget[level=\"success\"] { background: %15; color: %16; border-color: %15; }"
                    "QFrame#toast_widget[level=\"warning\"] { background: %17; color: %18; border-color: %17; }"
                    "QFrame#toast_widget[level=\"error\"] { background: %19; color: %20; border-color: %19; }"
-                   "QLabel#drawer_theme_label { color: %10; font-size: 12px; font-weight: 600; }"
-                   "QToolButton#drawer_theme_button { background: %9; border: 1px solid %5; border-radius: 10px; padding: 4px 12px; min-height: 32px; font-size: 12px; font-weight: 600; }"
+                   "QLabel#drawer_theme_label { color: %10; font-size: %THEME_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
+                   "QToolButton#drawer_theme_button { background: %9; border: 1px solid %5; border-radius: 10px; padding: 4px 12px; min-height: 32px; font-size: %THEME_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
                    "QToolButton#drawer_theme_button:hover { background: %7; }"
                    "QToolButton#drawer_theme_button:pressed { background: %13; }"
                    "QToolButton#drawer_theme_button:focus { border: 1px solid %11; outline: none; }"
@@ -264,6 +277,16 @@ namespace {
         qss = qss.arg(t.warning_text);
         qss = qss.arg(t.error);
         qss = qss.arg(t.error_text);
+        qss.replace("%BODY_FONT_PX%", QString::number(body_font_px));
+        qss.replace("%NAV_FONT_PX%", QString::number(nav_font_px));
+        qss.replace("%DRAWER_TOGGLE_FONT_PX%", QString::number(drawer_toggle_font_px));
+        qss.replace("%DRAWER_TITLE_FONT_PX%", QString::number(drawer_title_font_px));
+        qss.replace("%HOME_TITLE_FONT_PX%", QString::number(home_title_font_px));
+        qss.replace("%HOME_STATUS_FONT_PX%", QString::number(home_status_font_px));
+        qss.replace("%THEME_FONT_PX%", QString::number(theme_font_px));
+        qss.replace("%WEIGHT_REGULAR%", QString::number(regular_weight));
+        qss.replace("%WEIGHT_MEDIUM%", QString::number(medium_weight));
+        qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
         return qss;
     }
 } // namespace
