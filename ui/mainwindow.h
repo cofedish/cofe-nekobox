@@ -186,6 +186,8 @@ private:
     QTimer *add_debounce_timer = nullptr;
     bool add_in_progress = false;
     int add_base_count = 0;
+    QString home_running_full_text;
+    QString home_running_tooltip;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
@@ -212,6 +214,8 @@ private:
     void set_add_controls_enabled(bool enabled);
     void finish_add_operation();
     void sync_drawer_theme(const QString &themeKey);
+    void set_home_running_text(const QString &text, const QString &tooltip = {});
+    void update_home_running_elide();
 
     void keyPressEvent(QKeyEvent *event) override;
 

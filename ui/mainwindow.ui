@@ -439,20 +439,14 @@
                </spacer>
               </item>
               <item>
-               <widget class="QWidget" name="home_center" native="true">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
-                  <horstretch>0</horstretch>
-                  <verstretch>0</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>560</width>
-                  <height>16777215</height>
-                 </size>
-                </property>
-                 <layout class="QVBoxLayout" name="homeCenterLayout">
+                <widget class="QWidget" name="home_center" native="true">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                  <layout class="QVBoxLayout" name="homeCenterLayout">
                  <property name="spacing">
                   <number>16</number>
                  </property>
@@ -524,22 +518,22 @@ Direct: -</string>
                  </item>
                  <item>
                   <widget class="ConnectButton" name="home_connect_button">
-                   <property name="text">
-                    <string>Connect</string>
-                   </property>
-                   <property name="minimumSize">
-                    <size>
-                     <width>200</width>
-                     <height>200</height>
-                    </size>
-                   </property>
-                   <property name="maximumSize">
-                    <size>
-                     <width>200</width>
-                     <height>200</height>
-                    </size>
-                   </property>
-                  </widget>
+                    <property name="text">
+                     <string>Connect</string>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>180</width>
+                      <height>180</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>260</width>
+                      <height>260</height>
+                     </size>
+                    </property>
+                   </widget>
                  </item>
                  <item>
                   <spacer name="home_actions_spacer">

@@ -58,6 +58,7 @@
 #include <QMenu>
 #include <QParallelAnimationGroup>
 #include <QPropertyAnimation>
+#include <QSizePolicy>
 #include <QMessageBox>
 #include <QPainter>
 #include <QWidgetAction>
@@ -167,6 +168,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
+    if (ui->home_center != nullptr) {
+        ui->home_center->setMaximumWidth(QWIDGETSIZE_MAX);
+        ui->home_center->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    }
+    if (ui->label_running != nullptr) {
+        ui->label_running->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+        ui->label_running->setMinimumWidth(0);
+        set_home_running_text(ui->label_running->text());
+    }
     if (ui->homeCenterLayout != nullptr) {
         ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
     }
@@ -750,8 +760,29 @@ void MainWindow::closeEvent(QCloseEvent *event) {
 void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
     update_drawer_scrim();
+    update_home_running_elide();
     if (toast != nullptr) {
         toast->setAnchorRect(ui->centralwidget->rect());
+    }
+}
+
+void MainWindow::set_home_running_text(const QString &text, const QString &tooltip) {
+    home_running_full_text = text;
+    home_running_tooltip = tooltip;
+    update_home_running_elide();
+}
+
+void MainWindow::update_home_running_elide() {
+    if (ui == nullptr || ui->label_running == nullptr) return;
+    const int available = qMax(0, ui->label_running->contentsRect().width() - 4);
+    const QString elided = ui->label_running->fontMetrics().elidedText(home_running_full_text, Qt::ElideRight, available);
+    ui->label_running->setText(elided);
+    if (!home_running_tooltip.isEmpty()) {
+        ui->label_running->setToolTip(home_running_tooltip);
+    } else if (elided != home_running_full_text) {
+        ui->label_running->setToolTip(home_running_full_text);
+    } else {
+        ui->label_running->setToolTip({});
     }
 }
 
@@ -1160,13 +1191,13 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     }
 
     if (connect_state == ConnectState::Connecting) {
-        ui->label_running->setText(tr("Connecting"));
+        set_home_running_text(tr("Connecting"));
     } else if (connect_state == ConnectState::Disconnecting) {
-        ui->label_running->setText(tr("Disconnecting"));
+        set_home_running_text(tr("Disconnecting"));
     } else if (last_test_time.addSecs(2) < QTime::currentTime()) {
         auto txt = running == nullptr ? tr("Not Running")
-                                      : QStringLiteral("[%1] %2").arg(group_name, running->bean->DisplayName()).left(30);
-        ui->label_running->setText(txt);
+                                      : QStringLiteral("[%1] %2").arg(group_name, running->bean->DisplayName());
+        set_home_running_text(txt);
     }
     if (running == nullptr) {
         QString statusText = connect_state == ConnectState::Connecting ? tr("Connecting") : tr("Disconnected");
@@ -1201,10 +1232,10 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     ui->checkBox_VPN->setChecked(NekoGui::dataStore->spmode_vpn);
     ui->checkBox_SystemProxy->setChecked(NekoGui::dataStore->spmode_system_proxy);
     if (select_mode) {
-        ui->label_running->setText(tr("Select") + " *");
-        ui->label_running->setToolTip(tr("Select mode, double-click or press Enter to select a profile, press ESC to exit."));
+        set_home_running_text(tr("Select") + " *",
+                              tr("Select mode, double-click or press Enter to select a profile, press ESC to exit."));
     } else {
-        ui->label_running->setToolTip({});
+        update_home_running_elide();
     }
 
     auto make_title = [=](bool isTray) {
