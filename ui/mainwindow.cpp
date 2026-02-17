@@ -185,6 +185,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     if (auto connectButton = qobject_cast<ConnectButton *>(ui->home_connect_button)) {
         connectButton->setReduceMotion(NekoGui::dataStore->reduce_motion);
+        connectButton->refreshMetrics();
     }
     //
     connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
@@ -761,6 +762,7 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     QMainWindow::resizeEvent(event);
     update_drawer_scrim();
     update_home_running_elide();
+    update_connect_button();
     if (toast != nullptr) {
         toast->setAnchorRect(ui->centralwidget->rect());
     }
@@ -1309,6 +1311,7 @@ void MainWindow::update_connect_button() {
             break;
     }
     button->setState(state);
+    button->refreshMetrics();
     const bool busy = connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting;
     button->setEnabled(!busy);
 }
