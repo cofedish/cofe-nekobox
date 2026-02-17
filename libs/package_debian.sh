@@ -1,6 +1,8 @@
 #!/bin/bash
 
 version="$1"
+version="${version#v}"
+version="${version#V}"
 
 mkdir -p nekoray/DEBIAN
 mkdir -p nekoray/opt
