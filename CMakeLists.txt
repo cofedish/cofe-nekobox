@@ -163,6 +163,8 @@ set(PROJECT_SOURCES
         ui/ThemeManager.cpp
         ui/Typography.cpp
         ui/Typography.hpp
+        ui/UpdateService.cpp
+        ui/UpdateService.hpp
         ui/Icon.cpp
 
         ui/mainwindow_grpc.cpp
