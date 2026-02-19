@@ -207,6 +207,10 @@ jobs:
           ####
           bash ../libs/package_appimage.sh
           mv CofeBox-x86_64.AppImage $version_standalone-linux-x64.AppImage
+      - name: Generate checksums
+        run: |
+          cd deployment
+          sha256sum *.zip *.AppImage *.deb > sha256sums.txt
       - name: Clean Up
         run: |
           cd deployment
