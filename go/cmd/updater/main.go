@@ -1,62 +1,56 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
-	"time"
 )
 
 func main() {
-	// update & launcher
-	exe, err := os.Executable()
+	exePath, err := os.Executable()
 	if err != nil {
-		panic(err.Error())
+		log.Fatalf("resolve executable: %v", err)
 	}
 
-	wd := filepath.Dir(exe)
-	os.Chdir(wd)
-	exe = filepath.Base(os.Args[0])
-	log.Println("exe:", exe, "exe dir:", wd)
+	wd := filepath.Dir(exePath)
+	_ = os.Chdir(wd)
 
-	if strings.HasPrefix(strings.ToLower(exe), "updater") {
-		if runtime.GOOS == "windows" {
-			if strings.HasPrefix(strings.ToLower(exe), "updater.old") {
-				// 2. "updater.old" update files
-				time.Sleep(time.Second)
-				Updater()
-				// 3. start
-				exec.Command("./nekobox.exe").Start()
-			} else {
-				// 1. main prog quit and run "updater.exe"
-				Copy("./updater.exe", "./updater.old")
-				exec.Command("./updater.old", os.Args[1:]...).Start()
-			}
-		} else {
-			// 1. update files
-			Updater()
-			// 2. start
-			if os.Getenv("NKR_FROM_LAUNCHER") == "1" {
-				Launcher()
-			} else {
-				exec.Command("./nekobox").Start()
-			}
+	exeBase := strings.ToLower(filepath.Base(os.Args[0]))
+	log.Printf("exe=%s dir=%s args=%v", exeBase, wd, os.Args[1:])
+
+	if hasArg("--mode") {
+		if err := runAutoUpdateFromArgs(); err != nil {
+			log.Printf("auto-update failed: %v", err)
+			MessageBoxPlain("CofeBox Updater", "Update failed:\n\n"+err.Error())
+			os.Exit(1)
 		}
 		return
-	} else if strings.HasPrefix(strings.ToLower(exe), "launcher") {
+	}
+
+	if strings.HasPrefix(exeBase, "launcher") {
 		Launcher()
 		return
 	}
-	log.Fatalf("wrong name")
+
+	// Legacy entrypoint compatibility.
+	if strings.HasPrefix(exeBase, "updater") {
+		if err := runLegacyUpdaterEntry(exeBase, os.Args[1:]); err != nil {
+			log.Printf("legacy updater failed: %v", err)
+			MessageBoxPlain("CofeBox Updater", "Update failed:\n\n"+err.Error())
+			os.Exit(1)
+		}
+		return
+	}
+
+	log.Fatalf("unsupported executable name: %s", exeBase)
 }
 
-func Copy(src string, dst string) {
-	// Read all content of src to data
-	data, _ := ioutil.ReadFile(src)
-	// Write data to dst
-	ioutil.WriteFile(dst, data, 0644)
+func hasArg(name string) bool {
+	for _, arg := range os.Args[1:] {
+		if arg == name {
+			return true
+		}
+	}
+	return false
 }
