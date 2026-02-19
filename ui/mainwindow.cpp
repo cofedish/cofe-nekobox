@@ -896,7 +896,7 @@ void MainWindow::bind_update_service() {
     if (update_service == nullptr) return;
 
     connect(update_service, &UpdateService::messageChanged, this, [this] { refresh_update_ui(); });
-    connect(update_service, &UpdateService::updateInfoChanged, this, [this](const UpdateService::UpdateInfo &) { refresh_update_ui(); });
+    connect(update_service, &UpdateService::updateInfoChanged, this, [this] { refresh_update_ui(); });
     connect(update_service, &UpdateService::progressChanged, this, [this](double progress) {
         if (about_update_progress != nullptr) {
             about_update_progress->setValue(static_cast<int>(progress * 100.0));

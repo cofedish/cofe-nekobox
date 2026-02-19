@@ -38,7 +38,6 @@ QString joinDetail(const QString &a, const QString &b) {
 } // namespace
 
 UpdateService::UpdateService(QObject *parent) : QObject(parent) {
-    qRegisterMetaType<UpdateService::UpdateInfo>("UpdateService::UpdateInfo");
     network_ = new QNetworkAccessManager(this);
     info_.currentVersion = AppInfo::Version();
     QString modeReason;
@@ -92,7 +91,7 @@ void UpdateService::checkForUpdates(bool manual) {
     QString modeReason;
     info_.installMode = detectInstallMode(&modeReason);
     if (!modeReason.isEmpty()) info_.autoInstallReason = modeReason;
-    emit updateInfoChanged(info_);
+    emit updateInfoChanged();
 
     setState(State::Checking, tr("Checking for updates..."));
     appendLog(QStringLiteral("Check started manual=%1 mode=%2 reason=%3")
@@ -418,7 +417,7 @@ void UpdateService::handleCheckReply(QNetworkReply *reply) {
 
     if (cmp >= 0) {
         setState(State::UpToDate, tr("You are using the latest version."));
-        emit updateInfoChanged(info_);
+        emit updateInfoChanged();
         return;
     }
 
@@ -464,7 +463,7 @@ void UpdateService::handleCheckReply(QNetworkReply *reply) {
 
     if (targetAsset.name.isEmpty() || !isTrustedReleaseAssetUrl(targetAsset.url)) {
         setFailure(tr("No compatible update asset found for this system."));
-        emit updateInfoChanged(info_);
+        emit updateInfoChanged();
         return;
     }
 
@@ -505,7 +504,7 @@ void UpdateService::handleCheckReply(QNetworkReply *reply) {
                   .arg(info_.latestVersion, info_.assetName, checksumsName,
                        info_.autoInstallSupported ? "true" : "false"));
     setState(State::UpdateAvailable, tr("Update available: v%1").arg(info_.latestVersion));
-    emit updateInfoChanged(info_);
+    emit updateInfoChanged();
 }
 
 void UpdateService::handleChecksumsReply(QNetworkReply *reply) {

@@ -73,7 +73,7 @@ signals:
     void stateChanged(UpdateService::State state);
     void progressChanged(double progress01);
     void messageChanged(const QString &message);
-    void updateInfoChanged(const UpdateService::UpdateInfo &info);
+    void updateInfoChanged();
     void restartSuggested();
     void requestApplicationExitForInstall();
 
@@ -149,5 +149,3 @@ private:
     bool lastCheckManual_ = false;
     UpdateInfo info_;
 };
-
-Q_DECLARE_METATYPE(UpdateService::UpdateInfo)
