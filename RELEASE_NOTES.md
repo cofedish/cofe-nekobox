@@ -1,3 +1,10 @@
+# Release 1.2.1
+
+- Linux AppImage: fixed TUN enable flow via extracted writable helper + one-time `setcap` through `pkexec`.
+- Added clear diagnostics/errors for missing `/dev/net/tun`, missing `pkexec`, and missing `setcap`.
+- Added two new themes: `BAD600 Светлая` and `BAD600 Тёмная` (accent `#BAD600`).
+- Added Linux TUN documentation (`docs/TUN_LINUX.md`) and smoke QA guide (`docs/QA_SMOKE.md`).
+
 # Release 1.2.0
 
 - Fixed Home status/profile line truncation: now uses full available width and elides only on real overflow.

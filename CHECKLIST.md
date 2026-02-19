@@ -39,3 +39,11 @@
 - [x] Linux (deb + AppImage): `Подключено` не жирный, не обрезается, круг соразмерный - OK (code).
 - [x] Другие страницы (Settings/Profiles/Servers/Rules/About) не ломаются по шрифтам - OK (code).
 - [x] Темы (Light/Dark/Lucifer/System) сохраняют контраст и типографику - OK (code).
+
+## v1.2.1 AppImage TUN + BAD600 + routing smoke
+
+- [x] Linux AppImage: TUN one-time setup flow (extract helper + setcap via pkexec) реализован - OK (code).
+- [x] Linux AppImage: есть явные ошибки для `/dev/net/tun`, `pkexec`, `setcap`, без silent-fail - OK (code).
+- [x] Тема: добавлены `BAD600 Светлая` и `BAD600 Тёмная` с accent `#BAD600` - OK (code).
+- [x] Subscription proxy: сценарий smoke описан и не затронут изменениями core routing - OK (code review).
+- [x] Whitelist/bypass/direct: генерация правил и smoke-валидация описаны - OK (code review).
