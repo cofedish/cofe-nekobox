@@ -1396,6 +1396,34 @@ If still not working, see documentation for more information.
         <translation>Менеджер прокси на Qt для sing-box.\nВерсия: %1</translation>
     </message>
     <message>
+        <source>Check updates</source>
+        <translation>Проверить обновления</translation>
+    </message>
+    <message>
+        <source>Open release page</source>
+        <translation>Открыть страницу релиза</translation>
+    </message>
+    <message>
+        <source>Open update logs</source>
+        <translation>Открыть логи обновления</translation>
+    </message>
+    <message>
+        <source>Update available: v%1</source>
+        <translation>Доступно обновление: v%1</translation>
+    </message>
+    <message>
+        <source>Update installed. Restart now?</source>
+        <translation>Обновление установлено. Перезапустить сейчас?</translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation>Версия: %1</translation>
+    </message>
+    <message>
+        <source>Update to v%1</source>
+        <translation>Обновить до v%1</translation>
+    </message>
+    <message>
         <source>Invalid input</source>
         <translation>Некорректный ввод</translation>
     </message>
@@ -1921,6 +1949,221 @@ Release note:
     <message>
         <source>You can not input space characters here.</source>
         <translation>Сюда нельзя вводить пробелы.</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateService</name>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>Проверяем обновления...</translation>
+    </message>
+    <message>
+        <source>Update check could not start.</source>
+        <translation>Не удалось запустить проверку обновлений.</translation>
+    </message>
+    <message>
+        <source>Automatic update is unavailable.</source>
+        <translation>Автоматическое обновление недоступно.</translation>
+    </message>
+    <message>
+        <source>Update asset metadata is incomplete.</source>
+        <translation>Метаданные файла обновления неполные.</translation>
+    </message>
+    <message>
+        <source>Temporary directory is unavailable.</source>
+        <translation>Временная директория недоступна.</translation>
+    </message>
+    <message>
+        <source>Cannot create update directory.</source>
+        <translation>Не удалось создать директорию обновления.</translation>
+    </message>
+    <message>
+        <source>Cannot prepare update workspace.</source>
+        <translation>Не удалось подготовить рабочую директорию обновления.</translation>
+    </message>
+    <message>
+        <source>Downloading checksums...</source>
+        <translation>Скачиваем контрольные суммы...</translation>
+    </message>
+    <message>
+        <source>Failed to request checksums.</source>
+        <translation>Не удалось запросить файл контрольных сумм.</translation>
+    </message>
+    <message>
+        <source>Application directory is read-only: %1</source>
+        <translation>Директория приложения доступна только для чтения: %1</translation>
+    </message>
+    <message>
+        <source>AppImage file is not writable: %1</source>
+        <translation>Файл AppImage недоступен для записи: %1</translation>
+    </message>
+    <message>
+        <source>Unknown Linux installation type.</source>
+        <translation>Неизвестный тип установки на Linux.</translation>
+    </message>
+    <message>
+        <source>Unsupported platform.</source>
+        <translation>Неподдерживаемая платформа.</translation>
+    </message>
+    <message>
+        <source>No write permission for %1</source>
+        <translation>Нет прав на запись в %1</translation>
+    </message>
+    <message>
+        <source>Directory does not exist: %1</source>
+        <translation>Директория не существует: %1</translation>
+    </message>
+    <message>
+        <source>Update check failed.</source>
+        <translation>Проверка обновлений завершилась ошибкой.</translation>
+    </message>
+    <message>
+        <source>Could not parse release metadata.</source>
+        <translation>Не удалось разобрать метаданные релиза.</translation>
+    </message>
+    <message>
+        <source>Release source is not trusted.</source>
+        <translation>Источник релиза не является доверенным.</translation>
+    </message>
+    <message>
+        <source>You are using the latest version.</source>
+        <translation>У вас уже установлена последняя версия.</translation>
+    </message>
+    <message>
+        <source>No compatible update asset found for this system.</source>
+        <translation>Для этой системы не найден совместимый файл обновления.</translation>
+    </message>
+    <message>
+        <source>pkexec is missing. Install policykit-1 to enable automatic .deb update.</source>
+        <translation>Команда pkexec не найдена. Установите policykit-1 для автоматического обновления .deb.</translation>
+    </message>
+    <message>
+        <source>Release has no checksums file (sha256sums.txt).</source>
+        <translation>В релизе отсутствует файл контрольных сумм (sha256sums.txt).</translation>
+    </message>
+    <message>
+        <source>Checksums source is not trusted.</source>
+        <translation>Источник файла контрольных сумм не является доверенным.</translation>
+    </message>
+    <message>
+        <source>Cannot determine installation type for automatic update.</source>
+        <translation>Не удалось определить тип установки для автоматического обновления.</translation>
+    </message>
+    <message>
+        <source>Update available: v%1</source>
+        <translation>Доступно обновление: v%1</translation>
+    </message>
+    <message>
+        <source>Failed to download checksums.</source>
+        <translation>Не удалось скачать файл контрольных сумм.</translation>
+    </message>
+    <message>
+        <source>Checksums file does not contain target asset hash.</source>
+        <translation>Файл контрольных сумм не содержит хеш нужного артефакта.</translation>
+    </message>
+    <message>
+        <source>Checksums file contains invalid SHA256 value.</source>
+        <translation>Файл контрольных сумм содержит некорректное значение SHA256.</translation>
+    </message>
+    <message>
+        <source>Cannot write downloaded update package.</source>
+        <translation>Не удалось записать скачанный пакет обновления.</translation>
+    </message>
+    <message>
+        <source>Downloading update package...</source>
+        <translation>Скачиваем пакет обновления...</translation>
+    </message>
+    <message>
+        <source>Failed to start update download.</source>
+        <translation>Не удалось начать скачивание обновления.</translation>
+    </message>
+    <message>
+        <source>Failed to download update package.</source>
+        <translation>Не удалось скачать пакет обновления.</translation>
+    </message>
+    <message>
+        <source>Downloaded package size mismatch.</source>
+        <translation>Размер скачанного пакета не совпадает с ожидаемым.</translation>
+    </message>
+    <message>
+        <source>Expected: %1 bytes\nActual: %2 bytes</source>
+        <translation>Ожидалось: %1 байт\nПолучено: %2 байт</translation>
+    </message>
+    <message>
+        <source>Verifying package integrity...</source>
+        <translation>Проверяем целостность пакета...</translation>
+    </message>
+    <message>
+        <source>SHA256 verification failed.</source>
+        <translation>Проверка SHA256 не пройдена.</translation>
+    </message>
+    <message>
+        <source>Expected: %1\nActual: %2</source>
+        <translation>Ожидалось: %1\nПолучено: %2</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>Устанавливаем обновление...</translation>
+    </message>
+    <message>
+        <source>Updater helper is missing.</source>
+        <translation>Отсутствует вспомогательная утилита обновления.</translation>
+    </message>
+    <message>
+        <source>Expected cofebox-updater in %1</source>
+        <translation>Ожидался cofebox-updater в %1</translation>
+    </message>
+    <message>
+        <source>AppImage path is not available.</source>
+        <translation>Путь к AppImage недоступен.</translation>
+    </message>
+    <message>
+        <source>AppImage file is not writable.</source>
+        <translation>Файл AppImage недоступен для записи.</translation>
+    </message>
+    <message>
+        <source>Automatic install mode is unsupported on this platform.</source>
+        <translation>Автоматическая установка не поддерживается на этой платформе.</translation>
+    </message>
+    <message>
+        <source>Failed to start updater helper.</source>
+        <translation>Не удалось запустить вспомогательную утилиту обновления.</translation>
+    </message>
+    <message>
+        <source>Updater started. Restarting application...</source>
+        <translation>Утилита обновления запущена. Перезапускаем приложение...</translation>
+    </message>
+    <message>
+        <source>Deb install is only supported on Linux.</source>
+        <translation>Установка .deb поддерживается только на Linux.</translation>
+    </message>
+    <message>
+        <source>pkexec is required for .deb installation.</source>
+        <translation>Для установки .deb требуется pkexec.</translation>
+    </message>
+    <message>
+        <source>Install policykit-1 package and try again.</source>
+        <translation>Установите пакет policykit-1 и попробуйте снова.</translation>
+    </message>
+    <message>
+        <source>Downloaded .deb path is empty.</source>
+        <translation>Путь к скачанному .deb пуст.</translation>
+    </message>
+    <message>
+        <source>Failed to start .deb installer.</source>
+        <translation>Не удалось запустить установщик .deb.</translation>
+    </message>
+    <message>
+        <source>Installing .deb package (administrator access required)...</source>
+        <translation>Устанавливаем пакет .deb (нужны права администратора)...</translation>
+    </message>
+    <message>
+        <source>Update installed successfully. Restart to apply changes.</source>
+        <translation>Обновление успешно установлено. Перезапустите приложение для применения изменений.</translation>
+    </message>
+    <message>
+        <source>Deb install failed.</source>
+        <translation>Установка .deb завершилась ошибкой.</translation>
     </message>
 </context>
 <context>
