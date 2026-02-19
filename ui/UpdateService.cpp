@@ -214,7 +214,7 @@ void UpdateService::setFailure(const QString &shortMessage, const QString &detai
     }
 }
 
-void UpdateService::appendLog(const QString &line) {
+void UpdateService::appendLog(const QString &line) const {
     QDir dir(QDir::current());
     if (!dir.exists("logs")) {
         dir.mkpath("logs");

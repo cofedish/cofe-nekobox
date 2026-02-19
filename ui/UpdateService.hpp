@@ -103,7 +103,7 @@ private:
     void setState(State state, const QString &message = {});
     void setProgress(double progress01);
     void setFailure(const QString &shortMessage, const QString &detailMessage = {});
-    void appendLog(const QString &line);
+    void appendLog(const QString &line) const;
 
     InstallMode detectInstallMode(QString *reason) const;
     bool isAppImage() const;

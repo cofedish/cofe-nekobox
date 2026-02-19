@@ -5,6 +5,7 @@
 #include "db/ConfigBuilder.hpp"
 #include "db/traffic/TrafficLooper.hpp"
 #include "rpc/gRPC.h"
+#include "ui/UpdateService.hpp"
 #include "ui/widget/MessageBoxTimer.h"
 
 #include <QTimer>
