@@ -482,6 +482,7 @@ void UpdateService::handleCheckReply(QNetworkReply *reply) {
     info_.assetName = targetAsset.name;
     info_.assetUrl = targetAsset.url;
     info_.checksumsUrl = checksumsUrl;
+    info_.assetSize = targetAsset.size;
     info_.autoInstallSupported = info_.installMode != InstallMode::Unknown;
 #ifdef Q_OS_LINUX
     if (info_.installMode == InstallMode::LinuxDeb && !Linux_HavePkexec()) {
@@ -525,6 +526,10 @@ void UpdateService::handleChecksumsReply(QNetworkReply *reply) {
     expectedSha256_ = findChecksumForAsset(payload, info_.assetName);
     if (expectedSha256_.isEmpty()) {
         setFailure(tr("Checksums file does not contain target asset hash."), info_.assetName);
+        return;
+    }
+    if (expectedSha256_.size() != 64) {
+        setFailure(tr("Checksums file contains invalid SHA256 value."), expectedSha256_);
         return;
     }
     appendLog(QStringLiteral("Checksums loaded for asset=%1 sha256=%2").arg(info_.assetName, expectedSha256_));
@@ -586,6 +591,14 @@ void UpdateService::handleAssetReplyFinished(QNetworkReply *reply) {
     if (error != QNetworkReply::NoError) {
         setFailure(tr("Failed to download update package."), joinDetail(QStringLiteral("HTTP %1").arg(httpCode), errorString));
         return;
+    }
+    if (info_.assetSize > 0) {
+        QFileInfo fi(downloadedAssetPath_);
+        if (fi.size() != info_.assetSize) {
+            setFailure(tr("Downloaded package size mismatch."),
+                       tr("Expected: %1 bytes\nActual: %2 bytes").arg(info_.assetSize).arg(fi.size()));
+            return;
+        }
     }
 
     setProgress(1.0);

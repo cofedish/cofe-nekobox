@@ -46,6 +46,7 @@ public:
         QString assetName;
         QUrl assetUrl;
         QUrl checksumsUrl;
+        qint64 assetSize = -1;
         InstallMode installMode = InstallMode::Unknown;
         bool available = false;
         bool autoInstallSupported = false;
