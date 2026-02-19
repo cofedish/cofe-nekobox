@@ -13,6 +13,10 @@ namespace NekoGui {
     QString FindCoreAsset(const QString &name);
 
     QString FindNekoBoxCoreRealPath();
+    QString ResolveNekoBoxCorePathForRuntime();
+    bool IsRunningFromAppImage();
+    QString AppImageExtractedCorePath();
+    bool EnsureAppImageCoreExtracted(QString *outPath = nullptr, QString *error = nullptr);
 
     bool IsAdmin();
 } // namespace NekoGui

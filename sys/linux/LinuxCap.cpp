@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QStandardPaths>
+#include <QFileInfo>
 
 #define EXIT_CODE(p) (p.exitStatus() == QProcess::NormalExit ? p.exitCode() : -1)
 
@@ -32,6 +33,30 @@ bool Linux_HavePkexec() {
     p.start();
     p.waitForFinished(500);
     return EXIT_CODE(p) == 0;
+}
+
+bool Linux_HaveSetcap() {
+    const auto setcapExec = Linux_FindCapProgsExec("setcap");
+    return QFileInfo::exists(setcapExec) && QFileInfo(setcapExec).isExecutable();
+}
+
+bool Linux_HaveTunDevice(QString *details) {
+    const QFileInfo fi("/dev/net/tun");
+    if (!fi.exists()) {
+        if (details != nullptr) *details = QStringLiteral("/dev/net/tun does not exist");
+        return false;
+    }
+    if (!fi.isReadable() || !fi.isWritable()) {
+        if (details != nullptr) {
+            *details = QStringLiteral("/dev/net/tun exists but has insufficient access (%1)")
+                           .arg(static_cast<int>(fi.permissions()));
+        }
+        return false;
+    }
+    if (details != nullptr) {
+        *details = QStringLiteral("/dev/net/tun is available");
+    }
+    return true;
 }
 
 QString Linux_FindCapProgsExec(const QString &name) {

@@ -8,6 +8,9 @@
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QProcessEnvironment>
+#include <QStandardPaths>
+#include <QCryptographicHash>
 
 #include "main/AppInfo.hpp"
 
@@ -442,6 +445,102 @@ namespace NekoGui {
         return fn;
     }
 
+    namespace {
+        QByteArray HashFileSha256(const QString &path) {
+            QFile f(path);
+            if (!f.open(QIODevice::ReadOnly)) return {};
+            QCryptographicHash hash(QCryptographicHash::Sha256);
+            while (!f.atEnd()) {
+                hash.addData(f.read(1024 * 128));
+            }
+            return hash.result();
+        }
+    } // namespace
+
+    bool IsRunningFromAppImage() {
+#ifdef Q_OS_LINUX
+        return QProcessEnvironment::systemEnvironment().contains("APPIMAGE");
+#else
+        return false;
+#endif
+    }
+
+    QString AppImageExtractedCorePath() {
+#ifdef Q_OS_LINUX
+        auto base = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+        if (base.isEmpty()) {
+            base = QDir::homePath() + "/.local/share/" + AppInfo::AppId();
+        }
+        return QDir(base).filePath("bin/nekobox_core");
+#else
+        return FindNekoBoxCoreRealPath();
+#endif
+    }
+
+    bool EnsureAppImageCoreExtracted(QString *outPath, QString *error) {
+#ifdef Q_OS_LINUX
+        const auto sourcePath = FindNekoBoxCoreRealPath();
+        if (!IsRunningFromAppImage()) {
+            if (outPath != nullptr) *outPath = sourcePath;
+            return true;
+        }
+        if (!QFileInfo::exists(sourcePath)) {
+            if (error != nullptr) *error = QStringLiteral("Core binary not found: %1").arg(sourcePath);
+            return false;
+        }
+
+        const auto targetPath = AppImageExtractedCorePath();
+        const auto targetDir = QFileInfo(targetPath).absolutePath();
+        if (!QDir().mkpath(targetDir)) {
+            if (error != nullptr) *error = QStringLiteral("Unable to create helper directory: %1").arg(targetDir);
+            return false;
+        }
+
+        const QFileInfo srcInfo(sourcePath);
+        const QFileInfo dstInfo(targetPath);
+        const bool needsCopy = !dstInfo.exists() ||
+            srcInfo.size() != dstInfo.size() ||
+            HashFileSha256(sourcePath) != HashFileSha256(targetPath);
+
+        if (needsCopy) {
+            QFile::remove(targetPath);
+            if (!QFile::copy(sourcePath, targetPath)) {
+                if (error != nullptr) {
+                    *error = QStringLiteral("Unable to copy helper from %1 to %2").arg(sourcePath, targetPath);
+                }
+                return false;
+            }
+            QFile::setPermissions(targetPath, QFile::permissions(targetPath) |
+                                              QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner |
+                                              QFileDevice::ReadUser | QFileDevice::ExeUser |
+                                              QFileDevice::ReadGroup | QFileDevice::ExeGroup |
+                                              QFileDevice::ReadOther | QFileDevice::ExeOther);
+        }
+
+        if (outPath != nullptr) *outPath = targetPath;
+        return true;
+#else
+        if (outPath != nullptr) *outPath = FindNekoBoxCoreRealPath();
+        Q_UNUSED(error)
+        return true;
+#endif
+    }
+
+    QString ResolveNekoBoxCorePathForRuntime() {
+#ifdef Q_OS_LINUX
+        if (IsRunningFromAppImage()) {
+            QString helperPath;
+            QString helperError;
+            if (EnsureAppImageCoreExtracted(&helperPath, &helperError) && QFileInfo::exists(helperPath)) {
+                qDebug() << "[tun] using extracted helper:" << helperPath;
+                return helperPath;
+            }
+            qDebug() << "[tun] failed to prepare extracted helper:" << helperError;
+        }
+#endif
+        return FindNekoBoxCoreRealPath();
+    }
+
     short isAdminCache = -1;
 
     // IsAdmin 主要判断：有无权限启动 Tun
@@ -453,6 +552,7 @@ namespace NekoGui {
         admin = Windows_IsInAdmin();
 #else
 #ifdef Q_OS_LINUX
+        admin |= Linux_GetCapString(ResolveNekoBoxCorePathForRuntime()).contains("cap_net_admin");
         admin |= Linux_GetCapString(FindNekoBoxCoreRealPath()).contains("cap_net_admin");
 #endif
         admin |= geteuid() == 0;

@@ -83,7 +83,7 @@ namespace {
         if (key == "0" || key == "system") return "system";
         if (key == "1" || key == "light") return "light";
         if (key == "2" || key == "dark") return "dark";
-        if (key == "lucifer") return "lucifer";
+        if (key == "3" || key == "lucifer") return "lucifer";
         return "system";
     }
 
@@ -697,8 +697,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     NekoGui::dataStore->core_port = MkPort();
     if (NekoGui::dataStore->core_port <= 0) NekoGui::dataStore->core_port = 19810;
 
-    auto core_path = QApplication::applicationDirPath() + "/";
-    core_path += "nekobox_core";
+    auto core_path = NekoGui::ResolveNekoBoxCorePathForRuntime();
+    if (core_path.isEmpty()) {
+        core_path = QApplication::applicationDirPath() + "/nekobox_core";
+    }
 
     QStringList args;
     args.push_back("nekobox");
@@ -1102,33 +1104,92 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_vpn) {
         if (enable) {
             if (NekoGui::dataStore->vpn_internal_tun) {
+#ifdef Q_OS_LINUX
+                QString tunDeviceDetails;
+                if (!Linux_HaveTunDevice(&tunDeviceDetails)) {
+                    MessageBoxWarning(software_name, tr("TUN device is unavailable: %1").arg(tunDeviceDetails));
+                    MW_show_log("[tun] " + tunDeviceDetails);
+                    neko_set_spmode_FAILED
+                }
+
+                QString runtimeCorePath;
+                QString prepareError;
+                if (!NekoGui::EnsureAppImageCoreExtracted(&runtimeCorePath, &prepareError)) {
+                    MessageBoxWarning(software_name, tr("Failed to prepare TUN helper: %1").arg(prepareError));
+                    MW_show_log("[tun] helper prepare failed: " + prepareError);
+                    neko_set_spmode_FAILED
+                }
+                if (runtimeCorePath.isEmpty()) {
+                    runtimeCorePath = NekoGui::ResolveNekoBoxCorePathForRuntime();
+                }
+                if (!QFileInfo::exists(runtimeCorePath)) {
+                    MessageBoxWarning(software_name, tr("TUN helper not found: %1").arg(runtimeCorePath));
+                    MW_show_log("[tun] helper missing: " + runtimeCorePath);
+                    neko_set_spmode_FAILED
+                }
+                MW_show_log(QStringLiteral("[tun] diagnostics appimage=%1 uid=%2 euid=%3 core=%4")
+                                .arg(NekoGui::IsRunningFromAppImage() ? "1" : "0")
+                                .arg(getuid())
+                                .arg(geteuid())
+                                .arg(runtimeCorePath));
+                MW_show_log(QStringLiteral("[tun] diagnostics /dev/net/tun: %1").arg(tunDeviceDetails));
+
                 bool requestPermission = !NekoGui::IsAdmin();
                 if (requestPermission) {
-#ifdef Q_OS_LINUX
-                    if (!Linux_HavePkexec()) {
-                        MessageBoxWarning(software_name, "Please install \"pkexec\" first.");
+                    if (!Linux_HaveSetcap()) {
+                        MessageBoxWarning(software_name, tr("Please install \"setcap\" (libcap2-bin) first."));
                         neko_set_spmode_FAILED
                     }
-                    auto ret = Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin=ep");
+                    if (!Linux_HavePkexec()) {
+                        MessageBoxWarning(software_name, tr("Please install \"pkexec\" (policykit-1) first."));
+                        neko_set_spmode_FAILED
+                    }
+
+                    auto question = tr("CofeBox needs one-time administrator permission to enable TUN.\n\n"
+                                       "It will set capabilities on:\n%1\n\n"
+                                       "Continue?")
+                                        .arg(runtimeCorePath);
+                    auto n = QMessageBox::question(GetMessageBoxParent(), software_name, question,
+                                                   QMessageBox::Yes | QMessageBox::No);
+                    if (n != QMessageBox::Yes) {
+                        MessageBoxWarning(software_name, tr("TUN setup canceled."));
+                        neko_set_spmode_FAILED
+                    }
+
+                    const auto caps = QStringLiteral("cap_net_admin,cap_net_bind_service=ep");
+                    MW_show_log(QStringLiteral("[tun] applying setcap '%1' to %2").arg(caps, runtimeCorePath));
+                    auto ret = Linux_Pkexec_SetCapString(runtimeCorePath, caps);
                     if (ret == 0) {
+                        MW_show_log(QStringLiteral("[tun] setcap applied to %1").arg(runtimeCorePath));
+                        show_toast_success(tr("TUN is ready. Restarting CofeBox..."));
                         this->exit_reason = 3;
                         on_menu_exit_triggered();
                     } else {
-                        MessageBoxWarning(software_name, "Setcap for Tun mode failed.\n\n1. You may canceled the dialog.\n2. You may be using an incompatible environment like AppImage.");
-                        if (QProcessEnvironment::systemEnvironment().contains("APPIMAGE")) {
-                            MW_show_log("If you are using AppImage, it's impossible to start a Tun. Please use other package instead.");
-                        }
+                        auto capOutput = Linux_GetCapString(runtimeCorePath);
+                        MessageBoxWarning(software_name,
+                                          tr("Setcap for TUN mode failed.\n\n"
+                                             "Return code: %1\nPath: %2\n\n"
+                                             "Make sure pkexec is available and you accepted the elevation dialog.")
+                                              .arg(ret)
+                                              .arg(runtimeCorePath));
+                        MW_show_log(QStringLiteral("[tun] setcap failed rc=%1 path=%2 getcap=%3")
+                                        .arg(ret)
+                                        .arg(runtimeCorePath, capOutput.trimmed()));
                     }
+                    neko_set_spmode_FAILED
+                }
 #endif
 #ifdef Q_OS_WIN
+                bool requestPermission = !NekoGui::IsAdmin();
+                if (requestPermission) {
                     auto n = QMessageBox::warning(GetMessageBoxParent(), software_name, tr("Please run CofeBox as admin"), QMessageBox::Yes | QMessageBox::No);
                     if (n == QMessageBox::Yes) {
                         this->exit_reason = 3;
                         on_menu_exit_triggered();
                     }
-#endif
                     neko_set_spmode_FAILED
                 }
+#endif
             } else {
                 if (NekoGui::dataStore->need_keep_vpn_off) {
                     MessageBoxWarning(software_name, tr("Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart."));
