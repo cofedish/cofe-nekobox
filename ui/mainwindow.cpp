@@ -9,6 +9,7 @@
 #include "sys/AutoRun.hpp"
 
 #include "ui/ThemeManager.hpp"
+#include "ui/UpdateService.hpp"
 #include "ui/Icon.hpp"
 #include "ui/widget/WaveBackground.h"
 #include "ui/widget/ConnectButton.h"
@@ -67,6 +68,8 @@
 #include <QSizePolicy>
 #include <QDir>
 #include <QFileInfo>
+#include <QProgressBar>
+#include <QPlainTextEdit>
 
 #include "ui/widget/ToastWidget.h"
 
@@ -168,6 +171,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
+    update_service = new UpdateService(this);
+    setup_update_ui();
+    bind_update_service();
     if (ui->home_center != nullptr) {
         ui->home_center->setMaximumWidth(QWIDGETSIZE_MAX);
         ui->home_center->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -748,6 +754,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(TM_auto_update_subsctiption, &QTimer::timeout, this, [&] { UI_update_all_groups(true); });
     TM_auto_update_subsctiption_Reset_Minute(NekoGui::dataStore->sub_auto_update);
 
+    if (NekoGui::dataStore->check_update_on_start) {
+        QTimer::singleShot(1500, this, [this] {
+            if (update_service == nullptr) return;
+            update_service->checkForUpdates(false);
+        });
+    }
+
     if (!NekoGui::dataStore->flag_tray) show();
 }
 
@@ -802,6 +815,182 @@ void MainWindow::sync_drawer_theme(const QString &themeKey) {
     }
     const auto option = themeManager->ThemeOptionFor(normalized);
     ui->drawer_theme_label->setText(tr("Theme: %1").arg(option.displayName));
+}
+
+void MainWindow::setup_update_ui() {
+    if (ui == nullptr || ui->aboutLayout == nullptr) return;
+
+    about_update_status = new QLabel(ui->page_about);
+    about_update_status->setObjectName("about_update_status");
+    about_update_status->setWordWrap(true);
+    about_update_status->setAlignment(Qt::AlignHCenter);
+
+    about_update_progress = new QProgressBar(ui->page_about);
+    about_update_progress->setObjectName("about_update_progress");
+    about_update_progress->setRange(0, 100);
+    about_update_progress->setValue(0);
+    about_update_progress->setTextVisible(false);
+    about_update_progress->setVisible(false);
+
+    about_update_check = new QPushButton(tr("Check updates"), ui->page_about);
+    about_update_action = new QPushButton(tr("Update now"), ui->page_about);
+    about_update_release = new QPushButton(tr("Open release page"), ui->page_about);
+    about_update_logs = new QPushButton(tr("Open update logs"), ui->page_about);
+    about_update_details = new QPushButton(tr("Details"), ui->page_about);
+    for (auto *button : {about_update_check, about_update_action, about_update_release, about_update_logs, about_update_details}) {
+        if (button == nullptr) continue;
+        button->setFocusPolicy(Qt::NoFocus);
+    }
+
+    about_update_details_text = new QPlainTextEdit(ui->page_about);
+    about_update_details_text->setReadOnly(true);
+    about_update_details_text->setVisible(false);
+    about_update_details_text->setMaximumHeight(160);
+
+    auto row = new QHBoxLayout();
+    row->setSpacing(8);
+    row->addStretch();
+    row->addWidget(about_update_check);
+    row->addWidget(about_update_action);
+    row->addWidget(about_update_release);
+    row->addWidget(about_update_logs);
+    row->addWidget(about_update_details);
+    row->addStretch();
+
+    const int insertIndex = qMax(0, ui->aboutLayout->count() - 1);
+    ui->aboutLayout->insertWidget(insertIndex, about_update_status);
+    ui->aboutLayout->insertWidget(insertIndex + 1, about_update_progress);
+    ui->aboutLayout->insertLayout(insertIndex + 2, row);
+    ui->aboutLayout->insertWidget(insertIndex + 3, about_update_details_text);
+
+    connect(about_update_check, &QPushButton::clicked, this, [this] {
+        if (update_service != nullptr) {
+            update_service->checkForUpdates(true);
+        }
+    });
+    connect(about_update_action, &QPushButton::clicked, this, [this] {
+        if (update_service != nullptr) {
+            update_service->startUpdate();
+        }
+    });
+    connect(about_update_release, &QPushButton::clicked, this, [this] {
+        if (update_service != nullptr && update_service->info().releaseUrl.isValid()) {
+            QDesktopServices::openUrl(update_service->info().releaseUrl);
+        } else {
+            QDesktopServices::openUrl(QUrl(AppInfo::RepoUrl() + "/releases"));
+        }
+    });
+    connect(about_update_logs, &QPushButton::clicked, this, [this] {
+        if (update_service == nullptr) return;
+        const QString path = update_service->logFilePath();
+        QFileInfo fi(path);
+        if (!fi.exists()) {
+            QDir(fi.absolutePath()).mkpath(".");
+        }
+        QDesktopServices::openUrl(QUrl::fromLocalFile(path));
+    });
+    connect(about_update_details, &QPushButton::clicked, this, &MainWindow::show_update_error_details);
+}
+
+void MainWindow::bind_update_service() {
+    if (update_service == nullptr) return;
+
+    connect(update_service, &UpdateService::messageChanged, this, [this] { refresh_update_ui(); });
+    connect(update_service, &UpdateService::updateInfoChanged, this, [this](const UpdateService::UpdateInfo &) { refresh_update_ui(); });
+    connect(update_service, &UpdateService::progressChanged, this, [this](double progress) {
+        if (about_update_progress != nullptr) {
+            about_update_progress->setValue(static_cast<int>(progress * 100.0));
+        }
+    });
+    connect(update_service, &UpdateService::stateChanged, this, [this](UpdateService::State state) {
+        refresh_update_ui();
+        if (state == UpdateService::State::UpdateAvailable) {
+            if (!update_service->lastCheckWasManual()) {
+                show_toast_success(tr("Update available: v%1").arg(update_service->info().latestVersion));
+            }
+        } else if (state == UpdateService::State::Failed) {
+            if (update_service->lastCheckWasManual()) {
+                show_toast_error(update_service->message());
+            }
+        }
+    });
+    connect(update_service, &UpdateService::restartSuggested, this, [this] {
+        if (QMessageBox::question(this, tr("Update"), tr("Update installed. Restart now?")) == QMessageBox::Yes) {
+            exit_reason = 2;
+            on_menu_exit_triggered();
+        }
+    });
+    connect(update_service, &UpdateService::requestApplicationExitForInstall, this, [this] {
+        exit_reason = 4;
+        on_menu_exit_triggered();
+    });
+
+    refresh_update_ui();
+}
+
+void MainWindow::refresh_update_ui() {
+    if (update_service == nullptr || about_update_status == nullptr) return;
+    const auto info = update_service->info();
+    const auto state = update_service->state();
+
+    QString status = update_service->message();
+    if (status.isEmpty()) {
+        status = tr("Version: %1").arg(AppInfo::Version());
+    }
+    if (state == UpdateService::State::UpdateAvailable && !info.latestVersion.isEmpty()) {
+        status = tr("Update v%1 is available.").arg(info.latestVersion);
+        if (!info.autoInstallSupported && !info.autoInstallReason.isEmpty()) {
+            status += "\n" + info.autoInstallReason;
+        }
+    }
+    about_update_status->setText(status);
+
+    const bool showProgress = state == UpdateService::State::Downloading ||
+                              state == UpdateService::State::Verifying ||
+                              state == UpdateService::State::Installing;
+    if (about_update_progress != nullptr) {
+        about_update_progress->setVisible(showProgress);
+    }
+
+    if (about_update_check != nullptr) {
+        about_update_check->setEnabled(state != UpdateService::State::Checking &&
+                                       state != UpdateService::State::Downloading &&
+                                       state != UpdateService::State::Installing);
+    }
+
+    if (about_update_action != nullptr) {
+        about_update_action->setVisible(state == UpdateService::State::UpdateAvailable);
+        about_update_action->setText(info.latestVersion.isEmpty()
+                                         ? tr("Update now")
+                                         : tr("Update to v%1").arg(info.latestVersion));
+        about_update_action->setEnabled(state == UpdateService::State::UpdateAvailable && info.autoInstallSupported);
+        about_update_action->setToolTip(info.autoInstallSupported ? QString() : info.autoInstallReason);
+    }
+
+    if (about_update_release != nullptr) {
+        const bool showRelease = state == UpdateService::State::UpdateAvailable ||
+                                 state == UpdateService::State::Failed ||
+                                 !info.autoInstallSupported;
+        about_update_release->setVisible(showRelease);
+    }
+
+    if (about_update_logs != nullptr) {
+        about_update_logs->setVisible(true);
+    }
+
+    const QString detailText = update_service->details();
+    if (about_update_details != nullptr) {
+        about_update_details->setVisible(!detailText.isEmpty());
+    }
+    if (about_update_details_text != nullptr) {
+        about_update_details_text->setPlainText(detailText);
+        if (detailText.isEmpty()) about_update_details_text->setVisible(false);
+    }
+}
+
+void MainWindow::show_update_error_details() {
+    if (about_update_details_text == nullptr) return;
+    about_update_details_text->setVisible(!about_update_details_text->isVisible());
 }
 
 MainWindow::~MainWindow() {
@@ -1066,6 +1255,8 @@ void MainWindow::on_menu_exit_triggered() {
         } else {
             QProcess::startDetached(program, arguments);
         }
+    } else if (exit_reason == 4) {
+        // External updater helper handles installation and restart.
     }
     tray->hide();
     QCoreApplication::quit();

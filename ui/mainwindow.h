@@ -34,6 +34,11 @@ class QTimer;
 class QMenu;
 class QButtonGroup;
 class ToastWidget;
+class QLabel;
+class QPushButton;
+class QProgressBar;
+class QPlainTextEdit;
+class UpdateService;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -216,6 +221,10 @@ private:
     void sync_drawer_theme(const QString &themeKey);
     void set_home_running_text(const QString &text, const QString &tooltip = {});
     void update_home_running_elide();
+    void setup_update_ui();
+    void bind_update_service();
+    void refresh_update_ui();
+    void show_update_error_details();
 
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -239,6 +248,16 @@ private:
     static void stop_core_daemon();
 
     void CheckUpdate();
+
+    UpdateService *update_service = nullptr;
+    QLabel *about_update_status = nullptr;
+    QPushButton *about_update_check = nullptr;
+    QPushButton *about_update_action = nullptr;
+    QPushButton *about_update_release = nullptr;
+    QPushButton *about_update_logs = nullptr;
+    QPushButton *about_update_details = nullptr;
+    QProgressBar *about_update_progress = nullptr;
+    QPlainTextEdit *about_update_details_text = nullptr;
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
