@@ -68,6 +68,9 @@
 #include <QSizePolicy>
 #include <QDir>
 #include <QFileInfo>
+#include <QFile>
+#include <QCryptographicHash>
+#include <QProcessEnvironment>
 
 #include "ui/widget/ToastWidget.h"
 
@@ -132,6 +135,20 @@ namespace {
         painter.setBrush(Qt::NoBrush);
         painter.drawEllipse(rect);
         return QIcon(pixmap);
+    }
+
+    QString Sha256Hex(const QByteArray &data) {
+        return QString::fromLatin1(QCryptographicHash::hash(data, QCryptographicHash::Sha256).toHex()).toLower();
+    }
+
+    QString Sha256FileHex(const QString &path) {
+        QFile file(path);
+        if (!file.open(QIODevice::ReadOnly)) return {};
+        QCryptographicHash hash(QCryptographicHash::Sha256);
+        while (!file.atEnd()) {
+            hash.addData(file.read(1 << 16));
+        }
+        return QString::fromLatin1(hash.result().toHex()).toLower();
     }
 } // namespace
 
@@ -2530,7 +2547,26 @@ bool MainWindow::StartVPNProcess() {
     }
     //
     auto configPath = NekoGui::WriteVPNSingBoxConfig();
-    auto scriptPath = NekoGui::WriteVPNLinuxScript(configPath);
+    auto scriptPath = NekoGui::WriteVPNLinuxScript();
+    auto corePath = QDir(QApplication::applicationDirPath()).absoluteFilePath("cofebox_core");
+    if (!QFileInfo::exists(corePath)) {
+        MessageBoxWarning(tr("Error"), tr("Core binary not found for TUN mode."));
+        return false;
+    }
+#ifdef Q_OS_LINUX
+    if (!QFileInfo::exists("/dev/net/tun")) {
+        MessageBoxWarning(tr("Error"), tr("TUN device is unavailable: /dev/net/tun"));
+        return false;
+    }
+    const auto expectedScriptHash = Sha256Hex(ReadFile(":/cofebox/vpn/vpn-run-root.sh"));
+    const auto actualScriptHash = Sha256FileHex(scriptPath);
+    if (expectedScriptHash.isEmpty() || actualScriptHash.isEmpty() || expectedScriptHash != actualScriptHash) {
+        MessageBoxWarning(tr("Error"),
+                          tr("VPN root script integrity check failed.\nExpected: %1\nActual: %2")
+                              .arg(expectedScriptHash, actualScriptHash));
+        return false;
+    }
+#endif
     //
 #ifdef Q_OS_WIN
     runOnNewThread([=] {
@@ -2554,12 +2590,37 @@ bool MainWindow::StartVPNProcess() {
     //
     vpn_process->setProcessChannelMode(QProcess::ForwardedChannels);
 #ifdef Q_OS_MACOS
+    auto shellQuote = [](QString v) {
+        return QStringLiteral("'") + v.replace("'", "'\\''") + QStringLiteral("'");
+    };
+    const auto cmd = QStringLiteral("/bin/bash --noprofile --norc %1 %2 %3")
+                         .arg(shellQuote(scriptPath), shellQuote(corePath), shellQuote(configPath));
     vpn_process->start("osascript", {"-e", QStringLiteral("do shell script \"%1\" with administrator privileges")
-                                               .arg("bash " + scriptPath)});
+                                               .arg(cmd)});
 #else
-    vpn_process->start("pkexec", {"bash", scriptPath});
+    QProcessEnvironment cleanEnv;
+    cleanEnv.insert("PATH", "/usr/sbin:/usr/bin:/sbin:/bin");
+    for (const auto &key : {QStringLiteral("DISPLAY"),
+                            QStringLiteral("XAUTHORITY"),
+                            QStringLiteral("WAYLAND_DISPLAY"),
+                            QStringLiteral("XDG_RUNTIME_DIR"),
+                            QStringLiteral("DBUS_SESSION_BUS_ADDRESS"),
+                            QStringLiteral("LANG"),
+                            QStringLiteral("LC_ALL"),
+                            QStringLiteral("LC_CTYPE")}) {
+        if (qEnvironmentVariableIsSet(key.toUtf8().constData())) {
+            cleanEnv.insert(key, qEnvironmentVariable(key.toUtf8().constData()));
+        }
+    }
+    vpn_process->setProcessEnvironment(cleanEnv);
+    vpn_process->start("pkexec", {"/bin/bash", "--noprofile", "--norc", scriptPath, corePath, configPath});
 #endif
     vpn_process->waitForStarted();
+    if (vpn_process->state() == QProcess::NotRunning) {
+        MessageBoxWarning(tr("Error"), tr("Failed to start privileged TUN helper."));
+        vpn_process->deleteLater();
+        return false;
+    }
     vpn_pid = vpn_process->processId(); // actually it's pkexec or bash PID
 #endif
     return true;

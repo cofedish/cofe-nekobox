@@ -796,22 +796,22 @@ namespace NekoGui {
         return QFileInfo(file).absoluteFilePath();
     }
 
-    QString WriteVPNLinuxScript(const QString &configPath) {
+    QString WriteVPNLinuxScript() {
 #ifdef Q_OS_WIN
         return {};
 #endif
-        // gen script
-        auto scriptFn = ":/cofebox/vpn/vpn-run-root.sh";
-        if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
-        auto script = ReadFileText(scriptFn)
-                          .replace("./cofebox_core", QApplication::applicationDirPath() + "/cofebox_core")
-                          .replace("$CONFIG_PATH", configPath);
+        const auto scriptFn = QStringLiteral(":/cofebox/vpn/vpn-run-root.sh");
+        const auto script = ReadFileText(scriptFn);
+        if (script.isEmpty()) return {};
         // write script
         QFile file2;
         file2.setFileName(QFileInfo(scriptFn).fileName());
         file2.open(QIODevice::ReadWrite | QIODevice::Truncate);
         file2.write(script.toUtf8());
         file2.close();
+#ifndef Q_OS_WIN
+        file2.setPermissions(QFileDevice::ReadOwner | QFileDevice::WriteOwner | QFileDevice::ExeOwner);
+#endif
         return QFileInfo(file2).absoluteFilePath();
     }
 
