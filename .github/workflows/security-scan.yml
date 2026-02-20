@@ -1,0 +1,134 @@
+name: Security Scanning
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    # Run weekly on Monday at 08:00 UTC
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write  # required for CodeQL / SARIF upload
+
+jobs:
+  # ──────────────────────────────────────────────
+  # 1. Go security scanning (gosec + govulncheck)
+  # ──────────────────────────────────────────────
+  go-security:
+    name: Go Security (gosec + govulncheck)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: go
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "^1.22"
+          cache-dependency-path: go/go.sum
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: Run gosec
+        run: |
+          gosec -fmt sarif -out gosec-results.sarif ./... || true
+
+      - name: Upload gosec SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: go/gosec-results.sarif
+          category: gosec
+
+      - name: Install govulncheck
+        run: go install golang.org/x/vuln/cmd/govulncheck@latest
+
+      - name: Run govulncheck
+        run: govulncheck ./...
+
+  # ──────────────────────────────────────────────
+  # 2. CodeQL analysis (C++ + Go)
+  # ──────────────────────────────────────────────
+  codeql:
+    name: CodeQL Analysis
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [cpp, go]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+
+      - name: Setup Go (for Go analysis)
+        if: matrix.language == 'go'
+        uses: actions/setup-go@v5
+        with:
+          go-version: "^1.22"
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: codeql-${{ matrix.language }}
+
+  # ──────────────────────────────────────────────
+  # 3. Dependency vulnerability scan (Trivy)
+  # ──────────────────────────────────────────────
+  trivy-scan:
+    name: Trivy Dependency Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run Trivy vulnerability scanner (filesystem)
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "fs"
+          scan-ref: "."
+          format: "sarif"
+          output: "trivy-results.sarif"
+          severity: "CRITICAL,HIGH"
+          # Scan Go modules, C/C++ (via lock files), and configuration files
+          scanners: "vuln,secret,misconfig"
+
+      - name: Upload Trivy SARIF
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif
+          category: trivy
+
+  # ──────────────────────────────────────────────
+  # 4. Secret scanning (Gitleaks)
+  # ──────────────────────────────────────────────
+  secret-scan:
+    name: Secret Scanning (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # full history for secret scanning
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
