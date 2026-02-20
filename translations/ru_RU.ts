@@ -2018,6 +2018,10 @@ Release note:
         <translation>Проверка обновлений завершилась ошибкой.</translation>
     </message>
     <message>
+        <source>GitHub API rate limit exceeded. Set UPDATE_TOKEN or GITHUB_TOKEN and retry.</source>
+        <translation>Превышен лимит GitHub API. Задайте UPDATE_TOKEN или GITHUB_TOKEN и повторите попытку.</translation>
+    </message>
+    <message>
         <source>Could not parse release metadata.</source>
         <translation>Не удалось разобрать метаданные релиза.</translation>
     </message>

@@ -387,7 +387,14 @@ void UpdateService::handleCheckReply(QNetworkReply *reply) {
     reply->deleteLater();
 
     if (error != QNetworkReply::NoError) {
-        setFailure(tr("Update check failed."), joinDetail(QStringLiteral("HTTP %1").arg(httpCode), errorString));
+        QString detail = joinDetail(QStringLiteral("HTTP %1").arg(httpCode), errorString);
+        if (httpCode == 403 || httpCode == 429) {
+            const QString body = QString::fromUtf8(payload);
+            if (body.contains("rate limit", Qt::CaseInsensitive)) {
+                detail = joinDetail(detail, tr("GitHub API rate limit exceeded. Set UPDATE_TOKEN or GITHUB_TOKEN and retry."));
+            }
+        }
+        setFailure(tr("Update check failed."), detail);
         return;
     }
     appendLog(QStringLiteral("Release API OK. HTTP=%1 payload=%2 bytes").arg(httpCode).arg(payload.size()));
