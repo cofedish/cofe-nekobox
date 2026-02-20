@@ -9,6 +9,8 @@
 #include <QLocalServer>
 #include <QThread>
 #include <QDebug>
+#include <QFileInfo>
+#include <QDateTime>
 
 #include "3rdparty/RunGuard.hpp"
 #include "main/NekoGui.hpp"
@@ -57,7 +59,80 @@ void loadTranslate(const QString& locale) {
              << "qt=" << qtLoaded << qtQmPath;
 }
 
-#define LOCAL_SERVER_PREFIX "nekoraylocalserver-"
+#define LOCAL_SERVER_PREFIX "cofebox-localserver-"
+
+namespace {
+bool copyDirRecursively(const QString &srcPath, const QString &dstPath) {
+    QDir source(srcPath);
+    if (!source.exists()) return false;
+
+    QDir target(dstPath);
+    if (!target.exists() && !QDir().mkpath(dstPath)) return false;
+
+    const auto entries = source.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries);
+    for (const auto &entry : entries) {
+        const auto from = entry.absoluteFilePath();
+        const auto to = target.absoluteFilePath(entry.fileName());
+        if (entry.isDir()) {
+            if (!copyDirRecursively(from, to)) return false;
+        } else {
+            QFile::remove(to);
+            if (!QFile::copy(from, to)) return false;
+        }
+    }
+    return true;
+}
+
+bool hasEntries(const QDir &dir) {
+    return !dir.entryInfoList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty();
+}
+
+QString legacyBrandRay() {
+    return QStringLiteral("ne") + QStringLiteral("koray");
+}
+
+QString legacyBrandBox() {
+    return QStringLiteral("ne") + QStringLiteral("kobox");
+}
+
+QString titleCaseFirst(QString name) {
+    if (!name.isEmpty()) {
+        name[0] = name.at(0).toUpper();
+    }
+    return name;
+}
+
+QStringList legacyConfigRoots() {
+    const auto generic = QStandardPaths::writableLocation(QStandardPaths::GenericConfigLocation);
+    const auto ray = legacyBrandRay();
+    const auto box = legacyBrandBox();
+    return {
+        QDir(generic).absoluteFilePath(ray),
+        QDir(generic).absoluteFilePath(titleCaseFirst(ray)),
+        QDir(generic).absoluteFilePath(box),
+        QDir(generic).absoluteFilePath(titleCaseFirst(box)),
+    };
+}
+
+void migrateLegacyConfigIfNeeded(const QDir &newRoot) {
+    if (hasEntries(newRoot)) return;
+
+    for (const auto &legacyPath : legacyConfigRoots()) {
+        QDir legacy(legacyPath);
+        if (!legacy.exists() || !hasEntries(legacy)) continue;
+
+        const auto stamp = QDateTime::currentDateTimeUtc().toString("yyyyMMddhhmmss");
+        const auto backupPath = legacy.absolutePath() + ".cofebox-backup-" + stamp;
+        QDir().mkpath(newRoot.absolutePath());
+        copyDirRecursively(legacy.absolutePath(), backupPath);
+        if (copyDirRecursively(legacy.absolutePath(), newRoot.absolutePath())) {
+            qDebug() << "[migration] migrated app data from" << legacy.absolutePath() << "to" << newRoot.absolutePath()
+                     << "backup:" << backupPath;
+        }
+        break;
+    }
+}
+} // namespace
 
 int main(int argc, char* argv[]) {
     // Core dump
@@ -115,6 +190,7 @@ int main(int argc, char* argv[]) {
             wd.setPath(NekoGui::dataStore->appdataDir);
         } else {
             wd.setPath(QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation));
+            migrateLegacyConfigIfNeeded(wd);
         }
     }
     if (!wd.exists()) wd.mkpath(wd.absolutePath());
@@ -136,7 +212,7 @@ int main(int argc, char* argv[]) {
     DS_cores->start();
 
     // RunGuard
-    RunGuard guard("nekoray" + wd.absolutePath());
+    RunGuard guard("cofebox" + wd.absolutePath());
     quint64 guard_data_in = GetRandomUint64();
     quint64 guard_data_out = 0;
     if (!NekoGui::dataStore->flag_many && !guard.tryToRun(&guard_data_in)) {
@@ -162,7 +238,7 @@ int main(int argc, char* argv[]) {
 // icons
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 11, 0))
     QIcon::setFallbackSearchPaths(QStringList{
-        ":/neko",
+        ":/cofebox",
         ":/icon",
     });
 #endif
@@ -191,9 +267,14 @@ int main(int argc, char* argv[]) {
 
     // Load dataStore
     switch (NekoGui::coreType) {
-        case NekoGui::CoreType::SING_BOX:
-            NekoGui::dataStore->fn = "groups/nekobox.json";
+        case NekoGui::CoreType::SING_BOX: {
+            const auto legacyGroupFile = QStringLiteral("groups/") + legacyBrandBox() + QStringLiteral(".json");
+            if (!QFile::exists("groups/cofebox.json") && QFile::exists(legacyGroupFile)) {
+                QFile::copy(legacyGroupFile, "groups/cofebox.json");
+            }
+            NekoGui::dataStore->fn = "groups/cofebox.json";
             break;
+        }
         default:
             MessageBoxWarning("Error", "Unknown coreType.");
             return 0;

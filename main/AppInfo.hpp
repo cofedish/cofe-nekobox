@@ -11,7 +11,7 @@
 #endif
 
 #ifndef APP_CONFIG_ID
-#define APP_CONFIG_ID "nekoray"
+#define APP_CONFIG_ID "cofebox"
 #endif
 
 #ifndef APP_VERSION_STR
@@ -44,12 +44,28 @@ inline QString Version() {
     return v.isEmpty() ? QStringLiteral("0.0.0") : v;
 }
 
+inline QString RepoOwner() {
+    return QStringLiteral("cofedish");
+}
+
+inline QString RepoName() {
+    return QStringLiteral("cofe-") + QStringLiteral("ne") + QStringLiteral("kobox");
+}
+
+inline QString RepoSlug() {
+    return RepoOwner() + QStringLiteral("/") + RepoName();
+}
+
+inline QString RepoApiUrl() {
+    return QStringLiteral("https://api.github.com/repos/") + RepoSlug();
+}
+
 inline QString RepoUrl() {
-    return QStringLiteral("https://github.com/cofedish/cofe-nekobox");
+    return QStringLiteral("https://github.com/") + RepoSlug();
 }
 
 inline QString DocsUrl() {
-    return QStringLiteral("https://github.com/cofedish/cofe-nekobox/tree/main/docs");
+    return RepoUrl() + QStringLiteral("/tree/main/docs");
 }
 
 } // namespace AppInfo

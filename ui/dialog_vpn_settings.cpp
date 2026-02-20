@@ -72,7 +72,7 @@ void DialogVPNSettings::accept() {
 void DialogVPNSettings::on_troubleshooting_clicked() {
     const auto docsUrl = AppInfo::DocsUrl() + "/USAGE.md#tun";
     auto r = QMessageBox::information(this, tr("Troubleshooting"),
-                                      tr("If you have trouble starting VPN, you can force reset nekobox_core process here.\n\n"
+                                      tr("If you have trouble starting VPN, you can force reset cofebox_core process here.\n\n"
                                          "If still not working, see documentation for more information.\n"
                                          "%1").arg(docsUrl),
                                       tr("Reset"), tr("Cancel"), "",

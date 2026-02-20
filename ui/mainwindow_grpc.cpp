@@ -53,7 +53,7 @@ void MainWindow::setup_grpc() {
 #endif
 }
 
-// 测速
+// жµ‹йЂџ
 
 inline bool speedtesting = false;
 inline QList<QThread *> speedtesting_threads = {};
@@ -216,7 +216,7 @@ void MainWindow::speedtest_current_group(int mode, bool test_group) {
 
                     if (result.error().empty()) {
                         profile->latency = result.ms();
-                        if (profile->latency == 0) profile->latency = 1; // nekoray use 0 to represents not tested
+                        if (profile->latency == 0) profile->latency = 1; // cofebox uses 0 to represent "not tested"
                     } else {
                         profile->latency = -1;
                     }
@@ -282,7 +282,7 @@ void MainWindow::stop_core_daemon() {
 #endif
 }
 
-void MainWindow::neko_start(int _id) {
+void MainWindow::startProxy(int _id) {
     if (NekoGui::dataStore->prepare_exit) return;
 
     auto ents = get_now_selected_list();
@@ -305,7 +305,7 @@ void MainWindow::neko_start(int _id) {
         return;
     }
 
-    auto neko_start_stage2 = [=] {
+    auto start_stage2 = [=] {
 #ifndef NKR_NO_GRPC
         libcore::LoadConfigReq req;
         req.set_core_config(QJsonObject2QString(result->coreConfig, false).toStdString());
@@ -370,7 +370,7 @@ void MainWindow::neko_start(int _id) {
             },
             DS_cores);
         mu_starting.unlock();
-        return; // let CoreProcess call neko_start when core is up
+        return; // let CoreProcess call startProxy when core is up
     }
 
     // timeout message
@@ -382,12 +382,12 @@ void MainWindow::neko_start(int _id) {
     runOnNewThread([=] {
         // stop current running
         if (NekoGui::dataStore->started_id >= 0) {
-            runOnUiThread([=] { neko_stop(false, true); });
+            runOnUiThread([=] { stopProxy(false, true); });
             sem_stopped.acquire();
         }
         // do start
         MW_show_log(">>>>>>>> " + tr("Starting profile %1").arg(ent->bean->DisplayTypeAndName()));
-        if (!neko_start_stage2()) {
+        if (!start_stage2()) {
             MW_show_log("<<<<<<<< " + tr("Failed to start profile %1").arg(ent->bean->DisplayTypeAndName()));
             runOnUiThread([=] { set_connect_state(ConnectState::Disconnected); });
         }
@@ -407,7 +407,7 @@ void MainWindow::neko_start(int _id) {
     });
 }
 
-void MainWindow::neko_stop(bool crash, bool sem) {
+void MainWindow::stopProxy(bool crash, bool sem) {
     auto id = NekoGui::dataStore->started_id;
     if (id < 0) {
         if (sem) sem_stopped.release();
@@ -415,7 +415,7 @@ void MainWindow::neko_stop(bool crash, bool sem) {
     }
     set_connect_state(ConnectState::Disconnecting);
 
-    auto neko_stop_stage2 = [=] {
+    auto stop_stage2 = [=] {
         runOnUiThread(
             [=] {
                 while (!NekoGui_sys::running_ext.empty()) {
@@ -476,7 +476,7 @@ void MainWindow::neko_stop(bool crash, bool sem) {
     runOnNewThread([=] {
         // do stop
         MW_show_log(">>>>>>>> " + tr("Stopping profile %1").arg(running->bean->DisplayTypeAndName()));
-        if (!neko_stop_stage2()) {
+        if (!stop_stage2()) {
             MW_show_log("<<<<<<<< " + tr("Failed to stop, please restart the program."));
         }
         mu_stopping.unlock();
@@ -555,3 +555,5 @@ void MainWindow::CheckUpdate() {
     });
 #endif
 }
+
+

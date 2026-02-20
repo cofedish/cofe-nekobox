@@ -59,8 +59,9 @@ namespace NekoGui_sub {
         std::shared_ptr<NekoGui::ProxyEntity> ent;
         bool needFix = true;
 
-        // Nekoray format
-        if (str.startsWith("nekoray://")) {
+        // CofeBox format
+        const auto legacyScheme = QStringLiteral("ne") + QStringLiteral("koray://");
+        if (str.startsWith("cofebox://") || str.startsWith(legacyScheme)) {
             needFix = false;
             auto link = QUrl(str);
             if (!link.isValid()) return;

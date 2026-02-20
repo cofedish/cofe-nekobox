@@ -153,7 +153,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->about_title->setText(software_name);
     if (ui->about_logo != nullptr) {
         const int logoSize = 200;
-        QPixmap logo(":/neko/cofebox.png");
+        QPixmap logo(":/cofebox/cofebox.png");
         ui->about_logo->setPixmap(logo.scaled(logoSize, logoSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     if (ui->aboutLayout != nullptr) {
@@ -188,8 +188,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         connectButton->refreshMetrics();
     }
     //
-    connect(ui->menu_start, &QAction::triggered, this, [=]() { neko_start(); });
-    connect(ui->menu_stop, &QAction::triggered, this, [=]() { neko_stop(); });
+    connect(ui->menu_start, &QAction::triggered, this, [=]() { startProxy(); });
+    connect(ui->menu_stop, &QAction::triggered, this, [=]() { stopProxy(); });
     connect(ui->tabWidget->tabBar(), &QTabBar::tabMoved, this, [=](int from, int to) {
         // use tabData to track tab & gid
         NekoGui::profileManager->groupsTabOrder.clear();
@@ -215,7 +215,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     if (QDir("dashboard").count() == 0) {
         QDir().mkdir("dashboard");
-        QFile::copy(":/neko/dashboard-notice.html", "dashboard/index.html");
+        QFile::copy(":/cofebox/dashboard-notice.html", "dashboard/index.html");
     }
 
     // drawer + navigation
@@ -302,9 +302,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             return;
         }
         if (running == nullptr) {
-            neko_start();
+            startProxy();
         } else {
-            neko_stop();
+            stopProxy();
         }
     });
     connect(ui->home_select_server, &QToolButton::clicked, this, [=] {
@@ -320,9 +320,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             action->setChecked(NekoGui::dataStore->started_id == pf->id);
             connect(action, &QAction::triggered, this, [=] {
                 if (NekoGui::dataStore->started_id == pf->id) {
-                    neko_stop();
+                    stopProxy();
                 } else {
-                    neko_start(pf->id);
+                    startProxy(pf->id);
                 }
             });
             if (++active_count == 100) break;
@@ -458,7 +458,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionClicked, this, [=](int logicalIndex) {
         GroupSortAction action;
-        // 不正确的descending实现
+        // дёЌж­ЈзЎ®зљ„descendingе®ћзЋ°
         if (proxy_last_order == logicalIndex) {
             action.descending = true;
             proxy_last_order = -1;
@@ -466,7 +466,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             proxy_last_order = logicalIndex;
         }
         action.save_sort = true;
-        // 表头
+        // иЎЁе¤ґ
         if (logicalIndex == 0) {
             action.method = GroupSortMethod::ByType;
         } else if (logicalIndex == 1) {
@@ -538,10 +538,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->refresh_groups();
 
     // Setup Tray
-    tray = new QSystemTrayIcon(this); // 初始化托盘对象tray
+    tray = new QSystemTrayIcon(this); // е€ќе§‹еЊ–ж‰з›еЇ№и±Ўtray
     tray->setIcon(Icon::GetTrayIcon(Icon::NONE));
-    tray->setContextMenu(ui->menu_program); // 创建托盘菜单
-    tray->show();                           // 让托盘图标显示在系统托盘上
+    tray->setContextMenu(ui->menu_program); // е€›е»єж‰з›иЏњеЌ•
+    tray->show();                           // и®©ж‰з›е›ѕж ‡жѕз¤єењЁзі»з»џж‰з›дёЉ
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
         if (reason == QSystemTrayIcon::Trigger) {
             if (this->isVisible()) {
@@ -556,7 +556,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->menu_open_config_folder, &QAction::triggered, this, [=] { QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath())); });
     ui->menu_program_preference->addActions(ui->menu_preferences->actions());
     connect(ui->menu_add_from_clipboard2, &QAction::triggered, ui->menu_add_from_clipboard, &QAction::trigger);
-    connect(ui->actionRestart_Proxy, &QAction::triggered, this, [=] { if (NekoGui::dataStore->started_id>=0) neko_start(NekoGui::dataStore->started_id); });
+    connect(ui->actionRestart_Proxy, &QAction::triggered, this, [=] { if (NekoGui::dataStore->started_id>=0) startProxy(NekoGui::dataStore->started_id); });
     connect(ui->actionRestart_Program, &QAction::triggered, this, [=] { MW_dialog_message("", "RestartProgram"); });
     connect(ui->actionShow_window, &QAction::triggered, this, [=] { tray->activated(QSystemTrayIcon::ActivationReason::Trigger); });
     //
@@ -595,9 +595,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         auto id = a->property("id").toInt(&ok);
         if (!ok) return;
         if (NekoGui::dataStore->started_id == id) {
-            neko_stop();
+            stopProxy();
         } else {
-            neko_start(id);
+            startProxy(id);
         }
     });
     connect(ui->menuActive_Routing, &QMenu::triggered, this, [=](QAction *a) {
@@ -610,7 +610,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                 if (QMessageBox::question(GetMessageBoxParent(), software_name, tr("Load routing and apply: %1").arg(fn) + "\n" + r.DisplayRouting()) == QMessageBox::Yes) {
                     NekoGui::Routing::SetToActive(fn);
                     if (NekoGui::dataStore->started_id >= 0) {
-                        neko_start(NekoGui::dataStore->started_id);
+                        startProxy(NekoGui::dataStore->started_id);
                     } else {
                         refresh_status();
                     }
@@ -630,18 +630,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         MW_dialog_message("", "UpdateDataStore");
     });
     //
-    connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) { neko_set_spmode_vpn(checked); });
-    connect(ui->checkBox_SystemProxy, &QCheckBox::clicked, this, [=](bool checked) { neko_set_spmode_system_proxy(checked); });
+    connect(ui->checkBox_VPN, &QCheckBox::clicked, this, [=](bool checked) { setVpnMode(checked); });
+    connect(ui->checkBox_SystemProxy, &QCheckBox::clicked, this, [=](bool checked) { setSystemProxyMode(checked); });
     connect(ui->menu_spmode, &QMenu::aboutToShow, this, [=]() {
         ui->menu_spmode_disabled->setChecked(!(NekoGui::dataStore->spmode_system_proxy || NekoGui::dataStore->spmode_vpn));
         ui->menu_spmode_system_proxy->setChecked(NekoGui::dataStore->spmode_system_proxy);
         ui->menu_spmode_vpn->setChecked(NekoGui::dataStore->spmode_vpn);
     });
-    connect(ui->menu_spmode_system_proxy, &QAction::triggered, this, [=](bool checked) { neko_set_spmode_system_proxy(checked); });
-    connect(ui->menu_spmode_vpn, &QAction::triggered, this, [=](bool checked) { neko_set_spmode_vpn(checked); });
+    connect(ui->menu_spmode_system_proxy, &QAction::triggered, this, [=](bool checked) { setSystemProxyMode(checked); });
+    connect(ui->menu_spmode_vpn, &QAction::triggered, this, [=](bool checked) { setVpnMode(checked); });
     connect(ui->menu_spmode_disabled, &QAction::triggered, this, [=]() {
-        neko_set_spmode_system_proxy(false);
-        neko_set_spmode_vpn(false);
+        setSystemProxyMode(false);
+        setVpnMode(false);
     });
     connect(ui->menu_qr, &QAction::triggered, this, [=]() { display_qr_link(false); });
     connect(ui->menu_tcp_ping, &QAction::triggered, this, [=]() { speedtest_current_group(0, false); });
@@ -698,10 +698,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (NekoGui::dataStore->core_port <= 0) NekoGui::dataStore->core_port = 19810;
 
     auto core_path = QApplication::applicationDirPath() + "/";
-    core_path += "nekobox_core";
+    core_path += "cofebox_core";
 
     QStringList args;
-    args.push_back("nekobox");
+    args.push_back("cofebox");
     args.push_back("-port");
     args.push_back(Int2String(NekoGui::dataStore->core_port));
     if (NekoGui::dataStore->flag_debug) args.push_back("-debug");
@@ -723,10 +723,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     // Remember system proxy
     if (NekoGui::dataStore->remember_enable || NekoGui::dataStore->flag_restart_tun_on) {
         if (NekoGui::dataStore->remember_spmode.contains("system_proxy")) {
-            neko_set_spmode_system_proxy(true, false);
+            setSystemProxyMode(true, false);
         }
         if (NekoGui::dataStore->remember_spmode.contains("vpn") || NekoGui::dataStore->flag_restart_tun_on) {
-            neko_set_spmode_vpn(true, false);
+            setVpnMode(true, false);
         }
     }
 
@@ -753,8 +753,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (tray->isVisible()) {
-        hide();          // 隐藏窗口
-        event->ignore(); // 忽略事件
+        hide();          // йљђи—ЏзЄ—еЏЈ
+        event->ignore(); // еїЅз•Ґдє‹д»¶
     }
 }
 
@@ -845,7 +845,7 @@ void MainWindow::show_group(int gid) {
     }
     ui->tabWidget->widget(groupId2TabIndex(gid))->layout()->addWidget(ui->proxyListTable);
 
-    // 列宽是否可调
+    // е€—е®ЅжЇеђ¦еЏЇи°ѓ
     if (group->manually_column_width) {
         for (int i = 0; i <= 4; i++) {
             ui->proxyListTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Interactive);
@@ -898,7 +898,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         }
         if (suggestRestartProxy && NekoGui::dataStore->started_id >= 0 &&
             QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
-            neko_start(NekoGui::dataStore->started_id);
+            startProxy(NekoGui::dataStore->started_id);
         }
         refresh_status();
     }
@@ -925,7 +925,7 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
             refresh_proxy_list();
             if (msg.contains("restart")) {
                 if (QMessageBox::question(GetMessageBoxParent(), tr("Confirmation"), tr("Settings changed, restart proxy?")) == QMessageBox::StandardButton::Yes) {
-                    neko_start(NekoGui::dataStore->started_id);
+                    startProxy(NekoGui::dataStore->started_id);
                 }
             }
         }
@@ -945,11 +945,11 @@ void MainWindow::dialog_message_impl(const QString &sender, const QString &info)
         }
     } else if (sender == "ExternalProcess") {
         if (info == "Crashed") {
-            neko_stop();
+            stopProxy();
         } else if (info == "CoreCrashed") {
-            neko_stop(true);
+            stopProxy(true);
         } else if (info.startsWith("CoreStarted")) {
-            neko_start(info.split(",")[1].toInt());
+            startProxy(info.split(",")[1].toInt());
         }
     }
 }
@@ -1013,8 +1013,8 @@ void MainWindow::on_menu_exit_triggered() {
     if (mu_exit.tryLock()) {
         NekoGui::dataStore->prepare_exit = true;
         //
-        neko_set_spmode_system_proxy(false, false);
-        neko_set_spmode_vpn(false, false);
+        setSystemProxyMode(false, false);
+        setVpnMode(false, false);
         if (NekoGui::dataStore->spmode_vpn) {
             mu_exit.unlock(); // retry
             return;
@@ -1024,7 +1024,7 @@ void MainWindow::on_menu_exit_triggered() {
         on_commitDataRequest();
         //
         NekoGui::dataStore->save_control_no_save = true; // don't change datastore after this line
-        neko_stop(false, true);
+        stopProxy(false, true);
         //
         hide();
         runOnNewThread([=] {
@@ -1071,11 +1071,11 @@ void MainWindow::on_menu_exit_triggered() {
     QCoreApplication::quit();
 }
 
-#define neko_set_spmode_FAILED \
+#define set_spmode_FAILED \
     refresh_status();          \
     return;
 
-void MainWindow::neko_set_spmode_system_proxy(bool enable, bool save) {
+void MainWindow::setSystemProxyMode(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_system_proxy) {
         if (enable) {
             auto socks_port = NekoGui::dataStore->inbound_socks_port;
@@ -1098,7 +1098,7 @@ void MainWindow::neko_set_spmode_system_proxy(bool enable, bool save) {
     refresh_status();
 }
 
-void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
+void MainWindow::setVpnMode(bool enable, bool save) {
     if (enable != NekoGui::dataStore->spmode_vpn) {
         if (enable) {
             if (NekoGui::dataStore->vpn_internal_tun) {
@@ -1107,9 +1107,9 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
 #ifdef Q_OS_LINUX
                     if (!Linux_HavePkexec()) {
                         MessageBoxWarning(software_name, "Please install \"pkexec\" first.");
-                        neko_set_spmode_FAILED
+                        set_spmode_FAILED
                     }
-                    auto ret = Linux_Pkexec_SetCapString(NekoGui::FindNekoBoxCoreRealPath(), "cap_net_admin=ep");
+                    auto ret = Linux_Pkexec_SetCapString(NekoGui::FindCoreRealPath(), "cap_net_admin=ep");
                     if (ret == 0) {
                         this->exit_reason = 3;
                         on_menu_exit_triggered();
@@ -1127,15 +1127,15 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                         on_menu_exit_triggered();
                     }
 #endif
-                    neko_set_spmode_FAILED
+                    set_spmode_FAILED
                 }
             } else {
                 if (NekoGui::dataStore->need_keep_vpn_off) {
                     MessageBoxWarning(software_name, tr("Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart."));
-                    neko_set_spmode_FAILED
+                    set_spmode_FAILED
                 }
                 if (!StartVPNProcess()) {
-                    neko_set_spmode_FAILED
+                    set_spmode_FAILED
                 }
             }
         } else {
@@ -1143,7 +1143,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
                 // current core is sing-box
             } else {
                 if (!StopVPNProcess()) {
-                    neko_set_spmode_FAILED
+                    set_spmode_FAILED
                 }
             }
         }
@@ -1160,7 +1160,7 @@ void MainWindow::neko_set_spmode_vpn(bool enable, bool save) {
     NekoGui::dataStore->spmode_vpn = enable;
     refresh_status();
 
-    if (NekoGui::dataStore->vpn_internal_tun && NekoGui::dataStore->started_id >= 0) neko_start(NekoGui::dataStore->started_id);
+    if (NekoGui::dataStore->vpn_internal_tun && NekoGui::dataStore->started_id >= 0) startProxy(NekoGui::dataStore->started_id);
 }
 
 void MainWindow::refresh_status(const QString &traffic_update) {
@@ -1457,7 +1457,7 @@ void MainWindow::finish_add_operation() {
     }
 }
 
-// table显示
+// tableжѕз¤є
 
 // refresh_groups -> show_group -> refresh_proxy_list
 void MainWindow::refresh_groups() {
@@ -1518,12 +1518,12 @@ void MainWindow::refresh_proxy_list(const int &id) {
 }
 
 void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSortAction) {
-    // id < 0 重绘
+    // id < 0 й‡Ќз»
     if (id < 0) {
-        // 清空数据
+        // жё…з©єж•°жЌ®
         ui->proxyListTable->row2Id.clear();
         ui->proxyListTable->setRowCount(0);
-        // 添加行
+        // ж·»еЉ иЎЊ
         int row = -1;
         for (const auto &[id, profile]: NekoGui::profileManager->profiles) {
             if (NekoGui::dataStore->current_group != profile->gid) continue;
@@ -1533,7 +1533,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
         }
     }
 
-    // 显示排序
+    // жѕз¤єжЋ’еєЏ
     if (id < 0) {
         switch (groupSortAction.method) {
             case GroupSortMethod::Raw: {
@@ -1606,7 +1606,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
 }
 
 void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
-    // 绘制或更新item(s)
+    // з»е€¶ж€–ж›ґж–°item(s)
     for (int row = 0; row < ui->proxyListTable->rowCount(); row++) {
         auto profileId = ui->proxyListTable->row2Id[row];
         if (id >= 0 && profileId != id) continue; // refresh ONE item
@@ -1619,7 +1619,7 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
 
         // Check state
         auto check = f0->clone();
-        check->setText(isRunning ? "✓" : Int2String(row + 1));
+        check->setText(isRunning ? "вњ“" : Int2String(row + 1));
         ui->proxyListTable->setVerticalHeaderItem(row, check);
 
         // C0: Type
@@ -1658,7 +1658,7 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
     }
 }
 
-// table菜单相关
+// tableиЏњеЌ•з›ёе…і
 
 void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
     auto id = item->data(114514).toInt();
@@ -1890,7 +1890,7 @@ void MainWindow::display_qr_link(bool nkrFormat) {
             l->setScaledContents(true);
             layout()->addWidget(l);
             cb = new QCheckBox;
-            cb->setText("Neko Links");
+            cb->setText("CofeBox Links");
             layout()->addWidget(cb);
             l2 = new QPlainTextEdit();
             l2->setReadOnly(true);
@@ -2046,7 +2046,7 @@ void MainWindow::on_menu_resolve_domain_triggered() {
 }
 
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
-    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // 弹出菜单
+    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // еј№е‡єиЏњеЌ•
 }
 
 QList<std::shared_ptr<NekoGui::ProxyEntity>> MainWindow::get_now_selected_list() {
@@ -2078,7 +2078,7 @@ void MainWindow::keyPressEvent(QKeyEvent *event) {
             // take over by shortcut_esc
             break;
         case Qt::Key_Enter:
-            neko_start();
+            startProxy();
             break;
         default:
             QMainWindow::keyPressEvent(event);
@@ -2211,7 +2211,7 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     });
     menu->addAction(action_clear);
 
-    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // 弹出菜单
+    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // еј№е‡єиЏњеЌ•
 }
 
 // eventFilter
@@ -2262,9 +2262,9 @@ void MainWindow::start_select_mode(QObject *context, const std::function<void(in
     refresh_status();
 }
 
-// 连接列表
+// иїћжЋҐе€—иЎЁ
 
-inline QJsonArray last_arr; // format is nekoray_connections_json
+inline QJsonArray last_arr; // format is connection statistics json
 
 void MainWindow::refresh_connection_list(const QJsonArray &arr) {
     if (last_arr == arr) {
@@ -2400,11 +2400,11 @@ bool MainWindow::StartVPNProcess() {
 #ifdef Q_OS_WIN
     runOnNewThread([=] {
         vpn_pid = 1; // TODO get pid?
-        WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/nekobox_core.exe",
+        WinCommander::runProcessElevated(QApplication::applicationDirPath() + "/cofebox_core.exe",
                                          {"--disable-color", "run", "-c", configPath}, "",
                                          NekoGui::dataStore->vpn_hide_console ? WinCommander::SW_HIDE : WinCommander::SW_SHOWMINIMIZED); // blocking
         vpn_pid = 0;
-        runOnUiThread([=] { neko_set_spmode_vpn(false); });
+        runOnUiThread([=] { setVpnMode(false); });
     });
 #else
     //
@@ -2413,7 +2413,7 @@ bool MainWindow::StartVPNProcess() {
         if (state == QProcess::NotRunning) {
             vpn_pid = 0;
             vpn_process->deleteLater();
-            GetMainWindow()->neko_set_spmode_vpn(false);
+            GetMainWindow()->setVpnMode(false);
         }
     });
     //
@@ -2435,7 +2435,7 @@ bool MainWindow::StopVPNProcess(bool unconditional) {
         bool ok;
         core_process->processId();
 #ifdef Q_OS_WIN
-        auto ret = WinCommander::runProcessElevated("taskkill", {"/IM", "nekobox_core.exe",
+        auto ret = WinCommander::runProcessElevated("taskkill", {"/IM", "cofebox_core.exe",
                                                                  "/FI",
                                                                  "PID ne " + Int2String(core_process->processId())});
         ok = ret == 0;
@@ -2443,10 +2443,10 @@ bool MainWindow::StopVPNProcess(bool unconditional) {
         QProcess p;
 #ifdef Q_OS_MACOS
         p.start("osascript", {"-e", QStringLiteral("do shell script \"%1\" with administrator privileges")
-                                        .arg("pkill -2 -U 0 nekobox_core")});
+                                        .arg("pkill -2 -U 0 cofebox_core")});
 #else
         if (unconditional) {
-            p.start("pkexec", {"killall", "-2", "nekobox_core"});
+            p.start("pkexec", {"killall", "-2", "cofebox_core"});
         } else {
             p.start("pkexec", {"pkill", "-2", "-P", Int2String(vpn_pid)});
         }
@@ -2461,3 +2461,5 @@ bool MainWindow::StopVPNProcess(bool unconditional) {
     }
     return true;
 }
+
+

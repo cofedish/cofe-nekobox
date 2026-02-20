@@ -384,11 +384,11 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     current_theme = normalized;
     emit themeChanged(normalized);
 
-    auto nekoray_css = ReadFileText(":/neko/neko.css");
+    auto cofebox_css = ReadFileText(":/cofebox/cofebox.css");
     if (handled) {
-        qApp->setStyleSheet(base_qss.append("\n").append(nekoray_css));
+        qApp->setStyleSheet(base_qss.append("\n").append(cofebox_css));
     } else {
-        qApp->setStyleSheet(qApp->styleSheet().append("\n").append(nekoray_css));
+        qApp->setStyleSheet(qApp->styleSheet().append("\n").append(cofebox_css));
     }
 }
 

@@ -5,123 +5,123 @@
     <name>DialogBasicSettings</name>
     <message>
         <source>Basic Settings</source>
-        <translation>Основные настройки</translation>
+        <translation>РћСЃРЅРѕРІРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Общие</translation>
+        <translation>РћР±С‰РёРµ</translation>
     </message>
     <message>
         <source>Listen Address</source>
-        <translation>Адрес входящих подключений</translation>
+        <translation>РђРґСЂРµСЃ РІС…РѕРґСЏС‰РёС… РїРѕРґРєР»СЋС‡РµРЅРёР№</translation>
     </message>
     <message>
         <source>Custom Inbound</source>
-        <translation>Кастомный inbound</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Р№ inbound</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>Вкл</translation>
+        <translation>Р’РєР»</translation>
     </message>
     <message>
         <source>Latency Test URL</source>
-        <translation>URL теста задержки</translation>
+        <translation>URL С‚РµСЃС‚Р° Р·Р°РґРµСЂР¶РєРё</translation>
     </message>
     <message>
         <source>Concurrent</source>
-        <translation>Параллельно</translation>
+        <translation>РџР°СЂР°Р»Р»РµР»СЊРЅРѕ</translation>
     </message>
     <message>
         <source>Download Test URL</source>
-        <translation>URL теста загрузки</translation>
+        <translation>URL С‚РµСЃС‚Р° Р·Р°РіСЂСѓР·РєРё</translation>
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>Проверять пре-релизы при обновлениях</translation>
+        <translation>РџСЂРѕРІРµСЂСЏС‚СЊ РїСЂРµ-СЂРµР»РёР·С‹ РїСЂРё РѕР±РЅРѕРІР»РµРЅРёСЏС…</translation>
     </message>
     <message>
         <source>System proxy format</source>
-        <translation>Формат строки системного прокси</translation>
+        <translation>Р¤РѕСЂРјР°С‚ СЃС‚СЂРѕРєРё СЃРёСЃС‚РµРјРЅРѕРіРѕ РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation>Стиль</translation>
+        <translation>РЎС‚РёР»СЊ</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Тема</translation>
+        <translation>РўРµРјР°</translation>
     </message>
     <message>
         <source>Language</source>
-        <translation>Язык</translation>
+        <translation>РЇР·С‹Рє</translation>
     </message>
     <message>
         <source>System language</source>
-        <translation>Системный</translation>
+        <translation>РЎРёСЃС‚РµРјРЅС‹Р№</translation>
     </message>
     <message>
         <source>English</source>
-        <translation>Английский</translation>
+        <translation>РђРЅРіР»РёР№СЃРєРёР№</translation>
     </message>
     <message>
         <source>Chinese (Simplified)</source>
-        <translation>Китайский (упрощенный)</translation>
+        <translation>РљРёС‚Р°Р№СЃРєРёР№ (СѓРїСЂРѕС‰РµРЅРЅС‹Р№)</translation>
     </message>
     <message>
         <source>Persian (Iran)</source>
-        <translation>Персидский (Иран)</translation>
+        <translation>РџРµСЂСЃРёРґСЃРєРёР№ (РСЂР°РЅ)</translation>
     </message>
     <message>
         <source>Russian</source>
-        <translation>Русский</translation>
+        <translation>Р СѓСЃСЃРєРёР№</translation>
     </message>
     <message>
         <source>System</source>
-        <translation>Системная</translation>
+        <translation>РЎРёСЃС‚РµРјРЅР°СЏ</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Светлая</translation>
+        <translation>РЎРІРµС‚Р»Р°СЏ</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Темная</translation>
+        <translation>РўРµРјРЅР°СЏ</translation>
     </message>
     <message>
         <source>Lucifer</source>
-        <translation>Люцифер</translation>
+        <translation>Р›СЋС†РёС„РµСЂ</translation>
     </message>
     <message>
         <source>Set custom icon</source>
-        <translation>Задать иконку</translation>
+        <translation>Р—Р°РґР°С‚СЊ РёРєРѕРЅРєСѓ</translation>
     </message>
     <message>
         <source>Statistics refresh rate</source>
-        <translation>Период обновления статистики</translation>
+        <translation>РџРµСЂРёРѕРґ РѕР±РЅРѕРІР»РµРЅРёСЏ СЃС‚Р°С‚РёСЃС‚РёРєРё</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Выкл</translation>
+        <translation>Р’С‹РєР»</translation>
     </message>
     <message>
         <source>Connection statistics</source>
-        <translation>Статистика подключений</translation>
+        <translation>РЎС‚Р°С‚РёСЃС‚РёРєР° РїРѕРґРєР»СЋС‡РµРЅРёР№</translation>
     </message>
     <message>
         <source>Hide dashboard at startup</source>
-        <translation>Спрятать окно при старте</translation>
+        <translation>РЎРїСЂСЏС‚Р°С‚СЊ РѕРєРЅРѕ РїСЂРё СЃС‚Р°СЂС‚Рµ</translation>
     </message>
     <message>
         <source>Max log lines</source>
-        <translation>Макс. строк в логе</translation>
+        <translation>РњР°РєСЃ. СЃС‚СЂРѕРє РІ Р»РѕРіРµ</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Подписка</translation>
+        <translation>РџРѕРґРїРёСЃРєР°</translation>
     </message>
     <message>
         <source>User Agent</source>
@@ -129,178 +129,178 @@
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
-        <translation>Использовать прокси при обновлении подписок</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РїСЂРѕРєСЃРё РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РїРѕРґРїРёСЃРѕРє</translation>
     </message>
     <message>
         <source>Ignore TLS errors when updating subscription</source>
-        <translation>Игнорировать ошибки TLS при обновлении подписок</translation>
+        <translation>РРіРЅРѕСЂРёСЂРѕРІР°С‚СЊ РѕС€РёР±РєРё TLS РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РїРѕРґРїРёСЃРѕРє</translation>
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
-        <translation>Очищать список серверов при обновлении подписок</translation>
+        <translation>РћС‡РёС‰Р°С‚СЊ СЃРїРёСЃРѕРє СЃРµСЂРІРµСЂРѕРІ РїСЂРё РѕР±РЅРѕРІР»РµРЅРёРё РїРѕРґРїРёСЃРѕРє</translation>
     </message>
     <message>
         <source>Core</source>
-        <translation>Ядро</translation>
+        <translation>РЇРґСЂРѕ</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Выбрать</translation>
+        <translation>Р’С‹Р±СЂР°С‚СЊ</translation>
     </message>
     <message>
         <source>Multiplex (mux)</source>
-        <translation>Мультиплексирование (mux)</translation>
+        <translation>РњСѓР»СЊС‚РёРїР»РµРєСЃРёСЂРѕРІР°РЅРёРµ (mux)</translation>
     </message>
     <message>
         <source>Log level</source>
-        <translation>Уровень логов</translation>
+        <translation>РЈСЂРѕРІРµРЅСЊ Р»РѕРіРѕРІ</translation>
     </message>
     <message>
         <source>concurrency</source>
-        <translation>многопоточность</translation>
+        <translation>РјРЅРѕРіРѕРїРѕС‚РѕС‡РЅРѕСЃС‚СЊ</translation>
     </message>
     <message>
         <source>Padding</source>
-        <translation>Паддинг</translation>
+        <translation>РџР°РґРґРёРЅРі</translation>
     </message>
     <message>
         <source>Default On</source>
-        <translation>Вкл. по умолчанию</translation>
+        <translation>Р’РєР». РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>Core Options</source>
-        <translation>Параметры ядра</translation>
+        <translation>РџР°СЂР°РјРµС‚СЂС‹ СЏРґСЂР°</translation>
     </message>
     <message>
         <source>Extra Core</source>
-        <translation>Дополнительные ядра</translation>
+        <translation>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ СЏРґСЂР°</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Безопасность</translation>
+        <translation>Р‘РµР·РѕРїР°СЃРЅРѕСЃС‚СЊ</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
-        <translation>Не проверять подлинность TLS сертификатов по умолчанию</translation>
+        <translation>РќРµ РїСЂРѕРІРµСЂСЏС‚СЊ РїРѕРґР»РёРЅРЅРѕСЃС‚СЊ TLS СЃРµСЂС‚РёС„РёРєР°С‚РѕРІ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>Default uTLS Fingerprint</source>
-        <translation>uTLS fingerprint по умолчанию</translation>
+        <translation>uTLS fingerprint РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
-        <translation>Дополнительные настройки системного прокси. Пожалуйста, выберите формат.</translation>
+        <translation>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё СЃРёСЃС‚РµРјРЅРѕРіРѕ РїСЂРѕРєСЃРё. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІС‹Р±РµСЂРёС‚Рµ С„РѕСЂРјР°С‚.</translation>
     </message>
     <message>
         <source>Please input the core name.</source>
-        <translation>Введите имя ядра.</translation>
+        <translation>Р’РІРµРґРёС‚Рµ РёРјСЏ СЏРґСЂР°.</translation>
     </message>
     <message>
         <source>Please select the core name.</source>
-        <translation>Выберите имя ядра.</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ РёРјСЏ СЏРґСЂР°.</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
-        <translation>Выберите PNG файл</translation>
+        <translation>Р’С‹Р±РµСЂРёС‚Рµ PNG С„Р°Р№Р»</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Сброс</translation>
+        <translation>РЎР±СЂРѕСЃ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>РћС‚РјРµРЅР°</translation>
     </message>
     <message>
         <source>Please select a valid square image.</source>
-        <translation>Пожалуйста, выберите корректное квадратное изображение.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІС‹Р±РµСЂРёС‚Рµ РєРѕСЂСЂРµРєС‚РЅРѕРµ РєРІР°РґСЂР°С‚РЅРѕРµ РёР·РѕР±СЂР°Р¶РµРЅРёРµ.</translation>
     </message>
     <message>
         <source>Inbound Auth</source>
-        <translation>Аутентификация inbound</translation>
+        <translation>РђСѓС‚РµРЅС‚РёС„РёРєР°С†РёСЏ inbound</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Имя пользователя</translation>
+        <translation>РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <source>Override underlying DNS</source>
-        <translation>Переопределить нижестоящий DNS</translation>
+        <translation>РџРµСЂРµРѕРїСЂРµРґРµР»РёС‚СЊ РЅРёР¶РµСЃС‚РѕСЏС‰РёР№ DNS</translation>
     </message>
     <message>
         <source>Timeout (s)</source>
-        <translation>Таймаут (с)</translation>
+        <translation>РўР°Р№РјР°СѓС‚ (СЃ)</translation>
     </message>
     <message>
         <source>Automatic update</source>
-        <translation>Автоматическое обновление</translation>
+        <translation>РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ</translation>
     </message>
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
-        <translation>Интервал (в минутах, значение считается неправильным, если меньше 30)</translation>
+        <translation>РРЅС‚РµСЂРІР°Р» (РІ РјРёРЅСѓС‚Р°С…, Р·РЅР°С‡РµРЅРёРµ СЃС‡РёС‚Р°РµС‚СЃСЏ РЅРµРїСЂР°РІРёР»СЊРЅС‹Рј, РµСЃР»Рё РјРµРЅСЊС€Рµ 30)</translation>
     </message>
     <message>
         <source>Share VMess Link with v2rayN Format</source>
-        <translation>Поделиться ссылкой VMess в формате v2rayN</translation>
+        <translation>РџРѕРґРµР»РёС‚СЊСЃСЏ СЃСЃС‹Р»РєРѕР№ VMess РІ С„РѕСЂРјР°С‚Рµ v2rayN</translation>
     </message>
     <message>
         <source>Old Share Link Format</source>
-        <translation>Поделиться ссылкой в старом формате</translation>
+        <translation>РџРѕРґРµР»РёС‚СЊСЃСЏ СЃСЃС‹Р»РєРѕР№ РІ СЃС‚Р°СЂРѕРј С„РѕСЂРјР°С‚Рµ</translation>
     </message>
     <message>
         <source>Mixed (SOCKS+HTTP) Listen Port</source>
-        <translation>Порт смешанного (SOCKS+HTTP)</translation>
+        <translation>РџРѕСЂС‚ СЃРјРµС€Р°РЅРЅРѕРіРѕ (SOCKS+HTTP)</translation>
     </message>
 </context>
 <context>
     <name>DialogEditGroup</name>
     <message>
         <source>Edit Group</source>
-        <translation>Изменить группу</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ РіСЂСѓРїРїСѓ</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>РРјСЏ</translation>
     </message>
     <message>
         <source>Manually column width</source>
-        <translation>Уст. ширину колонок</translation>
+        <translation>РЈСЃС‚. С€РёСЂРёРЅСѓ РєРѕР»РѕРЅРѕРє</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Архив</translation>
+        <translation>РђСЂС…РёРІ</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>РўРёРї</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Простая</translation>
+        <translation>РџСЂРѕСЃС‚Р°СЏ</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Подписка (subscription)</translation>
+        <translation>РџРѕРґРїРёСЃРєР° (subscription)</translation>
     </message>
     <message>
         <source>Front Proxy</source>
-        <translation>Фронт-прокси</translation>
+        <translation>Р¤СЂРѕРЅС‚-РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Сбросить</translation>
+        <translation>РЎР±СЂРѕСЃРёС‚СЊ</translation>
     </message>
     <message>
         <source>URL</source>
@@ -308,288 +308,288 @@
     </message>
     <message>
         <source>Copy profile share links</source>
-        <translation>Скопировать ссылки на профиль</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєРё РЅР° РїСЂРѕС„РёР»СЊ</translation>
     </message>
     <message>
-        <source>Copy profile share links (Neko Links)</source>
-        <translation>Скопировать ссылки на профиль (Neko links)</translation>
+        <source>Copy profile share links (CofeBox Links)</source>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєРё РЅР° РїСЂРѕС„РёР»СЊ (CofeBox Links)</translation>
     </message>
     <message>
         <source>Copied</source>
-        <translation>Скопировано</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°РЅРѕ</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Предупреждение</translation>
+        <translation>РџСЂРµРґСѓРїСЂРµР¶РґРµРЅРёРµ</translation>
     </message>
     <message>
         <source>Please input URL</source>
-        <translation>Пожалуйста, введите URL</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ URL</translation>
     </message>
     <message>
         <source>None</source>
-        <translation>Нет</translation>
+        <translation>РќРµС‚</translation>
     </message>
     <message>
         <source>Skip automatic update</source>
-        <translation>Пропустить автоматическое обновление</translation>
+        <translation>РџСЂРѕРїСѓСЃС‚РёС‚СЊ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Общие</translation>
+        <translation>РћР±С‰РёРµ</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Поделиться</translation>
+        <translation>РџРѕРґРµР»РёС‚СЊСЃСЏ</translation>
     </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
     <message>
         <source>Edit</source>
-        <translation>Редактировать</translation>
+        <translation>Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Общие</translation>
+        <translation>РћР±С‰РёРµ</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>РўРёРї</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation>Порт</translation>
+        <translation>РџРѕСЂС‚</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation>РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>РРјСЏ</translation>
     </message>
     <message>
         <source>Custom Outbound Settings</source>
-        <translation>Доп. настройки outbound</translation>
+        <translation>Р”РѕРї. РЅР°СЃС‚СЂРѕР№РєРё outbound</translation>
     </message>
     <message>
         <source>Custom Config Settings</source>
-        <translation>Доп. настройки конфига</translation>
+        <translation>Р”РѕРї. РЅР°СЃС‚СЂРѕР№РєРё РєРѕРЅС„РёРіР°</translation>
     </message>
     <message>
         <source>Apply settings to this group</source>
-        <translation>Применить настройки к этой группе</translation>
+        <translation>РџСЂРёРјРµРЅРёС‚СЊ РЅР°СЃС‚СЂРѕР№РєРё Рє СЌС‚РѕР№ РіСЂСѓРїРїРµ</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Настройки</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation>Нижележащий транспорт. Должен соответствовать конфигурации сервера, иначе подключение будет невозможно.</translation>
+        <translation>РќРёР¶РµР»РµР¶Р°С‰РёР№ С‚СЂР°РЅСЃРїРѕСЂС‚. Р”РѕР»Р¶РµРЅ СЃРѕРѕС‚РІРµС‚СЃС‚РІРѕРІР°С‚СЊ РєРѕРЅС„РёРіСѓСЂР°С†РёРё СЃРµСЂРІРµСЂР°, РёРЅР°С‡Рµ РїРѕРґРєР»СЋС‡РµРЅРёРµ Р±СѓРґРµС‚ РЅРµРІРѕР·РјРѕР¶РЅРѕ.</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>Транспорт</translation>
+        <translation>РўСЂР°РЅСЃРїРѕСЂС‚</translation>
     </message>
     <message>
         <source>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation>TLS. Должно совпадать с параметрами сервера, иначе подключение будет невозможно.</translation>
+        <translation>TLS. Р”РѕР»Р¶РЅРѕ СЃРѕРІРїР°РґР°С‚СЊ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё СЃРµСЂРІРµСЂР°, РёРЅР°С‡Рµ РїРѕРґРєР»СЋС‡РµРЅРёРµ Р±СѓРґРµС‚ РЅРµРІРѕР·РјРѕР¶РЅРѕ.</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Безопасность</translation>
+        <translation>Р‘РµР·РѕРїР°СЃРЅРѕСЃС‚СЊ</translation>
     </message>
     <message>
         <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
-        <translation>UDP FullCone кодирование пакетов для реализации функционала типа UDP FullCone. Необходима поддержка со стороны сервера, при неправильном выборе подключение не будет работать. Оставьте пустым, если вы не знаете что и зачем это.</translation>
+        <translation>UDP FullCone РєРѕРґРёСЂРѕРІР°РЅРёРµ РїР°РєРµС‚РѕРІ РґР»СЏ СЂРµР°Р»РёР·Р°С†РёРё С„СѓРЅРєС†РёРѕРЅР°Р»Р° С‚РёРїР° UDP FullCone. РќРµРѕР±С…РѕРґРёРјР° РїРѕРґРґРµСЂР¶РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°, РїСЂРё РЅРµРїСЂР°РІРёР»СЊРЅРѕРј РІС‹Р±РѕСЂРµ РїРѕРґРєР»СЋС‡РµРЅРёРµ РЅРµ Р±СѓРґРµС‚ СЂР°Р±РѕС‚Р°С‚СЊ. РћСЃС‚Р°РІСЊС‚Рµ РїСѓСЃС‚С‹Рј, РµСЃР»Рё РІС‹ РЅРµ Р·РЅР°РµС‚Рµ С‡С‚Рѕ Рё Р·Р°С‡РµРј СЌС‚Рѕ.</translation>
     </message>
     <message>
         <source>Packet Encoding</source>
-        <translation>Кодирование пакетов</translation>
+        <translation>РљРѕРґРёСЂРѕРІР°РЅРёРµ РїР°РєРµС‚РѕРІ</translation>
     </message>
     <message>
         <source>Server support is required</source>
-        <translation>Необходима поддержка со стороны сервера</translation>
+        <translation>РќРµРѕР±С…РѕРґРёРјР° РїРѕРґРґРµСЂР¶РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°</translation>
     </message>
     <message>
         <source>Multiplex</source>
-        <translation>Мультиплексирование</translation>
+        <translation>РњСѓР»СЊС‚РёРїР»РµРєСЃРёСЂРѕРІР°РЅРёРµ</translation>
     </message>
     <message>
         <source>Keep Default</source>
-        <translation>По умолчанию</translation>
+        <translation>РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>On</source>
-        <translation>Вкл</translation>
+        <translation>Р’РєР»</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Выкл</translation>
+        <translation>Р’С‹РєР»</translation>
     </message>
     <message>
         <source>Network Settings (%1)</source>
-        <translation>Настройки транспорта (%1)</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё С‚СЂР°РЅСЃРїРѕСЂС‚Р° (%1)</translation>
     </message>
     <message>
         <source>TLS Security Settings</source>
-        <translation>Настройки TLS</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё TLS</translation>
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
-        <translation>Если вкл., то  клиент не будет проверять валидность TLS-сертификата, предоставленного сервером</translation>
+        <translation>Р•СЃР»Рё РІРєР»., С‚Рѕ  РєР»РёРµРЅС‚ РЅРµ Р±СѓРґРµС‚ РїСЂРѕРІРµСЂСЏС‚СЊ РІР°Р»РёРґРЅРѕСЃС‚СЊ TLS-СЃРµСЂС‚РёС„РёРєР°С‚Р°, РїСЂРµРґРѕСЃС‚Р°РІР»РµРЅРЅРѕРіРѕ СЃРµСЂРІРµСЂРѕРј</translation>
     </message>
     <message>
         <source>Allow insecure</source>
-        <translation>Разрешить небезопасн.</translation>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РЅРµР±РµР·РѕРїР°СЃРЅ.</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <translation>РЎРµСЂС‚РёС„РёРєР°С‚</translation>
     </message>
     <message>
         <source>Server name indication, clear text.</source>
-        <translation>SNI (идентификатор сервера, передается в открытом виде).</translation>
+        <translation>SNI (РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ СЃРµСЂРІРµСЂР°, РїРµСЂРµРґР°РµС‚СЃСЏ РІ РѕС‚РєСЂС‹С‚РѕРј РІРёРґРµ).</translation>
     </message>
     <message>
         <source>Application layer protocol negotiation, clear text. Please separate them with commas.</source>
-        <translation>ALPN, идентификатор протокола приложения, передается открытым текстом. Используйте запятую в качестве разделителя.</translation>
+        <translation>ALPN, РёРґРµРЅС‚РёС„РёРєР°С‚РѕСЂ РїСЂРѕС‚РѕРєРѕР»Р° РїСЂРёР»РѕР¶РµРЅРёСЏ, РїРµСЂРµРґР°РµС‚СЃСЏ РѕС‚РєСЂС‹С‚С‹Рј С‚РµРєСЃС‚РѕРј. РСЃРїРѕР»СЊР·СѓР№С‚Рµ Р·Р°РїСЏС‚СѓСЋ РІ РєР°С‡РµСЃС‚РІРµ СЂР°Р·РґРµР»РёС‚РµР»СЏ.</translation>
     </message>
     <message>
         <source>TLS Camouflage Settings</source>
-        <translation>Настройки маскировки TLS</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РјР°СЃРєРёСЂРѕРІРєРё TLS</translation>
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
-        <translation>Публичный ключ Reality. Если задано значение, то будет использован протокол Reality для TLS.</translation>
+        <translation>РџСѓР±Р»РёС‡РЅС‹Р№ РєР»СЋС‡ Reality. Р•СЃР»Рё Р·Р°РґР°РЅРѕ Р·РЅР°С‡РµРЅРёРµ, С‚Рѕ Р±СѓРґРµС‚ РёСЃРїРѕР»СЊР·РѕРІР°РЅ РїСЂРѕС‚РѕРєРѕР» Reality РґР»СЏ TLS.</translation>
     </message>
     <message>
         <source>Reality short id. Accept only one value.</source>
-        <translation>Короткий ID для Reality. Можно задать только одно значение.</translation>
+        <translation>РљРѕСЂРѕС‚РєРёР№ ID РґР»СЏ Reality. РњРѕР¶РЅРѕ Р·Р°РґР°С‚СЊ С‚РѕР»СЊРєРѕ РѕРґРЅРѕ Р·РЅР°С‡РµРЅРёРµ.</translation>
     </message>
     <message>
         <source>Custom (%1 outbound)</source>
-        <translation>Кастомный (%1 outbound)</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Р№ (%1 outbound)</translation>
     </message>
     <message>
         <source>Custom (%1 config)</source>
-        <translation>Кастомный (%1 конфиг)</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Р№ (%1 РєРѕРЅС„РёРі)</translation>
     </message>
     <message>
         <source>Custom (Extra Core)</source>
-        <translation>Кастомный (доп. ядро)</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Р№ (РґРѕРї. СЏРґСЂРѕ)</translation>
     </message>
     <message>
         <source>Not set</source>
-        <translation>Не задано</translation>
+        <translation>РќРµ Р·Р°РґР°РЅРѕ</translation>
     </message>
     <message>
         <source>Already set</source>
-        <translation>Уже задано</translation>
+        <translation>РЈР¶Рµ Р·Р°РґР°РЅРѕ</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation>Подтвердить</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚СЊ</translation>
     </message>
 </context>
 <context>
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
-        <translation>Горячие клавиши</translation>
+        <translation>Р“РѕСЂСЏС‡РёРµ РєР»Р°РІРёС€Рё</translation>
     </message>
     <message>
         <source>Show routes</source>
-        <translation>Показать маршруты</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РјР°СЂС€СЂСѓС‚С‹</translation>
     </message>
     <message>
         <source>Show groups</source>
-        <translation>Показать группы</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РіСЂСѓРїРїС‹</translation>
     </message>
     <message>
         <source>Trigger main window</source>
-        <translation>Показать главное окно</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РіР»Р°РІРЅРѕРµ РѕРєРЅРѕ</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Режим системного прокси</translation>
+        <translation>Р РµР¶РёРј СЃРёСЃС‚РµРјРЅРѕРіРѕ РїСЂРѕРєСЃРё</translation>
     </message>
 </context>
 <context>
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation>Группы</translation>
+        <translation>Р“СЂСѓРїРїС‹</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation>Новая группа</translation>
+        <translation>РќРѕРІР°СЏ РіСЂСѓРїРїР°</translation>
     </message>
     <message>
         <source>Update all subscriptions</source>
-        <translation>Обновить все подписки</translation>
+        <translation>РћР±РЅРѕРІРёС‚СЊ РІСЃРµ РїРѕРґРїРёСЃРєРё</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Подтвердить</translation>
+        <translation>РџРѕРґС‚РІРµСЂРґРёС‚СЊ</translation>
     </message>
     <message>
         <source>Update all subscriptions?</source>
-        <translation>Обновить все подписки?</translation>
+        <translation>РћР±РЅРѕРІРёС‚СЊ РІСЃРµ РїРѕРґРїРёСЃРєРё?</translation>
     </message>
 </context>
 <context>
     <name>DialogManageRoutes</name>
     <message>
         <source>Routes</source>
-        <translation>Маршруты</translation>
+        <translation>РњР°СЂС€СЂСѓС‚С‹</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Общие</translation>
+        <translation>РћР±С‰РёРµ</translation>
     </message>
     <message>
         <source>Route sets</source>
-        <translation>Набор маршрутов</translation>
+        <translation>РќР°Р±РѕСЂ РјР°СЂС€СЂСѓС‚РѕРІ</translation>
     </message>
     <message>
         <source>Mange route set</source>
-        <translation>Изменить набор маршрутов</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ РЅР°Р±РѕСЂ РјР°СЂС€СЂСѓС‚РѕРІ</translation>
     </message>
     <message>
         <source>Custom Route (global)</source>
-        <translation>Кастомные маршруты (global)</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Рµ РјР°СЂС€СЂСѓС‚С‹ (global)</translation>
     </message>
     <message>
         <source>Note: Other settings are independent for each route set.</source>
-        <translation>Остальные настройки будут индивидуальны
-для каждого набора маршрутов.</translation>
+        <translation>РћСЃС‚Р°Р»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё Р±СѓРґСѓС‚ РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹
+РґР»СЏ РєР°Р¶РґРѕРіРѕ РЅР°Р±РѕСЂР° РјР°СЂС€СЂСѓС‚РѕРІ.</translation>
     </message>
     <message>
         <source>Domain Strategy</source>
-        <translation>Стратегия доменов</translation>
+        <translation>РЎС‚СЂР°С‚РµРіРёСЏ РґРѕРјРµРЅРѕРІ</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Выкл</translation>
+        <translation>Р’С‹РєР»</translation>
     </message>
     <message>
         <source>Sniff result for routing</source>
-        <translation>Подслушивать для маршрутизации</translation>
+        <translation>РџРѕРґСЃР»СѓС€РёРІР°С‚СЊ РґР»СЏ РјР°СЂС€СЂСѓС‚РёР·Р°С†РёРё</translation>
     </message>
     <message>
         <source>Sniff result for destination</source>
-        <translation>Подслушивать для точки назначения</translation>
+        <translation>РџРѕРґСЃР»СѓС€РёРІР°С‚СЊ РґР»СЏ С‚РѕС‡РєРё РЅР°Р·РЅР°С‡РµРЅРёСЏ</translation>
     </message>
     <message>
         <source>Sniffing Mode</source>
-        <translation>Режим подслушивания</translation>
+        <translation>Р РµР¶РёРј РїРѕРґСЃР»СѓС€РёРІР°РЅРёСЏ</translation>
     </message>
     <message>
         <source>Server Address Strategy</source>
-        <translation>Стратегия выбора адреса сервера</translation>
+        <translation>РЎС‚СЂР°С‚РµРіРёСЏ РІС‹Р±РѕСЂР° Р°РґСЂРµСЃР° СЃРµСЂРІРµСЂР°</translation>
     </message>
     <message>
         <source>DNS</source>
@@ -597,59 +597,59 @@
     </message>
     <message>
         <source>Simple DNS Settings</source>
-        <translation>Базовые настройки DNS</translation>
+        <translation>Р‘Р°Р·РѕРІС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё DNS</translation>
     </message>
     <message>
         <source>Direct DNS</source>
-        <translation>DNS для &quot;прямых&quot; запросов</translation>
+        <translation>DNS РґР»СЏ &quot;РїСЂСЏРјС‹С…&quot; Р·Р°РїСЂРѕСЃРѕРІ</translation>
     </message>
     <message>
         <source>Query Strategy</source>
-        <translation>Стратегия запросов</translation>
+        <translation>РЎС‚СЂР°С‚РµРіРёСЏ Р·Р°РїСЂРѕСЃРѕРІ</translation>
     </message>
     <message>
         <source>Remote DNS</source>
-        <translation>Удаленный (remote) DNS</translation>
+        <translation>РЈРґР°Р»РµРЅРЅС‹Р№ (remote) DNS</translation>
     </message>
     <message>
         <source>Enable DNS Routing</source>
-        <translation>Вкл. DNS-маршрутизацию</translation>
+        <translation>Р’РєР». DNS-РјР°СЂС€СЂСѓС‚РёР·Р°С†РёСЋ</translation>
     </message>
     <message>
         <source>DNS Object Settings</source>
-        <translation>Специальные настройки DNS</translation>
+        <translation>РЎРїРµС†РёР°Р»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё DNS</translation>
     </message>
     <message>
         <source>Use DNS Object</source>
-        <translation>Использовать DNS-объект</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ DNS-РѕР±СЉРµРєС‚</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation>Форматировать</translation>
+        <translation>Р¤РѕСЂРјР°С‚РёСЂРѕРІР°С‚СЊ</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation>Помощь</translation>
+        <translation>РџРѕРјРѕС‰СЊ</translation>
     </message>
     <message>
         <source>Simple Route</source>
-        <translation>Базовые маршруты</translation>
+        <translation>Р‘Р°Р·РѕРІС‹Рµ РјР°СЂС€СЂСѓС‚С‹</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation>Блок</translation>
+        <translation>Р‘Р»РѕРє</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation>Напрямую</translation>
+        <translation>РќР°РїСЂСЏРјСѓСЋ</translation>
     </message>
     <message>
         <source>Domain</source>
-        <translation>Домен</translation>
+        <translation>Р”РѕРјРµРЅ</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation>Прокси</translation>
+        <translation>РџСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>IP</source>
@@ -657,215 +657,215 @@
     </message>
     <message>
         <source>Preset</source>
-        <translation>Пресет</translation>
+        <translation>РџСЂРµСЃРµС‚</translation>
     </message>
     <message>
         <source>Custom Route</source>
-        <translation>Кастомные маршруты</translation>
+        <translation>РљР°СЃС‚РѕРјРЅС‹Рµ РјР°СЂС€СЂСѓС‚С‹</translation>
     </message>
     <message>
         <source>Default Outbound</source>
-        <translation>Outbound по-умолчанию</translation>
+        <translation>Outbound РїРѕ-СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>Bypass LAN and China</source>
-        <translation>Пропускать LAN и китайские ресурсы</translation>
+        <translation>РџСЂРѕРїСѓСЃРєР°С‚СЊ LAN Рё РєРёС‚Р°Р№СЃРєРёРµ СЂРµСЃСѓСЂСЃС‹</translation>
     </message>
     <message>
         <source>Global</source>
-        <translation>Глобально</translation>
+        <translation>Р“Р»РѕР±Р°Р»СЊРЅРѕ</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation>Загрузить</translation>
+        <translation>Р—Р°РіСЂСѓР·РёС‚СЊ</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Сохранить</translation>
+        <translation>РЎРѕС…СЂР°РЅРёС‚СЊ</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отменить</translation>
+        <translation>РћС‚РјРµРЅРёС‚СЊ</translation>
     </message>
     <message>
         <source>Load routing: %1</source>
-        <translation>Загрузить машруты: %1</translation>
+        <translation>Р—Р°РіСЂСѓР·РёС‚СЊ РјР°С€СЂСѓС‚С‹: %1</translation>
     </message>
     <message>
         <source>Save routing: %1</source>
-        <translation>Сохранить маршруты: %1</translation>
+        <translation>РЎРѕС…СЂР°РЅРёС‚СЊ РјР°СЂС€СЂСѓС‚С‹: %1</translation>
     </message>
     <message>
         <source>Remove routing: %1</source>
-        <translation>Удалить маршруты: %1</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РјР°СЂС€СЂСѓС‚С‹: %1</translation>
     </message>
     <message>
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
 If the default value does not work, try changing it to &quot;223.5.5.5&quot;.
 For more information, see the document &quot;Configuration/DNS&quot;.</source>
-        <translation>Это особенно важно — рекомендуется использовать значение по умолчанию «localhost».
-Если значение по умолчанию не работает, попробуйте заменить на «223.5.5.5».
-Подробнее см. документ «Configuration/DNS».</translation>
+        <translation>Р­С‚Рѕ РѕСЃРѕР±РµРЅРЅРѕ РІР°Р¶РЅРѕ вЂ” СЂРµРєРѕРјРµРЅРґСѓРµС‚СЃСЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ В«localhostВ».
+Р•СЃР»Рё Р·РЅР°С‡РµРЅРёРµ РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РЅРµ СЂР°Р±РѕС‚Р°РµС‚, РїРѕРїСЂРѕР±СѓР№С‚Рµ Р·Р°РјРµРЅРёС‚СЊ РЅР° В«223.5.5.5В».
+РџРѕРґСЂРѕР±РЅРµРµ СЃРј. РґРѕРєСѓРјРµРЅС‚ В«Configuration/DNSВ».</translation>
     </message>
     <message>
         <source>Final DNS Out</source>
-        <translation>Финальный DNS outbound</translation>
+        <translation>Р¤РёРЅР°Р»СЊРЅС‹Р№ DNS outbound</translation>
     </message>
 </context>
 <context>
     <name>DialogVPNSettings</name>
     <message>
         <source>Tun Settings</source>
-        <translation>Настройки Tun</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё Tun</translation>
     </message>
     <message>
         <source>Tun Enable IPv6</source>
-        <translation>Вкл. IPv6 в Tun</translation>
+        <translation>Р’РєР». IPv6 РІ Tun</translation>
     </message>
     <message>
         <source>Add a tun inbound to the profile startup, instead of using two processes.
 This needs to be run CofeBox with administrator privileges.</source>
-        <translation>Добавить inbound c Tun в конфигурацию профиля вместо того, чтобы использовать два отдельных процесса.
-Для этого необходимо запускать CofeBox c правами администратора.</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ inbound c Tun РІ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ РїСЂРѕС„РёР»СЏ РІРјРµСЃС‚Рѕ С‚РѕРіРѕ, С‡С‚РѕР±С‹ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґРІР° РѕС‚РґРµР»СЊРЅС‹С… РїСЂРѕС†РµСЃСЃР°.
+Р”Р»СЏ СЌС‚РѕРіРѕ РЅРµРѕР±С…РѕРґРёРјРѕ Р·Р°РїСѓСЃРєР°С‚СЊ CofeBox c РїСЂР°РІР°РјРё Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°.</translation>
     </message>
     <message>
         <source>Internal Tun</source>
-        <translation>Встроен. Tun</translation>
+        <translation>Р’СЃС‚СЂРѕРµРЅ. Tun</translation>
     </message>
     <message>
         <source>Hide Console</source>
-        <translation>Скрывать окно</translation>
+        <translation>РЎРєСЂС‹РІР°С‚СЊ РѕРєРЅРѕ</translation>
     </message>
     <message>
         <source>Bypass CIDR</source>
-        <translation>Пропускать CIDR</translation>
+        <translation>РџСЂРѕРїСѓСЃРєР°С‚СЊ CIDR</translation>
     </message>
     <message>
         <source>Bypass Process Name</source>
-        <translation>Пропускать процессы</translation>
+        <translation>РџСЂРѕРїСѓСЃРєР°С‚СЊ РїСЂРѕС†РµСЃСЃС‹</translation>
     </message>
     <message>
-        <source>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
-        <translation>При использовании белого или черного списка, ваш трафик будет обработан ядром nekobox (sign-tun). Это НЕ эквивалент &quot;process mode&quot; как в некотором ПО.</translation>
+        <source>Whether blacklisted or whitelisted, your traffic will be handled by cofebox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
+        <translation>РџСЂРё РёСЃРїРѕР»СЊР·РѕРІР°РЅРёРё Р±РµР»РѕРіРѕ РёР»Рё С‡РµСЂРЅРѕРіРѕ СЃРїРёСЃРєР°, РІР°С€ С‚СЂР°С„РёРє Р±СѓРґРµС‚ РѕР±СЂР°Р±РѕС‚Р°РЅ СЏРґСЂРѕРј cofebox (sign-tun). Р­С‚Рѕ РќР• СЌРєРІРёРІР°Р»РµРЅС‚ &quot;process mode&quot; РєР°Рє РІ РЅРµРєРѕС‚РѕСЂРѕРј РџРћ.</translation>
     </message>
     <message>
         <source>Whitelist mode</source>
-        <translation>Режим белого списка</translation>
+        <translation>Р РµР¶РёРј Р±РµР»РѕРіРѕ СЃРїРёСЃРєР°</translation>
     </message>
     <message>
         <source>Troubleshooting</source>
-        <translation>Исправление проблем</translation>
+        <translation>РСЃРїСЂР°РІР»РµРЅРёРµ РїСЂРѕР±Р»РµРј</translation>
     </message>
     <message>
         <source>Proxy CIDR</source>
-        <translation>Проксировать CIDR</translation>
+        <translation>РџСЂРѕРєСЃРёСЂРѕРІР°С‚СЊ CIDR</translation>
     </message>
     <message>
         <source>Proxy Process Name</source>
-        <translation>Проксировать процессы</translation>
+        <translation>РџСЂРѕРєСЃРёСЂРѕРІР°С‚СЊ РїСЂРѕС†РµСЃСЃС‹</translation>
     </message>
     <message>
-        <source>If you have trouble starting VPN, you can force reset nekobox_core process here.
+        <source>If you have trouble starting VPN, you can force reset cofebox_core process here.
 
 If still not working, see documentation for more information.
 %1</source>
-        <translation>Если у вас проблемы с запуском VPN, можно принудительно перезапустить процесс nekobox-core.
+        <translation>Р•СЃР»Рё Сѓ РІР°СЃ РїСЂРѕР±Р»РµРјС‹ СЃ Р·Р°РїСѓСЃРєРѕРј VPN, РјРѕР¶РЅРѕ РїСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕС†РµСЃСЃ cofebox-core.
 
-Если ничего по-прежнему не работает, ознакомьтесь с документацией:
+Р•СЃР»Рё РЅРёС‡РµРіРѕ РїРѕ-РїСЂРµР¶РЅРµРјСѓ РЅРµ СЂР°Р±РѕС‚Р°РµС‚, РѕР·РЅР°РєРѕРјСЊС‚РµСЃСЊ СЃ РґРѕРєСѓРјРµРЅС‚Р°С†РёРµР№:
 %1</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>Перезапустить</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Отмена</translation>
+        <translation>РћС‚РјРµРЅР°</translation>
     </message>
 </context>
 <context>
     <name>EditChain</name>
     <message>
         <source>Traffic order is from top to bottom</source>
-        <translation>Порядок трафика сверху вниз</translation>
+        <translation>РџРѕСЂСЏРґРѕРє С‚СЂР°С„РёРєР° СЃРІРµСЂС…Сѓ РІРЅРёР·</translation>
     </message>
     <message>
         <source>Select Profile</source>
-        <translation>Выбор профиля</translation>
+        <translation>Р’С‹Р±РѕСЂ РїСЂРѕС„РёР»СЏ</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation>Имя не может быть пустым.</translation>
+        <translation>РРјСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.</translation>
     </message>
 </context>
 <context>
     <name>EditCustom</name>
     <message>
         <source>Core</source>
-        <translation>Ядро</translation>
+        <translation>РЇРґСЂРѕ</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation>Редактор JSON</translation>
+        <translation>Р РµРґР°РєС‚РѕСЂ JSON</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation>Команда</translation>
+        <translation>РљРѕРјР°РЅРґР°</translation>
     </message>
     <message>
         <source>Config Suffix</source>
-        <translation>Суффикс конфига</translation>
+        <translation>РЎСѓС„С„РёРєСЃ РєРѕРЅС„РёРіР°</translation>
     </message>
     <message>
         <source>Random if it&apos;s empty or zero.</source>
-        <translation>Если пусто или 0, то будет выбран случайным образом.</translation>
+        <translation>Р•СЃР»Рё РїСѓСЃС‚Рѕ РёР»Рё 0, С‚Рѕ Р±СѓРґРµС‚ РІС‹Р±СЂР°РЅ СЃР»СѓС‡Р°Р№РЅС‹Рј РѕР±СЂР°Р·РѕРј.</translation>
     </message>
     <message>
         <source>Preview</source>
-        <translation>Предпросмотр</translation>
+        <translation>РџСЂРµРґРїСЂРѕСЃРјРѕС‚СЂ</translation>
     </message>
     <message>
         <source>Outbound JSON, please read the documentation.</source>
-        <translation>Outbound JSON, читайте документацию.</translation>
+        <translation>Outbound JSON, С‡РёС‚Р°Р№С‚Рµ РґРѕРєСѓРјРµРЅС‚Р°С†РёСЋ.</translation>
     </message>
     <message>
         <source>Please fill the complete config.</source>
-        <translation>Пожалуйста, введите полную конфигурацию.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІРІРµРґРёС‚Рµ РїРѕР»РЅСѓСЋ РєРѕРЅС„РёРіСѓСЂР°С†РёСЋ.</translation>
     </message>
     <message>
         <source>Preview replace</source>
-        <translation>Предпросмотр замен</translation>
+        <translation>РџСЂРµРґРїСЂРѕСЃРјРѕС‚СЂ Р·Р°РјРµРЅ</translation>
     </message>
     <message>
         <source>Preview config</source>
-        <translation>Предпросмотр конфигурации</translation>
+        <translation>РџСЂРµРґРїСЂРѕСЃРјРѕС‚СЂ РєРѕРЅС„РёРіСѓСЂР°С†РёРё</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation>Имя не может быть пустым.</translation>
+        <translation>РРјСЏ РЅРµ РјРѕР¶РµС‚ Р±С‹С‚СЊ РїСѓСЃС‚С‹Рј.</translation>
     </message>
     <message>
         <source>Please pick a core.</source>
-        <translation>Пожалуйста, выберите ядро.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІС‹Р±РµСЂРёС‚Рµ СЏРґСЂРѕ.</translation>
     </message>
 </context>
 <context>
     <name>EditNaive</name>
     <message>
         <source>Protocol</source>
-        <translation>Протокол</translation>
+        <translation>РџСЂРѕС‚РѕРєРѕР»</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <source>Extra headers</source>
-        <translation>Дополнительные заголовки</translation>
+        <translation>Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рµ Р·Р°РіРѕР»РѕРІРєРё</translation>
     </message>
     <message>
         <source>SNI</source>
@@ -873,58 +873,58 @@ If still not working, see documentation for more information.
     </message>
     <message>
         <source>Username</source>
-        <translation>Имя пользователя</translation>
+        <translation>РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <translation>РЎРµСЂС‚РёС„РёРєР°С‚</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>
-        <translation>Небезопасная параллельность</translation>
+        <translation>РќРµР±РµР·РѕРїР°СЃРЅР°СЏ РїР°СЂР°Р»Р»РµР»СЊРЅРѕСЃС‚СЊ</translation>
     </message>
     <message>
         <source>Disable logs</source>
-        <translation>Отключить логи</translation>
+        <translation>РћС‚РєР»СЋС‡РёС‚СЊ Р»РѕРіРё</translation>
     </message>
     <message>
         <source>Turn on this option if your connection is lost after a while</source>
-        <translation>Включите этот параметр, если соединение пропадает через некоторое время</translation>
+        <translation>Р’РєР»СЋС‡РёС‚Рµ СЌС‚РѕС‚ РїР°СЂР°РјРµС‚СЂ, РµСЃР»Рё СЃРѕРµРґРёРЅРµРЅРёРµ РїСЂРѕРїР°РґР°РµС‚ С‡РµСЂРµР· РЅРµРєРѕС‚РѕСЂРѕРµ РІСЂРµРјСЏ</translation>
     </message>
 </context>
 <context>
     <name>EditQUIC</name>
     <message>
         <source>Download (Mbps)</source>
-        <translation>Скорость приема (Mbps)</translation>
+        <translation>РЎРєРѕСЂРѕСЃС‚СЊ РїСЂРёРµРјР° (Mbps)</translation>
     </message>
     <message>
         <source>Disable MTU Discovery</source>
-        <translation>Выкл. MTU discovery</translation>
+        <translation>Р’С‹РєР». MTU discovery</translation>
     </message>
     <message>
         <source>Hop Interval (s)</source>
-        <translation>Интервал hop (с)</translation>
+        <translation>РРЅС‚РµСЂРІР°Р» hop (СЃ)</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>Сертификат</translation>
+        <translation>РЎРµСЂС‚РёС„РёРєР°С‚</translation>
     </message>
     <message>
         <source>Allow Insecure</source>
-        <translation>Разрешить небезопасные</translation>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РЅРµР±РµР·РѕРїР°СЃРЅС‹Рµ</translation>
     </message>
     <message>
         <source>Hop Port</source>
-        <translation>Порт hop</translation>
+        <translation>РџРѕСЂС‚ hop</translation>
     </message>
     <message>
         <source>Upload (Mbps)</source>
-        <translation>Скорость отдачи (Mbps)</translation>
+        <translation>РЎРєРѕСЂРѕСЃС‚СЊ РѕС‚РґР°С‡Рё (Mbps)</translation>
     </message>
     <message>
         <source>Obfs Password</source>
-        <translation>Пароль для обфускации</translation>
+        <translation>РџР°СЂРѕР»СЊ РґР»СЏ РѕР±С„СѓСЃРєР°С†РёРё</translation>
     </message>
     <message>
         <source>SNI</source>
@@ -932,95 +932,95 @@ If still not working, see documentation for more information.
     </message>
     <message>
         <source>Disable SNI</source>
-        <translation>Отключить SNI</translation>
+        <translation>РћС‚РєР»СЋС‡РёС‚СЊ SNI</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation>Сгенерировать UUID</translation>
+        <translation>РЎРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ UUID</translation>
     </message>
     <message>
         <source>Heartbeat</source>
-        <translation>Сердцебиение (Hearbeat)</translation>
+        <translation>РЎРµСЂРґС†РµР±РёРµРЅРёРµ (Hearbeat)</translation>
     </message>
     <message>
         <source>Zero Rtt Handshake</source>
-        <translation>Без рукопожатия Rtt</translation>
+        <translation>Р‘РµР· СЂСѓРєРѕРїРѕР¶Р°С‚РёСЏ Rtt</translation>
     </message>
     <message>
         <source>Congestion Control</source>
-        <translation>Управление перегрузкой</translation>
+        <translation>РЈРїСЂР°РІР»РµРЅРёРµ РїРµСЂРµРіСЂСѓР·РєРѕР№</translation>
     </message>
     <message>
         <source>UDP Relay Mode</source>
-        <translation>Режим UDP Relay</translation>
+        <translation>Р РµР¶РёРј UDP Relay</translation>
     </message>
     <message>
         <source>Force use external core</source>
-        <translation>Принудительно использовать внешний core</translation>
+        <translation>РџСЂРёРЅСѓРґРёС‚РµР»СЊРЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РІРЅРµС€РЅРёР№ core</translation>
     </message>
 </context>
 <context>
     <name>EditShadowSocks</name>
     <message>
         <source>Encryption</source>
-        <translation>Шифрование</translation>
+        <translation>РЁРёС„СЂРѕРІР°РЅРёРµ</translation>
     </message>
     <message>
         <source>Plugin</source>
-        <translation>Плагин</translation>
+        <translation>РџР»Р°РіРёРЅ</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
     <message>
         <source>Plugin Args</source>
-        <translation>Аргументы</translation>
+        <translation>РђСЂРіСѓРјРµРЅС‚С‹</translation>
     </message>
     <message>
         <source>Version of UDP over TCP protocol, server support is required.</source>
-        <translation>Версия протокола &quot;UDP over TCP&quot;, требуется поддержка со стороны сервера.</translation>
+        <translation>Р’РµСЂСЃРёСЏ РїСЂРѕС‚РѕРєРѕР»Р° &quot;UDP over TCP&quot;, С‚СЂРµР±СѓРµС‚СЃСЏ РїРѕРґРґРµСЂР¶РєР° СЃРѕ СЃС‚РѕСЂРѕРЅС‹ СЃРµСЂРІРµСЂР°.</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Выкл</translation>
+        <translation>Р’С‹РєР»</translation>
     </message>
 </context>
 <context>
     <name>EditSocksHttp</name>
     <message>
         <source>Version</source>
-        <translation>Версия</translation>
+        <translation>Р’РµСЂСЃРёСЏ</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Имя пользователя</translation>
+        <translation>РРјСЏ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
 </context>
 <context>
     <name>EditTrojanVLESS</name>
     <message>
         <source>Password</source>
-        <translation>Пароль</translation>
+        <translation>РџР°СЂРѕР»СЊ</translation>
     </message>
 </context>
 <context>
     <name>EditVMess</name>
     <message>
         <source>Security</source>
-        <translation>Шифрование</translation>
+        <translation>РЁРёС„СЂРѕРІР°РЅРёРµ</translation>
     </message>
     <message>
         <source>Alter Id</source>
-        <translation>Альт. ID</translation>
+        <translation>РђР»СЊС‚. ID</translation>
     </message>
     <message>
         <source>UUID</source>
@@ -1028,752 +1028,780 @@ If still not working, see documentation for more information.
     </message>
     <message>
         <source>Generate UUID</source>
-        <translation>Сгенерировать UUID</translation>
+        <translation>РЎРіРµРЅРµСЂРёСЂРѕРІР°С‚СЊ UUID</translation>
     </message>
 </context>
 <context>
     <name>GroupItem</name>
     <message>
         <source>Update Subscription</source>
-        <translation>Обновить</translation>
+        <translation>РћР±РЅРѕРІРёС‚СЊ</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Изменить</translation>
+        <translation>РР·РјРµРЅРёС‚СЊ</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Удалить</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>Простая</translation>
+        <translation>РџСЂРѕСЃС‚Р°СЏ</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Подписка</translation>
+        <translation>РџРѕРґРїРёСЃРєР°</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>Архив</translation>
+        <translation>РђСЂС…РёРІ</translation>
     </message>
     <message>
         <source>Last update: %1</source>
-        <translation>Последнее обновление: %1</translation>
+        <translation>РџРѕСЃР»РµРґРЅРµРµ РѕР±РЅРѕРІР»РµРЅРёРµ: %1</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Подтверждение</translation>
+        <translation>РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ</translation>
     </message>
     <message>
         <source>Remove %1?</source>
-        <translation>Удалить %1?</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ %1?</translation>
     </message>
 </context>
 <context>
     <name>JsonEditor</name>
     <message>
         <source>JSON Editor</source>
-        <translation>Редактор JSON</translation>
+        <translation>Р РµРґР°РєС‚РѕСЂ JSON</translation>
     </message>
     <message>
         <source>Format JSON</source>
-        <translation>Форматировать JSON</translation>
+        <translation>Р¤РѕСЂРјР°С‚РёСЂРѕРІР°С‚СЊ JSON</translation>
     </message>
     <message>
         <source>Remove All Comments</source>
-        <translation>Удалить все комментарии</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РІСЃРµ РєРѕРјРјРµРЅС‚Р°СЂРёРё</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation>Редактор JSON</translation>
+        <translation>Р РµРґР°РєС‚РѕСЂ JSON</translation>
     </message>
     <message>
         <source>Structure Preview</source>
-        <translation>Предпросмотр структуры</translation>
+        <translation>РџСЂРµРґРїСЂРѕСЃРјРѕС‚СЂ СЃС‚СЂСѓРєС‚СѓСЂС‹</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation>ОК</translation>
+        <translation>РћРљ</translation>
     </message>
     <message>
         <source>Json Contains Syntax Errors</source>
-        <translation>JSON содержит синтаксические ошибки</translation>
+        <translation>JSON СЃРѕРґРµСЂР¶РёС‚ СЃРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёРµ РѕС€РёР±РєРё</translation>
     </message>
     <message>
         <source>Original Json may contain syntax errors. Json tree is disabled.</source>
-        <translation>Кажется, оригинальный JSON содержит синтатсические ошибки. Дерево JSON отключено.</translation>
+        <translation>РљР°Р¶РµС‚СЃСЏ, РѕСЂРёРіРёРЅР°Р»СЊРЅС‹Р№ JSON СЃРѕРґРµСЂР¶РёС‚ СЃРёРЅС‚Р°С‚СЃРёС‡РµСЃРєРёРµ РѕС€РёР±РєРё. Р”РµСЂРµРІРѕ JSON РѕС‚РєР»СЋС‡РµРЅРѕ.</translation>
     </message>
     <message>
         <source>You must correct these errors before continuing.</source>
-        <translation>Вы должны исправить эти ошибки чтобы продолжить.</translation>
+        <translation>Р’С‹ РґРѕР»Р¶РЅС‹ РёСЃРїСЂР°РІРёС‚СЊ СЌС‚Рё РѕС€РёР±РєРё С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ.</translation>
     </message>
     <message>
         <source>Syntax Errors</source>
-        <translation>Синтаксические ошибки</translation>
+        <translation>РЎРёРЅС‚Р°РєСЃРёС‡РµСЃРєРёРµ РѕС€РёР±РєРё</translation>
     </message>
     <message>
         <source>Please fix the JSON errors or remove the comments before continue</source>
-        <translation>Пожалуйста, чтобы продолжить, исправьте ошибки в JSON или удалите комментарии</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, С‡С‚РѕР±С‹ РїСЂРѕРґРѕР»Р¶РёС‚СЊ, РёСЃРїСЂР°РІСЊС‚Рµ РѕС€РёР±РєРё РІ JSON РёР»Рё СѓРґР°Р»РёС‚Рµ РєРѕРјРјРµРЅС‚Р°СЂРёРё</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Program</source>
-        <translation>Программа</translation>
+        <translation>РџСЂРѕРіСЂР°РјРјР°</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation>Настройки</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation>Сервер</translation>
+        <translation>РЎРµСЂРІРµСЂ</translation>
     </message>
     <message>
         <source>Ads</source>
-        <translation>Реклама</translation>
+        <translation>Р РµРєР»Р°РјР°</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation>Документация</translation>
+        <translation>Р”РѕРєСѓРјРµРЅС‚Р°С†РёСЏ</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновление</translation>
+        <translation>РћР±РЅРѕРІР»РµРЅРёРµ</translation>
     </message>
     <message>
         <source>Tun Mode</source>
-        <translation>Режим TUN</translation>
+        <translation>Р РµР¶РёРј TUN</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>Режим системного прокси</translation>
+        <translation>Р РµР¶РёРј СЃРёСЃС‚РµРјРЅРѕРіРѕ РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Тип</translation>
+        <translation>РўРёРї</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>Адрес</translation>
+        <translation>РђРґСЂРµСЃ</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Имя</translation>
+        <translation>РРјСЏ</translation>
     </message>
     <message>
         <source>Test Result</source>
-        <translation>Результат теста</translation>
+        <translation>Р РµР·СѓР»СЊС‚Р°С‚ С‚РµСЃС‚Р°</translation>
     </message>
     <message>
         <source>Traffic</source>
-        <translation>Трафик</translation>
+        <translation>РўСЂР°С„РёРє</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation>Журнал</translation>
+        <translation>Р–СѓСЂРЅР°Р»</translation>
     </message>
     <message>
         <source>Connection</source>
-        <translation>Подключение</translation>
+        <translation>РџРѕРґРєР»СЋС‡РµРЅРёРµ</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Статус</translation>
+        <translation>РЎС‚Р°С‚СѓСЃ</translation>
     </message>
     <message>
         <source>Outbound</source>
-        <translation>Исходящий</translation>
+        <translation>РСЃС…РѕРґСЏС‰РёР№</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation>Пункт назначения</translation>
+        <translation>РџСѓРЅРєС‚ РЅР°Р·РЅР°С‡РµРЅРёСЏ</translation>
     </message>
     <message>
         <source>Active Server</source>
-        <translation>Активный сервер</translation>
+        <translation>РђРєС‚РёРІРЅС‹Р№ СЃРµСЂРІРµСЂ</translation>
     </message>
     <message>
         <source>Active Routing</source>
-        <translation>Активное правило роутинга</translation>
+        <translation>РђРєС‚РёРІРЅРѕРµ РїСЂР°РІРёР»Рѕ СЂРѕСѓС‚РёРЅРіР°</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Поделиться</translation>
+        <translation>РџРѕРґРµР»РёС‚СЊСЃСЏ</translation>
     </message>
     <message>
         <source>Current Group</source>
-        <translation>Текущая группа</translation>
+        <translation>РўРµРєСѓС‰Р°СЏ РіСЂСѓРїРїР°</translation>
     </message>
     <message>
         <source>Current Select</source>
-        <translation>Текущий выбор</translation>
+        <translation>РўРµРєСѓС‰РёР№ РІС‹Р±РѕСЂ</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Выход</translation>
+        <translation>Р’С‹С…РѕРґ</translation>
     </message>
     <message>
         <source>Show Window</source>
-        <translation>Показать окно</translation>
+        <translation>РџРѕРєР°Р·Р°С‚СЊ РѕРєРЅРѕ</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation>Основные настройки</translation>
+        <translation>РћСЃРЅРѕРІРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>Basic settings</source>
-        <translation>Основные настройки</translation>
+        <translation>РћСЃРЅРѕРІРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>Tun settings</source>
-        <translation>Настройки TUN</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё TUN</translation>
     </message>
     <message>
         <source>Hotkey settings</source>
-        <translation>Настройки горячих клавиш</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РіРѕСЂСЏС‡РёС… РєР»Р°РІРёС€</translation>
     </message>
     <message>
         <source>Open config folder</source>
-        <translation>Открыть папку конфигурации</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РїР°РїРєСѓ РєРѕРЅС„РёРіСѓСЂР°С†РёРё</translation>
     </message>
     <message>
         <source>Restart proxy</source>
-        <translation>Перезапустить прокси</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Restart program</source>
-        <translation>Перезапустить программу</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ</translation>
     </message>
     <message>
         <source>Home</source>
-        <translation>Главная</translation>
+        <translation>Р“Р»Р°РІРЅР°СЏ</translation>
     </message>
     <message>
         <source>Servers</source>
-        <translation>Серверы</translation>
+        <translation>РЎРµСЂРІРµСЂС‹</translation>
     </message>
     <message>
         <source>Profiles</source>
-        <translation>Профили</translation>
+        <translation>РџСЂРѕС„РёР»Рё</translation>
     </message>
     <message>
         <source>Subscriptions</source>
-        <translation>Подписки</translation>
+        <translation>РџРѕРґРїРёСЃРєРё</translation>
     </message>
     <message>
         <source>Rules</source>
-        <translation>Правила</translation>
+        <translation>РџСЂР°РІРёР»Р°</translation>
     </message>
     <message>
         <source>Active routing: %1</source>
-        <translation>Активная маршрутизация: %1</translation>
+        <translation>РђРєС‚РёРІРЅР°СЏ РјР°СЂС€СЂСѓС‚РёР·Р°С†РёСЏ: %1</translation>
     </message>
     <message>
         <source>Active routing: Default</source>
-        <translation>Активная маршрутизация: По умолчанию</translation>
+        <translation>РђРєС‚РёРІРЅР°СЏ РјР°СЂС€СЂСѓС‚РёР·Р°С†РёСЏ: РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>Open routing settings</source>
-        <translation>Открыть настройки маршрутизации</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РЅР°СЃС‚СЂРѕР№РєРё РјР°СЂС€СЂСѓС‚РёР·Р°С†РёРё</translation>
     </message>
     <message>
         <source>Logs</source>
-        <translation>Логи</translation>
+        <translation>Р›РѕРіРё</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>Настройки</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё</translation>
     </message>
     <message>
         <source>About</source>
-        <translation>О программе</translation>
+        <translation>Рћ РїСЂРѕРіСЂР°РјРјРµ</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>Тема</translation>
+        <translation>РўРµРјР°</translation>
     </message>
     <message>
         <source>Theme: %1</source>
-        <translation>Тема: %1</translation>
+        <translation>РўРµРјР°: %1</translation>
     </message>
     <message>
         <source>Theme: -</source>
-        <translation>Тема: —</translation>
+        <translation>РўРµРјР°: вЂ”</translation>
     </message>
     <message>
         <source>System</source>
-        <translation>Системная</translation>
+        <translation>РЎРёСЃС‚РµРјРЅР°СЏ</translation>
     </message>
     <message>
         <source>Light</source>
-        <translation>Светлая</translation>
+        <translation>РЎРІРµС‚Р»Р°СЏ</translation>
     </message>
     <message>
         <source>Dark</source>
-        <translation>Темная</translation>
+        <translation>РўРµРјРЅР°СЏ</translation>
     </message>
     <message>
         <source>Lucifer</source>
-        <translation>Люцифер</translation>
+        <translation>Р›СЋС†РёС„РµСЂ</translation>
     </message>
     <message>
         <source>Disconnected</source>
-        <translation>Отключено</translation>
+        <translation>РћС‚РєР»СЋС‡РµРЅРѕ</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Подключено</translation>
+        <translation>РџРѕРґРєР»СЋС‡РµРЅРѕ</translation>
     </message>
     <message>
         <source>Connecting</source>
-        <translation>Подключение...</translation>
+        <translation>РџРѕРґРєР»СЋС‡РµРЅРёРµ...</translation>
     </message>
     <message>
         <source>Disconnecting</source>
-        <translation>Отключение...</translation>
+        <translation>РћС‚РєР»СЋС‡РµРЅРёРµ...</translation>
     </message>
     <message>
         <source>Profile: -</source>
-        <translation>Профиль: -</translation>
+        <translation>РџСЂРѕС„РёР»СЊ: -</translation>
     </message>
     <message>
         <source>Profile: %1</source>
-        <translation>Профиль: %1</translation>
+        <translation>РџСЂРѕС„РёР»СЊ: %1</translation>
     </message>
     <message>
         <source>Select server</source>
-        <translation>Выбрать сервер</translation>
+        <translation>Р’С‹Р±СЂР°С‚СЊ СЃРµСЂРІРµСЂ</translation>
     </message>
     <message>
         <source>Select profile</source>
-        <translation>Выбрать профиль</translation>
+        <translation>Р’С‹Р±СЂР°С‚СЊ РїСЂРѕС„РёР»СЊ</translation>
     </message>
     <message>
         <source>Open logs</source>
-        <translation>Открыть логи</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ Р»РѕРіРё</translation>
     </message>
     <message>
         <source>Paste subscription URL</source>
-        <translation>Вставьте ссылку подписки</translation>
+        <translation>Р’СЃС‚Р°РІСЊС‚Рµ СЃСЃС‹Р»РєСѓ РїРѕРґРїРёСЃРєРё</translation>
     </message>
     <message>
         <source>Paste link or subscription URL</source>
-        <translation>Вставьте ссылку или URL подписки</translation>
+        <translation>Р’СЃС‚Р°РІСЊС‚Рµ СЃСЃС‹Р»РєСѓ РёР»Рё URL РїРѕРґРїРёСЃРєРё</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Добавить</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ</translation>
     </message>
     <message>
         <source>Edit selected</source>
-        <translation>Редактировать выбранное</translation>
+        <translation>Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ РІС‹Р±СЂР°РЅРЅРѕРµ</translation>
     </message>
     <message>
         <source>Export config</source>
-        <translation>Экспорт конфигурации</translation>
+        <translation>Р­РєСЃРїРѕСЂС‚ РєРѕРЅС„РёРіСѓСЂР°С†РёРё</translation>
     </message>
     <message>
         <source>Open servers list</source>
-        <translation>Открыть список серверов</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ СЃРїРёСЃРѕРє СЃРµСЂРІРµСЂРѕРІ</translation>
     </message>
     <message>
         <source>Paste</source>
-        <translation>Вставить</translation>
+        <translation>Р’СЃС‚Р°РІРёС‚СЊ</translation>
     </message>
     <message>
         <source>Add from clipboard</source>
-        <translation>Добавить из буфера обмена</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ РёР· Р±СѓС„РµСЂР° РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <source>Tip: select profiles in Servers to edit, clone, or export.</source>
-        <translation>Подсказка: выберите профили на вкладке «Серверы» для редактирования, клонирования или экспорта.</translation>
+        <translation>РџРѕРґСЃРєР°Р·РєР°: РІС‹Р±РµСЂРёС‚Рµ РїСЂРѕС„РёР»Рё РЅР° РІРєР»Р°РґРєРµ В«РЎРµСЂРІРµСЂС‹В» РґР»СЏ СЂРµРґР°РєС‚РёСЂРѕРІР°РЅРёСЏ, РєР»РѕРЅРёСЂРѕРІР°РЅРёСЏ РёР»Рё СЌРєСЃРїРѕСЂС‚Р°.</translation>
     </message>
     <message>
         <source>Qt-based proxy manager for sing-box.\nVersion: %1</source>
-        <translation>Менеджер прокси на Qt для sing-box.\nВерсия: %1</translation>
+        <translation>РњРµРЅРµРґР¶РµСЂ РїСЂРѕРєСЃРё РЅР° Qt РґР»СЏ sing-box.\nР’РµСЂСЃРёСЏ: %1</translation>
+    </message>
+    <message>
+        <source>Check updates</source>
+        <translation>РџСЂРѕРІРµСЂРёС‚СЊ РѕР±РЅРѕРІР»РµРЅРёСЏ</translation>
+    </message>
+    <message>
+        <source>Open release page</source>
+        <translation>РћС‚РєСЂС‹С‚СЊ СЃС‚СЂР°РЅРёС†Сѓ СЂРµР»РёР·Р°</translation>
+    </message>
+    <message>
+        <source>Open update logs</source>
+        <translation>РћС‚РєСЂС‹С‚СЊ Р»РѕРіРё РѕР±РЅРѕРІР»РµРЅРёСЏ</translation>
+    </message>
+    <message>
+        <source>Update available: v%1</source>
+        <translation>Р”РѕСЃС‚СѓРїРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ: v%1</translation>
+    </message>
+    <message>
+        <source>Update installed. Restart now?</source>
+        <translation>РћР±РЅРѕРІР»РµРЅРёРµ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ. РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ СЃРµР№С‡Р°СЃ?</translation>
+    </message>
+    <message>
+        <source>Version: %1</source>
+        <translation>Р’РµСЂСЃРёСЏ: %1</translation>
+    </message>
+    <message>
+        <source>Update to v%1</source>
+        <translation>РћР±РЅРѕРІРёС‚СЊ РґРѕ v%1</translation>
     </message>
     <message>
         <source>Invalid input</source>
-        <translation>Некорректный ввод</translation>
+        <translation>РќРµРєРѕСЂСЂРµРєС‚РЅС‹Р№ РІРІРѕРґ</translation>
     </message>
     <message>
         <source>Please paste a subscription URL.</source>
-        <translation>Пожалуйста, вставьте ссылку подписки.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІСЃС‚Р°РІСЊС‚Рµ СЃСЃС‹Р»РєСѓ РїРѕРґРїРёСЃРєРё.</translation>
     </message>
     <message>
         <source>Please paste a valid URL.</source>
-        <translation>Пожалуйста, вставьте корректную ссылку.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІСЃС‚Р°РІСЊС‚Рµ РєРѕСЂСЂРµРєС‚РЅСѓСЋ СЃСЃС‹Р»РєСѓ.</translation>
     </message>
     <message>
         <source>Please paste a link.</source>
-        <translation>Пожалуйста, вставьте ссылку.</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, РІСЃС‚Р°РІСЊС‚Рµ СЃСЃС‹Р»РєСѓ.</translation>
     </message>
     <message>
         <source>New profile</source>
-        <translation>Новый профиль</translation>
+        <translation>РќРѕРІС‹Р№ РїСЂРѕС„РёР»СЊ</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>Группы</translation>
+        <translation>Р“СЂСѓРїРїС‹</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>Запустить</translation>
+        <translation>Р—Р°РїСѓСЃС‚РёС‚СЊ</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Остановить</translation>
+        <translation>РћСЃС‚Р°РЅРѕРІРёС‚СЊ</translation>
     </message>
     <message>
         <source>Routing Settings</source>
-        <translation>Настройки маршрутов</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РјР°СЂС€СЂСѓС‚РѕРІ</translation>
     </message>
     <message>
         <source>Add profile from clipboard</source>
-        <translation>Добавить профиль из буфера обмена</translation>
+        <translation>Р”РѕР±Р°РІРёС‚СЊ РїСЂРѕС„РёР»СЊ РёР· Р±СѓС„РµСЂР° РѕР±РјРµРЅР°</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Удалить</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Отладочная информация</translation>
+        <translation>РћС‚Р»Р°РґРѕС‡РЅР°СЏ РёРЅС„РѕСЂРјР°С†РёСЏ</translation>
     </message>
     <message>
         <source>QR Code and link</source>
-        <translation>QR-код и ссылка</translation>
+        <translation>QR-РєРѕРґ Рё СЃСЃС‹Р»РєР°</translation>
     </message>
     <message>
         <source>Copy Link</source>
-        <translation>Скопировать ссылку</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєСѓ</translation>
     </message>
     <message>
         <source>Clear Test Result</source>
-        <translation>Очистить результат теста</translation>
+        <translation>РћС‡РёСЃС‚РёС‚СЊ СЂРµР·СѓР»СЊС‚Р°С‚ С‚РµСЃС‚Р°</translation>
     </message>
     <message>
         <source>Export %1 config</source>
-        <translation>Экспортировать конфиг %1</translation>
+        <translation>Р­РєСЃРїРѕСЂС‚РёСЂРѕРІР°С‚СЊ РєРѕРЅС„РёРі %1</translation>
     </message>
     <message>
         <source>Reset Traffic</source>
-        <translation>Сбросить трафик</translation>
+        <translation>РЎР±СЂРѕСЃРёС‚СЊ С‚СЂР°С„РёРє</translation>
     </message>
     <message>
         <source>Scan QR Code</source>
-        <translation>Сканировать QR-код</translation>
+        <translation>РЎРєР°РЅРёСЂРѕРІР°С‚СЊ QR-РєРѕРґ</translation>
     </message>
     <message>
         <source>Enable System Proxy</source>
-        <translation>Активировать системный прокси</translation>
+        <translation>РђРєС‚РёРІРёСЂРѕРІР°С‚СЊ СЃРёСЃС‚РµРјРЅС‹Р№ РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>Отключить</translation>
+        <translation>РћС‚РєР»СЋС‡РёС‚СЊ</translation>
     </message>
     <message>
         <source>Remove Duplicates</source>
-        <translation>Удалить дубликаты</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РґСѓР±Р»РёРєР°С‚С‹</translation>
     </message>
     <message>
         <source>fake</source>
-        <translation>фейк</translation>
+        <translation>С„РµР№Рє</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Переместить</translation>
+        <translation>РџРµСЂРµРјРµСЃС‚РёС‚СЊ</translation>
     </message>
     <message>
         <source>Start with system</source>
-        <translation>Запускаться вместе с системой</translation>
+        <translation>Р—Р°РїСѓСЃРєР°С‚СЊСЃСЏ РІРјРµСЃС‚Рµ СЃ СЃРёСЃС‚РµРјРѕР№</translation>
     </message>
     <message>
         <source>Remember last profile</source>
-        <translation>Запомнить последний профиль</translation>
+        <translation>Р—Р°РїРѕРјРЅРёС‚СЊ РїРѕСЃР»РµРґРЅРёР№ РїСЂРѕС„РёР»СЊ</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
-        <translation>Разрешить подключаться другим устройствам</translation>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РїРѕРґРєР»СЋС‡Р°С‚СЊСЃСЏ РґСЂСѓРіРёРј СѓСЃС‚СЂРѕР№СЃС‚РІР°Рј</translation>
     </message>
     <message>
         <source>Remove Unavailable</source>
-        <translation>Удалить недоступные</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РЅРµРґРѕСЃС‚СѓРїРЅС‹Рµ</translation>
     </message>
     <message>
         <source>Full Test</source>
-        <translation>Полный тест</translation>
+        <translation>РџРѕР»РЅС‹Р№ С‚РµСЃС‚</translation>
     </message>
     <message>
         <source>Hotkey Settings</source>
-        <translation>Настройки комбинаций клавиш</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РєРѕРјР±РёРЅР°С†РёР№ РєР»Р°РІРёС€</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Выбрать всё</translation>
+        <translation>Р’С‹Р±СЂР°С‚СЊ РІСЃС‘</translation>
     </message>
     <message>
-        <source>Copy links of selected (Neko Links)</source>
-        <translation>Скопировать ссылки для выбранных (Neko links)</translation>
+        <source>Copy links of selected (CofeBox Links)</source>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєРё РґР»СЏ РІС‹Р±СЂР°РЅРЅС‹С… (CofeBox Links)</translation>
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation>Скопировать ссылки для выбранных</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°С‚СЊ СЃСЃС‹Р»РєРё РґР»СЏ РІС‹Р±СЂР°РЅРЅС‹С…</translation>
     </message>
     <message>
         <source>Enable Tun</source>
-        <translation>Включить TUN-режим</translation>
+        <translation>Р’РєР»СЋС‡РёС‚СЊ TUN-СЂРµР¶РёРј</translation>
     </message>
     <message>
         <source>Clone</source>
-        <translation>Клонировать</translation>
+        <translation>РљР»РѕРЅРёСЂРѕРІР°С‚СЊ</translation>
     </message>
     <message>
         <source>Update subscription</source>
-        <translation>Обновить подписки</translation>
+        <translation>РћР±РЅРѕРІРёС‚СЊ РїРѕРґРїРёСЃРєРё</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translatorcomment>Ну слово &quot;разрешить&quot; можно использоваться и в значении &quot;разобраться&quot;</translatorcomment>
-        <translation>Разрешить доменное имя</translation>
+        <translatorcomment>РќСѓ СЃР»РѕРІРѕ &quot;СЂР°Р·СЂРµС€РёС‚СЊ&quot; РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊСЃСЏ Рё РІ Р·РЅР°С‡РµРЅРёРё &quot;СЂР°Р·РѕР±СЂР°С‚СЊСЃСЏ&quot;</translatorcomment>
+        <translation>Р Р°Р·СЂРµС€РёС‚СЊ РґРѕРјРµРЅРЅРѕРµ РёРјСЏ</translation>
     </message>
     <message>
         <source>Tun Settings</source>
-        <translation>Настройки TUN-режима</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё TUN-СЂРµР¶РёРјР°</translation>
     </message>
     <message>
         <source>Restart Program</source>
-        <translation>Перезапустить программу</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРіСЂР°РјРјСѓ</translation>
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation>Открыть папку с конфигами</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РїР°РїРєСѓ СЃ РєРѕРЅС„РёРіР°РјРё</translation>
     </message>
     <message>
         <source>Restart Proxy</source>
-        <translation>Перезапустить прокси</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
-        <translation>Загрузить маршруты и активировать: %1</translation>
+        <translation>Р—Р°РіСЂСѓР·РёС‚СЊ РјР°СЂС€СЂСѓС‚С‹ Рё Р°РєС‚РёРІРёСЂРѕРІР°С‚СЊ: %1</translation>
     </message>
     <message>
         <source>Error</source>
-        <translation>Ошибка</translation>
+        <translation>РћС€РёР±РєР°</translation>
     </message>
     <message>
         <source>Tun Settings changed</source>
-        <translation>Настройки TUN изменились</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё TUN РёР·РјРµРЅРёР»РёСЃСЊ</translation>
     </message>
     <message>
         <source>Restart Tun to take effect.</source>
-        <translation>Перезапустите TUN чтобы применить изменения.</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ TUN С‡С‚РѕР±С‹ РїСЂРёРјРµРЅРёС‚СЊ РёР·РјРµРЅРµРЅРёСЏ.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>Подтверждение</translation>
+        <translation>РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ</translation>
     </message>
     <message>
         <source>Settings changed, restart proxy?</source>
-        <translation>Настройки изменены, перезапустить прокси?</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РёР·РјРµРЅРµРЅС‹, РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРєСЃРё?</translation>
     </message>
     <message>
         <source>Settings changed</source>
-        <translation>Настройки изменены</translation>
+        <translation>РќР°СЃС‚СЂРѕР№РєРё РёР·РјРµРЅРµРЅС‹</translation>
     </message>
     <message>
         <source>Restart the program to take effect.</source>
-        <translation>Перезапустите программу чтобы новые настройки вступили в силу.</translation>
+        <translation>РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРѕРіСЂР°РјРјСѓ С‡С‚РѕР±С‹ РЅРѕРІС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё РІСЃС‚СѓРїРёР»Рё РІ СЃРёР»Сѓ.</translation>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
-        <translation>Импортирован(ы) %1 профиль(ей)</translation>
+        <translation>РРјРїРѕСЂС‚РёСЂРѕРІР°РЅ(С‹) %1 РїСЂРѕС„РёР»СЊ(РµР№)</translation>
     </message>
     <message>
         <source>Added: %1</source>
-        <translation>Добавлено: %1</translation>
+        <translation>Р”РѕР±Р°РІР»РµРЅРѕ: %1</translation>
     </message>
     <message>
         <source>No new items</source>
-        <translation>Нет новых элементов</translation>
+        <translation>РќРµС‚ РЅРѕРІС‹С… СЌР»РµРјРµРЅС‚РѕРІ</translation>
     </message>
     <message>
         <source>Adding...</source>
-        <translation>Добавление...</translation>
+        <translation>Р”РѕР±Р°РІР»РµРЅРёРµ...</translation>
     </message>
     <message>
         <source>Clipboard is empty.</source>
-        <translation>Буфер обмена пуст.</translation>
+        <translation>Р‘СѓС„РµСЂ РѕР±РјРµРЅР° РїСѓСЃС‚.</translation>
     </message>
     <message>
         <source>Please run CofeBox as admin</source>
-        <translation>Пожалуйста, запустите CofeBox с правами администратора</translation>
+        <translation>РџРѕР¶Р°Р»СѓР№СЃС‚Р°, Р·Р°РїСѓСЃС‚РёС‚Рµ CofeBox СЃ РїСЂР°РІР°РјРё Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°</translation>
     </message>
     <message>
         <source>Current server is incompatible with Tun. Please stop the server first, enable Tun Mode, and then restart.</source>
-        <translation>Текущий сервер не совместим с TUN-режимом. Пожалуйста, сначала остановите подключение к серверу, активируйте TUN-режим, и потом перезапустите.</translation>
+        <translation>РўРµРєСѓС‰РёР№ СЃРµСЂРІРµСЂ РЅРµ СЃРѕРІРјРµСЃС‚РёРј СЃ TUN-СЂРµР¶РёРјРѕРј. РџРѕР¶Р°Р»СѓР№СЃС‚Р°, СЃРЅР°С‡Р°Р»Р° РѕСЃС‚Р°РЅРѕРІРёС‚Рµ РїРѕРґРєР»СЋС‡РµРЅРёРµ Рє СЃРµСЂРІРµСЂСѓ, Р°РєС‚РёРІРёСЂСѓР№С‚Рµ TUN-СЂРµР¶РёРј, Рё РїРѕС‚РѕРј РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ.</translation>
     </message>
     <message>
         <source>Not Running</source>
-        <translation>Не запущен</translation>
+        <translation>РќРµ Р·Р°РїСѓС‰РµРЅ</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Выбор</translation>
+        <translation>Р’С‹Р±РѕСЂ</translation>
     </message>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
-        <translation>Режим выбора, дважды кликните или нажмите Enter для выбора профиля, либо ESC чтобы выйти.</translation>
+        <translation>Р РµР¶РёРј РІС‹Р±РѕСЂР°, РґРІР°Р¶РґС‹ РєР»РёРєРЅРёС‚Рµ РёР»Рё РЅР°Р¶РјРёС‚Рµ Enter РґР»СЏ РІС‹Р±РѕСЂР° РїСЂРѕС„РёР»СЏ, Р»РёР±Рѕ ESC С‡С‚РѕР±С‹ РІС‹Р№С‚Рё.</translation>
     </message>
     <message>
         <source>Clone %1 item(s)</source>
-        <translation>Клонировать %1 записей</translation>
+        <translation>РљР»РѕРЅРёСЂРѕРІР°С‚СЊ %1 Р·Р°РїРёСЃРµР№</translation>
     </message>
     <message>
         <source>Move %1 item(s)</source>
-        <translation>Переместить %1 записей</translation>
+        <translation>РџРµСЂРµРјРµСЃС‚РёС‚СЊ %1 Р·Р°РїРёСЃРµР№</translation>
     </message>
     <message>
         <source>Remove %1 item(s) ?</source>
-        <translation>Удалить %1 записей ?</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ %1 Р·Р°РїРёСЃРµР№ ?</translation>
     </message>
     <message>
         <source>Delete selected server?</source>
-        <translation>Удалить выбранный сервер?</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РІС‹Р±СЂР°РЅРЅС‹Р№ СЃРµСЂРІРµСЂ?</translation>
     </message>
     <message>
         <source>Delete selected items (%1)?</source>
-        <translation>Удалить выбранные элементы (%1)?</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ РІС‹Р±СЂР°РЅРЅС‹Рµ СЌР»РµРјРµРЅС‚С‹ (%1)?</translation>
     </message>
     <message>
         <source>Deleted: %1</source>
-        <translation>Удалено: %1</translation>
+        <translation>РЈРґР°Р»РµРЅРѕ: %1</translation>
     </message>
     <message>
         <source>Copied %1 item(s)</source>
-        <translation>Скопировано %1 записей</translation>
+        <translation>РЎРєРѕРїРёСЂРѕРІР°РЅРѕ %1 Р·Р°РїРёСЃРµР№</translation>
     </message>
     <message>
         <source>Config copied</source>
-        <translation>Конфиг скопирован</translation>
+        <translation>РљРѕРЅС„РёРі СЃРєРѕРїРёСЂРѕРІР°РЅ</translation>
     </message>
     <message>
         <source>QR Code not found</source>
-        <translation>QR-код не найден</translation>
+        <translation>QR-РєРѕРґ РЅРµ РЅР°Р№РґРµРЅ</translation>
     </message>
     <message>
         <source>Resolving domain to IP, if support.</source>
-        <translation>Отрезолвить домен в IP-адрес, если поддерживается.</translation>
+        <translation>РћС‚СЂРµР·РѕР»РІРёС‚СЊ РґРѕРјРµРЅ РІ IP-Р°РґСЂРµСЃ, РµСЃР»Рё РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ.</translation>
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation>Ключевые слова для игнорирования</translation>
+        <translation>РљР»СЋС‡РµРІС‹Рµ СЃР»РѕРІР° РґР»СЏ РёРіРЅРѕСЂРёСЂРѕРІР°РЅРёСЏ</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
 Split by line.</source>
-        <translation>Задайте ключнвые слова для игнорирования,
-каждое на отдельной строке.</translation>
+        <translation>Р—Р°РґР°Р№С‚Рµ РєР»СЋС‡РЅРІС‹Рµ СЃР»РѕРІР° РґР»СЏ РёРіРЅРѕСЂРёСЂРѕРІР°РЅРёСЏ,
+РєР°Р¶РґРѕРµ РЅР° РѕС‚РґРµР»СЊРЅРѕР№ СЃС‚СЂРѕРєРµ.</translation>
     </message>
     <message>
         <source>Save as route</source>
-        <translation>Сохранить как маршрут</translation>
+        <translation>РЎРѕС…СЂР°РЅРёС‚СЊ РєР°Рє РјР°СЂС€СЂСѓС‚</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Редактировать</translation>
+        <translation>Р РµРґР°РєС‚РёСЂРѕРІР°С‚СЊ</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot; as a routing rule?</source>
-        <translation>Сохранить &quot;%1&quot; как профиль маршрутизации?</translation>
+        <translation>РЎРѕС…СЂР°РЅРёС‚СЊ &quot;%1&quot; РєР°Рє РїСЂРѕС„РёР»СЊ РјР°СЂС€СЂСѓС‚РёР·Р°С†РёРё?</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Очистить</translation>
+        <translation>РћС‡РёСЃС‚РёС‚СЊ</translation>
     </message>
     <message>
         <source>Start: %1
 End: %2</source>
-        <translation>Начало %1 
-Конец %2</translation>
+        <translation>РќР°С‡Р°Р»Рѕ %1 
+РљРѕРЅРµС† %2</translation>
     </message>
     <message>
         <source>Failed to stop Tun process</source>
-        <translation>Не удалось остановить TUN-процесс</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ TUN-РїСЂРѕС†РµСЃСЃ</translation>
     </message>
     <message>
         <source>Test Options</source>
-        <translation>Параметры тестирования</translation>
+        <translation>РџР°СЂР°РјРµС‚СЂС‹ С‚РµСЃС‚РёСЂРѕРІР°РЅРёСЏ</translation>
     </message>
     <message>
         <source>Latency</source>
-        <translation>Задержка</translation>
+        <translation>Р—Р°РґРµСЂР¶РєР°</translation>
     </message>
     <message>
         <source>UDP latency</source>
-        <translation>Задержка UDP</translation>
+        <translation>Р—Р°РґРµСЂР¶РєР° UDP</translation>
     </message>
     <message>
         <source>Download speed</source>
-        <translation>Скорость загрузки</translation>
+        <translation>РЎРєРѕСЂРѕСЃС‚СЊ Р·Р°РіСЂСѓР·РєРё</translation>
     </message>
     <message>
         <source>In and Out IP</source>
-        <translation>Входящий и исходящий IP</translation>
+        <translation>Р’С…РѕРґСЏС‰РёР№ Рё РёСЃС…РѕРґСЏС‰РёР№ IP</translation>
     </message>
     <message>
         <source>[%1] test error: %2</source>
-        <translation>[%1] ошибка теста: %2</translation>
+        <translation>[%1] РѕС€РёР±РєР° С‚РµСЃС‚Р°: %2</translation>
     </message>
     <message>
         <source>Testing</source>
-        <translation>Тестируем</translation>
+        <translation>РўРµСЃС‚РёСЂСѓРµРј</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>Недоступен</translation>
+        <translation>РќРµРґРѕСЃС‚СѓРїРµРЅ</translation>
     </message>
     <message>
         <source>If there is no response for a long time, it is recommended to restart the software.</source>
-        <translation>Если нет ответа в течении долгого времени, рекомендуем перезапустить приложение.</translation>
+        <translation>Р•СЃР»Рё РЅРµС‚ РѕС‚РІРµС‚Р° РІ С‚РµС‡РµРЅРёРё РґРѕР»РіРѕРіРѕ РІСЂРµРјРµРЅРё, СЂРµРєРѕРјРµРЅРґСѓРµРј РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРёР»РѕР¶РµРЅРёРµ.</translation>
     </message>
     <message>
         <source>Starting profile %1</source>
-        <translation>Запускаем профиль %1</translation>
+        <translation>Р—Р°РїСѓСЃРєР°РµРј РїСЂРѕС„РёР»СЊ %1</translation>
     </message>
     <message>
         <source>Failed to start profile %1</source>
-        <translation>Не удалось запустить профиль %1</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕС„РёР»СЊ %1</translation>
     </message>
     <message>
         <source>Stopping profile %1</source>
-        <translation>Останавливаем профиль %1</translation>
+        <translation>РћСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїСЂРѕС„РёР»СЊ %1</translation>
     </message>
     <message>
         <source>Failed to stop, please restart the program.</source>
-        <translation>Не удалось остановить, пожалуйста, перезапустите приложение.</translation>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РѕСЃС‚Р°РЅРѕРІРёС‚СЊ, РїРѕР¶Р°Р»СѓР№СЃС‚Р°, РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРёР»РѕР¶РµРЅРёРµ.</translation>
     </message>
     <message>
         <source>Stop Testing</source>
-        <translation>Остановить тесты</translation>
+        <translation>РћСЃС‚Р°РЅРѕРІРёС‚СЊ С‚РµСЃС‚С‹</translation>
     </message>
     <message>
         <source>URL Test</source>
-        <translation>URL-тест</translation>
+        <translation>URL-С‚РµСЃС‚</translation>
     </message>
 </context>
 <context>
     <name>ProxyItem</name>
     <message>
         <source>Confirmation</source>
-        <translation>Подтверждение</translation>
+        <translation>РџРѕРґС‚РІРµСЂР¶РґРµРЅРёРµ</translation>
     </message>
     <message>
         <source>Remove %1?</source>
-        <translation>Удалить %1?</translation>
+        <translation>РЈРґР°Р»РёС‚СЊ %1?</translation>
     </message>
 </context>
 <context>
@@ -1787,163 +1815,384 @@ End: %2</source>
     <name>QObject</name>
     <message>
         <source>Core not found: %1</source>
-        <translation>Ядро не найдено: %1</translation>
+        <translation>РЇРґСЂРѕ РЅРµ РЅР°Р№РґРµРЅРѕ: %1</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>Недоступно</translation>
+        <translation>РќРµРґРѕСЃС‚СѓРїРЅРѕ</translation>
     </message>
     <message>
         <source>Proxy: %1
 Direct: %2</source>
-        <translation>Через прокси: %1
-Напрямую: %2</translation>
+        <translation>Р§РµСЂРµР· РїСЂРѕРєСЃРё: %1
+РќР°РїСЂСЏРјСѓСЋ: %2</translation>
     </message>
     <message>
         <source>Chain Proxy</source>
-        <translation>Цепочка прокси</translation>
+        <translation>Р¦РµРїРѕС‡РєР° РїСЂРѕРєСЃРё</translation>
     </message>
     <message>
         <source>Request with proxy but no profile started.</source>
-        <translation>Запрос через прокси, но профиль не запущен.</translation>
+        <translation>Р—Р°РїСЂРѕСЃ С‡РµСЂРµР· РїСЂРѕРєСЃРё, РЅРѕ РїСЂРѕС„РёР»СЊ РЅРµ Р·Р°РїСѓС‰РµРЅ.</translation>
     </message>
     <message>
         <source>As Subscription (add to this group)</source>
-        <translation>Как подписку (добавить в эту группу)</translation>
+        <translation>РљР°Рє РїРѕРґРїРёСЃРєСѓ (РґРѕР±Р°РІРёС‚СЊ РІ СЌС‚Сѓ РіСЂСѓРїРїСѓ)</translation>
     </message>
     <message>
         <source>As Subscription (create new group)</source>
-        <translation>Как подписку (создать новую группу)</translation>
+        <translation>РљР°Рє РїРѕРґРїРёСЃРєСѓ (СЃРѕР·РґР°С‚СЊ РЅРѕРІСѓСЋ РіСЂСѓРїРїСѓ)</translation>
     </message>
     <message>
         <source>As link</source>
-        <translation>Как ссылку</translation>
+        <translation>РљР°Рє СЃСЃС‹Р»РєСѓ</translation>
     </message>
     <message>
         <source>url detected</source>
-        <translation>Обнаружен URL</translation>
+        <translation>РћР±РЅР°СЂСѓР¶РµРЅ URL</translation>
     </message>
     <message>
         <source>%1
 How to update?</source>
         <translation>%1
-Как обновить?</translation>
+РљР°Рє РѕР±РЅРѕРІРёС‚СЊ?</translation>
     </message>
     <message>
         <source>Requesting subscription: %1</source>
-        <translation>Запрашиваем подписку: %1</translation>
+        <translation>Р—Р°РїСЂР°С€РёРІР°РµРј РїРѕРґРїРёСЃРєСѓ: %1</translation>
     </message>
     <message>
         <source>Requesting subscription %1 error: %2</source>
-        <translation>Запрашиваем подписку %1 ошибка: %2</translation>
+        <translation>Р—Р°РїСЂР°С€РёРІР°РµРј РїРѕРґРїРёСЃРєСѓ %1 РѕС€РёР±РєР°: %2</translation>
     </message>
     <message>
         <source>Subscription request fininshed: %1</source>
-        <translation>Запрос подписки завершен: %1</translation>
+        <translation>Р—Р°РїСЂРѕСЃ РїРѕРґРїРёСЃРєРё Р·Р°РІРµСЂС€РµРЅ: %1</translation>
     </message>
     <message>
         <source>Clearing servers...</source>
-        <translation>Очишаем серверы...</translation>
+        <translation>РћС‡РёС€Р°РµРј СЃРµСЂРІРµСЂС‹...</translation>
     </message>
     <message>
         <source>Added %1 profiles:
 %2
 Deleted %3 Profiles:
 %4</source>
-        <translation>Добавлено %1 профилей:
+        <translation>Р”РѕР±Р°РІР»РµРЅРѕ %1 РїСЂРѕС„РёР»РµР№:
 %2
-Удалено %3 профилей:
+РЈРґР°Р»РµРЅРѕ %3 РїСЂРѕС„РёР»РµР№:
 %4</translation>
     </message>
     <message>
         <source>Nothing</source>
-        <translation>Ничего</translation>
+        <translation>РќРёС‡РµРіРѕ</translation>
     </message>
     <message>
         <source>Change of %1:</source>
-        <translation>Изменение %1:</translation>
+        <translation>РР·РјРµРЅРµРЅРёРµ %1:</translation>
     </message>
     <message>
         <source>Core exits too frequently, stop automatic restart this profile.</source>
-        <translation>Ядро слишком часто прекращает свою работу, отмена автоматического перезапуска этого профиля.</translation>
+        <translation>РЇРґСЂРѕ СЃР»РёС€РєРѕРј С‡Р°СЃС‚Рѕ РїСЂРµРєСЂР°С‰Р°РµС‚ СЃРІРѕСЋ СЂР°Р±РѕС‚Сѓ, РѕС‚РјРµРЅР° Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРіРѕ РїРµСЂРµР·Р°РїСѓСЃРєР° СЌС‚РѕРіРѕ РїСЂРѕС„РёР»СЏ.</translation>
     </message>
     <message>
         <source>Core exited, restarting.</source>
-        <translation>Ядро прекратило свою работу, перезапуск.</translation>
+        <translation>РЇРґСЂРѕ РїСЂРµРєСЂР°С‚РёР»Рѕ СЃРІРѕСЋ СЂР°Р±РѕС‚Сѓ, РїРµСЂРµР·Р°РїСѓСЃРє.</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Выбор</translation>
+        <translation>Р’С‹Р±РѕСЂ</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>Обновление</translation>
+        <translation>РћР±РЅРѕРІР»РµРЅРёРµ</translation>
     </message>
     <message>
         <source>No update</source>
-        <translation>Нет обновлений</translation>
+        <translation>РќРµС‚ РѕР±РЅРѕРІР»РµРЅРёР№</translation>
     </message>
     <message>
         <source>Update found: %1
 Release note:
 %2</source>
-        <translation>Найдено обновление: %1
-Примечания к выпуску:
+        <translation>РќР°Р№РґРµРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ: %1
+РџСЂРёРјРµС‡Р°РЅРёСЏ Рє РІС‹РїСѓСЃРєСѓ:
 %2</translation>
     </message>
     <message>
         <source>Open in browser</source>
-        <translation>Открыть в браузере</translation>
+        <translation>РћС‚РєСЂС‹С‚СЊ РІ Р±СЂР°СѓР·РµСЂРµ</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>Закрыть</translation>
+        <translation>Р—Р°РєСЂС‹С‚СЊ</translation>
     </message>
     <message>
         <source>Update is ready, restart to install?</source>
-        <translation>Обновление готово, перезапуститься для установки?</translation>
+        <translation>РћР±РЅРѕРІР»РµРЅРёРµ РіРѕС‚РѕРІРѕ, РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚СЊСЃСЏ РґР»СЏ СѓСЃС‚Р°РЅРѕРІРєРё?</translation>
     </message>
     <message>
         <source>Used: %1 Remain: %2 Expire: %3</source>
-        <translation>Использовано: %1, осталось: %2, истекло: %3</translation>
+        <translation>РСЃРїРѕР»СЊР·РѕРІР°РЅРѕ: %1, РѕСЃС‚Р°Р»РѕСЃСЊ: %2, РёСЃС‚РµРєР»Рѕ: %3</translation>
     </message>
     <message>
         <source>Default</source>
-        <translation>По умолчанию</translation>
+        <translation>РџРѕ СѓРјРѕР»С‡Р°РЅРёСЋ</translation>
     </message>
     <message>
         <source>The last speed test did not exit completely, please wait. If it persists, please restart the program.</source>
-        <translation>Предыдущий тест скорости ещё не завершился, подождите. Если проблема сохраняется, перезапустите программу.</translation>
+        <translation>РџСЂРµРґС‹РґСѓС‰РёР№ С‚РµСЃС‚ СЃРєРѕСЂРѕСЃС‚Рё РµС‰С‘ РЅРµ Р·Р°РІРµСЂС€РёР»СЃСЏ, РїРѕРґРѕР¶РґРёС‚Рµ. Р•СЃР»Рё РїСЂРѕР±Р»РµРјР° СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ, РїРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРѕРіСЂР°РјРјСѓ.</translation>
     </message>
 </context>
 <context>
     <name>Qv2ray::ui::widgets::AutoCompleteTextEdit</name>
     <message>
         <source>You can not input space characters here.</source>
-        <translation>Сюда нельзя вводить пробелы.</translation>
+        <translation>РЎСЋРґР° РЅРµР»СЊР·СЏ РІРІРѕРґРёС‚СЊ РїСЂРѕР±РµР»С‹.</translation>
+    </message>
+</context>
+<context>
+    <name>UpdateService</name>
+    <message>
+        <source>Checking for updates...</source>
+        <translation>РџСЂРѕРІРµСЂСЏРµРј РѕР±РЅРѕРІР»РµРЅРёСЏ...</translation>
+    </message>
+    <message>
+        <source>Update check could not start.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ РїСЂРѕРІРµСЂРєСѓ РѕР±РЅРѕРІР»РµРЅРёР№.</translation>
+    </message>
+    <message>
+        <source>Automatic update is unavailable.</source>
+        <translation>РђРІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРµ РѕР±РЅРѕРІР»РµРЅРёРµ РЅРµРґРѕСЃС‚СѓРїРЅРѕ.</translation>
+    </message>
+    <message>
+        <source>Update asset metadata is incomplete.</source>
+        <translation>РњРµС‚Р°РґР°РЅРЅС‹Рµ С„Р°Р№Р»Р° РѕР±РЅРѕРІР»РµРЅРёСЏ РЅРµРїРѕР»РЅС‹Рµ.</translation>
+    </message>
+    <message>
+        <source>Temporary directory is unavailable.</source>
+        <translation>Р’СЂРµРјРµРЅРЅР°СЏ РґРёСЂРµРєС‚РѕСЂРёСЏ РЅРµРґРѕСЃС‚СѓРїРЅР°.</translation>
+    </message>
+    <message>
+        <source>Cannot create update directory.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ СЃРѕР·РґР°С‚СЊ РґРёСЂРµРєС‚РѕСЂРёСЋ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Cannot prepare update workspace.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РїРѕРґРіРѕС‚РѕРІРёС‚СЊ СЂР°Р±РѕС‡СѓСЋ РґРёСЂРµРєС‚РѕСЂРёСЋ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Downloading checksums...</source>
+        <translation>РЎРєР°С‡РёРІР°РµРј РєРѕРЅС‚СЂРѕР»СЊРЅС‹Рµ СЃСѓРјРјС‹...</translation>
+    </message>
+    <message>
+        <source>Failed to request checksums.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСЂРѕСЃРёС‚СЊ С„Р°Р№Р» РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј.</translation>
+    </message>
+    <message>
+        <source>Application directory is read-only: %1</source>
+        <translation>Р”РёСЂРµРєС‚РѕСЂРёСЏ РїСЂРёР»РѕР¶РµРЅРёСЏ РґРѕСЃС‚СѓРїРЅР° С‚РѕР»СЊРєРѕ РґР»СЏ С‡С‚РµРЅРёСЏ: %1</translation>
+    </message>
+    <message>
+        <source>AppImage file is not writable: %1</source>
+        <translation>Р¤Р°Р№Р» AppImage РЅРµРґРѕСЃС‚СѓРїРµРЅ РґР»СЏ Р·Р°РїРёСЃРё: %1</translation>
+    </message>
+    <message>
+        <source>Unknown Linux installation type.</source>
+        <translation>РќРµРёР·РІРµСЃС‚РЅС‹Р№ С‚РёРї СѓСЃС‚Р°РЅРѕРІРєРё РЅР° Linux.</translation>
+    </message>
+    <message>
+        <source>Unsupported platform.</source>
+        <translation>РќРµРїРѕРґРґРµСЂР¶РёРІР°РµРјР°СЏ РїР»Р°С‚С„РѕСЂРјР°.</translation>
+    </message>
+    <message>
+        <source>No write permission for %1</source>
+        <translation>РќРµС‚ РїСЂР°РІ РЅР° Р·Р°РїРёСЃСЊ РІ %1</translation>
+    </message>
+    <message>
+        <source>Directory does not exist: %1</source>
+        <translation>Р”РёСЂРµРєС‚РѕСЂРёСЏ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚: %1</translation>
+    </message>
+    <message>
+        <source>Update check failed.</source>
+        <translation>РџСЂРѕРІРµСЂРєР° РѕР±РЅРѕРІР»РµРЅРёР№ Р·Р°РІРµСЂС€РёР»Р°СЃСЊ РѕС€РёР±РєРѕР№.</translation>
+    </message>
+    <message>
+        <source>GitHub API rate limit exceeded. Set UPDATE_TOKEN or GITHUB_TOKEN and retry.</source>
+        <translation>РџСЂРµРІС‹С€РµРЅ Р»РёРјРёС‚ GitHub API. Р—Р°РґР°Р№С‚Рµ UPDATE_TOKEN РёР»Рё GITHUB_TOKEN Рё РїРѕРІС‚РѕСЂРёС‚Рµ РїРѕРїС‹С‚РєСѓ.</translation>
+    </message>
+    <message>
+        <source>Could not parse release metadata.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ СЂР°Р·РѕР±СЂР°С‚СЊ РјРµС‚Р°РґР°РЅРЅС‹Рµ СЂРµР»РёР·Р°.</translation>
+    </message>
+    <message>
+        <source>Release source is not trusted.</source>
+        <translation>РСЃС‚РѕС‡РЅРёРє СЂРµР»РёР·Р° РЅРµ СЏРІР»СЏРµС‚СЃСЏ РґРѕРІРµСЂРµРЅРЅС‹Рј.</translation>
+    </message>
+    <message>
+        <source>You are using the latest version.</source>
+        <translation>РЈ РІР°СЃ СѓР¶Рµ СѓСЃС‚Р°РЅРѕРІР»РµРЅР° РїРѕСЃР»РµРґРЅСЏСЏ РІРµСЂСЃРёСЏ.</translation>
+    </message>
+    <message>
+        <source>No compatible update asset found for this system.</source>
+        <translation>Р”Р»СЏ СЌС‚РѕР№ СЃРёСЃС‚РµРјС‹ РЅРµ РЅР°Р№РґРµРЅ СЃРѕРІРјРµСЃС‚РёРјС‹Р№ С„Р°Р№Р» РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>pkexec is missing. Install policykit-1 to enable automatic .deb update.</source>
+        <translation>РљРѕРјР°РЅРґР° pkexec РЅРµ РЅР°Р№РґРµРЅР°. РЈСЃС‚Р°РЅРѕРІРёС‚Рµ policykit-1 РґР»СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ .deb.</translation>
+    </message>
+    <message>
+        <source>Release has no checksums file (sha256sums.txt).</source>
+        <translation>Р’ СЂРµР»РёР·Рµ РѕС‚СЃСѓС‚СЃС‚РІСѓРµС‚ С„Р°Р№Р» РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј (sha256sums.txt).</translation>
+    </message>
+    <message>
+        <source>Checksums source is not trusted.</source>
+        <translation>РСЃС‚РѕС‡РЅРёРє С„Р°Р№Р»Р° РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј РЅРµ СЏРІР»СЏРµС‚СЃСЏ РґРѕРІРµСЂРµРЅРЅС‹Рј.</translation>
+    </message>
+    <message>
+        <source>Cannot determine installation type for automatic update.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РѕРїСЂРµРґРµР»РёС‚СЊ С‚РёРї СѓСЃС‚Р°РЅРѕРІРєРё РґР»СЏ Р°РІС‚РѕРјР°С‚РёС‡РµСЃРєРѕРіРѕ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Update available: v%1</source>
+        <translation>Р”РѕСЃС‚СѓРїРЅРѕ РѕР±РЅРѕРІР»РµРЅРёРµ: v%1</translation>
+    </message>
+    <message>
+        <source>Failed to download checksums.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ СЃРєР°С‡Р°С‚СЊ С„Р°Р№Р» РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј.</translation>
+    </message>
+    <message>
+        <source>Checksums file does not contain target asset hash.</source>
+        <translation>Р¤Р°Р№Р» РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј РЅРµ СЃРѕРґРµСЂР¶РёС‚ С…РµС€ РЅСѓР¶РЅРѕРіРѕ Р°СЂС‚РµС„Р°РєС‚Р°.</translation>
+    </message>
+    <message>
+        <source>Checksums file contains invalid SHA256 value.</source>
+        <translation>Р¤Р°Р№Р» РєРѕРЅС‚СЂРѕР»СЊРЅС‹С… СЃСѓРјРј СЃРѕРґРµСЂР¶РёС‚ РЅРµРєРѕСЂСЂРµРєС‚РЅРѕРµ Р·РЅР°С‡РµРЅРёРµ SHA256.</translation>
+    </message>
+    <message>
+        <source>Cannot write downloaded update package.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїРёСЃР°С‚СЊ СЃРєР°С‡Р°РЅРЅС‹Р№ РїР°РєРµС‚ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Downloading update package...</source>
+        <translation>РЎРєР°С‡РёРІР°РµРј РїР°РєРµС‚ РѕР±РЅРѕРІР»РµРЅРёСЏ...</translation>
+    </message>
+    <message>
+        <source>Failed to start update download.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ РЅР°С‡Р°С‚СЊ СЃРєР°С‡РёРІР°РЅРёРµ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Failed to download update package.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ СЃРєР°С‡Р°С‚СЊ РїР°РєРµС‚ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Downloaded package size mismatch.</source>
+        <translation>Р Р°Р·РјРµСЂ СЃРєР°С‡Р°РЅРЅРѕРіРѕ РїР°РєРµС‚Р° РЅРµ СЃРѕРІРїР°РґР°РµС‚ СЃ РѕР¶РёРґР°РµРјС‹Рј.</translation>
+    </message>
+    <message>
+        <source>Expected: %1 bytes\nActual: %2 bytes</source>
+        <translation>РћР¶РёРґР°Р»РѕСЃСЊ: %1 Р±Р°Р№С‚\nРџРѕР»СѓС‡РµРЅРѕ: %2 Р±Р°Р№С‚</translation>
+    </message>
+    <message>
+        <source>Verifying package integrity...</source>
+        <translation>РџСЂРѕРІРµСЂСЏРµРј С†РµР»РѕСЃС‚РЅРѕСЃС‚СЊ РїР°РєРµС‚Р°...</translation>
+    </message>
+    <message>
+        <source>SHA256 verification failed.</source>
+        <translation>РџСЂРѕРІРµСЂРєР° SHA256 РЅРµ РїСЂРѕР№РґРµРЅР°.</translation>
+    </message>
+    <message>
+        <source>Expected: %1\nActual: %2</source>
+        <translation>РћР¶РёРґР°Р»РѕСЃСЊ: %1\nРџРѕР»СѓС‡РµРЅРѕ: %2</translation>
+    </message>
+    <message>
+        <source>Installing update...</source>
+        <translation>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РѕР±РЅРѕРІР»РµРЅРёРµ...</translation>
+    </message>
+    <message>
+        <source>Updater helper is missing.</source>
+        <translation>РћС‚СЃСѓС‚СЃС‚РІСѓРµС‚ РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅР°СЏ СѓС‚РёР»РёС‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Expected cofebox-updater in %1</source>
+        <translation>РћР¶РёРґР°Р»СЃСЏ cofebox-updater РІ %1</translation>
+    </message>
+    <message>
+        <source>AppImage path is not available.</source>
+        <translation>РџСѓС‚СЊ Рє AppImage РЅРµРґРѕСЃС‚СѓРїРµРЅ.</translation>
+    </message>
+    <message>
+        <source>AppImage file is not writable.</source>
+        <translation>Р¤Р°Р№Р» AppImage РЅРµРґРѕСЃС‚СѓРїРµРЅ РґР»СЏ Р·Р°РїРёСЃРё.</translation>
+    </message>
+    <message>
+        <source>Automatic install mode is unsupported on this platform.</source>
+        <translation>РђРІС‚РѕРјР°С‚РёС‡РµСЃРєР°СЏ СѓСЃС‚Р°РЅРѕРІРєР° РЅРµ РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ РЅР° СЌС‚РѕР№ РїР»Р°С‚С„РѕСЂРјРµ.</translation>
+    </message>
+    <message>
+        <source>Failed to start updater helper.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ РІСЃРїРѕРјРѕРіР°С‚РµР»СЊРЅСѓСЋ СѓС‚РёР»РёС‚Сѓ РѕР±РЅРѕРІР»РµРЅРёСЏ.</translation>
+    </message>
+    <message>
+        <source>Updater started. Restarting application...</source>
+        <translation>РЈС‚РёР»РёС‚Р° РѕР±РЅРѕРІР»РµРЅРёСЏ Р·Р°РїСѓС‰РµРЅР°. РџРµСЂРµР·Р°РїСѓСЃРєР°РµРј РїСЂРёР»РѕР¶РµРЅРёРµ...</translation>
+    </message>
+    <message>
+        <source>Deb install is only supported on Linux.</source>
+        <translation>РЈСЃС‚Р°РЅРѕРІРєР° .deb РїРѕРґРґРµСЂР¶РёРІР°РµС‚СЃСЏ С‚РѕР»СЊРєРѕ РЅР° Linux.</translation>
+    </message>
+    <message>
+        <source>pkexec is required for .deb installation.</source>
+        <translation>Р”Р»СЏ СѓСЃС‚Р°РЅРѕРІРєРё .deb С‚СЂРµР±СѓРµС‚СЃСЏ pkexec.</translation>
+    </message>
+    <message>
+        <source>Install policykit-1 package and try again.</source>
+        <translation>РЈСЃС‚Р°РЅРѕРІРёС‚Рµ РїР°РєРµС‚ policykit-1 Рё РїРѕРїСЂРѕР±СѓР№С‚Рµ СЃРЅРѕРІР°.</translation>
+    </message>
+    <message>
+        <source>Downloaded .deb path is empty.</source>
+        <translation>РџСѓС‚СЊ Рє СЃРєР°С‡Р°РЅРЅРѕРјСѓ .deb РїСѓСЃС‚.</translation>
+    </message>
+    <message>
+        <source>Failed to start .deb installer.</source>
+        <translation>РќРµ СѓРґР°Р»РѕСЃСЊ Р·Р°РїСѓСЃС‚РёС‚СЊ СѓСЃС‚Р°РЅРѕРІС‰РёРє .deb.</translation>
+    </message>
+    <message>
+        <source>Installing .deb package (administrator access required)...</source>
+        <translation>РЈСЃС‚Р°РЅР°РІР»РёРІР°РµРј РїР°РєРµС‚ .deb (РЅСѓР¶РЅС‹ РїСЂР°РІР° Р°РґРјРёРЅРёСЃС‚СЂР°С‚РѕСЂР°)...</translation>
+    </message>
+    <message>
+        <source>Update installed successfully. Restart to apply changes.</source>
+        <translation>РћР±РЅРѕРІР»РµРЅРёРµ СѓСЃРїРµС€РЅРѕ СѓСЃС‚Р°РЅРѕРІР»РµРЅРѕ. РџРµСЂРµР·Р°РїСѓСЃС‚РёС‚Рµ РїСЂРёР»РѕР¶РµРЅРёРµ РґР»СЏ РїСЂРёРјРµРЅРµРЅРёСЏ РёР·РјРµРЅРµРЅРёР№.</translation>
+    </message>
+    <message>
+        <source>Deb install failed.</source>
+        <translation>РЈСЃС‚Р°РЅРѕРІРєР° .deb Р·Р°РІРµСЂС€РёР»Р°СЃСЊ РѕС€РёР±РєРѕР№.</translation>
     </message>
 </context>
 <context>
     <name>ConnectButton</name>
     <message>
         <source>Disconnected</source>
-        <translation>Отключено</translation>
+        <translation>РћС‚РєР»СЋС‡РµРЅРѕ</translation>
     </message>
     <message>
         <source>Connecting</source>
-        <translation>Подключение...</translation>
+        <translation>РџРѕРґРєР»СЋС‡РµРЅРёРµ...</translation>
     </message>
     <message>
         <source>Connected</source>
-        <translation>Подключено</translation>
+        <translation>РџРѕРґРєР»СЋС‡РµРЅРѕ</translation>
     </message>
     <message>
         <source>Disconnecting</source>
-        <translation>Отключение...</translation>
+        <translation>РћС‚РєР»СЋС‡РµРЅРёРµ...</translation>
     </message>
     <message>
         <source>Connect</source>
-        <translation>Подключиться</translation>
+        <translation>РџРѕРґРєР»СЋС‡РёС‚СЊСЃСЏ</translation>
     </message>
 </context>
 </TS>
+
+

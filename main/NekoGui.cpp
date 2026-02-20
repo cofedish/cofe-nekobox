@@ -423,8 +423,8 @@ namespace NekoGui {
         search << "/usr/share/sing-geoip";
         search << "/usr/share/sing-geosite";
         search << "/usr/share/sing-box";
-        search << "/usr/lib/nekobox";
-        search << "/usr/share/nekobox";
+        search << "/usr/lib/cofebox";
+        search << "/usr/share/cofebox";
         for (const auto &dir: search) {
             if (dir.isEmpty()) continue;
             QFileInfo asset(dir + "/" + name);
@@ -435,11 +435,27 @@ namespace NekoGui {
         return {};
     }
 
-    QString FindNekoBoxCoreRealPath() {
-        auto fn = QApplication::applicationDirPath() + "/nekobox_core";
+    QString FindCoreRealPath() {
+        const auto appDir = QApplication::applicationDirPath();
+#ifdef Q_OS_WIN
+        auto fn = appDir + "/cofebox_core.exe";
+#else
+        auto fn = appDir + "/cofebox_core";
+#endif
+        if (!QFileInfo::exists(fn)) {
+            QDir dir(appDir);
+            const auto entries = dir.entryInfoList(QDir::Files | QDir::Executable);
+            for (const auto &entry: entries) {
+                const auto lower = entry.fileName().toLower();
+                if (lower.endsWith("_core") || lower.endsWith("_core.exe")) {
+                    fn = entry.absoluteFilePath();
+                    break;
+                }
+            }
+        }
         auto fi = QFileInfo(fn);
         if (fi.isSymLink()) return fi.symLinkTarget();
-        return fn;
+        return fi.exists() ? fi.absoluteFilePath() : fn;
     }
 
     short isAdminCache = -1;
@@ -453,7 +469,7 @@ namespace NekoGui {
         admin = Windows_IsInAdmin();
 #else
 #ifdef Q_OS_LINUX
-        admin |= Linux_GetCapString(FindNekoBoxCoreRealPath()).contains("cap_net_admin");
+        admin |= Linux_GetCapString(FindCoreRealPath()).contains("cap_net_admin");
 #endif
         admin |= geteuid() == 0;
 #endif

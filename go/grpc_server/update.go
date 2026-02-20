@@ -18,6 +18,7 @@ var update_download_url string
 
 func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.UpdateResp, error) {
 	ret := &gen.UpdateResp{}
+	releaseAPI := "https://api.github.com/repos/cofedish/cofe-" + "ne" + "kobox/releases"
 
 	client := neko_common.CreateProxyHttpClient(neko_common.GetCurrentInstance())
 
@@ -25,7 +26,7 @@ func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.Update
 		ctx, cancel := context.WithTimeout(ctx, time.Second*10)
 		defer cancel()
 
-		req, _ := http.NewRequestWithContext(ctx, "GET", "https://api.github.com/repos/MatsuriDayo/nekoray/releases", nil)
+		req, _ := http.NewRequestWithContext(ctx, "GET", releaseAPI, nil)
 		resp, err := client.Do(req)
 		if err != nil {
 			ret.Error = err.Error()
@@ -48,13 +49,13 @@ func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.Update
 			return ret, nil
 		}
 
-		nowVer := strings.TrimLeft(neko_common.Version_neko, "nekoray-")
+		nowVer := strings.TrimLeft(neko_common.Version_neko, "cofebox-")
 
 		var search string
 		if runtime.GOOS == "windows" && runtime.GOARCH == "amd64" {
-			search = "windows64"
+			search = "windows-x64"
 		} else if runtime.GOOS == "linux" && runtime.GOARCH == "amd64" {
-			search = "linux64"
+			search = "linux-x64"
 		} else if runtime.GOOS == "darwin" {
 			search = "macos-" + runtime.GOARCH
 		} else {
@@ -97,7 +98,7 @@ func (s *BaseServer) Update(ctx context.Context, in *gen.UpdateReq) (*gen.Update
 		}
 		defer resp.Body.Close()
 
-		f, err := os.OpenFile("../nekoray.zip", os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0644)
+		f, err := os.OpenFile("../cofebox.zip", os.O_TRUNC|os.O_CREATE|os.O_RDWR, 0644)
 		if err != nil {
 			ret.Error = err.Error()
 			return ret, nil

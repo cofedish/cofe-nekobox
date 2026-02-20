@@ -170,7 +170,7 @@ void AutoRun_SetEnabled(bool enable) {
     QString desktopFileLocation = userAutoStartPath + appName + QLatin1String(".desktop");
     QStringList appCmdList;
 
-    // nekoray: launcher
+    // cofebox: launcher
     if (qEnvironmentVariable("NKR_FROM_LAUNCHER") == "1") {
         appCmdList << QApplication::applicationDirPath() + "/launcher"
                    << "--";

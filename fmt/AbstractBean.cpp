@@ -18,7 +18,7 @@ namespace NekoGui_fmt {
     QString AbstractBean::ToNekorayShareLink(const QString &type) {
         auto b = ToJson();
         QUrl url;
-        url.setScheme("nekoray");
+        url.setScheme("cofebox");
         url.setHost(type);
         url.setFragment(QJsonObject2QString(b, true)
                             .toUtf8()

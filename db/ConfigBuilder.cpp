@@ -22,7 +22,7 @@ namespace NekoGui {
     }
 
     QString genTunName() {
-        auto tun_name = "neko-tun";
+        auto tun_name = "cofebox-tun";
 #ifdef Q_OS_MACOS
         tun_name = "utun9";
 #endif
@@ -744,8 +744,8 @@ namespace NekoGui {
 
     QString WriteVPNSingBoxConfig() {
         // tun user rule
-        auto match_out = dataStore->vpn_rule_white ? "neko-socks" : "direct";
-        auto no_match_out = dataStore->vpn_rule_white ? "direct" : "neko-socks";
+        auto match_out = dataStore->vpn_rule_white ? "cofebox-socks" : "direct";
+        auto no_match_out = dataStore->vpn_rule_white ? "direct" : "cofebox-socks";
 
         QString process_name_rule = dataStore->vpn_rule_process.trimmed();
         if (!process_name_rule.isEmpty()) {
@@ -772,7 +772,7 @@ namespace NekoGui {
             socks_user_pass = socks_user_pass.arg(dataStore->inbound_auth->username, dataStore->inbound_auth->password);
         }
         // gen config
-        auto configFn = ":/neko/vpn/sing-box-vpn.json";
+        auto configFn = ":/cofebox/vpn/sing-box-vpn.json";
         if (QFile::exists("vpn/sing-box-vpn.json")) configFn = "vpn/sing-box-vpn.json";
         auto config = ReadFileText(configFn)
                           .replace("//%IPV6_ADDRESS%", dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
@@ -801,10 +801,10 @@ namespace NekoGui {
         return {};
 #endif
         // gen script
-        auto scriptFn = ":/neko/vpn/vpn-run-root.sh";
+        auto scriptFn = ":/cofebox/vpn/vpn-run-root.sh";
         if (QFile::exists("vpn/vpn-run-root.sh")) scriptFn = "vpn/vpn-run-root.sh";
         auto script = ReadFileText(scriptFn)
-                          .replace("./nekobox_core", QApplication::applicationDirPath() + "/nekobox_core")
+                          .replace("./cofebox_core", QApplication::applicationDirPath() + "/cofebox_core")
                           .replace("$CONFIG_PATH", configPath);
         // write script
         QFile file2;

@@ -57,13 +57,13 @@ public:
 
     void refresh_status(const QString &traffic_update = "");
 
-    void neko_start(int _id = -1);
+    void startProxy(int _id = -1);
 
-    void neko_stop(bool crash = false, bool sem = false);
+    void stopProxy(bool crash = false, bool sem = false);
 
-    void neko_set_spmode_system_proxy(bool enable, bool save = true);
+    void setSystemProxyMode(bool enable, bool save = true);
 
-    void neko_set_spmode_vpn(bool enable, bool save = true);
+    void setVpnMode(bool enable, bool save = true);
 
     void show_log_impl(const QString &log);
 
@@ -251,3 +251,4 @@ inline MainWindow *GetMainWindow() {
 }
 
 void UI_InitMainWindow();
+
