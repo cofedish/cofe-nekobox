@@ -1,14 +1,10 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
-	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
-	"time"
 )
 
 func main() {
@@ -22,41 +18,36 @@ func main() {
 	os.Chdir(wd)
 	exe = filepath.Base(os.Args[0])
 	log.Println("exe:", exe, "exe dir:", wd)
+	exeLower := strings.ToLower(exe)
 
-	if strings.HasPrefix(strings.ToLower(exe), "updater") {
-		if runtime.GOOS == "windows" {
-			if strings.HasPrefix(strings.ToLower(exe), "updater.old") {
-				// 2. "updater.old" update files
-				time.Sleep(time.Second)
-				Updater()
-				// 3. start
-				exec.Command("./cofebox.exe").Start()
-			} else {
-				// 1. main prog quit and run "updater.exe"
-				Copy("./updater.exe", "./updater.old")
-				exec.Command("./updater.old", os.Args[1:]...).Start()
+	if strings.HasPrefix(exeLower, "updater") {
+		if hasAutoUpdateModeArg(os.Args[1:]) {
+			if err := runAutoUpdateFromArgs(); err != nil {
+				log.Printf("auto update failed: %v", err)
+				os.Exit(1)
 			}
-		} else {
-			// 1. update files
-			Updater()
-			// 2. start
-			if os.Getenv("NKR_FROM_LAUNCHER") == "1" {
-				Launcher()
-			} else {
-				exec.Command("./cofebox").Start()
-			}
+			return
+		}
+		if err := runLegacyUpdaterEntry(exeLower, os.Args[1:]); err != nil {
+			log.Printf("legacy updater failed: %v", err)
+			os.Exit(1)
 		}
 		return
-	} else if strings.HasPrefix(strings.ToLower(exe), "launcher") {
+	} else if strings.HasPrefix(exeLower, "launcher") {
 		Launcher()
 		return
 	}
 	log.Fatalf("wrong name")
 }
 
-func Copy(src string, dst string) {
-	// Read all content of src to data
-	data, _ := ioutil.ReadFile(src)
-	// Write data to dst
-	ioutil.WriteFile(dst, data, 0644)
+func hasAutoUpdateModeArg(args []string) bool {
+	for i, arg := range args {
+		if arg == "--mode" {
+			return i+1 < len(args) && strings.TrimSpace(args[i+1]) != ""
+		}
+		if strings.HasPrefix(arg, "--mode=") {
+			return strings.TrimSpace(strings.TrimPrefix(arg, "--mode=")) != ""
+		}
+	}
+	return false
 }

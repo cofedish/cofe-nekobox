@@ -75,6 +75,24 @@ func waitForPidExit(pid int, timeout time.Duration) error {
 	return fmt.Errorf("process %d is still running after %s", pid, timeout)
 }
 
+func isPidRunning(pid int) bool {
+	if pid <= 0 {
+		return false
+	}
+
+	if runtime.GOOS == "windows" {
+		filter := fmt.Sprintf("PID eq %d", pid)
+		out, err := exec.Command("tasklist", "/FI", filter, "/FO", "CSV", "/NH").Output()
+		if err != nil {
+			return false
+		}
+		pidNeedle := fmt.Sprintf("\"%d\"", pid)
+		return strings.Contains(string(out), pidNeedle)
+	}
+
+	return exec.Command("kill", "-0", fmt.Sprintf("%d", pid)).Run() == nil
+}
+
 func updateWindowsZip(cfg autoUpdateConfig) error {
 	if runtime.GOOS != "windows" {
 		return errors.New("windows mode is only available on Windows")
