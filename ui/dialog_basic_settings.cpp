@@ -20,6 +20,8 @@ namespace {
         if (key == "0" || key == "system") return "system";
         if (key == "1" || key == "light") return "light";
         if (key == "2" || key == "dark") return "dark";
+        if (key == "bad600light" || key == "bad600-light") return "bad600-light";
+        if (key == "bad600dark" || key == "bad600-dark") return "bad600-dark";
         if (key == "lucifer") return "lucifer";
         return "system";
     }
@@ -28,6 +30,8 @@ namespace {
         if (index == 1) return "light";
         if (index == 2) return "dark";
         if (index == 3) return "lucifer";
+        if (index == 4) return "bad600-light";
+        if (index == 5) return "bad600-dark";
         return "system";
     }
 
@@ -36,6 +40,8 @@ namespace {
         if (key == "light") return 1;
         if (key == "dark") return 2;
         if (key == "lucifer") return 3;
+        if (key == "bad600-light") return 4;
+        if (key == "bad600-dark") return 5;
         return 0;
     }
 } // namespace

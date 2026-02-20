@@ -301,7 +301,7 @@
              </size>
             </property>
             <property name="text">
-             <string>в‰Ў</string>
+             <string>Menu</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonIconOnly</enum>

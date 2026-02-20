@@ -36,10 +36,13 @@ namespace {
     };
 
     QString NormalizeThemeKey(const QString &theme) {
-        if (theme == "0") return "system";
-        if (theme == "1") return "light";
-        if (theme == "2") return "dark";
-        return theme;
+        const auto key = theme.trimmed().toLower();
+        if (key == "0" || key == "system") return "system";
+        if (key == "1" || key == "light") return "light";
+        if (key == "2" || key == "dark") return "dark";
+        if (key == "bad600light" || key == "bad600-light") return "bad600-light";
+        if (key == "bad600dark" || key == "bad600-dark") return "bad600-dark";
+        return key;
     }
 
     QString ToRgba(const QColor &color, int alpha) {
@@ -115,6 +118,52 @@ namespace {
         t.warning_text = "#0B0B0E";
         t.error = "#B04646";
         t.error_text = "#FCEFF1";
+        t.font_family = Typography::QssFamilyChain();
+        return t;
+    }
+
+    ThemeTokens TokensBad600Light() {
+        ThemeTokens t;
+        t.window = "#FBFAF3";
+        t.surface = "#FFFFFF";
+        t.surface_alt = "#F1EFDF";
+        t.border = "#D8D5C4";
+        t.text = "#1A190F";
+        t.text_muted = "#66624F";
+        t.accent = "#BAD600";
+        t.accent_hover = "#A4BE00";
+        t.accent_press = "#8FA700";
+        t.accent_soft = "#EAF1B7";
+        t.text_on_accent = "#111207";
+        t.success = "#7D9800";
+        t.success_text = "#111207";
+        t.warning = "#C89A2A";
+        t.warning_text = "#111207";
+        t.error = "#C4563E";
+        t.error_text = "#FFFFFF";
+        t.font_family = Typography::QssFamilyChain();
+        return t;
+    }
+
+    ThemeTokens TokensBad600Dark() {
+        ThemeTokens t;
+        t.window = "#0F110D";
+        t.surface = "#151913";
+        t.surface_alt = "#1D2219";
+        t.border = "#2D3524";
+        t.text = "#E6EBD4";
+        t.text_muted = "#A4AB8D";
+        t.accent = "#BAD600";
+        t.accent_hover = "#A4BE00";
+        t.accent_press = "#8FA700";
+        t.accent_soft = "#2A3210";
+        t.text_on_accent = "#101207";
+        t.success = "#BAD600";
+        t.success_text = "#101207";
+        t.warning = "#D4A43B";
+        t.warning_text = "#101207";
+        t.error = "#D46A55";
+        t.error_text = "#101207";
         t.font_family = Typography::QssFamilyChain();
         return t;
     }
@@ -304,7 +353,8 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     bool handled = false;
     QString base_qss;
 
-    if (normalized == "system" || normalized == "light" || normalized == "dark" || normalized == "lucifer") {
+    if (normalized == "system" || normalized == "light" || normalized == "dark" || normalized == "lucifer" ||
+        normalized == "bad600-light" || normalized == "bad600-dark") {
         auto system_style = QStyleFactory::create(this->system_style_name);
         if (system_style != nullptr) {
             qApp->setStyle(system_style);
@@ -316,6 +366,12 @@ void ThemeManager::ApplyTheme(const QString &theme) {
             qApp->setPalette(palette);
         } else if (normalized == "lucifer") {
             tokens = TokensLucifer();
+            qApp->setPalette(BuildPalette(tokens));
+        } else if (normalized == "bad600-dark") {
+            tokens = TokensBad600Dark();
+            qApp->setPalette(BuildPalette(tokens));
+        } else if (normalized == "bad600-light") {
+            tokens = TokensBad600Light();
             qApp->setPalette(BuildPalette(tokens));
         } else if (normalized == "dark") {
             tokens = TokensDark();
@@ -402,6 +458,10 @@ ThemeOption ThemeManager::ThemeOptionFor(const QString &theme) const {
         tokens = TokensDark();
     } else if (normalized == "lucifer") {
         tokens = TokensLucifer();
+    } else if (normalized == "bad600-light") {
+        tokens = TokensBad600Light();
+    } else if (normalized == "bad600-dark") {
+        tokens = TokensBad600Dark();
     } else {
         tokens = TokensLight();
     }
@@ -416,6 +476,10 @@ ThemeOption ThemeManager::ThemeOptionFor(const QString &theme) const {
         option.displayName = QCoreApplication::translate("MainWindow", "Dark");
     } else if (normalized == "lucifer") {
         option.displayName = QCoreApplication::translate("MainWindow", "Lucifer");
+    } else if (normalized == "bad600-light") {
+        option.displayName = QCoreApplication::translate("MainWindow", "BAD600 Light");
+    } else if (normalized == "bad600-dark") {
+        option.displayName = QCoreApplication::translate("MainWindow", "BAD600 Dark");
     } else {
         option.displayName = normalized;
     }
@@ -431,6 +495,8 @@ QVector<ThemeOption> ThemeManager::AvailableThemes() const {
         ThemeOptionFor("system"),
         ThemeOptionFor("light"),
         ThemeOptionFor("dark"),
-        ThemeOptionFor("lucifer")
+        ThemeOptionFor("lucifer"),
+        ThemeOptionFor("bad600-light"),
+        ThemeOptionFor("bad600-dark")
     };
 }
