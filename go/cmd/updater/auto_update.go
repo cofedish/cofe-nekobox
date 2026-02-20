@@ -135,8 +135,49 @@ func updateWindowsZip(cfg autoUpdateConfig) error {
 		return fmt.Errorf("install failed and rollback attempted: %w", err)
 	}
 
-	log.Printf("windows update installed from %s to %s", payloadRoot, cfg.installDir)
-	return exec.Command(cfg.appExe).Start()
+	relaunchExe := resolveWindowsRelaunchExe(cfg.installDir, cfg.appExe)
+	log.Printf("windows update installed from %s to %s, relaunch=%s", payloadRoot, cfg.installDir, relaunchExe)
+	return exec.Command(relaunchExe).Start()
+}
+
+func resolveWindowsRelaunchExe(installDir, requestedExe string) string {
+	candidates := []string{
+		filepath.Join(installDir, "cofebox.exe"),
+	}
+
+	if strings.TrimSpace(requestedExe) != "" {
+		if filepath.IsAbs(requestedExe) {
+			candidates = append(candidates, requestedExe)
+		} else {
+			candidates = append(candidates, filepath.Join(installDir, requestedExe))
+		}
+		candidates = append(candidates, filepath.Join(installDir, filepath.Base(requestedExe)))
+	}
+
+	candidates = append(candidates,
+		filepath.Join(installDir, "cofebox"),
+		filepath.Join(installDir, "nekobox.exe"),
+	)
+
+	seen := map[string]bool{}
+	for _, candidate := range candidates {
+		candidate = filepath.Clean(candidate)
+		if seen[candidate] {
+			continue
+		}
+		seen[candidate] = true
+		if fileExists(candidate) {
+			return candidate
+		}
+	}
+
+	if strings.TrimSpace(requestedExe) != "" {
+		if filepath.IsAbs(requestedExe) {
+			return filepath.Clean(requestedExe)
+		}
+		return filepath.Clean(filepath.Join(installDir, requestedExe))
+	}
+	return filepath.Clean(filepath.Join(installDir, "cofebox.exe"))
 }
 
 func updateAppImage(cfg autoUpdateConfig) error {

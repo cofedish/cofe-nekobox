@@ -652,11 +652,14 @@ void UpdateService::finalizeVerifiedDownload() {
     QStringList args;
     args << "--mode";
     if (info_.installMode == InstallMode::WindowsZip) {
+        const auto appDir = QFileInfo(QCoreApplication::applicationFilePath()).absolutePath();
+        const auto preferredExe = QDir(appDir).absoluteFilePath("cofebox.exe");
+        const auto requestedExe = QFileInfo(preferredExe).exists() ? preferredExe : QCoreApplication::applicationFilePath();
         args << "windows"
              << "--pid" << QString::number(QCoreApplication::applicationPid())
-             << "--install-dir" << QFileInfo(QCoreApplication::applicationFilePath()).absolutePath()
+             << "--install-dir" << appDir
              << "--archive-path" << downloadedAssetPath_
-             << "--app-exe" << QCoreApplication::applicationFilePath()
+             << "--app-exe" << requestedExe
              << "--backup-tag" << normalizeVersion(info_.currentVersion);
     } else if (info_.installMode == InstallMode::LinuxAppImage) {
         const auto currentAppImage = appImagePath();
