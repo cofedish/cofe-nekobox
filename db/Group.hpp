@@ -9,6 +9,7 @@ namespace NekoGui {
         int id = -1;
         bool archive = false;
         bool skip_auto_update = false;
+        bool sub_insecure = false; // per-subscription TLS override
         QString name = "";
         QString url = "";
         QString info = "";

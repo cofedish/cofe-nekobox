@@ -138,6 +138,26 @@
         </property>
        </widget>
       </item>
+      <item row="2" column="1">
+       <widget class="QCheckBox" name="sub_insecure">
+        <property name="text">
+         <string>Insecure TLS for this subscription</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QLabel" name="sub_insecure_warning">
+        <property name="styleSheet">
+         <string notr="true">color: #C44C4C;</string>
+        </property>
+        <property name="text">
+         <string>Warning: disables certificate verification for this subscription only.</string>
+        </property>
+        <property name="wordWrap">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </item>
@@ -189,6 +209,7 @@
   <tabstop>archive</tabstop>
   <tabstop>url</tabstop>
   <tabstop>skip_auto_update</tabstop>
+  <tabstop>sub_insecure</tabstop>
   <tabstop>copy_links</tabstop>
   <tabstop>copy_links_nkr</tabstop>
  </tabstops>

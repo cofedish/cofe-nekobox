@@ -5,12 +5,19 @@
 #include <QEventLoop>
 #include <QMetaEnum>
 #include <QTimer>
+#include <QSslConfiguration>
+#include <QSslSocket>
 
 #include "main/NekoGui.hpp"
 
 namespace NekoGui_network {
 
-    NekoHTTPResponse NetworkRequestHelper::HttpGet(const QUrl &url) {
+    NekoHTTPResponse NetworkRequestHelper::HttpGet(const QUrl &url, bool allowInsecureTls) {
+        const auto scheme = url.scheme().toLower();
+        if (scheme != "http" && scheme != "https") {
+            return NekoHTTPResponse{QObject::tr("Only http(s) URLs are allowed.")};
+        }
+
         QNetworkRequest request;
         QNetworkAccessManager accessManager;
         request.setUrl(url);
@@ -39,19 +46,19 @@ namespace NekoGui_network {
         request.setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 #endif
         request.setHeader(QNetworkRequest::KnownHeaders::UserAgentHeader, NekoGui::dataStore->GetUserAgent());
-        if (NekoGui::dataStore->sub_insecure) {
+        if (allowInsecureTls && scheme == "https") {
             QSslConfiguration c;
             c.setPeerVerifyMode(QSslSocket::PeerVerifyMode::VerifyNone);
             request.setSslConfiguration(c);
         }
         //
         auto _reply = accessManager.get(request);
-        connect(_reply, &QNetworkReply::sslErrors, _reply, [](const QList<QSslError> &errors) {
+        connect(_reply, &QNetworkReply::sslErrors, _reply, [allowInsecureTls](const QList<QSslError> &errors) {
             QStringList error_str;
             for (const auto &err: errors) {
                 error_str << err.errorString();
             }
-            MW_show_log(QStringLiteral("SSL Errors: %1 %2").arg(error_str.join(","), NekoGui::dataStore->sub_insecure ? "(Ignored)" : ""));
+            MW_show_log(QStringLiteral("SSL Errors: %1 %2").arg(error_str.join(","), allowInsecureTls ? "(Ignored)" : ""));
         });
         // Wait for response
         auto abortTimer = new QTimer;
@@ -68,9 +75,16 @@ namespace NekoGui_network {
             abortTimer->stop();
             abortTimer->deleteLater();
         }
-        //
-        auto result = NekoHTTPResponse{_reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString(),
-                                       _reply->readAll(), _reply->rawHeaderPairs()};
+
+        QString error = _reply->error() == QNetworkReply::NetworkError::NoError ? "" : _reply->errorString();
+        const auto responseData = _reply->readAll();
+        const auto responseHeaders = _reply->rawHeaderPairs();
+        const auto finalUrl = _reply->url();
+        if (error.isEmpty() && scheme == "https" && finalUrl.scheme().compare("http", Qt::CaseInsensitive) == 0) {
+            error = QObject::tr("Blocked insecure redirect from https to http.");
+        }
+
+        auto result = NekoHTTPResponse{error, responseData, responseHeaders};
         _reply->deleteLater();
         return result;
     }

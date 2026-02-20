@@ -20,9 +20,14 @@ DialogEditGroup::DialogEditGroup(const std::shared_ptr<NekoGui::Group> &ent, QWi
     ui->name->setText(ent->name);
     ui->archive->setChecked(ent->archive);
     ui->skip_auto_update->setChecked(ent->skip_auto_update);
+    ui->sub_insecure->setChecked(ent->sub_insecure);
     ui->url->setText(ent->url);
     ui->type->setCurrentIndex(ent->url.isEmpty() ? 0 : 1);
     ui->type->currentIndexChanged(ui->type->currentIndex());
+    ui->sub_insecure_warning->setVisible(ui->sub_insecure->isChecked());
+    connect(ui->sub_insecure, &QCheckBox::toggled, this, [=](bool checked) {
+        ui->sub_insecure_warning->setVisible(checked);
+    });
     ui->manually_column_width->setChecked(ent->manually_column_width);
     ui->cat_share->setVisible(false);
 
@@ -81,6 +86,7 @@ void DialogEditGroup::accept() {
     ent->url = ui->url->text();
     ent->archive = ui->archive->isChecked();
     ent->skip_auto_update = ui->skip_auto_update->isChecked();
+    ent->sub_insecure = ui->sub_insecure->isChecked();
     ent->manually_column_width = ui->manually_column_width->isChecked();
     ent->front_proxy_id = CACHE.front_proxy;
     QDialog::accept();
