@@ -5,185 +5,185 @@
     <name>DialogBasicSettings</name>
     <message>
         <source>Basic Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ ЩѕШ§ЫЊЩ‡</translation>
+        <translation>تنظیمات پایه</translation>
     </message>
     <message>
         <source>Enable</source>
-        <translation>ЩЃШ№Ш§Щ„ Ъ©Ш±ШЇЩ†</translation>
+        <translation>فعال کردن</translation>
     </message>
     <message>
         <source>Listen Address</source>
-        <translation>ШўШЇШ±Ші ШЇШ±Ш­Ш§Щ„ ШґЩ†Щ€ШЇ</translation>
+        <translation>آدرس درحال شنود</translation>
     </message>
     <message>
         <source>concurrency</source>
-        <translation>Щ‡Щ…ШІЩ…Ш§Щ†ЫЊ</translation>
+        <translation>همزمانی</translation>
     </message>
     <message>
         <source>User Agent</source>
-        <translation>Ш№Ш§Щ…Щ„ Ъ©Ш§Ш±ШЁШ±</translation>
+        <translation>عامل کاربر</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Щ…ШЄШЇШ§Щ€Щ„</translation>
+        <translation>متداول</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation>Ш§ШіШЄШ§ЫЊЩ„</translation>
+        <translation>استایل</translation>
     </message>
     <message>
         <source>Theme</source>
-        <translation>ЩѕЩ€ШіШЄЩ‡</translation>
+        <translation>پوسته</translation>
     </message>
     <message>
         <source>System</source>
-        <translation>ШіЫЊШіШЄЩ…</translation>
+        <translation>سیستم</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Ш§ШґШЄШ±Ш§Ъ©</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Core</source>
-        <translation>Щ‡ШіШЄЩ‡</translation>
+        <translation>هسته</translation>
     </message>
     <message>
         <source>Extra Core</source>
-        <translation>Щ‡ШіШЄЩ‡ Ш§Ш¶Ш§ЩЃЫЊ</translation>
+        <translation>هسته اضافی</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>ШЁШ±ЪЇШІЫЊШЇЩ†</translation>
+        <translation>برگزیدن</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґ</translation>
+        <translation>ویرایش</translation>
     </message>
     <message>
         <source>Custom Inbound</source>
-        <translation>Щ€Ш±Щ€ШЇЫЊ ШіЩЃШ§Ш±ШґЫЊ</translation>
+        <translation>ورودی سفارشی</translation>
     </message>
     <message>
         <source>Concurrent</source>
-        <translation>Щ‡Щ… ШІЩ…Ш§Щ†</translation>
+        <translation>هم زمان</translation>
     </message>
     <message>
         <source>Use proxy when updating subscription</source>
-        <translation>Ш§ШіШЄЩЃШ§ШЇЩ‡ Ш§ШІ ЩѕШ±Щ€Ъ©ШіЫЊ ШІЩ…Ш§Щ†ЫЊ Ъ©Щ‡ Ш§ШґШЄШ±Ш§Ъ© Ш±Ш§ ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ Щ…ЫЊ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>استفاده از پروکسی زمانی که اشتراک را بروزرسانی می کنید</translation>
     </message>
     <message>
         <source>Security</source>
-        <translatorcomment>Ш§Щ…Щ†ЫЊШЄ security</translatorcomment>
-        <translation>Ш§Щ…Щ†ЫЊШЄ</translation>
+        <translatorcomment>امنیت security</translatorcomment>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>Statistics refresh rate</source>
-        <translation>Щ†Ш±Ш® ШЄШ§ШІЩ‡ ШіШ§ШІЫЊ ШўЩ…Ш§Ш± ШЄШ±Ш§ЩЃЫЊЪ©</translation>
+        <translation>نرخ تازه سازی آمار ترافیک</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation>Ш®Ш§Щ…Щ€Шґ</translation>
+        <translation>خاموش</translation>
     </message>
     <message>
         <source>Add</source>
-        <translation>Ш§Ш¶Ш§ЩЃЩ‡ Ъ©Ш±ШЇЩ†</translation>
+        <translation>اضافه کردن</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translatorcomment>Ш­Ш°ЩЃ</translatorcomment>
-        <translation>Ш­Ш°ЩЃ Ъ©Ш±ШЇЩ†</translation>
+        <translatorcomment>حذف</translatorcomment>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Please input the core name.</source>
-        <translation>Щ„Ш·ЩЃШ§ Щ†Ш§Щ… Щ‡ШіШЄЩ‡ Ш±Ш§ Щ€Ш§Ш±ШЇ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لطفا نام هسته را وارد کنید</translation>
     </message>
     <message>
         <source>Please select the core name.</source>
-        <translation>Щ„Ш·ЩЃШ§ Щ†Ш§Щ… Щ‡ШіШЄЩ‡ Ш±Ш§ Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لطفا نام هسته را انتخاب کنید</translation>
     </message>
     <message>
         <source>Connection statistics</source>
-        <translation>ШўЩ…Ш§Ш± Ш§ШЄШµШ§Щ„</translation>
+        <translation>آمار اتصال</translation>
     </message>
     <message>
         <source>Include Pre-release when checking update</source>
-        <translation>Щ‡Щ†ЪЇШ§Щ… ШЁШ±Ш±ШіЫЊ ШЁЩ‡вЂЊШ±Щ€ШІШ±ШіШ§Щ†ЫЊШЊ Щ†ШіШ®Щ‡ ЩѕЫЊШґвЂЊШ§Щ†ШЄШґШ§Ш± Ш±Ш§ Щ†ЫЊШІ Щ„Ш­Ш§Шё ШґЩ€ШЇ</translation>
+        <translation>هنگام بررسی به‌روزرسانی، نسخه پیش‌انتشار را نیز لحاظ شود</translation>
     </message>
     <message>
         <source>System proxy format</source>
-        <translation>ЩЃШ±Щ…ШЄ ЩѕШ±Щ€Ъ©ШіЫЊ ШіЫЊШіШЄЩ…</translation>
+        <translation>فرمت پروکسی سیستم</translation>
     </message>
     <message>
         <source>Set custom icon</source>
-        <translation>ШЄЩ†ШёЫЊЩ… ШўЫЊЪ©Щ€Щ† ШіЩЃШ§Ш±ШґЫЊ</translation>
+        <translation>تنظیم آیکون سفارشی</translation>
     </message>
     <message>
         <source>Hide dashboard at startup</source>
-        <translation>Щ…Ш®ЩЃЫЊ Ъ©Ш±ШЇЩ† ШЇШ§ШґШЁЩ€Ш±ШЇ Щ‡Щ†ЪЇШ§Щ… Ш±Ш§Щ‡вЂЊШ§Щ†ШЇШ§ШІЫЊ</translation>
+        <translation>مخفی کردن داشبورد هنگام راه‌اندازی</translation>
     </message>
     <message>
         <source>Clear servers before updating subscription</source>
-        <translation>Щ‚ШЁЩ„ Ш§ШІ ШЁЩ‡вЂЊШ±Щ€ШІШ±ШіШ§Щ†ЫЊ Ш§ШґШЄШ±Ш§Ъ©ШЊ ШіШ±Щ€Ш±Щ‡Ш§ Ш±Ш§ ЩѕШ§Ъ© ШґЩ€ШЇ</translation>
+        <translation>قبل از به‌روزرسانی اشتراک، سرورها را پاک شود</translation>
     </message>
     <message>
         <source>Ignore TLS errors when updating subscription</source>
-        <translation>Щ‡Щ†ЪЇШ§Щ… ШЁЩ‡вЂЊШ±Щ€ШІШ±ШіШ§Щ†ЫЊ Ш§ШґШЄШ±Ш§Ъ©ШЊ Ш®Ш·Ш§Щ‡Ш§ЫЊ TLS Ш±Ш§ Щ†Ш§ШЇЫЊШЇЩ‡ ЪЇШ±ЩЃШЄЩ‡ ШґЩ€ШЇ</translation>
+        <translation>هنگام به‌روزرسانی اشتراک، خطاهای TLS را نادیده گرفته شود</translation>
     </message>
     <message>
         <source>Advanced system proxy settings. Please select a format.</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ ЩѕЫЊШґШ±ЩЃШЄЩ‡ ЩѕШ±Щ€Ъ©ШіЫЊ ШіЫЊШіШЄЩ…. Щ„Ш·ЩЃШ§ ЫЊЪ© Щ‚Ш§Щ„ШЁ Ш±Ш§ Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Щ†ЫЊШЇ.</translation>
+        <translation>تنظیمات پیشرفته پروکسی سیستم. لطفا یک قالب را انتخاب کنید.</translation>
     </message>
     <message>
         <source>Please select a PNG file.</source>
-        <translation>Щ„Ш·ЩЃШ§Щ‹ ЫЊЪ© ЩЃШ§ЫЊЩ„ PNG Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Щ†ЫЊШЇ.</translation>
+        <translation>لطفاً یک فایل PNG انتخاب کنید.</translation>
     </message>
     <message>
         <source>Reset</source>
-        <translation>ШЁШ§ШІЩ†ШґШ§Щ†ЫЊ</translation>
+        <translation>بازنشانی</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Щ„ШєЩ€ Ъ©Ш±ШЇЩ†</translation>
+        <translation>لغو کردن</translation>
     </message>
     <message>
         <source>Please select a valid square image.</source>
-        <translation>Щ„Ш·ЩЃШ§Щ‹ ЫЊЪ© ШЄШµЩ€ЫЊШ± Щ…Ш±ШЁШ№ Щ…Ш№ШЄШЁШ± Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Щ†ЫЊШЇ.</translation>
+        <translation>لطفاً یک تصویر مربع معتبر انتخاب کنید.</translation>
     </message>
     <message>
         <source>Max log lines</source>
-        <translation>Ш­ШЇШ§Ъ©Ш«Ш± Ш®Ш·Щ€Ш· ЩЃШ§ЫЊЩ„ Щ„Ш§ЪЇ</translation>
+        <translation>حداکثر خطوط فایل لاگ</translation>
     </message>
     <message>
         <source>Inbound Auth</source>
-        <translation>Ш§Ш№ШЄШЁШ§Ш± Щ€Ш±Щ€ШЇЫЊ</translation>
+        <translation>اعتبار ورودی</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Щ†Ш§Щ… Ъ©Ш§Ш±ШЁШ±ЫЊ</translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Ш±Щ…ШІ Ш№ШЁЩ€Ш±</translation>
+        <translation>رمز عبور</translation>
     </message>
     <message>
         <source>Skip TLS certificate authentication by default (allowInsecure)</source>
-        <translation>Ш±ШЇ ШґШЇЩ† Ш§ШІ Ш§Ш­Ш±Ш§ШІ Щ‡Щ€ЫЊШЄ ЪЇЩ€Ш§Щ‡ЫЊ TLS ШЁЩ‡ Ш·Щ€Ш± ЩѕЫЊШґ ЩЃШ±Ш¶ (allowInsecure)</translation>
+        <translation>رد شدن از احراز هویت گواهی TLS به طور پیش فرض (allowInsecure)</translation>
     </message>
     <message>
         <source>Default uTLS Fingerprint</source>
-        <translation type="unfinished">Ш§Ш«Ш±Ш§Щ†ЪЇШґШЄ ЩѕЫЊШґЩЃШ±Ш¶ uTLS</translation>
+        <translation type="unfinished">اثرانگشت پیشفرض uTLS</translation>
     </message>
     <message>
         <source>Core Options</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ Щ‡ШіШЄЩ‡</translation>
+        <translation type="unfinished">تنظیمات هسته</translation>
     </message>
     <message>
         <source>Override underlying DNS</source>
-        <translation type="unfinished">Щ„ШєЩ€ ШЇЫЊ Ш§Щ† Ш§Ші ШІЫЊШ±ШЁЩ†Ш§ЫЊЫЊ</translation>
+        <translation type="unfinished">لغو دی ان اس زیربنایی</translation>
     </message>
     <message>
         <source>Default On</source>
-        <translation type="unfinished">ШЁЩ‡ ШµЩ€Ш±ШЄ ЩѕЫЊШґЩЃШ±Ш¶ ЩЃШ№Ш§Щ„</translation>
+        <translation type="unfinished">به صورت پیشفرض فعال</translation>
     </message>
     <message>
         <source>Multiplex (mux)</source>
@@ -191,23 +191,23 @@
     </message>
     <message>
         <source>Latency Test URL</source>
-        <translation type="unfinished">ШўШЇШ±Ші ШЄШіШЄ ШЄШ§Ш®ЫЊШ±</translation>
+        <translation type="unfinished">آدرس تست تاخیر</translation>
     </message>
     <message>
         <source>Download Test URL</source>
-        <translation type="unfinished">ШўШЇШ±Ші ШЄШіШЄ ШЇШ§Щ†Щ„Щ€ШЇ</translation>
+        <translation type="unfinished">آدرس تست دانلود</translation>
     </message>
     <message>
         <source>Timeout (s)</source>
-        <translation type="unfinished">ШЄШ§ЫЊЩ… Ш§Щ€ШЄ (ШЁЩ‡ Ш«Ш§Щ†ЫЊЩ‡)</translation>
+        <translation type="unfinished">تایم اوت (به ثانیه)</translation>
     </message>
     <message>
         <source>Automatic update</source>
-        <translation type="unfinished">ШўЩѕШЇЫЊШЄ Ш§ШЄЩ€Щ…Ш§ШЄЫЊЪ©</translation>
+        <translation type="unfinished">آپدیت اتوماتیک</translation>
     </message>
     <message>
         <source>Interval (minute, invalid if less than 30)</source>
-        <translation type="unfinished">ЩЃШ§ШµЩ„Щ‡ (ШЁЩ‡ ШЇЩ‚ЫЊЩ‚Ш§ ШЊ Ш§ЪЇШ± Ъ©Щ…ШЄШ± Ш§ШІ ЫіЫ° ШЁШ§ШґШЇ Щ†Ш§ШЇШ±ШіШЄ Ш§ШіШЄ)</translation>
+        <translation type="unfinished">فاصله (به دقیقا ، اگر کمتر از ۳۰ باشد نادرست است)</translation>
     </message>
     <message>
         <source>Share VMess Link with v2rayN Format</source>
@@ -226,27 +226,27 @@
     <name>DialogEditGroup</name>
     <message>
         <source>Edit Group</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґ ЪЇШ±Щ€Щ‡</translation>
+        <translation>ویرایش گروه</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Щ†Щ€Ш№</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Щ†Ш§Щ…</translation>
+        <translation>نام</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>ЩѕШ§ЫЊЩ‡</translation>
+        <translation>پایه</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Ш§ШґШЄШ±Ш§Ъ©</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>ШЁШ§ЫЊЪЇШ§Щ†ЫЊ</translation>
+        <translation>بایگانی</translation>
     </message>
     <message>
         <source>URL</source>
@@ -254,98 +254,98 @@
     </message>
     <message>
         <source>Copy profile share links</source>
-        <translation>Щ„ЫЊЩ†Ъ© Щ‡Ш§ЫЊ Ш§ШґШЄШ±Ш§Ъ© ЪЇШ°Ш§Ш±ЫЊ Щ†Щ…Ш§ЫЊЩ‡ Ш±Ш§ Ъ©ЩѕЫЊ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لینک های اشتراک گذاری نمایه را کپی کنید</translation>
     </message>
     <message>
-        <source>Copy profile share links (CofeBox Links)</source>
-        <translation>Щ„ЫЊЩ†Ъ© Щ‡Ш§ЫЊ Ш§ШґШЄШ±Ш§Ъ© ЪЇШ°Ш§Ш±ЫЊ Щ†Щ…Ш§ЫЊЩ‡ Ш±Ш§ Ъ©ЩѕЫЊ Ъ©Щ†ЫЊШЇ (Щ„ЫЊЩ†Ъ© Щ‡Ш§ЫЊ Neko)</translation>
+        <source>Copy profile share links (Neko Links)</source>
+        <translation>لینک های اشتراک گذاری نمایه را کپی کنید (لینک های Neko)</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation>Щ‡ШґШЇШ§Ш±</translation>
+        <translation>هشدار</translation>
     </message>
     <message>
         <source>Please input URL</source>
-        <translation>Щ„Ш·ЩЃШ§ URL Ш±Ш§ Щ€Ш§Ш±ШЇ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لطفا URL را وارد کنید</translation>
     </message>
     <message>
         <source>Copied</source>
-        <translation>Ъ©ЩѕЫЊ ШґШЇЩ‡ Ш§ШіШЄ</translation>
+        <translation>کپی شده است</translation>
     </message>
     <message>
         <source>Manually column width</source>
-        <translation>Ш№Ш±Ш¶ ШіШЄЩ€Щ† ШЁЩ‡ ШµЩ€Ш±ШЄ ШЇШіШЄЫЊ</translation>
+        <translation>عرض ستون به صورت دستی</translation>
     </message>
     <message>
         <source>Front Proxy</source>
-        <translation type="unfinished">ЩѕШ±Щ€Ъ©ШіЫЊ front</translation>
+        <translation type="unfinished">پروکسی front</translation>
     </message>
     <message>
         <source>None</source>
-        <translation type="unfinished">Щ‡ЫЊЪ† ЫЊЪ©</translation>
+        <translation type="unfinished">هیچ یک</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">ЩѕШ§Ъ© Ъ©Ш±ШЇЩ†</translation>
+        <translation type="unfinished">پاک کردن</translation>
     </message>
     <message>
         <source>Skip automatic update</source>
-        <translation type="unfinished">Щ„ШєЩ€ ШўЩѕШЇЫЊШЄ Ш§ШЄЩ€Щ…Ш§ШЄЫЊЪ©</translation>
+        <translation type="unfinished">لغو آپدیت اتوماتیک</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">Щ…ШЄШЇШ§Щ€Щ„</translation>
+        <translation type="unfinished">متداول</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation type="unfinished">Ш§ШґШЄШ±Ш§Ъ© ЪЇШ°Ш§Ш±ЫЊ</translation>
+        <translation type="unfinished">اشتراک گذاری</translation>
     </message>
 </context>
 <context>
     <name>DialogEditProfile</name>
     <message>
         <source>Edit</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґ Ъ©Ш±ШЇЩ†</translation>
+        <translation>ویرایش کردن</translation>
     </message>
     <message>
         <source>Common</source>
-        <translation>Щ…ШЄШЇШ§Щ€Щ„</translation>
+        <translation>متداول</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Щ†Щ€Ш№</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Port</source>
-        <translation>ЩѕЩ€Ш±ШЄ</translation>
+        <translation>پورت</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>ШўШЇШ±Ші</translation>
+        <translation>آدرس</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ш§ШіЩ…</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <source>Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ</translation>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <source>The underlying transport method. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation>Ш±Щ€Шґ Ш§Щ†ШЄЩ‚Ш§Щ„ ШЁШ§ЫЊШЇ ШЁШ§ ШіШ±Щ€Ш± ШіШ§ШІЪЇШ§Ш± ШЁШ§ШґШЇШЊ ШЇШ± ШєЫЊШ± Ш§ЫЊЩ† ШµЩ€Ш±ШЄШЊ Ш§ШЄШµШ§Щ„ Щ†Щ…ЫЊ ШЄЩ€Ш§Щ†ШЇ ШЁШ±Щ‚Ш±Ш§Ш± ШґЩ€ШЇ.</translation>
+        <translation>روش انتقال باید با سرور سازگار باشد، در غیر این صورت، اتصال نمی تواند برقرار شود.</translation>
     </message>
     <message>
         <source>Network</source>
-        <translation>ШґШЁЪ©Щ‡</translation>
+        <translation>شبکه</translation>
     </message>
     <message>
         <source>Transport Layer Security. It must be consistent with the server, otherwise, the connection cannot be established.</source>
-        <translation>Ш§Щ…Щ†ЫЊШЄ Щ„Ш§ЫЊЩ‡ Ш§Щ†ШЄЩ‚Ш§Щ„ ШЁШ§ЫЊШЇ ШЁШ§ ШіШ±Щ€Ш± ШіШ§ШІЪЇШ§Ш± ШЁШ§ШґШЇШЊ ШЇШ± ШєЫЊШ± Ш§ЫЊЩ† ШµЩ€Ш±ШЄШЊ Ш§ШЄШµШ§Щ„ Щ†Щ…ЫЊ ШЄЩ€Ш§Щ†ШЇ ШЁШ±Щ‚Ш±Ш§Ш± ШґЩ€ШЇ.</translation>
+        <translation>امنیت لایه انتقال باید با سرور سازگار باشد، در غیر این صورت، اتصال نمی تواند برقرار شود.</translation>
     </message>
     <message>
         <source>Security</source>
-        <translation>Ш§Щ…Щ†ЫЊШЄ</translation>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>UDP FullCone Packet encoding for implementing features such as UDP FullCone. Server support is required, if the wrong selection is made, the connection cannot be made. Please leave it blank.</source>
@@ -353,11 +353,11 @@
     </message>
     <message>
         <source>Packet Encoding</source>
-        <translation>Ш±Щ…ШІЩ†ЪЇШ§Ш±ЫЊ ШЁШіШЄЩ‡ Щ‡Ш§</translation>
+        <translation>رمزنگاری بسته ها</translation>
     </message>
     <message>
         <source>Network Settings (%1)</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ ШґШЁЪ©Щ‡ (1%)</translation>
+        <translation>تنظیمات شبکه (1%)</translation>
     </message>
     <message>
         <source>When enabled, V2Ray will not check the validity of the TLS certificate provided by the remote host (the security is equivalent to plaintext)</source>
@@ -365,15 +365,15 @@
     </message>
     <message>
         <source>Allow insecure</source>
-        <translation>Ш§Ш¬Ш§ШІЩ‡ Щ†Ш§Ш§Щ…Щ† ШЁЩ€ШЇЩ†</translation>
+        <translation>اجازه ناامن بودن</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation>ЪЇЩ€Ш§Щ‡ЫЊ</translation>
+        <translation>گواهی</translation>
     </message>
     <message>
         <source>Server name indication, clear text.</source>
-        <translation type="unfinished">ШґЩ†Ш§ШіЩ‡ Щ†Ш§Щ… ШіШ±Щ€Ш± ШЊ Щ…ШЄЩ† ШµШ±ЫЊШ­</translation>
+        <translation type="unfinished">شناسه نام سرور ، متن صریح</translation>
     </message>
     <message>
         <source>Application layer protocol negotiation, clear text. Please separate them with commas.</source>
@@ -381,23 +381,23 @@
     </message>
     <message>
         <source>Custom (Extra Core)</source>
-        <translation>ШіЩЃШ§Ш±ШґЫЊ ( Щ‡ШіШЄЩ‡ Ш§Ш¶Ш§ЩЃЩ‡)</translation>
+        <translation>سفارشی ( هسته اضافه)</translation>
     </message>
     <message>
         <source>Not set</source>
-        <translation>ШЄЩ†ШёЫЊЩ… Щ†ШґШЇЩ‡</translation>
+        <translation>تنظیم نشده</translation>
     </message>
     <message>
         <source>Already set</source>
-        <translation>ШЄЩ†ШёЫЊЩ… ШґШЇЩ‡</translation>
+        <translation>تنظیم شده</translation>
     </message>
     <message>
         <source>TLS Security Settings</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ Ш§Щ…Щ†ЫЊШЄ TLS</translation>
+        <translation type="unfinished">تنظیمات امنیت TLS</translation>
     </message>
     <message>
         <source>TLS Camouflage Settings</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ Ш§ШіШЄШЄШ§Ш± TLS</translation>
+        <translation type="unfinished">تنظیمات استتار TLS</translation>
     </message>
     <message>
         <source>Reality public key. If not empty, turn TLS into REALITY.</source>
@@ -421,7 +421,7 @@
     </message>
     <message>
         <source>Apply settings to this group</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ ШЁЩ‡ Ш§ЫЊЩ† ЪЇШ±Щ€Щ‡ Ш§Ш№Щ…Ш§Щ„ ШґЩ€ШЇ</translation>
+        <translation type="unfinished">تنظیمات به این گروه اعمال شود</translation>
     </message>
     <message>
         <source>Multiplex</source>
@@ -429,23 +429,23 @@
     </message>
     <message>
         <source>Keep Default</source>
-        <translation type="unfinished">Щ†ЪЇЩ‡ ШЇШ§Ш±ЫЊ Щ…Щ‚ШЇШ§Ш± ЩѕЫЊШґЩЃШ±Ш¶</translation>
+        <translation type="unfinished">نگه داری مقدار پیشفرض</translation>
     </message>
     <message>
         <source>On</source>
-        <translation type="unfinished">ЩЃШ№Ш§Щ„</translation>
+        <translation type="unfinished">فعال</translation>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">Ш®Ш§Щ…Щ€Шґ</translation>
+        <translation type="unfinished">خاموش</translation>
     </message>
     <message>
         <source>Confirm</source>
-        <translation type="unfinished">ШЄШ§ЫЊЫЊШЇ</translation>
+        <translation type="unfinished">تایید</translation>
     </message>
     <message>
         <source>Server support is required</source>
-        <translation type="unfinished">Щ†ЫЊШ§ШІЩ…Щ†ШЇ ЩѕШґШЄЫЊШЁШ§Щ†ЫЊ ШЇШ± ШіЩ…ШЄ ШіШ±Щ€Ш±</translation>
+        <translation type="unfinished">نیازمند پشتیبانی در سمت سرور</translation>
     </message>
     <message>
         <source>Reality short id. Accept only one value.</source>
@@ -456,53 +456,53 @@
     <name>DialogHotkey</name>
     <message>
         <source>Hotkey</source>
-        <translation>Ъ©Щ„ЫЊШЇ Щ…ЫЊШ§Щ†ШЁШ±</translation>
+        <translation>کلید میانبر</translation>
     </message>
     <message>
         <source>Show routes</source>
-        <translation>Щ…ШіЫЊШ±Щ‡Ш§ Ш±Ш§ Щ†Щ…Ш§ЫЊШґ ШЁШЇЩ‡</translation>
+        <translation>مسیرها را نمایش بده</translation>
     </message>
     <message>
         <source>Show groups</source>
-        <translation>Щ†Щ…Ш§ЫЊШґ ЪЇШ±Щ€Щ‡ Щ‡Ш§</translation>
+        <translation>نمایش گروه ها</translation>
     </message>
     <message>
         <source>Trigger main window</source>
-        <translation type="unfinished">Щ†Щ…Ш§ЫЊШґ ЩѕЩ†Ш¬Ш±Щ‡ Ш§ШµЩ„ЫЊ</translation>
+        <translation type="unfinished">نمایش پنجره اصلی</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>ЩѕШ±Щ€Ъ©ШіЫЊ ШіЫЊШіШЄЩ…</translation>
+        <translation>پروکسی سیستم</translation>
     </message>
 </context>
 <context>
     <name>DialogManageGroups</name>
     <message>
         <source>Groups</source>
-        <translation>ЪЇШ±Щ€Щ‡ Щ‡Ш§ЪЇШ±Щ€Щ‡ Щ‡Ш§</translation>
+        <translation>گروه هاگروه ها</translation>
     </message>
     <message>
         <source>New group</source>
-        <translation>ЪЇШ±Щ€Щ‡ Ш¬ШЇЫЊШЇ</translation>
+        <translation>گروه جدید</translation>
     </message>
     <message>
         <source>Update all subscriptions</source>
-        <translation>ШЁЩ‡ Ш±Щ€ШІ Ш±ШіШ§Щ†ЫЊ ШЄЩ…Ш§Щ… Ш§ШґШЄШ±Ш§Ъ© Щ‡Ш§</translation>
+        <translation>به روز رسانی تمام اشتراک ها</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>ШЄШ§ЫЊЫЊШЇЫЊЩ‡</translation>
+        <translation>تاییدیه</translation>
     </message>
     <message>
         <source>Update all subscriptions?</source>
-        <translation>ШўЫЊШ§ Щ‡Щ…Щ‡ Ш§ШґШЄШ±Ш§Ъ© Щ‡Ш§ ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ ШґЩ€Щ†ШЇШџ</translation>
+        <translation>آیا همه اشتراک ها بروزرسانی شوند؟</translation>
     </message>
 </context>
 <context>
     <name>DialogManageRoutes</name>
     <message>
         <source>Routes</source>
-        <translation>Щ…ШіЫЊШ±Щ‡Ш§</translation>
+        <translation>مسیرها</translation>
     </message>
     <message>
         <source>Sniffing Mode</source>
@@ -510,83 +510,83 @@
     </message>
     <message>
         <source>Disable</source>
-        <translation>ШєЫЊШ±ЩЃШ№Ш§Щ„ Ъ©Ш±ШЇЩ†</translation>
+        <translation>غیرفعال کردن</translation>
     </message>
     <message>
         <source>Remote DNS</source>
-        <translation type="unfinished">ШЇЫЊ Ш§Щ† Ш§Ші ШіЩ…ШЄ-ШіШ±Щ€Ш±</translation>
+        <translation type="unfinished">دی ان اس سمت-سرور</translation>
     </message>
     <message>
         <source>Direct DNS</source>
-        <translation type="unfinished">ШЇЫЊ Ш§Щ† Ш§Ші Щ…ШіШЄЩ‚ЫЊЩ…</translation>
+        <translation type="unfinished">دی ان اس مستقیم</translation>
     </message>
     <message>
         <source>Enable DNS Routing</source>
-        <translation>ЩЃШ№Ш§Щ„ Ъ©Ш±ШЇЩ† Щ…ШіЫЊШ±ЫЊШ§ШЁЫЊ DNS</translation>
+        <translation>فعال کردن مسیریابی DNS</translation>
     </message>
     <message>
         <source>Block</source>
-        <translation type="unfinished">Щ…ШіШЇЩ€ШЇ Ъ©Ш±ШЇЩ†</translation>
+        <translation type="unfinished">مسدود کردن</translation>
     </message>
     <message>
         <source>Direct</source>
-        <translation>Щ…ШіШЄЩ‚ЫЊЩ…</translation>
+        <translation>مستقیم</translation>
     </message>
     <message>
         <source>Domain</source>
-        <translation>ШЇШ§Щ…Щ†Щ‡</translation>
+        <translation>دامنه</translation>
     </message>
     <message>
         <source>Proxy</source>
-        <translation>ЩѕШ±Щ€Ъ©ШіЫЊ</translation>
+        <translation>پروکسی</translation>
     </message>
     <message>
         <source>IP</source>
-        <translation>ШўЫЊ ЩѕЫЊ</translation>
+        <translation>آی پی</translation>
     </message>
     <message>
         <source>Preset</source>
-        <translation>ЩѕЫЊШґЩЃШ±Ш¶</translation>
+        <translation>پیشفرض</translation>
     </message>
     <message>
         <source>Mange route set</source>
-        <translation type="unfinished">Щ…ШЇЫЊШ±ЫЊШЄ Щ…ШіЫЊШ±Щ‡Ш§</translation>
+        <translation type="unfinished">مدیریت مسیرها</translation>
     </message>
     <message>
         <source>Bypass LAN and China</source>
-        <translation type="unfinished">Ш№ШЁЩ€Ш± Щ†ШЇШ§ШЇЩ† ШЄШ±Ш§ЩЃЫЊЪ© LAN Щ€ Ъ©ШґЩ€Ш± Ъ†ЫЊЩ†</translation>
+        <translation type="unfinished">عبور ندادن ترافیک LAN و کشور چین</translation>
     </message>
     <message>
         <source>Global</source>
-        <translation type="unfinished">Щ‡Щ…ЪЇШ§Щ†ЫЊ</translation>
+        <translation type="unfinished">همگانی</translation>
     </message>
     <message>
         <source>Load</source>
-        <translation type="unfinished">ШЁШ§Ш±ЪЇЫЊШ±ЫЊ</translation>
+        <translation type="unfinished">بارگیری</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation>Ш°Ш®ЫЊШ±Щ‡ Ъ©Ш±ШЇЩ†</translation>
+        <translation>ذخیره کردن</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Ш­Ш°ЩЃ Ъ©Ш±ШЇЩ†</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation>Щ„ШєЩ€ Ъ©Ш±ШЇЩ†</translation>
+        <translation>لغو کردن</translation>
     </message>
     <message>
         <source>Load routing: %1</source>
-        <translation type="unfinished">ШЁШ§Ш±ЪЇЫЊШ±ЫЊ Щ…ШіЫЊШ± : 1%</translation>
+        <translation type="unfinished">بارگیری مسیر : 1%</translation>
     </message>
     <message>
         <source>Save routing: %1</source>
-        <translation type="unfinished">Ш°Ш®ЫЊШ±Щ‡ Щ…ШіЫЊШ± : 1%</translation>
+        <translation type="unfinished">ذخیره مسیر : 1%</translation>
     </message>
     <message>
         <source>Remove routing: %1</source>
-        <translation type="unfinished">Ш­Ш°ЩЃ Щ…ШіЫЊШ± : 1%</translation>
+        <translation type="unfinished">حذف مسیر : 1%</translation>
     </message>
     <message>
         <source>Default Outbound</source>
@@ -594,11 +594,11 @@
     </message>
     <message>
         <source>Domain Strategy</source>
-        <translation type="unfinished">Ш§ШіШЄШ±Ш§ШЄЪЫЊ ШЇШ§Щ…Щ†Щ‡</translation>
+        <translation type="unfinished">استراتژی دامنه</translation>
     </message>
     <message>
         <source>Server Address Strategy</source>
-        <translation type="unfinished">Ш§ШіШЄШ±Ш§ШЄЪЫЊ ШўШЇШ±Ші ШіШ±Щ€Ш±</translation>
+        <translation type="unfinished">استراتژی آدرس سرور</translation>
     </message>
     <message>
         <source>Sniff result for routing</source>
@@ -610,15 +610,15 @@
     </message>
     <message>
         <source>Common</source>
-        <translation type="unfinished">Щ…ШЄШЇШ§Щ€Щ„</translation>
+        <translation type="unfinished">متداول</translation>
     </message>
     <message>
         <source>DNS</source>
-        <translation type="unfinished">ШЇЫЊ Ш§Щ† Ш§Ші</translation>
+        <translation type="unfinished">دی ان اس</translation>
     </message>
     <message>
         <source>Simple DNS Settings</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ ШЇЫЊ Ш§Щ† Ш§Ші ШіШ§ШЇЩ‡</translation>
+        <translation type="unfinished">تنظیمات دی ان اس ساده</translation>
     </message>
     <message>
         <source>Use DNS Object</source>
@@ -630,11 +630,11 @@
     </message>
     <message>
         <source>Simple Route</source>
-        <translation type="unfinished">Щ…ШіЫЊШ± ШіШ§ШЇЩ‡</translation>
+        <translation type="unfinished">مسیر ساده</translation>
     </message>
     <message>
         <source>Custom Route</source>
-        <translation type="unfinished">Щ…ШіЫЊШ± ШіЩЃШ§Ш±ШґЫЊ</translation>
+        <translation type="unfinished">مسیر سفارشی</translation>
     </message>
     <message>
         <source>Custom Route (global)</source>
@@ -654,11 +654,11 @@
     </message>
     <message>
         <source>Document</source>
-        <translation type="unfinished">Ш§ШіЩ†Ш§ШЇ</translation>
+        <translation type="unfinished">اسناد</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished">ЩЃШ±Щ…ШЄ</translation>
+        <translation type="unfinished">فرمت</translation>
     </message>
     <message>
         <source>This is especially important and it is recommended to use the default value of &quot;localhost&quot;.
@@ -675,11 +675,11 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     <name>DialogVPNSettings</name>
     <message>
         <source>Tun Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ vpn</translation>
+        <translation>تنظیمات vpn</translation>
     </message>
     <message>
         <source>Hide Console</source>
-        <translation>Щ…Ш®ЩЃЫЊ Ъ©Ш±ШЇЩ† Ъ©Щ†ШіЩ€Щ„</translation>
+        <translation>مخفی کردن کنسول</translation>
     </message>
     <message>
         <source>Tun Enable IPv6</source>
@@ -694,12 +694,12 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Whether blacklisted or whitelisted, your traffic will be handled by cofebox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
+        <source>Whether blacklisted or whitelisted, your traffic will be handled by nekobox_core (sing-tun). This is NOT equal to &quot;process mode&quot; of some software.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Whitelist mode</source>
-        <translation type="unfinished">Ш­Ш§Щ„ШЄ Щ„ЫЊШіШЄ ШіЩЃЫЊШЇ</translation>
+        <translation type="unfinished">حالت لیست سفید</translation>
     </message>
     <message>
         <source>Proxy CIDR</source>
@@ -707,14 +707,14 @@ For more information, see the document &quot;Configuration/DNS&quot;.</source>
     </message>
     <message>
         <source>Proxy Process Name</source>
-        <translation type="unfinished">Щ†Ш§Щ… ЩѕШ±Щ€ШіЩ‡ ЩѕШ±Ш§Ъ©ШіЫЊ</translation>
+        <translation type="unfinished">نام پروسه پراکسی</translation>
     </message>
     <message>
         <source>Troubleshooting</source>
-        <translation type="unfinished">Ш№ЫЊШЁ ЫЊШ§ШЁЫЊ</translation>
+        <translation type="unfinished">عیب یابی</translation>
     </message>
     <message>
-        <source>If you have trouble starting VPN, you can force reset cofebox_core process here.
+        <source>If you have trouble starting VPN, you can force reset nekobox_core process here.
 
 If still not working, see documentation for more information.
 %1</source>
@@ -722,19 +722,19 @@ If still not working, see documentation for more information.
     </message>
     <message>
         <source>Reset</source>
-        <translation type="unfinished">ШЁШ§ШІЩ†ШґШ§Щ†ЫЊ</translation>
+        <translation type="unfinished">بازنشانی</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Щ„ШєЩ€ Ъ©Ш±ШЇЩ†</translation>
+        <translation type="unfinished">لغو کردن</translation>
     </message>
     <message>
         <source>Internal Tun</source>
-        <translation type="unfinished">Ш­Ш§Щ„ШЄ ШЄЩ€Щ†Щ„ ШЇШ§Ш®Щ„ЫЊ</translation>
+        <translation type="unfinished">حالت تونل داخلی</translation>
     </message>
     <message>
         <source>Add a tun inbound to the profile startup, instead of using two processes.
-This needs to be run CofeBox with administrator privileges.</source>
+This needs to be run NekoBox with administrator privileges.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -742,42 +742,42 @@ This needs to be run CofeBox with administrator privileges.</source>
     <name>EditChain</name>
     <message>
         <source>Traffic order is from top to bottom</source>
-        <translation type="unfinished">Ш№ШЁЩ€Ш± ШЄШ±Ш§ЩЃЫЊЪ© Ш§ШІ ШЁШ§Щ„Ш§ ШЁЩ‡ ЩѕШ§ЫЊЫЊЩ† Ш§ШіШЄ</translation>
+        <translation type="unfinished">عبور ترافیک از بالا به پایین است</translation>
     </message>
     <message>
         <source>Select Profile</source>
-        <translation>Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Ш±ШЇЩ† ЩѕШ±Щ€ЩЃШ§ЫЊЩ„</translation>
+        <translation>انتخاب کردن پروفایل</translation>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation type="unfinished">Щ†Ш§Щ… Щ†Щ…ЫЊШЄЩ€Ш§Щ†ШЇ Ш®Ш§Щ„ЫЊ ШЁШ§ШґШЇ</translation>
+        <translation type="unfinished">نام نمیتواند خالی باشد</translation>
     </message>
 </context>
 <context>
     <name>EditCustom</name>
     <message>
         <source>Core</source>
-        <translation>Щ‡ШіШЄЩ‡</translation>
+        <translation>هسته</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґЪЇШ± Json</translation>
+        <translation>ویرایشگر Json</translation>
     </message>
     <message>
         <source>Command</source>
-        <translation type="unfinished">ЩЃШ±Щ…Ш§Щ†</translation>
+        <translation type="unfinished">فرمان</translation>
     </message>
     <message>
         <source>Config Suffix</source>
-        <translation type="unfinished">ЩѕШіЩ€Щ†ШЇ Ъ©Ш§Щ†ЩЃЫЊЪЇ</translation>
+        <translation type="unfinished">پسوند کانفیگ</translation>
     </message>
     <message>
         <source>Outbound JSON, please read the documentation.</source>
-        <translation>JSON Ш®Ш±Щ€Ш¬ЫЊШЊ Щ„Ш·ЩЃШ§Щ‹ Щ…ШіШЄЩ†ШЇШ§ШЄ Ш±Ш§ ШЁШ®Щ€Ш§Щ†ЫЊШЇ.</translation>
+        <translation>JSON خروجی، لطفاً مستندات را بخوانید.</translation>
     </message>
     <message>
         <source>Please pick a core.</source>
-        <translation>Щ„Ш·ЩЃШ§ ЫЊЪ© Щ‡ШіШЄЩ‡ Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Щ†ЫЊШЇ.</translation>
+        <translation>لطفا یک هسته انتخاب کنید.</translation>
     </message>
     <message>
         <source>Random if it&apos;s empty or zero.</source>
@@ -785,7 +785,7 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Preview</source>
-        <translation type="unfinished">ЩѕЫЊШґ Щ†Щ…Ш§ЫЊШґ</translation>
+        <translation type="unfinished">پیش نمایش</translation>
     </message>
     <message>
         <source>Preview replace</source>
@@ -801,18 +801,18 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Name cannot be empty.</source>
-        <translation type="unfinished">Щ†Ш§Щ… Щ†Щ…ЫЊШЄЩ€Ш§Щ†ШЇ Ш®Ш§Щ„ЫЊ ШЁШ§ШґШЇ</translation>
+        <translation type="unfinished">نام نمیتواند خالی باشد</translation>
     </message>
 </context>
 <context>
     <name>EditNaive</name>
     <message>
         <source>Protocol</source>
-        <translation>ЩѕШ±Щ€ШЄЪ©Щ„</translation>
+        <translation>پروتکل</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Ш±Щ…ШІШ№ШЁЩ€Ш±</translation>
+        <translation>رمزعبور</translation>
     </message>
     <message>
         <source>Extra headers</source>
@@ -824,15 +824,15 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Username</source>
-        <translation>Щ†Ш§Щ… Ъ©Ш§Ш±ШЁШ±ЫЊ</translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished">ЪЇЩ€Ш§Щ‡ЫЊ</translation>
+        <translation type="unfinished">گواهی</translation>
     </message>
     <message>
         <source>Insecure concurrency</source>
-        <translation>Щ‡Щ…ШІЩ…Ш§Щ†ЫЊ Щ†Ш§Ш§Щ…Щ†</translation>
+        <translation>همزمانی ناامن</translation>
     </message>
     <message>
         <source>Disable logs</source>
@@ -847,11 +847,11 @@ This needs to be run CofeBox with administrator privileges.</source>
     <name>EditQUIC</name>
     <message>
         <source>Certificate</source>
-        <translation type="unfinished">ЪЇЩ€Ш§Щ‡ЫЊ</translation>
+        <translation type="unfinished">گواهی</translation>
     </message>
     <message>
         <source>Download (Mbps)</source>
-        <translation type="unfinished">ШЇШ§Щ†Щ„Щ€ШЇ (Щ…ЪЇШ§ШЁЫЊШЄ ШЁШ± Ш«Ш§Щ†ЫЊЩ‡)</translation>
+        <translation type="unfinished">دانلود (مگابیت بر ثانیه)</translation>
     </message>
     <message>
         <source>Disable MTU Discovery</source>
@@ -863,7 +863,7 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Allow Insecure</source>
-        <translation type="unfinished">Ш§Ш¬Ш§ШІЩ‡ Ш§Ш±ШЄШЁШ§Ш·Ш§ШЄ Щ†Ш§Ш§Щ…Щ† ШЇШ§ШЇЩ‡ ШґЩ€ШЇ</translation>
+        <translation type="unfinished">اجازه ارتباطات ناامن داده شود</translation>
     </message>
     <message>
         <source>Hop Port</source>
@@ -871,7 +871,7 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Upload (Mbps)</source>
-        <translation type="unfinished">ШўЩѕЩ„Щ€ШЇ (Щ…ЪЇШ§ШЁЫЊШЄ ШЁШ± Ш«Ш§Щ†ЫЊЩ‡)</translation>
+        <translation type="unfinished">آپلود (مگابیت بر ثانیه)</translation>
     </message>
     <message>
         <source>Obfs Password</source>
@@ -922,15 +922,15 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Password</source>
-        <translation>Ъ©Щ„Щ…Щ‡ Ш№ШЁЩ€Ш±</translation>
+        <translation>کلمه عبور</translation>
     </message>
     <message>
         <source>Encryption</source>
-        <translation>Ш±Щ…ШІЪЇШ°Ш§Ш±ЫЊ</translation>
+        <translation>رمزگذاری</translation>
     </message>
     <message>
         <source>Plugin</source>
-        <translation>ЩѕЩ„Ш§ЪЇЫЊЩ†</translation>
+        <translation>پلاگین</translation>
     </message>
     <message>
         <source>Version of UDP over TCP protocol, server support is required.</source>
@@ -938,29 +938,29 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Off</source>
-        <translation type="unfinished">Ш®Ш§Щ…Щ€Шґ</translation>
+        <translation type="unfinished">خاموش</translation>
     </message>
 </context>
 <context>
     <name>EditSocksHttp</name>
     <message>
         <source>Version</source>
-        <translation>Щ†ШіШ®Щ‡</translation>
+        <translation>نسخه</translation>
     </message>
     <message>
         <source>Username</source>
-        <translation>Щ†Ш§Щ… Ъ©Ш§Ш±ШЁШ±ЫЊ</translation>
+        <translation>نام کاربری</translation>
     </message>
     <message>
         <source>Password</source>
-        <translation>Ъ©Щ„Щ…Щ‡ Ш№ШЁЩ€Ш±</translation>
+        <translation>کلمه عبور</translation>
     </message>
 </context>
 <context>
     <name>EditTrojanVLESS</name>
     <message>
         <source>Password</source>
-        <translation>Ъ©Щ„Щ…Щ‡ Ш№ШЁЩ€Ш±</translation>
+        <translation>کلمه عبور</translation>
     </message>
 </context>
 <context>
@@ -971,7 +971,7 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Security</source>
-        <translation>Ш§Щ…Щ†ЫЊШЄ</translation>
+        <translation>امنیت</translation>
     </message>
     <message>
         <source>UUID</source>
@@ -986,66 +986,66 @@ This needs to be run CofeBox with administrator privileges.</source>
     <name>GroupItem</name>
     <message>
         <source>Update Subscription</source>
-        <translation>ШЁЩ‡ Ш±Щ€ШІ Ш±ШіШ§Щ†ЫЊ Ш§ШґШЄШ±Ш§Ъ©</translation>
+        <translation>به روز رسانی اشتراک</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґ</translation>
+        <translation>ویرایش</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation>Ш­Ш°ЩЃ Ъ©Ш±ШЇЩ†</translation>
+        <translation>حذف کردن</translation>
     </message>
     <message>
         <source>Basic</source>
-        <translation>ЩѕШ§ЫЊЩ‡</translation>
+        <translation>پایه</translation>
     </message>
     <message>
         <source>Subscription</source>
-        <translation>Ш§ШґШЄШ±Ш§Ъ©</translation>
+        <translation>اشتراک</translation>
     </message>
     <message>
         <source>Archive</source>
-        <translation>ШўШ±ШґЫЊЩ€</translation>
+        <translation>آرشیو</translation>
     </message>
     <message>
         <source>Last update: %1</source>
-        <translation type="unfinished">ШўШ®Ш±ЫЊЩ† ШўЩѕШЇЫЊШЄ : %1</translation>
+        <translation type="unfinished">آخرین آپدیت : %1</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation type="unfinished">ШЄШ§ЫЊЫЊШЇ</translation>
+        <translation type="unfinished">تایید</translation>
     </message>
     <message>
         <source>Remove %1?</source>
-        <translation type="unfinished">Ш­Ш°ЩЃ %1?</translation>
+        <translation type="unfinished">حذف %1?</translation>
     </message>
 </context>
 <context>
     <name>JsonEditor</name>
     <message>
         <source>JSON Editor</source>
-        <translation type="unfinished">Щ€ЫЊШ±Ш§ЫЊШґЪЇШ± JSON</translation>
+        <translation type="unfinished">ویرایشگر JSON</translation>
     </message>
     <message>
         <source>Format JSON</source>
-        <translation type="unfinished">ЩЃШ±Щ…ШЄ JSON</translation>
+        <translation type="unfinished">فرمت JSON</translation>
     </message>
     <message>
         <source>Remove All Comments</source>
-        <translation type="unfinished">Ш­Ш°ЩЃ Щ‡Щ…Щ‡ Ъ©Ш§Щ…Щ†ШЄ Щ‡Ш§</translation>
+        <translation type="unfinished">حذف همه کامنت ها</translation>
     </message>
     <message>
         <source>Json Editor</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґЪЇШ± Json</translation>
+        <translation>ویرایشگر Json</translation>
     </message>
     <message>
         <source>Structure Preview</source>
-        <translation type="unfinished">ЩѕЫЊШґ Щ†Щ…Ш§ЫЊШґ ШіШ§Ш®ШЄШ§Ш±</translation>
+        <translation type="unfinished">پیش نمایش ساختار</translation>
     </message>
     <message>
         <source>OK</source>
-        <translation type="unfinished">ШЄШ§ЫЊЫЊШЇ</translation>
+        <translation type="unfinished">تایید</translation>
     </message>
     <message>
         <source>Json Contains Syntax Errors</source>
@@ -1057,158 +1057,158 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>You must correct these errors before continuing.</source>
-        <translation type="unfinished">ШґЩ…Ш§ ШЁШ§ЫЊШЇ Ш§ЫЊЩ† Ш§ЫЊШ±Ш§ШЇШ§ШЄ Ш±Ш§ Щ‚ШЁЩ„ Ш§ШІ Ш§ШЇШ§Щ…Щ‡ ШЇШ§ШЇЩ† Ш§ШµЩ„Ш§Ш­ Ъ©Щ†ЫЊШЇ</translation>
+        <translation type="unfinished">شما باید این ایرادات را قبل از ادامه دادن اصلاح کنید</translation>
     </message>
     <message>
         <source>Syntax Errors</source>
-        <translation>Ш®Ш·Ш§Щ‡Ш§ЫЊ Щ†Ш­Щ€ЫЊ</translation>
+        <translation>خطاهای نحوی</translation>
     </message>
     <message>
         <source>Please fix the JSON errors or remove the comments before continue</source>
-        <translation type="unfinished">Щ„Ш·ЩЃШ§ Щ‚ШЁЩ„ Ш§ШІ Ш§ШЇШ§Щ…Щ‡ ШЇШ§ШЇЩ† Ш§ЫЊШ±Ш§ШЇШ§ШЄ JSON Ш±Ш§ Ш§ШµЩ„Ш§Ш­ Ъ©Щ†ЫЊШЇ ЫЊШ§ Ъ©Ш§Щ…Щ†ШЄ Щ‡Ш§ Ш±Ш§ Ш­Ш°ЩЃ Ъ©Щ†ЫЊШЇ</translation>
+        <translation type="unfinished">لطفا قبل از ادامه دادن ایرادات JSON را اصلاح کنید یا کامنت ها را حذف کنید</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
         <source>Program</source>
-        <translation>ШЁШ±Щ†Ш§Щ…Щ‡</translation>
+        <translation>برنامه</translation>
     </message>
     <message>
         <source>Preferences</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ</translation>
+        <translation>تنظیمات</translation>
     </message>
     <message>
         <source>Server</source>
-        <translation>ШіШ±Щ€Ш±</translation>
+        <translation>سرور</translation>
     </message>
     <message>
         <source>Ads</source>
-        <translation>ШЄШЁЩ„ЫЊШєШ§ШЄ</translation>
+        <translation>تبلیغات</translation>
     </message>
     <message>
         <source>Document</source>
-        <translation>Ш§ШіЩ†Ш§ШЇ</translation>
+        <translation>اسناد</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ</translation>
+        <translation>بروزرسانی</translation>
     </message>
     <message>
         <source>Tun Mode</source>
-        <translation>Ш­Ш§Щ„ШЄvpn</translation>
+        <translation>حالتvpn</translation>
     </message>
     <message>
         <source>System Proxy</source>
-        <translation>ЩѕШ±Щ€Ъ©ШіЫЊ ШіЫЊШіШЄЩ…ЫЊ</translation>
+        <translation>پروکسی سیستمی</translation>
     </message>
     <message>
         <source>Type</source>
-        <translation>Щ†Щ€Ш№</translation>
+        <translation>نوع</translation>
     </message>
     <message>
         <source>Address</source>
-        <translation>ШўШЇШ±Ші</translation>
+        <translation>آدرس</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation>Ш§ШіЩ…</translation>
+        <translation>اسم</translation>
     </message>
     <message>
         <source>Test Result</source>
-        <translation>Щ†ШЄЫЊШ¬Щ‡ ШЄШіШЄ</translation>
+        <translation>نتیجه تست</translation>
     </message>
     <message>
         <source>Traffic</source>
-        <translation>ШЄШ±Ш§ЩЃЫЊЪ©</translation>
+        <translation>ترافیک</translation>
     </message>
     <message>
         <source>Log</source>
-        <translation>Ш«ШЁШЄ Ш±Щ€ЫЊШЇШ§ШЇЩ‡Ш§</translation>
+        <translation>ثبت رویدادها</translation>
     </message>
     <message>
         <source>Connection</source>
-        <translation>Ш§ШЄШµШ§Щ„</translation>
+        <translation>اتصال</translation>
     </message>
     <message>
         <source>Status</source>
-        <translation>Щ€Ш¶Ш№ЫЊШЄ</translation>
+        <translation>وضعیت</translation>
     </message>
     <message>
         <source>Outbound</source>
-        <translation>Ш®Ш±Щ€Ш¬ЫЊ</translation>
+        <translation>خروجی</translation>
     </message>
     <message>
         <source>Destination</source>
-        <translation>Щ…Щ‚ШµШЇ</translation>
+        <translation>مقصد</translation>
     </message>
     <message>
         <source>Active Server</source>
-        <translation>ШіШ±Щ€Ш± ЩЃШ№Ш§Щ„</translation>
+        <translation>سرور فعال</translation>
     </message>
     <message>
         <source>Active Routing</source>
-        <translation>Щ…ШіЫЊШ±ЫЊШ§ШЁЫЊ ЩЃШ№Ш§Щ„</translation>
+        <translation>مسیریابی فعال</translation>
     </message>
     <message>
         <source>Share</source>
-        <translation>Ш§ШґШЄШ±Ш§Ъ© ЪЇШ°Ш§Ш±ЫЊ</translation>
+        <translation>اشتراک گذاری</translation>
     </message>
     <message>
         <source>Current Group</source>
-        <translation>ЪЇШ±Щ€Щ‡ ЩЃШ№Щ„ЫЊ</translation>
+        <translation>گروه فعلی</translation>
     </message>
     <message>
         <source>Exit</source>
-        <translation>Ш®Ш±Щ€Ш¬</translation>
+        <translation>خروج</translation>
     </message>
     <message>
         <source>Basic Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ ЩѕШ§ЫЊЩ‡</translation>
+        <translation>تنظیمات پایه</translation>
     </message>
     <message>
         <source>New profile</source>
-        <translation>ЩѕШ±Щ€ЩЃШ§ЫЊЩ„ Ш¬ШЇЫЊШЇ</translation>
+        <translation>پروفایل جدید</translation>
     </message>
     <message>
         <source>Groups</source>
-        <translation>ЪЇШ±Щ€Щ‡ Щ‡Ш§</translation>
+        <translation>گروه ها</translation>
     </message>
     <message>
         <source>Start</source>
-        <translation>ШўШєШ§ШІЪ©Ш±ШЇЩ†</translation>
+        <translation>آغازکردن</translation>
     </message>
     <message>
         <source>Stop</source>
-        <translation>Щ…ШЄЩ€Щ‚ЩЃ Ъ©Ш±ШЇЩ†</translation>
+        <translation>متوقف کردن</translation>
     </message>
     <message>
         <source>Routing Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ Щ…ШіЫЊШ±ЫЊШ§ШЁЫЊ</translation>
+        <translation>تنظیمات مسیریابی</translation>
     </message>
     <message>
         <source>Add profile from clipboard</source>
-        <translation>Ш§ЩЃШІЩ€ШЇЩ† ЩѕШ±Щ€ЩЃШ§ЫЊЩ„ Ш§ШІ Ъ©Щ„ЫЊЩѕ ШЁЩ€Ш±ШЇ</translation>
+        <translation>افزودن پروفایل از کلیپ بورد</translation>
     </message>
     <message>
         <source>Delete</source>
-        <translation>Ш§ШІ ШЁЫЊЩ† ШЁШ±ШЇЩ†</translation>
+        <translation>از بین بردن</translation>
     </message>
     <message>
         <source>Debug Info</source>
-        <translation>Ш§Ш·Щ„Ш§Ш№Ш§ШЄ Ш§ШґЪ©Ш§Щ„ ШІШЇШ§ЫЊЫЊ</translation>
+        <translation>اطلاعات اشکال زدایی</translation>
     </message>
     <message>
         <source>QR Code and link</source>
-        <translation>Ъ©ШЇ QR Щ€ ЩѕЫЊЩ€Щ†ШЇ</translation>
+        <translation>کد QR و پیوند</translation>
     </message>
     <message>
         <source>Copy Link</source>
-        <translation>Щ„ЫЊЩ†Ъ© Ш±Ш§ Ъ©ЩѕЫЊ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لینک را کپی کنید</translation>
     </message>
     <message>
         <source>Clear Test Result</source>
-        <translation>Щ†ШЄШ§ЫЊШ¬ ШЄШіШЄ ЩѕШ§Ъ© ШґЩ€ШЇ</translation>
+        <translation>نتایج تست پاک شود</translation>
     </message>
     <message>
         <source>Export %1 config</source>
@@ -1216,95 +1216,95 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Reset Traffic</source>
-        <translation>ШЁШ§ШІЩ†ШґШ§Щ†ЫЊ ШЄШ±Ш§ЩЃЫЊЪ©</translation>
+        <translation>بازنشانی ترافیک</translation>
     </message>
     <message>
         <source>Scan QR Code</source>
-        <translation>Ъ©ШЇ QR Ш±Ш§ Ш§ШіЪ©Щ† Ъ©Щ†ЫЊШЇ</translation>
+        <translation>کد QR را اسکن کنید</translation>
     </message>
     <message>
         <source>Enable System Proxy</source>
-        <translation>ЩѕШ±Щ€Ъ©ШіЫЊ ШіЫЊШіШЄЩ… Ш±Ш§ ЩЃШ№Ш§Щ„ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>پروکسی سیستم را فعال کنید</translation>
     </message>
     <message>
         <source>Disable</source>
-        <translation>ШєЫЊШ±ЩЃШ№Ш§Щ„ Ъ©Ш±ШЇЩ†</translation>
+        <translation>غیرفعال کردن</translation>
     </message>
     <message>
         <source>Remove Duplicates</source>
-        <translation>Щ…Щ€Ш§Ш±ШЇ ШЄЪ©Ш±Ш§Ш±ЫЊ Ш±Ш§ Ш­Ш°ЩЃ Ъ©Ш±ШЇЩ†</translation>
+        <translation>موارد تکراری را حذف کردن</translation>
     </message>
     <message>
         <source>fake</source>
-        <translation>Ш¬Ш№Щ„ЫЊ</translation>
+        <translation>جعلی</translation>
     </message>
     <message>
         <source>Move</source>
-        <translation>Ш¬Ш§ШЁШ¬Ш§ЫЊЫЊ</translation>
+        <translation>جابجایی</translation>
     </message>
     <message>
         <source>Start with system</source>
-        <translation>ШЁШ§ ШіЫЊШіШЄЩ… ШґШ±Щ€Ш№ ШґЩ€ШЇ</translation>
+        <translation>با سیستم شروع شود</translation>
     </message>
     <message>
         <source>Remember last profile</source>
-        <translation>ШўШ®Ш±ЫЊЩ† ЩѕШ±Щ€ЩЃШ§ЫЊЩ„ Ш±Ш§ ШЁЩ‡ Ш®Ш§Ш·Ш± ШЁШіЩѕШ§Ш±</translation>
+        <translation>آخرین پروفایل را به خاطر بسپار</translation>
     </message>
     <message>
         <source>Allow other devices to connect</source>
-        <translation>ШЁЩ‡ ШЇШіШЄЪЇШ§Щ‡ Щ‡Ш§ЫЊ ШЇЫЊЪЇШ± Ш§Ш¬Ш§ШІЩ‡ Ш§ШЄШµШ§Щ„ ШЇЩ‡ЫЊШЇ</translation>
+        <translation>به دستگاه های دیگر اجازه اتصال دهید</translation>
     </message>
     <message>
         <source>Remove Unavailable</source>
-        <translation>ШєЫЊШ±Щ‚Ш§ШЁЩ„ ШЇШіШЄЫЊШ§ШЁЫЊ ЩѕШ§Ъ© ШґЩ€ШЇ</translation>
+        <translation>غیرقابل دستیابی پاک شود</translation>
     </message>
     <message>
         <source>Full Test</source>
-        <translation>ШЄШіШЄ Ъ©Ш§Щ…Щ„</translation>
+        <translation>تست کامل</translation>
     </message>
     <message>
         <source>Hotkey Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ Ъ©Щ„ЫЊШЇ Щ…ЫЊШ§Щ†ШЁШ±</translation>
+        <translation>تنظیمات کلید میانبر</translation>
     </message>
     <message>
         <source>Select All</source>
-        <translation>Ш§Щ†ШЄШ®Ш§ШЁ Щ‡Щ…Щ‡</translation>
+        <translation>انتخاب همه</translation>
     </message>
     <message>
-        <source>Copy links of selected (CofeBox Links)</source>
-        <translation>Ъ©ЩѕЫЊ Щ„ЫЊЩ†Ъ© Щ‡Ш§ЫЊ Ш§Щ†ШЄШ®Ш§ШЁ ШґШЇЩ‡ (ЩѕЫЊЩ€Щ†ШЇЩ‡Ш§ЫЊ Neko)</translation>
+        <source>Copy links of selected (Neko Links)</source>
+        <translation>کپی لینک های انتخاب شده (پیوندهای Neko)</translation>
     </message>
     <message>
         <source>Copy links of selected</source>
-        <translation>Щ„ЫЊЩ†Ъ© Щ‡Ш§ЫЊ Ш§Щ†ШЄШ®Ш§ШЁ ШґШЇЩ‡ Ш±Ш§ Ъ©ЩѕЫЊ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>لینک های انتخاب شده را کپی کنید</translation>
     </message>
     <message>
         <source>Enable Tun</source>
-        <translation>ЩЃШ№Ш§Щ„ Ъ©Ш±ШЇЩ† tun</translation>
+        <translation>فعال کردن tun</translation>
     </message>
     <message>
         <source>Clone</source>
-        <translation>Щ‡Щ…ШІШ§ШЇШіШ§ШІЫЊ</translation>
+        <translation>همزادسازی</translation>
     </message>
     <message>
         <source>Update subscription</source>
-        <translation>Ш§ШґШЄШ±Ш§Ъ© Ш±Ш§ ШЁЩ‡ Ш±Щ€ШІ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>اشتراک را به روز کنید</translation>
     </message>
     <message>
         <source>Resolve domain</source>
-        <translation>ШЇШ§Щ…Щ†Щ‡ Ш±Ш§ Ш­Щ„ Ъ©Щ†ЫЊШЇ</translation>
+        <translation>دامنه را حل کنید</translation>
     </message>
     <message>
         <source>Tun Settings</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ vpn</translation>
+        <translation>تنظیمات vpn</translation>
     </message>
     <message>
         <source>Restart Program</source>
-        <translation>Ш§Ш¬Ш±Ш§ ШЇЩ€ШЁШ§Ш±Щ‡ ШЁШ±Щ†Ш§Щ…Щ‡</translation>
+        <translation>اجرا دوباره برنامه</translation>
     </message>
     <message>
         <source>Open Config Folder</source>
-        <translation>ЩѕЩ€ШґЩ‡ Config ШЁШ§ШІ ШґЩ€ШЇ</translation>
+        <translation>پوشه Config باز شود</translation>
     </message>
     <message>
         <source>Load routing and apply: %1</source>
@@ -1312,23 +1312,23 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Error</source>
-        <translation>Ш®Ш·Ш§</translation>
+        <translation>خطا</translation>
     </message>
     <message>
         <source>Tun Settings changed</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ Tun ШЄШєЫЊЫЊШ± Ъ©Ш±ШЇ</translation>
+        <translation>تنظیمات Tun تغییر کرد</translation>
     </message>
     <message>
         <source>Restart Tun to take effect.</source>
-        <translation>Tun Ш±Ш§ Щ…Ш¬ШЇШЇШ§Щ‹ Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ Ъ©Щ†ЫЊШЇ ШЄШ§ Ш§Ш№Щ…Ш§Щ„ ШґЩ€ШЇ.</translation>
+        <translation>Tun را مجدداً راه اندازی کنید تا اعمال شود.</translation>
     </message>
     <message>
         <source>Confirmation</source>
-        <translation>ШЄШ§Ш¦ЫЊШЇЫЊЩ‡</translation>
+        <translation>تائیدیه</translation>
     </message>
     <message>
         <source>Settings changed, restart proxy?</source>
-        <translation>ШЄЩ†ШёЫЊЩ…Ш§ШЄ ШЄШєЫЊЫЊШ± Ъ©Ш±ШЇШЊ ЩѕШ±Ш§Ъ©ШіЫЊ Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ Щ…Ш¬ШЇШЇ ШґЩ€ШЇШџ</translation>
+        <translation>تنظیمات تغییر کرد، پراکسی راه اندازی مجدد شود؟</translation>
     </message>
     <message>
         <source>Imported %1 profile(s)</source>
@@ -1340,11 +1340,11 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Not Running</source>
-        <translation>ШЇШ± Ш­Ш§Щ„ Ш§Ш¬Ш±Ш§ Щ†ЫЊШіШЄ</translation>
+        <translation>در حال اجرا نیست</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation>Ш§Щ†ШЄШ®Ш§ШЁ</translation>
+        <translation>انتخاب</translation>
     </message>
     <message>
         <source>Clone %1 item(s)</source>
@@ -1364,11 +1364,11 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Config copied</source>
-        <translation>Ъ©Ш§Щ†ЩЃЫЊЪЇ Ъ©ЩѕЫЊ ШґШЇ</translation>
+        <translation>کانفیگ کپی شد</translation>
     </message>
     <message>
         <source>QR Code not found</source>
-        <translation>Ъ©ШЇ QR ЫЊШ§ЩЃШЄ Щ†ШґШЇ</translation>
+        <translation>کد QR یافت نشد</translation>
     </message>
     <message>
         <source>Resolving domain to IP, if support.</source>
@@ -1376,7 +1376,7 @@ This needs to be run CofeBox with administrator privileges.</source>
     </message>
     <message>
         <source>Set ignore keyword</source>
-        <translation>Ъ©Щ„ЫЊШЇЩ€Ш§ЪЩ‡ Щ†Ш§ШЇЫЊШЇЩ‡ ЪЇШ±ЩЃШЄЩ† Ш±Ш§ ШЄЩ†ШёЫЊЩ… Ъ©Щ†ЫЊШЇ</translation>
+        <translation>کلیدواژه نادیده گرفتن را تنظیم کنید</translation>
     </message>
     <message>
         <source>Set the following keywords to ignore?
@@ -1385,11 +1385,11 @@ Split by line.</source>
     </message>
     <message>
         <source>Save as route</source>
-        <translation>Ш°Ш®ЫЊШ±Щ‡ ШЁЩ‡ Ш№Щ†Щ€Ш§Щ† Щ…ШіЫЊШ±</translation>
+        <translation>ذخیره به عنوان مسیر</translation>
     </message>
     <message>
         <source>Edit</source>
-        <translation>Щ€ЫЊШ±Ш§ЫЊШґ Ъ©Ш±ШЇЩ†</translation>
+        <translation>ویرایش کردن</translation>
     </message>
     <message>
         <source>Save &quot;%1&quot; as a routing rule?</source>
@@ -1397,7 +1397,7 @@ Split by line.</source>
     </message>
     <message>
         <source>Clear</source>
-        <translation>ЩѕШ§Ъ© Ъ©Ш±ШЇЩ†</translation>
+        <translation>پاک کردن</translation>
     </message>
     <message>
         <source>Start: %1
@@ -1406,7 +1406,7 @@ End: %2</source>
     </message>
     <message>
         <source>Failed to stop Tun process</source>
-        <translation>ЩЃШ±ШўЫЊЩ†ШЇ Tun Щ…ШЄЩ€Щ‚ЩЃ Щ†ШґШЇ</translation>
+        <translation>فرآیند Tun متوقف نشد</translation>
     </message>
     <message>
         <source>[%1] test error: %2</source>
@@ -1414,43 +1414,43 @@ End: %2</source>
     </message>
     <message>
         <source>Testing</source>
-        <translation>ШўШІЩ…Ш§ЫЊШґ Ъ©Ш±ШЇЩ†</translation>
+        <translation>آزمایش کردن</translation>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>ШєЫЊШ±Щ‚Ш§ЫЊЩ„ ШЇШіШЄШ±ШіЫЊ</translation>
+        <translation>غیرقایل دسترسی</translation>
     </message>
     <message>
         <source>Starting profile %1</source>
-        <translation>Ш§ШєШ§ШІ ЩѕШ±Щ€ЩЃШ§ЫЊЩ„ %1</translation>
+        <translation>اغاز پروفایل %1</translation>
     </message>
     <message>
         <source>Stopping profile %1</source>
-        <translation>Щ…ШЄЩ€Щ‚ЩЃ Ъ©Ш±ШЇЩ† ЩѕШ±Щ€ЩЃШ§ЫЊЩ„ %1</translation>
+        <translation>متوقف کردن پروفایل %1</translation>
     </message>
     <message>
         <source>Current Select</source>
-        <translation type="unfinished">Ш§Щ†ШЄШ®Ш§ШЁ ЩЃШ№Щ„ЫЊ</translation>
+        <translation type="unfinished">انتخاب فعلی</translation>
     </message>
     <message>
         <source>Show Window</source>
-        <translation>Щ†Щ…Ш§ЫЊШґ ЩѕЩ†Ш¬Ш±Щ‡ ШЁШ±Щ†Ш§Щ…Щ‡</translation>
+        <translation>نمایش پنجره برنامه</translation>
     </message>
     <message>
         <source>Settings changed</source>
-        <translation type="unfinished">ШЄЩ†ШёЫЊЩ…Ш§ШЄ ШЄШєЫЊЫЊШ± Ъ©Ш±ШЇ</translation>
+        <translation type="unfinished">تنظیمات تغییر کرد</translation>
     </message>
     <message>
-        <source>Please run CofeBox as admin</source>
-        <translation type="unfinished">Щ„Ш·ЩЃШ§ Nekobox Ш±Ш§ ШЁШ§ Щ…Ш¬Щ€ШІ Ш§ШЇЩ…ЫЊЩ† Ш§Ш¬Ш±Ш§ Ъ©Щ†ЫЊШЇ</translation>
+        <source>Please run NekoBox as admin</source>
+        <translation type="unfinished">لطفا Nekobox را با مجوز ادمین اجرا کنید</translation>
     </message>
     <message>
         <source>Restart Proxy</source>
-        <translation type="unfinished">Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ Щ…Ш¬ШЇШЇ ЩѕШ±Щ€Ъ©ШіЫЊ</translation>
+        <translation type="unfinished">راه اندازی مجدد پروکسی</translation>
     </message>
     <message>
         <source>If there is no response for a long time, it is recommended to restart the software.</source>
-        <translation type="unfinished">Ш§ЪЇШ± ШЁШ±Ш§ЫЊ Щ…ШЇШЄ ШІЩ…Ш§Щ† Ш·Щ€Щ„Ш§Щ†ЫЊ Щ‡ЫЊЪ† ЩѕШ§ШіШ®ЫЊ ШЇШ±ЫЊШ§ЩЃШЄ Щ†ШґШЇ ШЊ ЩѕЫЊШґЩ†Щ‡Ш§ШЇ Щ…ЫЊШґЩ€ШЇ Ъ©Щ‡ Щ†Ш±Щ… Ш§ЩЃШІШ§Ш± Ш±Ш§ ШЇЩ€ШЁШ§Ш±Щ‡ Ш§Ш¬Ш±Ш§ Ъ©Щ†ЫЊШЇ</translation>
+        <translation type="unfinished">اگر برای مدت زمان طولانی هیچ پاسخی دریافت نشد ، پیشنهاد میشود که نرم افزار را دوباره اجرا کنید</translation>
     </message>
     <message>
         <source>Failed to start profile %1</source>
@@ -1458,7 +1458,7 @@ End: %2</source>
     </message>
     <message>
         <source>Failed to stop, please restart the program.</source>
-        <translation type="unfinished">ШЄЩ€Щ‚ЩЃ Щ†Ш§Щ…Щ€ЩЃЩ‚ ШЁЩ€ШЇ ШЊ Щ„Ш·ЩЃШ§ ШЁШ±Щ†Ш§Щ…Щ‡ Ш±Ш§ ШЇЩ€ШЁШ§Ш±Щ‡ Ш§Ш¬Ш±Ш§ Ъ©Щ†ЫЊШЇ</translation>
+        <translation type="unfinished">توقف ناموفق بود ، لطفا برنامه را دوباره اجرا کنید</translation>
     </message>
     <message>
         <source>Select mode, double-click or press Enter to select a profile, press ESC to exit.</source>
@@ -1466,7 +1466,7 @@ End: %2</source>
     </message>
     <message>
         <source>Latency</source>
-        <translation type="unfinished">ШЄШ§Ш®ЫЊШ±</translation>
+        <translation type="unfinished">تاخیر</translation>
     </message>
     <message>
         <source>UDP latency</source>
@@ -1474,7 +1474,7 @@ End: %2</source>
     </message>
     <message>
         <source>Download speed</source>
-        <translation type="unfinished">ШіШ±Ш№ШЄ ШЇШ§Щ†Щ„Щ€ШЇ</translation>
+        <translation type="unfinished">سرعت دانلود</translation>
     </message>
     <message>
         <source>In and Out IP</source>
@@ -1482,11 +1482,11 @@ End: %2</source>
     </message>
     <message>
         <source>Test Options</source>
-        <translation type="unfinished">ЪЇШІЫЊЩ†Щ‡ Щ‡Ш§ЫЊ ШЄШіШЄ</translation>
+        <translation type="unfinished">گزینه های تست</translation>
     </message>
     <message>
         <source>Restart the program to take effect.</source>
-        <translation type="unfinished">ШЁШ±Ш§ЫЊ Щ…ШґШ§Щ‡ШЇЩ‡ Щ†ШЄЫЊШ¬Щ‡ ШЁШ±Щ†Ш§Щ…Щ‡ Ш±Ш§ ШЇЩ€ШЁШ§Ш±Щ‡ Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ Ъ©Щ†ЫЊШЇ</translation>
+        <translation type="unfinished">برای مشاهده نتیجه برنامه را دوباره راه اندازی کنید</translation>
     </message>
     <message>
         <source>Stop Testing</source>
@@ -1501,11 +1501,11 @@ End: %2</source>
     <name>ProxyItem</name>
     <message>
         <source>Confirmation</source>
-        <translation>ШЄШ§Ш¦ЫЊШЇЫЊЩ‡</translation>
+        <translation>تائیدیه</translation>
     </message>
     <message>
         <source>Remove %1?</source>
-        <translation type="unfinished">Ш­Ш°ЩЃ %1?</translation>
+        <translation type="unfinished">حذف %1?</translation>
     </message>
 </context>
 <context>
@@ -1523,15 +1523,15 @@ End: %2</source>
     </message>
     <message>
         <source>Select</source>
-        <translation>Ш§Щ†ШЄШ®Ш§ШЁ Ъ©Ш±ШЇЩ†</translation>
+        <translation>انتخاب کردن</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation>ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ</translation>
+        <translation>بروزرسانی</translation>
     </message>
     <message>
         <source>No update</source>
-        <translation>ШЁШЇЩ€Щ† ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ Ш¬ШЇЫЊШЇ</translation>
+        <translation>بدون بروزرسانی جدید</translation>
     </message>
     <message>
         <source>Update found: %1
@@ -1541,28 +1541,28 @@ Release note:
     </message>
     <message>
         <source>Open in browser</source>
-        <translation>ШЇШ± Щ…Ш±Щ€Ш± ЪЇШ± ШЁШ§ШІ ШґЩ€ШЇ</translation>
+        <translation>در مرور گر باز شود</translation>
     </message>
     <message>
         <source>Close</source>
-        <translation>ШЁШіШЄЩ†</translation>
+        <translation>بستن</translation>
     </message>
     <message>
         <source>Update is ready, restart to install?</source>
-        <translation>ШЁЩ‡ Ш±Щ€ШІ Ш±ШіШ§Щ†ЫЊ ШўЩ…Ш§ШЇЩ‡ Ш§ШіШЄШЊ ШЁШ±Ш§ЫЊ Щ†ШµШЁ Щ…Ш¬ШЇШЇ Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ ШґЩ€ШЇШџ</translation>
+        <translation>به روز رسانی آماده است، برای نصب مجدد راه اندازی شود؟</translation>
     </message>
     <message>
         <source>As link</source>
-        <translation>ШЁЩ‡ Ш№Щ†Щ€Ш§Щ† Щ„ЫЊЩ†Ъ©</translation>
+        <translation>به عنوان لینک</translation>
     </message>
     <message>
         <source>url detected</source>
-        <translation type="unfinished">ШўШЇШ±Ші ШґЩ†Ш§ШіШ§ЫЊЫЊ ШґШЇ</translation>
+        <translation type="unfinished">آدرس شناسایی شد</translation>
     </message>
     <message>
         <source>%1
 How to update?</source>
-        <translation type="unfinished">Ъ†ЪЇЩ€Щ†Щ‡ ШЁШ±Щ€ШІШ±ШіШ§Щ†ЫЊ Ъ©Щ†Щ… Шџ</translation>
+        <translation type="unfinished">چگونه بروزرسانی کنم ؟</translation>
     </message>
     <message>
         <source>Requesting subscription: %1</source>
@@ -1574,7 +1574,7 @@ How to update?</source>
     </message>
     <message>
         <source>Clearing servers...</source>
-        <translation type="unfinished">ЩѕШ§Ъ© Ъ©Ш±ШЇЩ† ШіШ±Щ€Ш±Щ‡Ш§</translation>
+        <translation type="unfinished">پاک کردن سرورها</translation>
     </message>
     <message>
         <source>Added %1 profiles:
@@ -1585,7 +1585,7 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Nothing</source>
-        <translation type="unfinished">Ш®Ш§Щ„ЫЊ</translation>
+        <translation type="unfinished">خالی</translation>
     </message>
     <message>
         <source>Change of %1:</source>
@@ -1593,11 +1593,11 @@ Deleted %3 Profiles:
     </message>
     <message>
         <source>Chain Proxy</source>
-        <translation>ЩѕШ±Щ€Ъ©ШіЫЊ ШІЩ†Ш¬ЫЊШ±Щ‡ Ш§ЫЊ</translation>
+        <translation>پروکسی زنجیره ای</translation>
     </message>
     <message>
         <source>Core not found: %1</source>
-        <translation type="unfinished">Щ‡ШіШЄЩ‡ ШЁШ±Щ†Ш§Щ…Щ‡ ЫЊШ§ЩЃШЄ Щ†ШґШЇ : %1</translation>
+        <translation type="unfinished">هسته برنامه یافت نشد : %1</translation>
     </message>
     <message>
         <source>Proxy: %1
@@ -1606,7 +1606,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Unavailable</source>
-        <translation>ШєЫЊШ±Щ‚Ш§ШЁЩ„ ШЇШіШЄШ±Ші</translation>
+        <translation>غیرقابل دسترس</translation>
     </message>
     <message>
         <source>Request with proxy but no profile started.</source>
@@ -1618,7 +1618,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Core exited, restarting.</source>
-        <translation type="unfinished">Щ‡ШіШЄЩ‡ ШЁШ±Щ†Ш§Щ…Щ‡ Щ…ШЄЩ€Щ‚ЩЃ ШґШЇ ШЊ ШЇШ± Ш­Ш§Щ„ Ш±Ш§Щ‡ Ш§Щ†ШЇШ§ШІЫЊ Щ…Ш¬ШЇШЇ</translation>
+        <translation type="unfinished">هسته برنامه متوقف شد ، در حال راه اندازی مجدد</translation>
     </message>
     <message>
         <source>Core exits too frequently, stop automatic restart this profile.</source>
@@ -1634,7 +1634,7 @@ Direct: %2</source>
     </message>
     <message>
         <source>Default</source>
-        <translation type="unfinished">ЩѕЫЊШґ ЩЃШ±Ш¶</translation>
+        <translation type="unfinished">پیش فرض</translation>
     </message>
     <message>
         <source>The last speed test did not exit completely, please wait. If it persists, please restart the program.</source>
@@ -1645,9 +1645,7 @@ Direct: %2</source>
     <name>Qv2ray::ui::widgets::AutoCompleteTextEdit</name>
     <message>
         <source>You can not input space characters here.</source>
-        <translation>ШґЩ…Ш§ Щ†Щ…ЫЊ ШЄЩ€Ш§Щ†ЫЊШЇ Ъ©Ш§Ш±Ш§Ъ©ШЄШ± ЩЃШ¶Ш§ЫЊ Ш®Ш§Щ„ЫЊ ШЇШ± Ш§ЫЊЩ†Ш¬Ш§ Ш§ШіШЄЩЃШ§ШЇЩ‡ Ъ©Щ†ЫЊШЇ.</translation>
+        <translation>شما نمی توانید کاراکتر فضای خالی در اینجا استفاده کنید.</translation>
     </message>
 </context>
 </TS>
-
-
