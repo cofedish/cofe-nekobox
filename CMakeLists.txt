@@ -164,6 +164,8 @@ set(PROJECT_SOURCES
         ui/Typography.cpp
         ui/Typography.hpp
         ui/Icon.cpp
+        ui/UpdateService.cpp
+        ui/UpdateService.hpp
 
         ui/mainwindow_grpc.cpp
         ui/mainwindow.cpp

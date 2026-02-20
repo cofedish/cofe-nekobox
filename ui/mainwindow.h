@@ -34,6 +34,7 @@ class QTimer;
 class QMenu;
 class QButtonGroup;
 class ToastWidget;
+class UpdateService;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -183,8 +184,10 @@ private:
     QMenu *drawer_theme_menu = nullptr;
     QButtonGroup *drawer_theme_group = nullptr;
     ToastWidget *toast = nullptr;
+    UpdateService *updateService_ = nullptr;
     QTimer *add_debounce_timer = nullptr;
     bool add_in_progress = false;
+    double update_progress_cached_ = 0.0;
     int add_base_count = 0;
     QString home_running_full_text;
     QString home_running_tooltip;
