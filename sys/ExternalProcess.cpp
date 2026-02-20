@@ -5,6 +5,62 @@
 #include <QDir>
 #include <QApplication>
 #include <QElapsedTimer>
+#include <QRegularExpression>
+#include <QSet>
+
+namespace {
+QString envKeyOf(const QString &entry) {
+    const int split = entry.indexOf('=');
+    return (split > 0 ? entry.left(split) : entry).trimmed();
+}
+
+bool isSafeEnvKey(const QString &keyUpper) {
+    static const QSet<QString> safeEnvKeys = {
+        "PATH",
+        "LANG",
+        "LC_ALL",
+        "LC_CTYPE",
+        "LC_MESSAGES",
+        "HOME",
+        "USER",
+        "USERNAME",
+        "TMPDIR",
+        "TMP",
+        "TEMP",
+        "SYSTEMROOT",
+        "WINDIR",
+        "COMSPEC",
+    };
+    if (safeEnvKeys.contains(keyUpper)) return true;
+    if (keyUpper.startsWith("LC_")) return true;
+    return false;
+}
+
+bool isSensitiveEnvKey(const QString &keyUpper) {
+    static const QRegularExpression sensitivePattern(
+        "(TOKEN|SECRET|PASS|PASSWORD|KEY|PROXY|AUTH|COOKIE|SESSION|BEARER|SSH|AWS|GITHUB|CI)",
+        QRegularExpression::CaseInsensitiveOption);
+    return sensitivePattern.match(keyUpper).hasMatch();
+}
+
+QStringList redactEnvForLog(const QStringList &env) {
+    QStringList redacted;
+    redacted.reserve(env.size());
+    for (const auto &entry : env) {
+        const auto key = envKeyOf(entry);
+        if (key.isEmpty()) continue;
+        const auto keyUpper = key.toUpper();
+        if (isSafeEnvKey(keyUpper)) {
+            redacted << key + "=<set>";
+        } else if (isSensitiveEnvKey(keyUpper)) {
+            redacted << key + "=<redacted>";
+        } else {
+            redacted << key + "=<hidden>";
+        }
+    }
+    return redacted;
+}
+} // namespace
 
 namespace NekoGui_sys {
 
@@ -49,7 +105,15 @@ namespace NekoGui_sys {
                     }
                 }
             });
-            MW_show_log_ext(tag, "External core starting: " + env.join(" ") + " " + program + " " + arguments.join(" "));
+            const auto redactedEnv = redactEnvForLog(env);
+            const auto redactedPreview = redactedEnv.mid(0, 12).join(", ");
+            MW_show_log_ext(tag,
+                            QStringLiteral("External core starting: %1 %2 [env=%3 vars, preview: %4%5]")
+                                .arg(program,
+                                     arguments.join(" "),
+                                     QString::number(env.size()),
+                                     redactedPreview,
+                                     redactedEnv.size() > 12 ? QStringLiteral(", ...") : QStringLiteral("")));
         }
 
         QProcess::setEnvironment(env);
