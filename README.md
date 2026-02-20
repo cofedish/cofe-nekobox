@@ -1,6 +1,6 @@
 ﻿# CofeBox
 
-CofeBox — форк NekoRay/NekoBox: кроссплатформенный Qt‑GUI для sing-box. Проект сохраняет совместимость конфигов и фокусируется на современном, минималистичном UI.
+CofeBox — кроссплатформенный Qt‑GUI для sing-box с упором на современный, минималистичный UI.
 
 ## Возможности
 - Подписки и импорты (URL/буфер обмена)
@@ -14,7 +14,7 @@ CofeBox — форк NekoRay/NekoBox: кроссплатформенный Qt‑
 - Windows: ZIP из Releases
 - Linux: AppImage или deb
 
-Скачать: https://github.com/cofedish/cofe-nekobox/releases
+Скачать: `Releases` текущего репозитория на GitHub.
 
 ## Быстрый старт
 1) На Home вставьте URL подписки и нажмите «Добавить».
@@ -43,6 +43,9 @@ cmake --build build
 Подробности по платформам см. в `docs/`.
 
 ## Ссылки
-- Репозиторий: https://github.com/cofedish/cofe-nekobox
-- Issues: https://github.com/cofedish/cofe-nekobox/issues
-- Releases: https://github.com/cofedish/cofe-nekobox/releases
+- Репозиторий: текущий GitHub-репозиторий проекта
+- Issues: вкладка `Issues`
+- Releases: вкладка `Releases`
+
+## Credits
+- Основано на экосистеме sing-box и связанных open-source проектах.

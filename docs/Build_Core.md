@@ -1,24 +1,25 @@
-## 构建 nekobox_core
+﻿## жћ„е»є cofebox_core
 
-### 目录结构
+### з›®еЅ•з»“жћ„
 
 ```
-  | nekoray
+  | cofebox
   |   go/cmd/*
   | sing-box-extra
   | sing-box
   | ......
 ```
 
-### 常规构建
+### еёёи§„жћ„е»є
 
-1. `bash libs/get_source.sh` （自动下载目录结构，自动 checkout commit）
+1. `bash libs/get_source.sh` пј€и‡ЄеЉЁдё‹иЅЅз›®еЅ•з»“жћ„пјЊи‡ЄеЉЁ checkout commitпј‰
 2. `GOOS=windows GOARCH=amd64 bash libs/build_go.sh`
 
-具体支持的 GOOS 和 GOARCH 请看 `libs/build_go.sh`
+е…·дЅ“ж”ЇжЊЃзљ„ GOOS е’Њ GOARCH иЇ·зњ‹ `libs/build_go.sh`
 
-非官方构建无需编译 `updater` `launcher`
+йќће®ж–№жћ„е»єж— йњЂзј–иЇ‘ `updater` `launcher`
 
 ### sing-box tags
 
-具体使用的 tags 请看 `libs/build_go.sh`
+е…·дЅ“дЅїз”Ёзљ„ tags иЇ·зњ‹ `libs/build_go.sh`
+

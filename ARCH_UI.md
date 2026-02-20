@@ -8,7 +8,7 @@
 
 ## Home
 - `page_home` hosts the large Connect/Disconnect button and status labels.
-- Connect button calls `MainWindow::neko_start` / `MainWindow::neko_stop`.
+- Connect button calls `MainWindow::startProxy` / `MainWindow::stopProxy`.
 - Quick actions:
   - Select server: menu of profiles from current group.
   - Select profile: menu of groups, changes group + switches to Servers page.
@@ -51,3 +51,4 @@
 - Animated gradient waves are drawn in `WaveBackground::paintEvent`.
 - Reduce motion disables the timer animation but keeps static gradient.
 - Reduce motion is stored in `NekoGui::DataStore::reduce_motion` and set in `DialogBasicSettings`.
+

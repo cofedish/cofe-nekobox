@@ -1,52 +1,52 @@
-在 Windows 下编译 Nekoray
+﻿ењЁ Windows дё‹зј–иЇ‘ CofeBox
 
-### git clone 源码
+### git clone жєђз Ѓ
 
 ```
-git clone https://github.com/cofedish/cofe-nekobox.git --recursive
+git clone <URL_ЭТОГО_РЕПОЗИТОРИЯ> --recursive
 ```
 
-### 安装 Visual Studio
+### е®‰иЈ… Visual Studio
 
-从微软官网安装，可以使用 2019 和 2022 版本，安装 Win32 C++ 开发环境。
+д»Ћеѕ®иЅЇе®зЅ‘е®‰иЈ…пјЊеЏЇд»ҐдЅїз”Ё 2019 е’Њ 2022 з‰€жњ¬пјЊе®‰иЈ… Win32 C++ ејЂеЏ‘зЋЇеўѓгЂ‚
 
-安装好后可以在「开始」菜单找到 `x64 Native Tools Command Prompt`
+е®‰иЈ…еҐЅеђЋеЏЇд»ҐењЁгЂЊејЂе§‹гЂЌиЏњеЌ•ж‰ѕе€° `x64 Native Tools Command Prompt`
 
-本文之后的命令均在该 cmd 内执行。`cmake` `ninja` 等工具使用 VS 自带的即可。
+жњ¬ж–‡д№‹еђЋзљ„е‘Ѕд»¤еќ‡ењЁиЇҐ cmd е†…ж‰§иЎЊгЂ‚`cmake` `ninja` з­‰е·Ґе…·дЅїз”Ё VS и‡Єеё¦зљ„еЌіеЏЇгЂ‚
 
-### 下载 Qt SDK
+### дё‹иЅЅ Qt SDK
 
-目前 Windows Release 使用的版本是 Qt 6.5.x
+з›®е‰Ќ Windows Release дЅїз”Ёзљ„з‰€жњ¬жЇ Qt 6.5.x
 
-下载解压后，将 bin 目录添加到环境变量。
+дё‹иЅЅи§ЈеЋ‹еђЋпјЊе°† bin з›®еЅ•ж·»еЉ е€°зЋЇеўѓеЏй‡ЏгЂ‚
 
-#### Release 编译用到的 Qt 包下载 (MSVC2019 x86_64)
+#### Release зј–иЇ‘з”Ёе€°зљ„ Qt еЊ…дё‹иЅЅ (MSVC2019 x86_64)
 
 https://download.qt.io/official_releases/qt/6.5/
 
-#### 官方签名版 Qt 5.15.2 （可选，已知有内存泄漏的BUG）
+#### е®ж–№з­ѕеђЌз‰€ Qt 5.15.2 пј€еЏЇйЂ‰пјЊе·ІзџҐжњ‰е†…е­жі„жјЏзљ„BUGпј‰
 
-在此下载 `qtbase` `qtsvg` `qttools` 的包并解压到同一个目录。
+ењЁж­¤дё‹иЅЅ `qtbase` `qtsvg` `qttools` зљ„еЊ…е№¶и§ЈеЋ‹е€°еђЊдёЂдёЄз›®еЅ•гЂ‚
 
 https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt5_5152/qt.qt5.5152.win64_msvc2019_64/
 
-### C++ 部分编译
+### C++ йѓЁе€†зј–иЇ‘
 
-#### 编译安装 C/C++ 依赖
+#### зј–иЇ‘е®‰иЈ… C/C++ дѕќиµ–
 
-（这一步可能要挂梯）
+пј€иї™дёЂж­ҐеЏЇиѓЅи¦ЃжЊ‚жўЇпј‰
 
 ```shell
 bash ./libs/build_deps_all.sh
 ```
 
-目前只有 bash 脚本，没有批处理或 powershell，如果 Windows 没有带 bash 建议自行安装。
+з›®е‰ЌеЏЄжњ‰ bash и„љжњ¬пјЊжІЎжњ‰ж‰№е¤„зђ†ж€– powershellпјЊе¦‚жћњ Windows жІЎжњ‰её¦ bash е»єи®®и‡ЄиЎЊе®‰иЈ…гЂ‚
 
-CMake 参数等细节与 Linux 大同小异，有问题可以参照 Build_Linux 文档。
+CMake еЏ‚ж•°з­‰з»†иЉ‚дёЋ Linux е¤§еђЊе°Џеј‚пјЊжњ‰й—®йўеЏЇд»ҐеЏ‚з…§ Build_Linux ж–‡жЎЈгЂ‚
 
-#### 编译本体
+#### зј–иЇ‘жњ¬дЅ“
 
-请根据你的 QT Sdk 的位置替换命令
+иЇ·ж №жЌ®дЅ зљ„ QT Sdk зљ„дЅЌзЅ®ж›їжЌўе‘Ѕд»¤
 
 ```shell
 mkdir build
@@ -55,10 +55,13 @@ cmake -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH=D:/path/to/qt/5.15.
 ninja
 ```
 
-编译完成后得到 `nekobox.exe`
+зј–иЇ‘е®Њж€ђеђЋеѕ—е€° `cofebox.exe`
 
-最后运行 `windeployqt nekobox.exe` 自动复制所需 DLL 等文件到当前目录
+жњЂеђЋиїђиЎЊ `windeployqt cofebox.exe` и‡ЄеЉЁе¤Ќе€¶ж‰ЂйњЂ DLL з­‰ж–‡д»¶е€°еЅ“е‰Ќз›®еЅ•
 
-### Go 部分编译
+### Go йѓЁе€†зј–иЇ‘
 
-请看 [Build_Core.md](./Build_Core.md)
+иЇ·зњ‹ [Build_Core.md](./Build_Core.md)
+
+
+

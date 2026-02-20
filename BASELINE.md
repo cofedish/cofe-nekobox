@@ -15,14 +15,14 @@
 - Go core:
   - `bash libs/get_source.sh`
   - `GOOS=windows GOARCH=amd64 bash libs/build_go.sh`
-- Run: `build/nekobox.exe` (use `windeployqt` for runtime Qt DLLs as needed).
+- Run: `build/cofebox.exe` (use `windeployqt` for runtime Qt DLLs as needed).
 
 ### Linux (from docs)
 - Prereqs: Qt5/Qt6 dev packages (qtbase/qtsvg/qttools/qtx11extras), CMake + Ninja, C++ deps (protobuf, yaml-cpp, zxing-cpp).
 - Configure/build:
   - `cmake -S . -B build -GNinja`
   - `cmake --build build`
-- Run: `build/nekobox`.
+- Run: `build/cofebox`.
 
 ### Local build attempt (this workspace)
 - `cmake -S . -B build -GNinja` failed because no C++ compiler was found (`CMAKE_CXX_COMPILER` missing). Build/run not completed.
@@ -49,7 +49,7 @@
 - Table wrapper: `ui/widget/MyTableWidget.h`.
 
 ## Key user scenarios and code locations
-- Connect / Disconnect: `MainWindow::neko_start`, `MainWindow::neko_stop` in `ui/mainwindow.cpp` (bound to `menu_start`, `menu_stop`).
+- Connect / Disconnect: `MainWindow::startProxy`, `MainWindow::stopProxy` in `ui/mainwindow.cpp` (bound to `menu_start`, `menu_stop`).
 - Select active server/profile:
   - Double-click row in proxy table: `MainWindow::on_proxyListTable_itemDoubleClicked`.
   - Group tabs + selection state: `MainWindow::show_group`, `MainWindow::refresh_groups`.
@@ -66,3 +66,5 @@
   - Connection list: `MainWindow::refresh_connection_list` in `ui/mainwindow.cpp`.
 - Settings (general/core/theme/etc.): `DialogBasicSettings` (`ui/dialog_basic_settings.*`), persisted in `NekoGui::DataStore` (`main/NekoGui_DataStore.hpp`).
 - Theme selection: `ThemeManager::ApplyTheme` in `ui/ThemeManager.cpp`, theme value in `NekoGui::DataStore::theme`.
+
+

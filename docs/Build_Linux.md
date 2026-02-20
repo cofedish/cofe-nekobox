@@ -1,19 +1,19 @@
-在 Linux 下编译 Nekoray
+﻿ењЁ Linux дё‹зј–иЇ‘ CofeBox
 
-## git clone 源码
+## git clone жєђз Ѓ
 
 ```
-git clone https://github.com/cofedish/cofe-nekobox.git --recursive
+git clone <URL_ЭТОГО_РЕПОЗИТОРИЯ> --recursive
 ```
 
-## 简单编译法
+## з®ЂеЌ•зј–иЇ‘жі•
 
-条件：
+жќЎд»¶пјљ
 
-1. C++ 依赖：`protobuf yaml-cpp zxing-cpp` 已用包管理器安装，并符合版本要求。
-2. 已安装 `qtbase` `qtsvg` `qttools` `qtx11extras`
-3. 已安装 Qt `5.12.x` 或 `5.15.x`
-4. 系统为 `x86-64-linux-gnu`
+1. C++ дѕќиµ–пјљ`protobuf yaml-cpp zxing-cpp` е·Із”ЁеЊ…з®Ўзђ†е™Ёе®‰иЈ…пјЊе№¶з¬¦еђ€з‰€жњ¬и¦Ѓж±‚гЂ‚
+2. е·Іе®‰иЈ… `qtbase` `qtsvg` `qttools` `qtx11extras`
+3. е·Іе®‰иЈ… Qt `5.12.x` ж€– `5.15.x`
+4. зі»з»џдёє `x86-64-linux-gnu`
 
 ```shell
 mkdir build
@@ -22,45 +22,45 @@ cmake -GNinja ..
 ninja
 ```
 
-编译完成后得到 `nekobox`
+зј–иЇ‘е®Њж€ђеђЋеѕ—е€° `cofebox`
 
-解压 Release 的压缩包，替换其中的 `nekobox`，删除 `launcher` 即可使用。
+и§ЈеЋ‹ Release зљ„еЋ‹зј©еЊ…пјЊж›їжЌўе…¶дё­зљ„ `cofebox`пјЊе€ й™¤ `launcher` еЌіеЏЇдЅїз”ЁгЂ‚
 
-## 复杂编译法
+## е¤Ќжќ‚зј–иЇ‘жі•
 
-### CMake 参数
+### CMake еЏ‚ж•°
 
-| CMake 参数          | 默认值               | 含义                    |
+| CMake еЏ‚ж•°          | й»и®¤еЂј               | еђ«д№‰                    |
 |-------------------|-------------------|-----------------------|
-| QT_VERSION_MAJOR  | 5                 | QT版本                  |
-| NKR_NO_EXTERNAL   |                   | 不包含外部 C/C++ 依赖 (以下所有) |
-| NKR_NO_YAML       |                   | 不包含 yaml-cpp          |
-| NKR_NO_QHOTKEY    |                   | 不包含 qhotkey           |
-| NKR_NO_ZXING      |                   | 不包含 zxing             |
-| NKR_NO_GRPC       |                   | 不包含 gRPC              |
-| NKR_PACKAGE       |                   | 编译 package 版本 (aur)   |
-| NKR_LIBS          | ./libs/deps/built | 依赖搜索目录                |
-| NKR_DISABLE_LIBS  |                   | 禁用 NKR_LIBS           |
+| QT_VERSION_MAJOR  | 5                 | QTз‰€жњ¬                  |
+| NKR_NO_EXTERNAL   |                   | дёЌеЊ…еђ«е¤–йѓЁ C/C++ дѕќиµ– (д»Ґдё‹ж‰Ђжњ‰) |
+| NKR_NO_YAML       |                   | дёЌеЊ…еђ« yaml-cpp          |
+| NKR_NO_QHOTKEY    |                   | дёЌеЊ…еђ« qhotkey           |
+| NKR_NO_ZXING      |                   | дёЌеЊ…еђ« zxing             |
+| NKR_NO_GRPC       |                   | дёЌеЊ…еђ« gRPC              |
+| NKR_PACKAGE       |                   | зј–иЇ‘ package з‰€жњ¬ (aur)   |
+| NKR_LIBS          | ./libs/deps/built | дѕќиµ–жђњзґўз›®еЅ•                |
+| NKR_DISABLE_LIBS  |                   | з¦Ѓз”Ё NKR_LIBS           |
 
-1. `NKR_LIBS` 的值会被追加到 `CMAKE_PREFIX_PATH`
-2. `NKR_PACKAGE` 打开后，`NKR_LIBS` 的默认值为 `./libs/deps/package` ，具体依赖请看 `build_deps_all.sh`
-3. `NKR_PACKAGE` 打开后，应用将使用 appdata 目录存放配置，自动更新等功能将被禁用。
+1. `NKR_LIBS` зљ„еЂјдјљиў«иїЅеЉ е€° `CMAKE_PREFIX_PATH`
+2. `NKR_PACKAGE` ж‰“ејЂеђЋпјЊ`NKR_LIBS` зљ„й»и®¤еЂјдёє `./libs/deps/package` пјЊе…·дЅ“дѕќиµ–иЇ·зњ‹ `build_deps_all.sh`
+3. `NKR_PACKAGE` ж‰“ејЂеђЋпјЊеє”з”Ёе°†дЅїз”Ё appdata з›®еЅ•е­ж”ѕй…ЌзЅ®пјЊи‡ЄеЉЁж›ґж–°з­‰еЉџиѓЅе°†иў«з¦Ѓз”ЁгЂ‚
 
-### C++ 部分
+### C++ йѓЁе€†
 
-当您的发行版没有上面几个 C++ 依赖包，或者版本不符合要求时，可以参考 `build_deps_all.sh` 编译脚本自行编译。
+еЅ“ж‚Ёзљ„еЏ‘иЎЊз‰€жІЎжњ‰дёЉйќўе‡ дёЄ C++ дѕќиµ–еЊ…пјЊж€–иЂ…з‰€жњ¬дёЌз¬¦еђ€и¦Ѓж±‚ж—¶пјЊеЏЇд»ҐеЏ‚иЂѓ `build_deps_all.sh` зј–иЇ‘и„љжњ¬и‡ЄиЎЊзј–иЇ‘гЂ‚
 
-条件： 已安装 Qt `5.12.x` 或 `5.15.x`
+жќЎд»¶пјљ е·Іе®‰иЈ… Qt `5.12.x` ж€– `5.15.x`
 
-#### 编译安装 C/C++ 依赖
+#### зј–иЇ‘е®‰иЈ… C/C++ дѕќиµ–
 
-（这一步可能要挂梯）
+пј€иї™дёЂж­ҐеЏЇиѓЅи¦ЃжЊ‚жўЇпј‰
 
 ```shell
 ./libs/build_deps_all.sh
 ```
 
-#### 编译本体
+#### зј–иЇ‘жњ¬дЅ“
 
 ```shell
 mkdir build
@@ -69,8 +69,10 @@ cmake -GNinja ..
 ninja
 ```
 
-编译完成后得到 `nekobox`
+зј–иЇ‘е®Њж€ђеђЋеѕ—е€° `cofebox`
 
-### Go 部分编译
+### Go йѓЁе€†зј–иЇ‘
 
-请看 [Build_Core.md](./Build_Core.md)
+иЇ·зњ‹ [Build_Core.md](./Build_Core.md)
+
+

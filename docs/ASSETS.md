@@ -3,7 +3,7 @@
 ## Где лежат ресурсы
 - `res/cofebox.ico` — иконка приложения для Windows (вшивается в `.exe`).
 - `res/public/cofebox.png` — базовая PNG‑иконка (окно/трей/упаковка).
-- `res/neko.qrc` — QRC с публичными ресурсами (включает `cofebox.png`).
+- `res/cofebox.qrc` — QRC с публичными ресурсами (включает `cofebox.png`).
 - `res/icon/*.svg` и `res/icon/material/*.svg` — SVG‑иконки для кнопок/меню.
 - `res/theme/**` — картинки для старых QSS‑тем (если используете).
 
@@ -27,11 +27,11 @@
 - положите `res/cofebox.icns` и подключите в CMake/Info.plist.
 
 ## Иконка трея
-- Логика в `ui/Icon.cpp`: берётся `:/neko/cofebox.png`, поверх рисуется статус.
-- Для замены обновите `res/public/cofebox.png` и `res/neko.qrc`, затем пересоберите.
+- Логика в `ui/Icon.cpp`: берётся `:/cofebox/cofebox.png`, поверх рисуется статус.
+- Для замены обновите `res/public/cofebox.png` и `res/cofebox.qrc`, затем пересоберите.
 
 ## Логотип на странице «О программе»
-- Используется тот же ресурс `:/neko/cofebox.png`.
+- Используется тот же ресурс `:/cofebox/cofebox.png`.
 - Отображение настраивается в `ui/mainwindow.ui` (виджет `about_logo`) и в `ui/mainwindow.cpp`.
 - Рекомендуемые размеры исходника: 256x256 или 512x512 PNG.
 
