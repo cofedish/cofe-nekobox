@@ -14,9 +14,9 @@
         <file>icon/material/delete.svg</file>
         <file>icon/material/swap-horizontal.svg</file>
     </qresource>
-    <qresource prefix="/neko">
+    <qresource prefix="/cofebox">
         <file alias="cofebox.png">public/cofebox.png</file>
-        <file>neko.css</file>
+        <file>cofebox.css</file>
         <file>vpn/vpn-run-root.sh</file>
         <file>vpn/sing-box-vpn.json</file>
         <file>dashboard-notice.html</file>

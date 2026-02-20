@@ -1,4 +1,4 @@
-module nekobox_core
+module cofebox_core
 
 go 1.19
 

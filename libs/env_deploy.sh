@@ -1,6 +1,6 @@
 SRC_ROOT="$PWD"
 DEPLOYMENT="$SRC_ROOT/deployment"
 BUILD="$SRC_ROOT/build"
-APP_NAME="${APP_NAME:-nekoray}"
-TAG="${TAG:-$(cat nekoray_version.txt)}"
+APP_NAME="${APP_NAME:-cofebox}"
+TAG="${TAG:-$(cat cofebox_version.txt)}"
 version_standalone="${APP_NAME}-${TAG}"

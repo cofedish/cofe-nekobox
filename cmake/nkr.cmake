@@ -1,10 +1,10 @@
 # Release
-file(STRINGS nekoray_version.txt NKR_VERSION)
+file(STRINGS cofebox_version.txt NKR_VERSION)
 add_compile_definitions(NKR_VERSION=\"${NKR_VERSION}\")
 
 set(APP_DISPLAY_NAME "CofeBox")
 set(APP_ID "cofebox")
-set(APP_CONFIG_ID "nekoray")
+set(APP_CONFIG_ID "cofebox")
 
 if(DEFINED ENV{APP_VERSION_STR})
     set(APP_VERSION_STR "$ENV{APP_VERSION_STR}")

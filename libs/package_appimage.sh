@@ -11,7 +11,7 @@ rm CofeBox.AppDir/launcher
 cat >CofeBox.AppDir/CofeBox.desktop <<-EOF
 [Desktop Entry]
 Name=CofeBox
-Exec=echo "nekobox started"
+Exec=cofebox -appdata
 Icon=cofebox
 Type=Application
 Categories=Network
@@ -20,8 +20,8 @@ EOF
 cat >CofeBox.AppDir/AppRun <<-EOF
 #!/bin/bash
 echo "PATH: \${PATH}"
-echo "nekobox runing on: \$APPDIR"
-LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/nekobox -appdata "\$@"
+echo "cofebox running on: \$APPDIR"
+LD_LIBRARY_PATH=\${APPDIR}/usr/lib QT_PLUGIN_PATH=\${APPDIR}/usr/plugins \${APPDIR}/cofebox -appdata "\$@"
 EOF
 
 chmod +x CofeBox.AppDir/AppRun

@@ -13,11 +13,11 @@ import (
 )
 
 func main() {
-	fmt.Println("sing-box:", constant.Version, "NekoBox:", neko_common.Version_neko)
+	fmt.Println("sing-box:", constant.Version, "CofeBox:", neko_common.Version_neko)
 	fmt.Println()
 
-	// nekobox_core
-	if len(os.Args) > 1 && os.Args[1] == "nekobox" {
+	// cofebox_core
+	if len(os.Args) > 1 && os.Args[1] == "cofebox" {
 		neko_common.RunMode = neko_common.RunMode_NekoBox_Core
 		grpc_server.RunCore(setupCore, &server{})
 		return

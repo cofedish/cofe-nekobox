@@ -1,4 +1,4 @@
-name: Nekoray build matrix - cmake
+name: CofeBox build matrix - cmake
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
 permissions:
   contents: write
 env:
-  APP_NAME: cofe-nekobox
+  APP_NAME: cofebox
   TAG: ${{ github.event.inputs.tag || github.ref_name }}
   APP_VERSION_STR: ${{ github.event.inputs.tag || github.ref_name }}
 jobs:
@@ -116,8 +116,8 @@ jobs:
         if: steps.cache-deps.outputs.cache-hit != 'true' && matrix.platform == 'ubuntu-22.04'
         run: |
           docker run --rm \
-            -v $PWD:/nekoray \
-            -w /nekoray \
+            -v $PWD:/workspace/cofebox \
+            -w /workspace/cofebox \
             ghcr.io/matsuridayo/debian10-qt5:20230131 \
             bash -c "./libs/build_deps_all.sh"
       # ========================================================================================================= Generate MakeFile and Build
@@ -141,8 +141,8 @@ jobs:
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           docker run --rm \
-            -v $PWD:/nekoray \
-            -w /nekoray \
+            -v $PWD:/workspace/cofebox \
+            -w /workspace/cofebox \
             -e APP_VERSION_STR=${{ env.APP_VERSION_STR }} \
             ghcr.io/matsuridayo/debian10-qt5:20230131 \
             bash -c "mkdir build && pushd build && cmake -GNinja -DCMAKE_BUILD_TYPE=Release .. && ninja && popd &&./libs/deploy_linux64.sh"
@@ -175,38 +175,48 @@ jobs:
           mv ghr*linux_amd64/ghr .
           ####
           source libs/env_deploy.sh
+          release_ver="${TAG#v}"
+          release_ver="${release_ver#V}"
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
           cp -r public_res/* windows64
           rm -rf public_res *.pdb
           ####
-          mv linux64 nekoray
-          zip -r $version_standalone-linux-x64.zip nekoray
-          rm -rf nekoray
+          mv linux64 cofebox
+          zip -r CofeBox-${release_ver}-linux-x64.zip cofebox
+          rm -rf cofebox
           ####
-          mv windows64 nekoray
-          zip -r $version_standalone-windows-x64.zip nekoray
-          rm -rf nekoray
+          mv windows64 cofebox
+          zip -r CofeBox-${release_ver}-windows-x64.zip cofebox
+          rm -rf cofebox
       - name: Pack Debian
         run: |
           source libs/env_deploy.sh
+          release_ver="${TAG#v}"
+          release_ver="${release_ver#V}"
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
           ####
           bash ../libs/package_debian.sh ${{ env.TAG }}
-          mv nekoray.deb $version_standalone-debian-x64.deb
-          sudo rm -rf nekoray
+          mv cofebox.deb CofeBox-${release_ver}-debian-x64.deb
+          sudo rm -rf cofebox
       - name: Pack AppImage
         run: |
           source libs/env_deploy.sh
+          release_ver="${TAG#v}"
+          release_ver="${release_ver#V}"
           find . -name artifacts.tgz | xargs -n1 tar xvzf
           cd deployment
           cp -r public_res/* linux64
           ####
           bash ../libs/package_appimage.sh
-          mv CofeBox-x86_64.AppImage $version_standalone-linux-x64.AppImage
+          mv CofeBox-x86_64.AppImage CofeBox-${release_ver}-linux-x64.AppImage
+      - name: Generate checksums
+        run: |
+          cd deployment
+          sha256sum *.zip *.AppImage *.deb > sha256sums.txt
       - name: Clean Up
         run: |
           cd deployment

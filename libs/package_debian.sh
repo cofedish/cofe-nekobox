@@ -4,44 +4,44 @@ version="$1"
 version="${version#v}"
 version="${version#V}"
 
-mkdir -p nekoray/DEBIAN
-mkdir -p nekoray/opt
-cp -r linux64 nekoray/opt/
-mv nekoray/opt/linux64 nekoray/opt/nekoray
-rm -rf nekoray/opt/nekoray/usr
-rm nekoray/opt/nekoray/launcher
+mkdir -p cofebox/DEBIAN
+mkdir -p cofebox/opt
+cp -r linux64 cofebox/opt/
+mv cofebox/opt/linux64 cofebox/opt/cofebox
+rm -rf cofebox/opt/cofebox/usr
+rm cofebox/opt/cofebox/launcher
 
 # basic
-cat >nekoray/DEBIAN/control <<-EOF
-Package: nekoray
+cat >cofebox/DEBIAN/control <<-EOF
+Package: cofebox
 Version: $version
 Architecture: amd64
-Maintainer: MatsuriDayo nekoha_matsuri@protonmail.com
+Maintainer: CofeDish cofedish@users.noreply.github.com
 Depends: libxcb-xinerama0, libqt5core5a, libqt5gui5, libqt5network5, libqt5widgets5, libqt5svg5, libqt5x11extras5, desktop-file-utils
 Description: Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box)
 EOF
 
-cat >nekoray/DEBIAN/postinst <<-EOF
-if [ ! -s /usr/share/applications/nekoray.desktop ]; then
-    cat >/usr/share/applications/nekoray.desktop<<-END
+cat >cofebox/DEBIAN/postinst <<-EOF
+if [ ! -s /usr/share/applications/cofebox.desktop ]; then
+    cat >/usr/share/applications/cofebox.desktop<<-END
 [Desktop Entry]
 Name=CofeBox
 Comment=Qt based cross-platform GUI proxy configuration manager (backend: sing-box)
-Exec=sh -c "PATH=/opt/nekoray:\$PATH /opt/nekoray/nekobox -appdata"
-Icon=/opt/nekoray/cofebox.png
+Exec=sh -c "PATH=/opt/cofebox:\$PATH /opt/cofebox/cofebox -appdata"
+Icon=/opt/cofebox/cofebox.png
 Terminal=false
 Type=Application
 Categories=Network;Application;
 END
 fi
 
-setcap cap_net_admin=ep /opt/nekoray/nekobox_core
+setcap cap_net_admin=ep /opt/cofebox/cofebox_core
 
 update-desktop-database
 EOF
 
-sudo chmod 0755 nekoray/DEBIAN/postinst
+sudo chmod 0755 cofebox/DEBIAN/postinst
 
 # desktop && PATH
 
-sudo dpkg-deb -Zxz --build nekoray
+sudo dpkg-deb -Zxz --build cofebox
