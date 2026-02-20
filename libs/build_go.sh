@@ -17,7 +17,8 @@ export CGO_ENABLED=0
 
 #### Go: updater ####
 pushd go/cmd/updater
-[ "$GOOS" == "darwin" ] || go build -o $DEST/cofebox-updater -trimpath -ldflags "-w -s"
+[ "$GOOS" == "windows" ] && go build -o $DEST/cofebox-updater.exe -trimpath -ldflags "-w -s" || true
+[ "$GOOS" != "windows" ] && [ "$GOOS" != "darwin" ] && go build -o $DEST/cofebox-updater -trimpath -ldflags "-w -s" || true
 [ "$GOOS" == "linux" ] && cp $DEST/cofebox-updater $DEST/launcher || true
 [ "$GOOS" == "linux" ] && cp $DEST/cofebox-updater $DEST/updater || true
 [ "$GOOS" == "windows" ] && cp $DEST/cofebox-updater.exe $DEST/updater.exe || true

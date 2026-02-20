@@ -333,7 +333,9 @@ QString UpdateService::updaterBinaryPath() const {
 #ifdef Q_OS_WIN
     const QStringList candidates = {
         QDir(appDir).absoluteFilePath("cofebox-updater.exe"),
+        QDir(appDir).absoluteFilePath("cofebox-updater"),
         QDir(appDir).absoluteFilePath("updater.exe"),
+        QDir(appDir).absoluteFilePath("updater"),
     };
 #else
     const QStringList candidates = {
