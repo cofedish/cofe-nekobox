@@ -339,6 +339,17 @@ All identified dependencies are OSI-approved (MIT, Apache-2.0, LGPL, GPL-3.0). G
 
 ## 6. Findings Table
 
+### 6.1 Fix Status (2026-02-20)
+
+| Finding | Status | Note |
+|---|---|---|
+| SEC-011 | **Fixed** | Environment values are redacted in `ExternalProcess` logs; only safe preview + count is logged. |
+| SEC-004 | **Fixed** | TLS insecure mode is per-subscription (`Group::sub_insecure`) and no longer global for all subscription requests. |
+| SEC-006 | **Fixed** | Subscription URL scheme allowlist now enforces HTTP/HTTPS only in updater flow and edit dialog. |
+| SEC-009 | **Fixed** | Linux VPN root script now has runtime SHA-256 integrity verification before privileged launch. |
+| SEC-008 | **Mitigated** | `pkexec` now uses restricted `bash --noprofile --norc` with cleaned env + strict args; compiled helper remains follow-up. |
+| SEC-010 | **Fixed** | VPN script now receives validated positional args and quotes paths. |
+
 | ID | Severity | Description | Impact | Evidence | Recommendation | Effort |
 |---|---|---|---|---|---|---|
 | SEC-001 | **High** | Update checksums file not GPG-signed | Supply-chain: compromised GitHub token allows swapping artifact + checksum | UpdateService.cpp (SHA-256 verify), Release pipeline | Sign `sha256sums.txt` with a project GPG key; publish public key in repo | Medium |
