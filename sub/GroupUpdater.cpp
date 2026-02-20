@@ -18,6 +18,22 @@ namespace NekoGui_sub {
 
     GroupUpdater *groupUpdater = new GroupUpdater;
 
+    namespace {
+        bool IsAllowedSubscriptionUrl(const QUrl &url) {
+            if (!url.isValid()) return false;
+            const auto scheme = url.scheme().toLower();
+            return scheme == "http" || scheme == "https";
+        }
+
+        QString SafeUrlForLog(const QString &raw) {
+            const QUrl url(raw);
+            if (!url.isValid()) return QStringLiteral("<invalid-url>");
+            QString out = url.scheme() + "://" + url.host();
+            if (!url.path().isEmpty()) out += url.path();
+            return out;
+        }
+    } // namespace
+
     void RawUpdater_FixEnt(const std::shared_ptr<NekoGui::ProxyEntity> &ent) {
         if (ent == nullptr) return;
         auto stream = NekoGui_fmt::GetStreamSettings(ent->bean.get());
@@ -488,7 +504,8 @@ namespace NekoGui_sub {
             auto gid = _sub_gid;
             if (createNewGroup) {
                 auto group = NekoGui::ProfileManager::NewGroup();
-                group->name = QUrl(str).host();
+                const auto url = QUrl(str);
+                group->name = url.host();
                 group->url = str;
                 group->sub_insecure = NekoGui::dataStore->sub_insecure;
                 NekoGui::profileManager->AddGroup(group);
@@ -516,7 +533,13 @@ namespace NekoGui_sub {
 
         // 网络请求
         if (asURL) {
-            auto groupName = group == nullptr ? content : group->name;
+            const auto requestUrl = QUrl(content);
+            if (!IsAllowedSubscriptionUrl(requestUrl)) {
+                MW_show_log("<<<<<<<< " + QObject::tr("Only http(s) URLs are allowed."));
+                return;
+            }
+
+            auto groupName = group == nullptr ? SafeUrlForLog(content) : group->name;
             MW_show_log(">>>>>>>> " + QObject::tr("Requesting subscription: %1").arg(groupName));
 
             const bool allowInsecureForThisSubscription = group != nullptr && group->sub_insecure;

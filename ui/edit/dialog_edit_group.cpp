@@ -5,6 +5,7 @@
 #include "ui/mainwindow_interface.h"
 
 #include <QClipboard>
+#include <QUrl>
 
 #define ADJUST_SIZE runOnUiThread([=] { adjustSize(); adjustPosition(mainwindow); }, this);
 
@@ -82,8 +83,17 @@ void DialogEditGroup::accept() {
             return;
         }
     }
+    const auto urlText = ui->url->text().trimmed();
+    if (!urlText.isEmpty()) {
+        const QUrl url(urlText);
+        const auto scheme = url.scheme().toLower();
+        if (!url.isValid() || (scheme != "http" && scheme != "https")) {
+            MessageBoxWarning(tr("Warning"), tr("Only http(s) URLs are allowed."));
+            return;
+        }
+    }
     ent->name = ui->name->text();
-    ent->url = ui->url->text();
+    ent->url = urlText;
     ent->archive = ui->archive->isChecked();
     ent->skip_auto_update = ui->skip_auto_update->isChecked();
     ent->sub_insecure = ui->sub_insecure->isChecked();

@@ -1516,8 +1516,13 @@ void MainWindow::submit_home_subscription() {
     }
 
     QUrl url(text);
-    if (!url.isValid() || url.scheme().isEmpty()) {
+    const auto scheme = url.scheme().toLower();
+    if (!url.isValid()) {
         show_toast_error(tr("Please paste a valid URL."));
+        return;
+    }
+    if (scheme != "http" && scheme != "https") {
+        show_toast_error(tr("Only http(s) URLs are allowed."));
         return;
     }
 
