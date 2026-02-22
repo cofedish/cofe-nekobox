@@ -1087,6 +1087,23 @@ Direct: -</string>
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QLabel" name="rules_app_summary">
+                <property name="text">
+                 <string>App routing: all applications through Proxy/TUN</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QPushButton" name="rules_app_routing">
+                <property name="text">
+                 <string>Open application routing</string>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>

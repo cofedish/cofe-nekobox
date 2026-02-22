@@ -125,6 +125,8 @@ set(PROJECT_SOURCES
         main/main.cpp
         main/NekoGui.cpp
         main/NekoGui_Utils.cpp
+        main/ProcessRoutingRules.cpp
+        main/ProcessRoutingRules.hpp
         main/HTTPRequestHelper.cpp
 
         3rdparty/base64.cpp
@@ -218,6 +220,9 @@ set(PROJECT_SOURCES
         ui/dialog_manage_routes.cpp
         ui/dialog_manage_routes.h
         ui/dialog_manage_routes.ui
+
+        ui/dialog_app_routing.cpp
+        ui/dialog_app_routing.h
 
         ui/dialog_vpn_settings.cpp
         ui/dialog_vpn_settings.h

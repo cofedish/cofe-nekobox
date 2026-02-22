@@ -18,10 +18,12 @@
 #include "main/AppInfo.hpp"
 #include "ui/dialog_manage_groups.h"
 #include "ui/dialog_manage_routes.h"
+#include "ui/dialog_app_routing.h"
 #include "ui/dialog_vpn_settings.h"
 #include "ui/dialog_hotkey.h"
 #include "ui/edit/dialog_edit_group.h"
 #include "ui/widget/GroupItem.h"
+#include "main/ProcessRoutingRules.hpp"
 
 #include "3rdparty/fix_old_qt.h"
 #include "3rdparty/qrcodegen.hpp"
@@ -192,7 +194,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
-    ui->drawer_toggle->setText(QString::fromUtf8("\xE2\x98\xB0"));
+    ui->drawer_toggle->setText(QString(QChar(0x2630)));
     if (ui->home_center != nullptr) {
         ui->home_center->setMaximumWidth(QWIDGETSIZE_MAX);
         ui->home_center->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
@@ -399,6 +401,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     });
     connect(ui->rules_open, &QPushButton::clicked, this, &MainWindow::on_menu_routing_settings_triggered);
+    connect(ui->rules_app_routing, &QPushButton::clicked, this, [=] {
+        DialogAppRouting dialog(this);
+        if (dialog.exec() != QDialog::Accepted) return;
+        NekoGui::dataStore->Save();
+        MW_dialog_message("", "UpdateDataStore,VPNChanged");
+        if (NekoGui::dataStore->spmode_vpn) {
+            MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));
+        }
+        show_toast_success(tr("Application routing updated."));
+        refresh_status();
+    });
     connect(ui->settings_basic, &QPushButton::clicked, this, &MainWindow::on_menu_basic_settings_triggered);
     connect(ui->settings_vpn, &QPushButton::clicked, this, &MainWindow::on_menu_vpn_settings_triggered);
     connect(ui->settings_hotkey, &QPushButton::clicked, this, &MainWindow::on_menu_hotkey_settings_triggered);
@@ -1382,6 +1395,16 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     auto inbound_txt = QStringLiteral("Mixed: %1").arg(display_socks);
     ui->label_inbound->setText(inbound_txt);
     ui->rules_active_label->setText(tr("Active routing: %1").arg(NekoGui::dataStore->active_routing));
+    const auto processRules = AppRoutingRules::Parse(NekoGui::dataStore->vpn_rule_process);
+    QString appRoutingSummary;
+    if (processRules.isEmpty() && !NekoGui::dataStore->vpn_rule_white) {
+        appRoutingSummary = tr("App routing: all applications through Proxy/TUN");
+    } else if (NekoGui::dataStore->vpn_rule_white) {
+        appRoutingSummary = tr("App routing: only selected (%1)").arg(processRules.size());
+    } else {
+        appRoutingSummary = tr("App routing: direct exceptions (%1)").arg(processRules.size());
+    }
+    ui->rules_app_summary->setText(appRoutingSummary);
     //
     ui->checkBox_VPN->setChecked(NekoGui::dataStore->spmode_vpn);
     ui->checkBox_SystemProxy->setChecked(NekoGui::dataStore->spmode_system_proxy);
