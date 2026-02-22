@@ -7,11 +7,6 @@
 #include <QElapsedTimer>
 #include <QRegularExpression>
 #include <QSet>
-#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
-#include <QTextCodec>
-#else
-#include <QStringDecoder>
-#endif
 
 namespace {
 QString envKeyOf(const QString &entry) {
@@ -72,17 +67,8 @@ QString decodeProcessOutput(const QByteArray &data) {
     if (!utf8.contains(QChar::ReplacementCharacter)) {
         return utf8;
     }
-#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
-    QStringDecoder decoder(QStringDecoder::System);
-    const auto local = decoder.decode(data);
+    const auto local = QString::fromLocal8Bit(data.constData(), data.size());
     if (!local.isEmpty()) return local;
-#else
-    auto *codec = QTextCodec::codecForLocale();
-    if (codec != nullptr) {
-        const auto local = codec->toUnicode(data);
-        if (!local.isEmpty()) return local;
-    }
-#endif
     return utf8;
 }
 } // namespace
