@@ -35,6 +35,11 @@ class QMenu;
 class QButtonGroup;
 class ToastWidget;
 class UpdateService;
+class HotspotGatewayService;
+class QLabel;
+class QCheckBox;
+class QPushButton;
+class QFrame;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -185,7 +190,22 @@ private:
     QButtonGroup *drawer_theme_group = nullptr;
     ToastWidget *toast = nullptr;
     UpdateService *updateService_ = nullptr;
+    HotspotGatewayService *hotspotService_ = nullptr;
     QTimer *add_debounce_timer = nullptr;
+    QFrame *hotspotCard_ = nullptr;
+    QCheckBox *hotspotToggle_ = nullptr;
+    QLabel *hotspotStatusLabel_ = nullptr;
+    QLabel *hotspotSsidValue_ = nullptr;
+    QLabel *hotspotPasswordValue_ = nullptr;
+    QLabel *hotspotDevicesValue_ = nullptr;
+    QLabel *hotspotModeValue_ = nullptr;
+    QPushButton *hotspotStartButton_ = nullptr;
+    QPushButton *hotspotStopButton_ = nullptr;
+    QPushButton *hotspotDiagButton_ = nullptr;
+    QPushButton *hotspotCopyPassButton_ = nullptr;
+    QPushButton *hotspotRegenButton_ = nullptr;
+    QPushButton *hotspotQrButton_ = nullptr;
+    bool hotspotShowPassword_ = false;
     bool add_in_progress = false;
     double update_progress_cached_ = 0.0;
     int add_base_count = 0;
@@ -219,6 +239,9 @@ private:
     void sync_drawer_theme(const QString &themeKey);
     void set_home_running_text(const QString &text, const QString &tooltip = {});
     void update_home_running_elide();
+    void setupHotspotUi();
+    void syncHotspotUi();
+    void showHotspotQrDialog();
 
     void keyPressEvent(QKeyEvent *event) override;
 

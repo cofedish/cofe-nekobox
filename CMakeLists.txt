@@ -168,6 +168,8 @@ set(PROJECT_SOURCES
         ui/Icon.cpp
         ui/UpdateService.cpp
         ui/UpdateService.hpp
+        ui/HotspotGatewayService.cpp
+        ui/HotspotGatewayService.hpp
 
         ui/mainwindow_grpc.cpp
         ui/mainwindow.cpp
@@ -282,6 +284,17 @@ set_property(TARGET cofebox PROPERTY AUTORCC ON)
 
 set_target_properties(cofebox PROPERTIES
         WIN32_EXECUTABLE TRUE
+)
+
+add_executable(cofebox_net_helper
+        sys/hotspot/cofebox_net_helper.cpp
+)
+target_link_libraries(cofebox_net_helper PRIVATE Qt${QT_VERSION_MAJOR}::Core)
+if (WIN32)
+    target_link_libraries(cofebox_net_helper PRIVATE shell32)
+endif ()
+set_target_properties(cofebox_net_helper PROPERTIES
+        OUTPUT_NAME "cofebox-net-helper"
 )
 
 # Target Source Translations

@@ -155,6 +155,12 @@ namespace NekoGui {
         QString vpn_rule_process = "";
         QString vpn_rule_cidr = "";
 
+        // Hotspot Gateway
+        bool hotspot_enabled = false;
+        int hotspot_mode = 0; // FullTunnelForHotspot
+        QString hotspot_ssid = "";
+        QString hotspot_password = "";
+
         // Hotkey
         QString hotkey_mainwindow = "";
         QString hotkey_group = "";

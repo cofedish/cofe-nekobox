@@ -10,6 +10,7 @@
 
 #include "ui/ThemeManager.hpp"
 #include "ui/UpdateService.hpp"
+#include "ui/HotspotGatewayService.hpp"
 #include "ui/Icon.hpp"
 #include "ui/widget/WaveBackground.h"
 #include "ui/widget/ConnectButton.h"
@@ -66,6 +67,10 @@
 #include <QPainter>
 #include <QWidgetAction>
 #include <QHBoxLayout>
+#include <QGridLayout>
+#include <QFrame>
+#include <QCheckBox>
+#include <QPushButton>
 #include <QStyle>
 #include <QSizePolicy>
 #include <QDir>
@@ -409,9 +414,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         if (NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));
         }
-        show_toast_success(tr("Маршрутизация приложений обновлена."));
+        show_toast_success(tr("Application routing updated."));
         refresh_status();
     });
+    setupHotspotUi();
+
     connect(ui->settings_basic, &QPushButton::clicked, this, &MainWindow::on_menu_basic_settings_triggered);
     connect(ui->settings_vpn, &QPushButton::clicked, this, &MainWindow::on_menu_vpn_settings_triggered);
     connect(ui->settings_hotkey, &QPushButton::clicked, this, &MainWindow::on_menu_hotkey_settings_triggered);
@@ -623,7 +630,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     connect(ui->proxyListTable->horizontalHeader(), &QHeaderView::sectionClicked, this, [=](int logicalIndex) {
         GroupSortAction action;
-        // дёЌж­ЈзЎ®зљ„descendingе®ћзЋ°
+        // toggle descending sort order
         if (proxy_last_order == logicalIndex) {
             action.descending = true;
             proxy_last_order = -1;
@@ -631,7 +638,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             proxy_last_order = logicalIndex;
         }
         action.save_sort = true;
-        // иЎЁе¤ґ
+        // sort method
         if (logicalIndex == 0) {
             action.method = GroupSortMethod::ByType;
         } else if (logicalIndex == 1) {
@@ -703,10 +710,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->refresh_groups();
 
     // Setup Tray
-    tray = new QSystemTrayIcon(this); // е€ќе§‹еЊ–ж‰з›еЇ№и±Ўtray
+    tray = new QSystemTrayIcon(this); // initialize tray icon
     tray->setIcon(Icon::GetTrayIcon(Icon::NONE));
-    tray->setContextMenu(ui->menu_program); // е€›е»єж‰з›иЏњеЌ•
-    tray->show();                           // и®©ж‰з›е›ѕж ‡жѕз¤єењЁзі»з»џж‰з›дёЉ
+    tray->setContextMenu(ui->menu_program); // attach tray menu
+    tray->show();                           // show tray icon
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
         if (reason == QSystemTrayIcon::Trigger) {
             if (this->isVisible()) {
@@ -916,10 +923,250 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     if (!NekoGui::dataStore->flag_tray) show();
 }
 
+void MainWindow::setupHotspotUi() {
+    if (ui == nullptr || ui->rulesLayout == nullptr || ui->page_rules == nullptr) return;
+
+    if (ui->rules_open != nullptr) ui->rules_open->setText(tr("Open routing settings"));
+    if (ui->rules_app_routing != nullptr) ui->rules_app_routing->setText(tr("Open application routing"));
+    if (ui->rules_active_label != nullptr) {
+        ui->rules_active_label->setText(tr("Active routing: %1").arg(NekoGui::dataStore->active_routing));
+    }
+    if (ui->rules_app_summary != nullptr) {
+        ui->rules_app_summary->setText(tr("App routing: all applications through Proxy/TUN"));
+    }
+
+    hotspotService_ = new HotspotGatewayService(this);
+    hotspotService_->setCredentials(NekoGui::dataStore->hotspot_ssid, NekoGui::dataStore->hotspot_password);
+
+    hotspotCard_ = new QFrame(ui->page_rules);
+    hotspotCard_->setObjectName("hotspot_gateway_card");
+    auto *root = new QVBoxLayout(hotspotCard_);
+    root->setContentsMargins(10, 10, 10, 10);
+    root->setSpacing(8);
+
+    auto *titleRow = new QHBoxLayout;
+    auto *title = new QLabel(tr("Hotspot Gateway (CofeBox network)"), hotspotCard_);
+    hotspotToggle_ = new QCheckBox(tr("Share internet (Hotspot)"), hotspotCard_);
+    hotspotStatusLabel_ = new QLabel(tr("Idle"), hotspotCard_);
+    titleRow->addWidget(title, 1);
+    titleRow->addWidget(hotspotToggle_, 0);
+    titleRow->addWidget(hotspotStatusLabel_, 0);
+    root->addLayout(titleRow);
+
+    auto *grid = new QGridLayout;
+    grid->setHorizontalSpacing(12);
+    grid->setVerticalSpacing(6);
+    grid->addWidget(new QLabel(tr("SSID"), hotspotCard_), 0, 0);
+    hotspotSsidValue_ = new QLabel(hotspotCard_);
+    hotspotSsidValue_->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    grid->addWidget(hotspotSsidValue_, 0, 1);
+
+    grid->addWidget(new QLabel(tr("Password"), hotspotCard_), 1, 0);
+    hotspotPasswordValue_ = new QLabel(hotspotCard_);
+    hotspotPasswordValue_->setTextInteractionFlags(Qt::TextSelectableByMouse);
+    grid->addWidget(hotspotPasswordValue_, 1, 1);
+
+    grid->addWidget(new QLabel(tr("Connected devices"), hotspotCard_), 2, 0);
+    hotspotDevicesValue_ = new QLabel("0", hotspotCard_);
+    grid->addWidget(hotspotDevicesValue_, 2, 1);
+
+    grid->addWidget(new QLabel(tr("Mode"), hotspotCard_), 3, 0);
+    hotspotModeValue_ = new QLabel(tr("Full-tunnel for Hotspot"), hotspotCard_);
+    grid->addWidget(hotspotModeValue_, 3, 1);
+    root->addLayout(grid);
+
+    auto *buttons = new QHBoxLayout;
+    hotspotStartButton_ = new QPushButton(tr("Start"), hotspotCard_);
+    hotspotStopButton_ = new QPushButton(tr("Stop"), hotspotCard_);
+    hotspotDiagButton_ = new QPushButton(tr("Diagnostics"), hotspotCard_);
+    hotspotCopyPassButton_ = new QPushButton(tr("Copy password"), hotspotCard_);
+    hotspotRegenButton_ = new QPushButton(tr("Regenerate"), hotspotCard_);
+    hotspotQrButton_ = new QPushButton(tr("Show QR"), hotspotCard_);
+    buttons->addWidget(hotspotStartButton_);
+    buttons->addWidget(hotspotStopButton_);
+    buttons->addWidget(hotspotDiagButton_);
+    buttons->addWidget(hotspotCopyPassButton_);
+    buttons->addWidget(hotspotRegenButton_);
+    buttons->addWidget(hotspotQrButton_);
+    root->addLayout(buttons);
+
+    ui->rulesLayout->insertWidget(1, hotspotCard_);
+
+    connect(hotspotToggle_, &QCheckBox::clicked, this, [this](bool checked) {
+        if (checked) {
+            if (!NekoGui::dataStore->spmode_vpn) {
+                show_toast_error(tr("Hotspot is enabled, but internet is not shared: check tunnel connection."));
+                QSignalBlocker blocker(hotspotToggle_);
+                hotspotToggle_->setChecked(false);
+                return;
+            }
+            if (!hotspotService_->start()) {
+                show_toast_error(hotspotService_->lastMessage());
+                QSignalBlocker blocker(hotspotToggle_);
+                hotspotToggle_->setChecked(false);
+                return;
+            }
+            NekoGui::dataStore->hotspot_enabled = true;
+            NekoGui::dataStore->Save();
+        } else {
+            hotspotService_->stop();
+            NekoGui::dataStore->hotspot_enabled = false;
+            NekoGui::dataStore->Save();
+        }
+        syncHotspotUi();
+    });
+    connect(hotspotStartButton_, &QPushButton::clicked, this, [this] {
+        if (!NekoGui::dataStore->spmode_vpn) {
+            show_toast_error(tr("Hotspot is enabled, but internet is not shared: check tunnel connection."));
+            return;
+        }
+        if (!hotspotService_->start()) {
+            show_toast_error(hotspotService_->lastMessage());
+            return;
+        }
+        NekoGui::dataStore->hotspot_enabled = true;
+        NekoGui::dataStore->Save();
+        syncHotspotUi();
+    });
+    connect(hotspotStopButton_, &QPushButton::clicked, this, [this] {
+        hotspotService_->stop();
+        NekoGui::dataStore->hotspot_enabled = false;
+        NekoGui::dataStore->Save();
+        syncHotspotUi();
+    });
+    connect(hotspotDiagButton_, &QPushButton::clicked, this, [this] { hotspotService_->runDiagnostics(); });
+    connect(hotspotCopyPassButton_, &QPushButton::clicked, this, [this] {
+        QApplication::clipboard()->setText(hotspotService_->runtime().password);
+        show_toast_success(tr("Password copied."));
+    });
+    connect(hotspotRegenButton_, &QPushButton::clicked, this, [this] {
+        hotspotService_->regenerateCredentials();
+        NekoGui::dataStore->hotspot_ssid = hotspotService_->runtime().ssid;
+        NekoGui::dataStore->hotspot_password = hotspotService_->runtime().password;
+        NekoGui::dataStore->Save();
+        syncHotspotUi();
+    });
+    connect(hotspotQrButton_, &QPushButton::clicked, this, [this] { showHotspotQrDialog(); });
+
+    connect(hotspotService_, &HotspotGatewayService::stateChanged, this, [this](HotspotGatewayService::State state, const QString &message) {
+        if (state == HotspotGatewayService::State::Failed) {
+            MessageBoxWarning(software_name, message);
+        }
+        syncHotspotUi();
+    });
+    connect(hotspotService_, &HotspotGatewayService::devicesChanged, this, [this](const QVector<HotspotDeviceInfo> &) {
+        syncHotspotUi();
+    });
+    connect(hotspotService_, &HotspotGatewayService::diagReport, this, [this](bool ok, const QString &report) {
+        if (ok) {
+            QMessageBox::information(this, tr("Hotspot diagnostics"), report);
+        } else {
+            MessageBoxWarning(tr("Hotspot diagnostics"), report);
+        }
+    });
+    connect(hotspotService_, &HotspotGatewayService::credentialsChanged, this, [this](const QString &, const QString &) {
+        NekoGui::dataStore->hotspot_ssid = hotspotService_->runtime().ssid;
+        NekoGui::dataStore->hotspot_password = hotspotService_->runtime().password;
+        NekoGui::dataStore->Save();
+        syncHotspotUi();
+    });
+
+    syncHotspotUi();
+    if (NekoGui::dataStore->hotspot_enabled && NekoGui::dataStore->spmode_vpn) {
+        QTimer::singleShot(900, this, [this] {
+            hotspotService_->start();
+            syncHotspotUi();
+        });
+    }
+}
+
+void MainWindow::syncHotspotUi() {
+    if (hotspotService_ == nullptr || hotspotCard_ == nullptr) return;
+    const auto runtime = hotspotService_->runtime();
+    const auto state = hotspotService_->state();
+    const auto devices = hotspotService_->devices();
+
+    if (hotspotSsidValue_ != nullptr) hotspotSsidValue_->setText(runtime.ssid);
+    if (hotspotPasswordValue_ != nullptr) hotspotPasswordValue_->setText(hotspotService_->maskedPassword());
+    if (hotspotDevicesValue_ != nullptr) hotspotDevicesValue_->setText(Int2String(devices.size()));
+    if (hotspotModeValue_ != nullptr) hotspotModeValue_->setText(tr("Full-tunnel for Hotspot"));
+
+    QString statusText;
+    switch (state) {
+        case HotspotGatewayService::State::Idle:
+            statusText = tr("Idle");
+            break;
+        case HotspotGatewayService::State::Starting:
+            statusText = tr("Starting");
+            break;
+        case HotspotGatewayService::State::Running:
+            statusText = tr("Running");
+            break;
+        case HotspotGatewayService::State::Stopping:
+            statusText = tr("Stopping");
+            break;
+        case HotspotGatewayService::State::Failed:
+            statusText = tr("Failed");
+            break;
+    }
+    if (!hotspotService_->lastMessage().isEmpty()) {
+        statusText += QStringLiteral(": ") + hotspotService_->lastMessage();
+    }
+    if (hotspotStatusLabel_ != nullptr) hotspotStatusLabel_->setText(statusText);
+
+    const bool busy = state == HotspotGatewayService::State::Starting || state == HotspotGatewayService::State::Stopping;
+    const bool running = state == HotspotGatewayService::State::Running;
+    if (hotspotToggle_ != nullptr) {
+        QSignalBlocker blocker(hotspotToggle_);
+        hotspotToggle_->setChecked(running);
+        hotspotToggle_->setEnabled(!busy);
+    }
+    if (hotspotStartButton_ != nullptr) hotspotStartButton_->setEnabled(!busy && !running);
+    if (hotspotStopButton_ != nullptr) hotspotStopButton_->setEnabled(!busy && running);
+    if (hotspotDiagButton_ != nullptr) hotspotDiagButton_->setEnabled(!busy);
+    if (hotspotCopyPassButton_ != nullptr) hotspotCopyPassButton_->setEnabled(!runtime.password.isEmpty());
+    if (hotspotRegenButton_ != nullptr) hotspotRegenButton_->setEnabled(!busy);
+    if (hotspotQrButton_ != nullptr) hotspotQrButton_->setEnabled(!runtime.ssid.isEmpty() && !runtime.password.isEmpty());
+}
+
+void MainWindow::showHotspotQrDialog() {
+    if (hotspotService_ == nullptr) return;
+    const auto runtime = hotspotService_->runtime();
+    if (runtime.ssid.isEmpty() || runtime.password.isEmpty()) {
+        MessageBoxWarning(software_name, tr("Hotspot credentials are empty."));
+        return;
+    }
+
+    const auto qrText = hotspotService_->wifiQrText();
+    qrcodegen::QrCode qr = qrcodegen::QrCode::encodeText(qrText.toUtf8().constData(), qrcodegen::QrCode::Ecc::MEDIUM);
+    const int border = 4;
+    const int scale = 6;
+    const int side = (qr.getSize() + border * 2) * scale;
+    QImage image(side, side, QImage::Format_RGB32);
+    image.fill(Qt::white);
+    for (int y = 0; y < qr.getSize(); ++y) {
+        for (int x = 0; x < qr.getSize(); ++x) {
+            if (!qr.getModule(x, y)) continue;
+            const int px = (x + border) * scale;
+            const int py = (y + border) * scale;
+            for (int oy = 0; oy < scale; ++oy) {
+                for (int ox = 0; ox < scale; ++ox) {
+                    image.setPixel(px + ox, py + oy, qRgb(0, 0, 0));
+                }
+            }
+        }
+    }
+    QMessageBox box(this);
+    box.setWindowTitle(tr("Hotspot QR"));
+    box.setIconPixmap(QPixmap::fromImage(image));
+    box.setText(tr("SSID: %1\nPassword: %2").arg(runtime.ssid, runtime.password));
+    box.exec();
+}
+
 void MainWindow::closeEvent(QCloseEvent *event) {
     if (tray->isVisible()) {
-        hide();          // йљђи—ЏзЄ—еЏЈ
-        event->ignore(); // еїЅз•Ґдє‹д»¶
+        hide();          // keep app in tray
+        event->ignore(); // ignore close event
     }
 }
 
@@ -1010,7 +1257,7 @@ void MainWindow::show_group(int gid) {
     }
     ui->tabWidget->widget(groupId2TabIndex(gid))->layout()->addWidget(ui->proxyListTable);
 
-    // е€—е®ЅжЇеђ¦еЏЇи°ѓ
+    // restore column widths
     if (group->manually_column_width) {
         for (int i = 0; i <= 4; i++) {
             ui->proxyListTable->horizontalHeader()->setSectionResizeMode(i, QHeaderView::Interactive);
@@ -1323,7 +1570,19 @@ void MainWindow::setVpnMode(bool enable, bool save) {
     }
 
     NekoGui::dataStore->spmode_vpn = enable;
+
+    if (!enable && hotspotService_ != nullptr &&
+        hotspotService_->state() != HotspotGatewayService::State::Idle) {
+        hotspotService_->stop();
+        NekoGui::dataStore->hotspot_enabled = false;
+    }
+    if (enable && hotspotService_ != nullptr && NekoGui::dataStore->hotspot_enabled &&
+        hotspotService_->state() == HotspotGatewayService::State::Idle) {
+        hotspotService_->start();
+    }
+
     refresh_status();
+    syncHotspotUi();
 
     if (NekoGui::dataStore->vpn_internal_tun && NekoGui::dataStore->started_id >= 0) startProxy(NekoGui::dataStore->started_id);
 }
@@ -1398,11 +1657,11 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     const auto processRules = AppRoutingRules::Parse(NekoGui::dataStore->vpn_rule_process);
     QString appRoutingSummary;
     if (processRules.isEmpty() && !NekoGui::dataStore->vpn_rule_white) {
-        appRoutingSummary = tr("Маршрутизация приложений: все через Proxy/TUN");
+        appRoutingSummary = tr("Application routing: all applications through Proxy/TUN");
     } else if (NekoGui::dataStore->vpn_rule_white) {
-        appRoutingSummary = tr("Маршрутизация приложений: только выбранные (%1)").arg(processRules.size());
+        appRoutingSummary = tr("Application routing: only selected (%1)").arg(processRules.size());
     } else {
-        appRoutingSummary = tr("Маршрутизация приложений: исключения напрямую (%1)").arg(processRules.size());
+        appRoutingSummary = tr("Application routing: direct exceptions (%1)").arg(processRules.size());
     }
     ui->rules_app_summary->setText(appRoutingSummary);
     //
@@ -1637,7 +1896,7 @@ void MainWindow::finish_add_operation() {
     }
 }
 
-// tableжѕз¤є
+// table display
 
 // refresh_groups -> show_group -> refresh_proxy_list
 void MainWindow::refresh_groups() {
@@ -1698,12 +1957,12 @@ void MainWindow::refresh_proxy_list(const int &id) {
 }
 
 void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSortAction) {
-    // id < 0 й‡Ќз»
+    // id < 0 means full refresh
     if (id < 0) {
-        // жё…з©єж•°жЌ®
+        // clear data
         ui->proxyListTable->row2Id.clear();
         ui->proxyListTable->setRowCount(0);
-        // ж·»еЉ иЎЊ
+        // append rows
         int row = -1;
         for (const auto &[id, profile]: NekoGui::profileManager->profiles) {
             if (NekoGui::dataStore->current_group != profile->gid) continue;
@@ -1713,7 +1972,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
         }
     }
 
-    // жѕз¤єжЋ’еєЏ
+    // apply sort mode
     if (id < 0) {
         switch (groupSortAction.method) {
             case GroupSortMethod::Raw: {
@@ -1786,7 +2045,7 @@ void MainWindow::refresh_proxy_list_impl(const int &id, GroupSortAction groupSor
 }
 
 void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
-    // з»е€¶ж€–ж›ґж–°item(s)
+    // draw/update table items
     for (int row = 0; row < ui->proxyListTable->rowCount(); row++) {
         auto profileId = ui->proxyListTable->row2Id[row];
         if (id >= 0 && profileId != id) continue; // refresh ONE item
@@ -1799,7 +2058,7 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
 
         // Check state
         auto check = f0->clone();
-        check->setText(isRunning ? "вњ“" : Int2String(row + 1));
+        check->setText(isRunning ? QString(QChar(0x2713)) : Int2String(row + 1));
         ui->proxyListTable->setVerticalHeaderItem(row, check);
 
         // C0: Type
@@ -1838,7 +2097,7 @@ void MainWindow::refresh_proxy_list_impl_refresh_data(const int &id) {
     }
 }
 
-// tableиЏњеЌ•з›ёе…і
+// table context menu handlers
 
 void MainWindow::on_proxyListTable_itemDoubleClicked(QTableWidgetItem *item) {
     auto id = item->data(114514).toInt();
@@ -2226,7 +2485,7 @@ void MainWindow::on_menu_resolve_domain_triggered() {
 }
 
 void MainWindow::on_proxyListTable_customContextMenuRequested(const QPoint &pos) {
-    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // еј№е‡єиЏњеЌ•
+    ui->menu_server->popup(ui->proxyListTable->viewport()->mapToGlobal(pos)); // show menu
 }
 
 QList<std::shared_ptr<NekoGui::ProxyEntity>> MainWindow::get_now_selected_list() {
@@ -2391,7 +2650,7 @@ void MainWindow::on_masterLogBrowser_customContextMenuRequested(const QPoint &po
     });
     menu->addAction(action_clear);
 
-    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // еј№е‡єиЏњеЌ•
+    menu->exec(ui->masterLogBrowser->viewport()->mapToGlobal(pos)); // show menu
 }
 
 // eventFilter
@@ -2442,7 +2701,7 @@ void MainWindow::start_select_mode(QObject *context, const std::function<void(in
     refresh_status();
 }
 
-// иїћжЋҐе€—иЎЁ
+// connection list
 
 inline QJsonArray last_arr; // format is connection statistics json
 

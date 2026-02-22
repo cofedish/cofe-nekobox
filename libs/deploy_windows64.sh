@@ -8,6 +8,7 @@ mkdir -p $DEST
 
 #### copy exe ####
 cp $BUILD/cofebox.exe $DEST
+[ -f "$BUILD/cofebox-net-helper.exe" ] && cp "$BUILD/cofebox-net-helper.exe" "$DEST"
 
 #### deploy qt & DLL runtime ####
 pushd $DEST
