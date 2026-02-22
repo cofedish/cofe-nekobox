@@ -409,7 +409,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         if (NekoGui::dataStore->spmode_vpn) {
             MessageBoxWarning(tr("Tun Settings changed"), tr("Restart Tun to take effect."));
         }
-        show_toast_success(tr("Application routing updated."));
+        show_toast_success(tr("Маршрутизация приложений обновлена."));
         refresh_status();
     });
     connect(ui->settings_basic, &QPushButton::clicked, this, &MainWindow::on_menu_basic_settings_triggered);
@@ -1398,11 +1398,11 @@ void MainWindow::refresh_status(const QString &traffic_update) {
     const auto processRules = AppRoutingRules::Parse(NekoGui::dataStore->vpn_rule_process);
     QString appRoutingSummary;
     if (processRules.isEmpty() && !NekoGui::dataStore->vpn_rule_white) {
-        appRoutingSummary = tr("App routing: all applications through Proxy/TUN");
+        appRoutingSummary = tr("Маршрутизация приложений: все через Proxy/TUN");
     } else if (NekoGui::dataStore->vpn_rule_white) {
-        appRoutingSummary = tr("App routing: only selected (%1)").arg(processRules.size());
+        appRoutingSummary = tr("Маршрутизация приложений: только выбранные (%1)").arg(processRules.size());
     } else {
-        appRoutingSummary = tr("App routing: direct exceptions (%1)").arg(processRules.size());
+        appRoutingSummary = tr("Маршрутизация приложений: исключения напрямую (%1)").arg(processRules.size());
     }
     ui->rules_app_summary->setText(appRoutingSummary);
     //

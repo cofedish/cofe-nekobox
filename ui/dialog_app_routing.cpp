@@ -108,11 +108,11 @@ QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
          "[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; $ErrorActionPreference='SilentlyContinue'; Get-CimInstance Win32_Process | ForEach-Object { '{0}|{1}' -f $_.Name, $_.ExecutablePath }"});
     if (!process.waitForFinished(6000)) {
         process.kill();
-        if (errorText != nullptr) *errorText = QObject::tr("Failed to enumerate running processes.");
+        if (errorText != nullptr) *errorText = QObject::tr("Не удалось получить список запущенных процессов.");
         return rows;
     }
     if (process.exitStatus() != QProcess::NormalExit) {
-        if (errorText != nullptr) *errorText = QObject::tr("Failed to enumerate running processes.");
+        if (errorText != nullptr) *errorText = QObject::tr("Не удалось получить список запущенных процессов.");
         return rows;
     }
     const auto text = QString::fromUtf8(process.readAllStandardOutput());
@@ -174,7 +174,7 @@ QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
     QProcess process;
     process.start("ps", {"-axo", "comm=,args="});
     if (!process.waitForFinished(4000) || process.exitStatus() != QProcess::NormalExit) {
-        if (errorText != nullptr) *errorText = QObject::tr("Failed to enumerate running processes.");
+        if (errorText != nullptr) *errorText = QObject::tr("Не удалось получить список запущенных процессов.");
         return rows;
     }
     const auto text = QString::fromUtf8(process.readAllStandardOutput());
@@ -234,7 +234,7 @@ private:
 };
 
 AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
-    setWindowTitle(tr("Add application"));
+    setWindowTitle(tr("Добавить приложение"));
     resize(860, 560);
 
     auto *rootLayout = new QVBoxLayout(this);
@@ -251,11 +251,11 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
 
     auto *runningToolbar = new QHBoxLayout;
     runningSearch_ = new QLineEdit(runningTab);
-    runningSearch_->setPlaceholderText(tr("Search by name or path"));
+    runningSearch_->setPlaceholderText(tr("Поиск по имени или пути"));
     runningMatchMode_ = new QComboBox(runningTab);
-    runningMatchMode_->addItem(tr("Match by process name"), "name");
-    runningMatchMode_->addItem(tr("Match by full path"), "path");
-    auto *refreshButton = new QPushButton(tr("Refresh"), runningTab);
+    runningMatchMode_->addItem(tr("Сопоставлять по имени процесса"), "name");
+    runningMatchMode_->addItem(tr("Сопоставлять по полному пути"), "path");
+    auto *refreshButton = new QPushButton(tr("Обновить"), runningTab);
     runningToolbar->addWidget(runningSearch_, 1);
     runningToolbar->addWidget(runningMatchMode_, 0);
     runningToolbar->addWidget(refreshButton, 0);
@@ -264,7 +264,7 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     runningTable_ = new QTableWidget(runningTab);
     runningTable_->setColumnCount(4);
     runningTable_->setHorizontalHeaderLabels(
-        {tr("Application"), tr("Process"), tr("Path"), tr("Match")});
+        {tr("Приложение"), tr("Процесс"), tr("Путь"), tr("Сопоставление")});
     runningTable_->setSelectionBehavior(QAbstractItemView::SelectRows);
     runningTable_->setSelectionMode(QAbstractItemView::ExtendedSelection);
     runningTable_->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -275,7 +275,7 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     runningTable_->horizontalHeader()->setSectionResizeMode(2, QHeaderView::Stretch);
     runningTable_->horizontalHeader()->setSectionResizeMode(3, QHeaderView::ResizeToContents);
     runningLayout->addWidget(runningTable_, 1);
-    tabs_->addTab(runningTab, tr("Running"));
+    tabs_->addTab(runningTab, tr("Запущенные"));
 
     auto *fileTab = new QWidget(this);
     auto *fileLayout = new QVBoxLayout(fileTab);
@@ -283,20 +283,20 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     fileLayout->setSpacing(8);
     auto *filePathRow = new QHBoxLayout;
     filePathEdit_ = new QLineEdit(fileTab);
-    filePathEdit_->setPlaceholderText(tr("Path to executable"));
-    auto *browseButton = new QPushButton(tr("Browse..."), fileTab);
+    filePathEdit_->setPlaceholderText(tr("Путь к исполняемому файлу"));
+    auto *browseButton = new QPushButton(tr("Выбрать..."), fileTab);
     filePathRow->addWidget(filePathEdit_, 1);
     filePathRow->addWidget(browseButton, 0);
     fileLayout->addLayout(filePathRow);
     fileDisplayEdit_ = new QLineEdit(fileTab);
-    fileDisplayEdit_->setPlaceholderText(tr("Display name (optional)"));
+    fileDisplayEdit_->setPlaceholderText(tr("Отображаемое имя (необязательно)"));
     fileLayout->addWidget(fileDisplayEdit_);
     fileMatchMode_ = new QComboBox(fileTab);
-    fileMatchMode_->addItem(tr("Match by full path"), "path");
-    fileMatchMode_->addItem(tr("Match by process name"), "name");
+    fileMatchMode_->addItem(tr("Сопоставлять по полному пути"), "path");
+    fileMatchMode_->addItem(tr("Сопоставлять по имени процесса"), "name");
     fileLayout->addWidget(fileMatchMode_);
     fileLayout->addStretch(1);
-    tabs_->addTab(fileTab, tr("Select file"));
+    tabs_->addTab(fileTab, tr("Выбрать файл"));
 
     auto *clipboardTab = new QWidget(this);
     auto *clipboardLayout = new QVBoxLayout(clipboardTab);
@@ -304,20 +304,20 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     clipboardLayout->setSpacing(8);
     clipboardPreview_ = new QPlainTextEdit(clipboardTab);
     clipboardPreview_->setReadOnly(true);
-    clipboardPreview_->setPlaceholderText(tr("Clipboard is empty"));
+    clipboardPreview_->setPlaceholderText(tr("Буфер обмена пуст"));
     clipboardPreview_->setMaximumBlockCount(2);
     clipboardLayout->addWidget(clipboardPreview_);
     clipboardMatchMode_ = new QComboBox(clipboardTab);
-    clipboardMatchMode_->addItem(tr("Match by full path"), "path");
-    clipboardMatchMode_->addItem(tr("Match by process name"), "name");
+    clipboardMatchMode_->addItem(tr("Сопоставлять по полному пути"), "path");
+    clipboardMatchMode_->addItem(tr("Сопоставлять по имени процесса"), "name");
     clipboardLayout->addWidget(clipboardMatchMode_);
-    auto *pasteButton = new QPushButton(tr("Use clipboard path"), clipboardTab);
+    auto *pasteButton = new QPushButton(tr("Использовать путь из буфера"), clipboardTab);
     clipboardLayout->addWidget(pasteButton, 0, Qt::AlignLeft);
     clipboardLayout->addStretch(1);
-    tabs_->addTab(clipboardTab, tr("From clipboard"));
+    tabs_->addTab(clipboardTab, tr("Из буфера"));
 
     auto *buttonBox = new QDialogButtonBox(QDialogButtonBox::Cancel, this);
-    addButton_ = buttonBox->addButton(tr("Add"), QDialogButtonBox::AcceptRole);
+    addButton_ = buttonBox->addButton(tr("Добавить"), QDialogButtonBox::AcceptRole);
     rootLayout->addWidget(buttonBox);
 
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
@@ -329,9 +329,9 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     });
     connect(browseButton, &QPushButton::clicked, this, [this] {
 #ifdef Q_OS_WIN
-        const auto file = QFileDialog::getOpenFileName(this, tr("Select executable"), {}, tr("Executables (*.exe);;All files (*)"));
+        const auto file = QFileDialog::getOpenFileName(this, tr("Выберите исполняемый файл"), {}, tr("Исполняемые файлы (*.exe);;Все файлы (*)"));
 #else
-        const auto file = QFileDialog::getOpenFileName(this, tr("Select executable"));
+        const auto file = QFileDialog::getOpenFileName(this, tr("Выберите исполняемый файл"));
 #endif
         if (file.isEmpty()) return;
         filePathEdit_->setText(QDir::toNativeSeparators(file));
@@ -367,7 +367,7 @@ void AddProcessDialog::reloadRunningProcesses() {
     runningRows_ = queryRunningProcesses(&error);
     refreshRunningTable();
     if (runningRows_.isEmpty() && !error.isEmpty()) {
-        QMessageBox::warning(this, tr("Error"), error);
+        QMessageBox::warning(this, tr("Ошибка"), error);
     }
 }
 
@@ -389,7 +389,7 @@ void AddProcessDialog::refreshRunningTable() {
         runningTable_->setItem(tableRow, 1, new QTableWidgetItem(row.processName));
         runningTable_->setItem(tableRow, 2, new QTableWidgetItem(row.processPath));
         runningTable_->setItem(tableRow, 3, new QTableWidgetItem(
-                                                row.processPath.isEmpty() ? tr("process_name") : tr("process_path")));
+                                                row.processPath.isEmpty() ? tr("имя процесса") : tr("путь процесса")));
     }
     runningTable_->setSortingEnabled(true);
 }
@@ -424,7 +424,7 @@ void AddProcessDialog::addFromCurrentTab() {
 void AddProcessDialog::addFromRunning() {
     const auto indexes = runningTable_->selectionModel()->selectedRows();
     if (indexes.isEmpty()) {
-        QMessageBox::information(this, tr("Select application"), tr("Choose at least one running process."));
+        QMessageBox::information(this, tr("Выбор приложения"), tr("Выберите хотя бы один запущенный процесс."));
         return;
     }
     const bool matchByPath = runningMatchMode_->currentData().toString() == "path";
@@ -445,7 +445,7 @@ void AddProcessDialog::addFromRunning() {
 void AddProcessDialog::addFromFile() {
     auto filePath = filePathEdit_->text().trimmed();
     if (filePath.isEmpty()) {
-        QMessageBox::warning(this, tr("Error"), tr("Select executable file first."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Сначала выберите исполняемый файл."));
         return;
     }
     filePath = normalizePath(filePath);
@@ -464,7 +464,7 @@ void AddProcessDialog::addFromClipboard() {
         text = QApplication::clipboard()->text().trimmed();
     }
     if (text.isEmpty()) {
-        QMessageBox::warning(this, tr("Error"), tr("Clipboard is empty."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Буфер обмена пуст."));
         return;
     }
     text = text.split(QRegularExpression("[\r\n]"), kSkipEmptyParts).value(0).trimmed();
@@ -473,7 +473,7 @@ void AddProcessDialog::addFromClipboard() {
     }
     text = normalizePath(text);
     if (text.isEmpty()) {
-        QMessageBox::warning(this, tr("Error"), tr("Clipboard does not contain executable path."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("В буфере обмена нет пути к исполняемому файлу."));
         return;
     }
     const bool matchByPath = clipboardMatchMode_->currentData().toString() == "path";
@@ -487,7 +487,7 @@ void AddProcessDialog::addFromClipboard() {
 } // namespace
 
 DialogAppRouting::DialogAppRouting(QWidget *parent) : QDialog(parent) {
-    setWindowTitle(tr("Application routing"));
+    setWindowTitle(tr("Маршрутизация приложений"));
     resize(940, 620);
 
     auto *rootLayout = new QVBoxLayout(this);
@@ -495,19 +495,19 @@ DialogAppRouting::DialogAppRouting(QWidget *parent) : QDialog(parent) {
     rootLayout->setSpacing(10);
 
     auto *desc = new QLabel(
-        tr("Simple setup: choose which applications use Proxy/TUN, and which go Direct."),
+        tr("Простой режим: выберите, какие приложения идут через Proxy/TUN, а какие - напрямую."),
         this);
     desc->setWordWrap(true);
     rootLayout->addWidget(desc);
 
-    auto *modeBox = new QGroupBox(tr("Mode"), this);
+    auto *modeBox = new QGroupBox(tr("Режим"), this);
     auto *modeLayout = new QVBoxLayout(modeBox);
     modeLayout->setContentsMargins(10, 10, 10, 10);
     modeLayout->setSpacing(6);
     modeGroup_ = new QButtonGroup(this);
-    modeAllRadio_ = new QRadioButton(tr("By default: all applications through Proxy/TUN"), modeBox);
-    modeAllowRadio_ = new QRadioButton(tr("Only selected applications through Proxy/TUN"), modeBox);
-    modeBlockRadio_ = new QRadioButton(tr("All through Proxy/TUN except selected"), modeBox);
+    modeAllRadio_ = new QRadioButton(tr("По умолчанию: все приложения через Proxy/TUN"), modeBox);
+    modeAllowRadio_ = new QRadioButton(tr("Только выбранные приложения через Proxy/TUN"), modeBox);
+    modeBlockRadio_ = new QRadioButton(tr("Все через Proxy/TUN, кроме выбранных"), modeBox);
     modeGroup_->addButton(modeAllRadio_, 0);
     modeGroup_->addButton(modeAllowRadio_, 1);
     modeGroup_->addButton(modeBlockRadio_, 2);
@@ -526,12 +526,12 @@ DialogAppRouting::DialogAppRouting(QWidget *parent) : QDialog(parent) {
 
     auto *toolbar = new QHBoxLayout;
     searchEdit_ = new QLineEdit(rulesGroup_);
-    searchEdit_->setPlaceholderText(tr("Search in list"));
-    addButton_ = new QPushButton(tr("Add application"), rulesGroup_);
-    removeButton_ = new QPushButton(tr("Remove"), rulesGroup_);
-    importButton_ = new QPushButton(tr("Import"), rulesGroup_);
-    exportButton_ = new QPushButton(tr("Export"), rulesGroup_);
-    checkButton_ = new QPushButton(tr("Check rule"), rulesGroup_);
+    searchEdit_->setPlaceholderText(tr("Поиск в списке"));
+    addButton_ = new QPushButton(tr("Добавить приложение"), rulesGroup_);
+    removeButton_ = new QPushButton(tr("Удалить"), rulesGroup_);
+    importButton_ = new QPushButton(tr("Импорт"), rulesGroup_);
+    exportButton_ = new QPushButton(tr("Экспорт"), rulesGroup_);
+    checkButton_ = new QPushButton(tr("Проверить правило"), rulesGroup_);
     toolbar->addWidget(searchEdit_, 1);
     toolbar->addWidget(addButton_, 0);
     toolbar->addWidget(removeButton_, 0);
@@ -542,7 +542,7 @@ DialogAppRouting::DialogAppRouting(QWidget *parent) : QDialog(parent) {
 
     rulesTable_ = new QTableWidget(rulesGroup_);
     rulesTable_->setColumnCount(3);
-    rulesTable_->setHorizontalHeaderLabels({tr("Application"), tr("Match"), tr("Value")});
+    rulesTable_->setHorizontalHeaderLabels({tr("Приложение"), tr("Сопоставление"), tr("Значение")});
     rulesTable_->setSelectionBehavior(QAbstractItemView::SelectRows);
     rulesTable_->setSelectionMode(QAbstractItemView::ExtendedSelection);
     rulesTable_->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -604,19 +604,19 @@ void DialogAppRouting::loadFromDataStore() {
 void DialogAppRouting::syncModeUi() {
     const auto mode = currentMode();
     if (mode == Mode::AllThroughProxy) {
-        rulesGroup_->setTitle(tr("Lists are disabled"));
-        modeHintLabel_->setText(tr("Everything goes through Proxy/TUN. Use this if you don't need per-app rules."));
+        rulesGroup_->setTitle(tr("Списки отключены"));
+        modeHintLabel_->setText(tr("Весь трафик идет через Proxy/TUN. Используйте этот режим, если правила по приложениям не нужны."));
     } else if (mode == Mode::OnlySelected) {
-        rulesGroup_->setTitle(tr("Applications through Proxy/TUN"));
-        modeHintLabel_->setText(tr("Useful for games or selected programs. Other applications go Direct."));
+        rulesGroup_->setTitle(tr("Приложения через Proxy/TUN"));
+        modeHintLabel_->setText(tr("Подходит для игр или отдельных программ. Остальные приложения идут напрямую."));
     } else {
-        rulesGroup_->setTitle(tr("Direct exceptions"));
-        modeHintLabel_->setText(tr("Useful when most traffic goes through Proxy/TUN, except selected applications."));
+        rulesGroup_->setTitle(tr("Исключения (напрямую)"));
+        modeHintLabel_->setText(tr("Подходит, когда основной трафик идет через Proxy/TUN, кроме выбранных приложений."));
     }
 
     if (!NekoGui::dataStore->spmode_vpn) {
         modeHintLabel_->setText(modeHintLabel_->text() + "\n" +
-                                tr("Note: process routing is applied in TUN mode."));
+                                tr("Примечание: маршрутизация по процессам применяется в режиме TUN."));
     }
 
     const bool listEnabled = mode != Mode::AllThroughProxy;
@@ -671,7 +671,7 @@ void DialogAppRouting::addRule() {
         ++added;
     }
     if (added == 0) {
-        QMessageBox::information(this, tr("Already added"), tr("Selected application already exists in the list."));
+        QMessageBox::information(this, tr("Уже добавлено"), tr("Выбранное приложение уже есть в списке."));
     }
     refreshRulesTable();
 }
@@ -705,21 +705,21 @@ void DialogAppRouting::showRulesContextMenu(const QPoint &pos) {
     auto &entry = rules_[sourceIndex];
 
     QMenu menu(this);
-    auto *renameAction = menu.addAction(tr("Rename display name"));
-    auto *copyAction = menu.addAction(tr("Copy value"));
+    auto *renameAction = menu.addAction(tr("Переименовать отображаемое имя"));
+    auto *copyAction = menu.addAction(tr("Копировать значение"));
     QAction *openFolderAction = nullptr;
     if (entry.matchType == AppRoutingRules::MatchType::ProcessPath) {
-        openFolderAction = menu.addAction(tr("Open containing folder"));
+        openFolderAction = menu.addAction(tr("Открыть папку файла"));
     }
     menu.addSeparator();
-    auto *deleteAction = menu.addAction(tr("Delete"));
+    auto *deleteAction = menu.addAction(tr("Удалить"));
 
     const auto chosen = menu.exec(rulesTable_->viewport()->mapToGlobal(pos));
     if (chosen == nullptr) return;
     if (chosen == renameAction) {
         bool ok = false;
-        const auto value = QInputDialog::getText(this, tr("Rename"),
-                                                 tr("Display name"),
+        const auto value = QInputDialog::getText(this, tr("Переименовать"),
+                                                 tr("Отображаемое имя"),
                                                  QLineEdit::Normal,
                                                  entry.displayName,
                                                  &ok).trimmed();
@@ -747,19 +747,19 @@ void DialogAppRouting::showRulesContextMenu(const QPoint &pos) {
 }
 
 void DialogAppRouting::importRules() {
-    const auto fileName = QFileDialog::getOpenFileName(this, tr("Import rules"), {}, tr("JSON files (*.json);;All files (*)"));
+    const auto fileName = QFileDialog::getOpenFileName(this, tr("Импорт правил"), {}, tr("JSON файлы (*.json);;Все файлы (*)"));
     if (fileName.isEmpty()) return;
 
     QFile file(fileName);
     if (!file.open(QIODevice::ReadOnly)) {
-        QMessageBox::warning(this, tr("Error"), tr("Cannot open file."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Не удалось открыть файл."));
         return;
     }
     QJsonParseError error{};
     const auto document = QJsonDocument::fromJson(file.readAll(), &error);
     file.close();
     if (error.error != QJsonParseError::NoError || !document.isObject()) {
-        QMessageBox::warning(this, tr("Error"), tr("Invalid JSON format."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Некорректный формат JSON."));
         return;
     }
 
@@ -790,9 +790,9 @@ void DialogAppRouting::importRules() {
 
 void DialogAppRouting::exportRules() {
     const auto fileName = QFileDialog::getSaveFileName(this,
-                                                       tr("Export rules"),
+                                                       tr("Экспорт правил"),
                                                        "app-routing-rules.json",
-                                                       tr("JSON files (*.json)"));
+                                                       tr("JSON файлы (*.json)"));
     if (fileName.isEmpty()) return;
 
     QJsonArray entries;
@@ -811,7 +811,7 @@ void DialogAppRouting::exportRules() {
 
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        QMessageBox::warning(this, tr("Error"), tr("Cannot write file."));
+        QMessageBox::warning(this, tr("Ошибка"), tr("Не удалось записать файл."));
         return;
     }
     file.write(QJsonDocument(root).toJson(QJsonDocument::Indented));
@@ -822,16 +822,16 @@ void DialogAppRouting::checkRuleRouting() {
     const auto mode = currentMode();
     if (mode == Mode::AllThroughProxy) {
         QMessageBox::information(this,
-                                 tr("Rule check"),
-                                 tr("Result: all applications go through Proxy/TUN."));
+                                 tr("Проверка правила"),
+                                 tr("Результат: все приложения идут через Proxy/TUN."));
         return;
     }
     if (rules_.isEmpty()) {
         QMessageBox::information(this,
-                                 tr("Rule check"),
+                                 tr("Проверка правила"),
                                  mode == Mode::OnlySelected
-                                     ? tr("List is empty: all applications will go Direct.")
-                                     : tr("List is empty: all applications will go through Proxy/TUN."));
+                                     ? tr("Список пуст: все приложения будут идти напрямую.")
+                                     : tr("Список пуст: все приложения будут идти через Proxy/TUN."));
         return;
     }
 
@@ -842,18 +842,18 @@ void DialogAppRouting::checkRuleRouting() {
     }
     bool ok = false;
     const auto chosen = QInputDialog::getItem(this,
-                                              tr("Rule check"),
-                                              tr("Choose application from list"),
+                                              tr("Проверка правила"),
+                                              tr("Выберите приложение из списка"),
                                               appNames,
                                               0,
                                               false,
                                               &ok);
     if (!ok || chosen.isEmpty()) return;
 
-    const auto result = (mode == Mode::OnlySelected) ? tr("Proxy/TUN") : tr("Direct");
+    const auto result = (mode == Mode::OnlySelected) ? tr("Proxy/TUN") : tr("Напрямую");
     QMessageBox::information(this,
-                             tr("Rule check"),
-                             tr("For selected application: %1").arg(result));
+                             tr("Проверка правила"),
+                             tr("Для выбранного приложения: %1").arg(result));
 }
 
 void DialogAppRouting::accept() {

@@ -1076,21 +1076,21 @@ Direct: -</string>
               <item>
                <widget class="QLabel" name="rules_active_label">
                 <property name="text">
-                 <string>Active routing: Default</string>
+                  <string>Активная маршрутизация: Default</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QPushButton" name="rules_open">
                 <property name="text">
-                 <string>Open routing settings</string>
+                  <string>Открыть настройки маршрутизации</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="rules_app_summary">
                 <property name="text">
-                 <string>App routing: all applications through Proxy/TUN</string>
+                  <string>Маршрутизация приложений: все через Proxy/TUN</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -1100,7 +1100,7 @@ Direct: -</string>
               <item>
                <widget class="QPushButton" name="rules_app_routing">
                 <property name="text">
-                 <string>Open application routing</string>
+                  <string>Открыть маршрутизацию приложений</string>
                 </property>
                </widget>
               </item>
