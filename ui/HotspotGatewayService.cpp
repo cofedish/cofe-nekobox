@@ -235,7 +235,7 @@ public:
             HotspotDeviceInfo d;
             d.ip = m.captured(1).trimmed();
             d.mac = m.captured(2).trimmed().toLower();
-            d.hostname = {};
+            d.hostname.clear();
             d.lastSeen = QDateTime::currentDateTime();
             out.push_back(d);
         }
@@ -453,7 +453,7 @@ public:
             HotspotDeviceInfo d;
             d.ip = parts.at(0).trimmed();
             d.mac = parts.at(1).trimmed().toLower();
-            d.hostname = {};
+            d.hostname.clear();
             d.lastSeen = QDateTime::currentDateTime();
             out.push_back(d);
         }
