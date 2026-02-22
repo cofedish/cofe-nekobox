@@ -2,7 +2,10 @@
 
 #include "main/NekoGui.hpp"
 
+#include <QApplication>
+#include <QIcon>
 #include <QPainter>
+#include <QStyle>
 
 QPixmap Icon::GetTrayIcon(Icon::TrayIconStatus status) {
     QPixmap pixmap;
@@ -18,6 +21,21 @@ QPixmap Icon::GetTrayIcon(Icon::TrayIconStatus status) {
     // user icon
     pixmap_read = QPixmap("./" + software_name.toLower() + ".png");
     if (!pixmap_read.isNull()) pixmap = pixmap_read;
+
+    if (pixmap.isNull()) {
+        pixmap = QPixmap(":/cofebox/cofebox.png");
+    }
+    if (pixmap.isNull()) {
+        const auto fallback = QIcon::fromTheme("cofebox");
+        if (!fallback.isNull()) pixmap = fallback.pixmap(64, 64);
+    }
+    if (pixmap.isNull()) {
+        const auto fallback = QIcon::fromTheme("applications-internet");
+        if (!fallback.isNull()) pixmap = fallback.pixmap(64, 64);
+    }
+    if (pixmap.isNull()) {
+        pixmap = QApplication::style()->standardIcon(QStyle::SP_ComputerIcon).pixmap(64, 64);
+    }
 
     if (status == TrayIconStatus::NONE) return pixmap;
 

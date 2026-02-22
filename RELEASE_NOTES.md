@@ -1,3 +1,9 @@
+# Release 1.4.3
+
+- Linux zip: fixed right-click behavior on tray icon (context menu now opens reliably).
+- Linux zip: fixed drawer/sidebar scrollbar styling in System theme (no broken black track).
+- Fixed app icon fallback chain for window title/taskbar/tray to prevent incorrect placeholder icon.
+
 # Release 1.2.0
 
 - Fixed Home status/profile line truncation: now uses full available width and elides only on real overflow.

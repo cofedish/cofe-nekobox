@@ -71,6 +71,7 @@
 #include <QFrame>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QCursor>
 #include <QStyle>
 #include <QSizePolicy>
 #include <QDir>
@@ -199,6 +200,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         }
     }
     ui->about_text->setText(tr("Qt-based proxy manager for sing-box.\nVersion: %1").arg(AppInfo::Version()));
+    const QIcon appIcon(Icon::GetTrayIcon(Icon::NONE));
+    if (!appIcon.isNull()) {
+        QApplication::setWindowIcon(appIcon);
+        setWindowIcon(appIcon);
+    }
     ui->drawer_toggle->setText(QString(QChar(0x2630)));
     if (ui->home_center != nullptr) {
         ui->home_center->setMaximumWidth(QWIDGETSIZE_MAX);
@@ -715,7 +721,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     tray->setContextMenu(ui->menu_program); // attach tray menu
     tray->show();                           // show tray icon
     connect(tray, &QSystemTrayIcon::activated, this, [=](QSystemTrayIcon::ActivationReason reason) {
-        if (reason == QSystemTrayIcon::Trigger) {
+        if (reason == QSystemTrayIcon::Context) {
+            if (ui->menu_program != nullptr) {
+                ui->menu_program->popup(QCursor::pos());
+            }
+            return;
+        }
+
+        if (reason == QSystemTrayIcon::Trigger || reason == QSystemTrayIcon::DoubleClick) {
             if (this->isVisible()) {
                 hide();
             } else {
@@ -1705,7 +1718,13 @@ void MainWindow::refresh_status(const QString &traffic_update) {
 
     // refresh title & window icon
     setWindowTitle(make_title(false));
-    if (icon_status_new != icon_status) QApplication::setWindowIcon(Icon::GetTrayIcon(Icon::NONE));
+    if (icon_status_new != icon_status) {
+        const QIcon appIcon(Icon::GetTrayIcon(Icon::NONE));
+        if (!appIcon.isNull()) {
+            QApplication::setWindowIcon(appIcon);
+            setWindowIcon(appIcon);
+        }
+    }
 
     // refresh tray
     if (tray != nullptr) {
