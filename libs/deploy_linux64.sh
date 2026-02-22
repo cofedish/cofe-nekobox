@@ -7,8 +7,29 @@ rm -rf $DEST
 mkdir -p $DEST
 
 #### copy binary ####
-cp $BUILD/cofebox $DEST
+cp $BUILD/cofebox $DEST/cofebox-bin
 [ -f "$BUILD/cofebox-net-helper" ] && cp "$BUILD/cofebox-net-helper" "$DEST"
+
+cat >"$DEST/cofebox" <<'EOF'
+#!/bin/sh
+set -eu
+
+SELF_DIR="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)"
+APP_BIN="$SELF_DIR/cofebox-bin"
+
+if [ -d "$SELF_DIR/usr/lib" ]; then
+  export LD_LIBRARY_PATH="$SELF_DIR/usr/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+fi
+if [ -d "$SELF_DIR/usr/plugins" ]; then
+  export QT_PLUGIN_PATH="$SELF_DIR/usr/plugins${QT_PLUGIN_PATH:+:$QT_PLUGIN_PATH}"
+fi
+if [ -d "$SELF_DIR/usr/qml" ]; then
+  export QML2_IMPORT_PATH="$SELF_DIR/usr/qml${QML2_IMPORT_PATH:+:$QML2_IMPORT_PATH}"
+fi
+
+exec "$APP_BIN" "$@"
+EOF
+chmod +x "$DEST/cofebox"
 
 #### Download: prebuilt runtime ####
 curl -Lso usr.zip https://github.com/MatsuriDayo/nekoray_qt_runtime/releases/download/20220503/20230202-5.12.8-ubuntu20.04-linux64.zip
