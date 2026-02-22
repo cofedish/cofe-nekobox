@@ -2,6 +2,7 @@
 #include "db/Database.hpp"
 #include "fmt/includes.h"
 #include "fmt/Preset.hpp"
+#include "main/ProcessRoutingRules.hpp"
 
 #include <QApplication>
 #include <QFile>
@@ -667,13 +668,19 @@ namespace NekoGui {
 
         // tun user rule
         if (dataStore->vpn_internal_tun && dataStore->spmode_vpn && !status->forTest) {
-            auto match_out = dataStore->vpn_rule_white ? "proxy" : "bypass";
+            auto match_out = dataStore->vpn_rule_white ? tagProxy : QStringLiteral("bypass");
 
-            QString process_name_rule = dataStore->vpn_rule_process.trimmed();
-            if (!process_name_rule.isEmpty()) {
-                auto arr = SplitLinesSkipSharp(process_name_rule);
+            const auto processRules = AppRoutingRules::Parse(dataStore->vpn_rule_process);
+            const auto processNames = AppRoutingRules::CollectValues(processRules, AppRoutingRules::MatchType::ProcessName);
+            if (!processNames.isEmpty()) {
                 QJsonObject rule{{"outbound", match_out},
-                                 {"process_name", QList2QJsonArray(arr)}};
+                                 {"process_name", QList2QJsonArray(processNames)}};
+                status->routingRules += rule;
+            }
+            const auto processPaths = AppRoutingRules::CollectValues(processRules, AppRoutingRules::MatchType::ProcessPath);
+            if (!processPaths.isEmpty()) {
+                QJsonObject rule{{"outbound", match_out},
+                                 {"process_path", QList2QJsonArray(processPaths)}};
                 status->routingRules += rule;
             }
 
@@ -688,8 +695,16 @@ namespace NekoGui {
             auto autoBypassExternalProcessPaths = getAutoBypassExternalProcessPaths(status->result);
             if (!autoBypassExternalProcessPaths.isEmpty()) {
                 QJsonObject rule{{"outbound", "bypass"},
-                                 {"process_name", QList2QJsonArray(autoBypassExternalProcessPaths)}};
+                                 {"process_path", QList2QJsonArray(autoBypassExternalProcessPaths)}};
                 status->routingRules += rule;
+            }
+
+            // Allowlist mode: only selected apps use proxy/tun, all other tun traffic is direct.
+            if (dataStore->vpn_rule_white) {
+                status->routingRules += QJsonObject{
+                    {"inbound", QJsonArray{"tun-in"}},
+                    {"outbound", "bypass"},
+                };
             }
         }
 
@@ -747,12 +762,20 @@ namespace NekoGui {
         auto match_out = dataStore->vpn_rule_white ? "cofebox-socks" : "direct";
         auto no_match_out = dataStore->vpn_rule_white ? "direct" : "cofebox-socks";
 
-        QString process_name_rule = dataStore->vpn_rule_process.trimmed();
-        if (!process_name_rule.isEmpty()) {
-            auto arr = SplitLinesSkipSharp(process_name_rule);
+        QString process_name_rule;
+        QString process_path_rule;
+        const auto processRules = AppRoutingRules::Parse(dataStore->vpn_rule_process);
+        const auto processNames = AppRoutingRules::CollectValues(processRules, AppRoutingRules::MatchType::ProcessName);
+        if (!processNames.isEmpty()) {
             QJsonObject rule{{"outbound", match_out},
-                             {"process_name", QList2QJsonArray(arr)}};
+                             {"process_name", QList2QJsonArray(processNames)}};
             process_name_rule = "," + QJsonObject2QString(rule, false);
+        }
+        const auto processPaths = AppRoutingRules::CollectValues(processRules, AppRoutingRules::MatchType::ProcessPath);
+        if (!processPaths.isEmpty()) {
+            QJsonObject rule{{"outbound", match_out},
+                             {"process_path", QList2QJsonArray(processPaths)}};
+            process_path_rule = "," + QJsonObject2QString(rule, false);
         }
 
         QString cidr_rule = dataStore->vpn_rule_cidr.trimmed();
@@ -778,6 +801,7 @@ namespace NekoGui {
                           .replace("//%IPV6_ADDRESS%", dataStore->vpn_ipv6 ? R"("inet6_address": "fdfe:dcba:9876::1/126",)" : "")
                           .replace("//%SOCKS_USER_PASS%", socks_user_pass)
                           .replace("//%PROCESS_NAME_RULE%", process_name_rule)
+                          .replace("//%PROCESS_PATH_RULE%", process_path_rule)
                           .replace("//%CIDR_RULE%", cidr_rule)
                           .replace("%MTU%", Int2String(dataStore->vpn_mtu))
                           .replace("%STACK%", Preset::SingBox::VpnImplementation.value(dataStore->vpn_implementation))

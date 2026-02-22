@@ -137,6 +137,7 @@
                 "outbound": "direct"
             }
             //%PROCESS_NAME_RULE%
+            //%PROCESS_PATH_RULE%
             //%CIDR_RULE%
             ,
             {
