@@ -6,24 +6,17 @@ on:
   pull_request:
     branches: [main]
   schedule:
-    # Run weekly on Monday at 08:00 UTC
     - cron: "0 8 * * 1"
   workflow_dispatch:
 
 permissions:
   contents: read
-  security-events: write  # required for CodeQL / SARIF upload
+  security-events: write
 
 jobs:
-  # ──────────────────────────────────────────────
-  # 1. Go security scanning (gosec + govulncheck)
-  # ──────────────────────────────────────────────
   go-security:
     name: Go Security (gosec + govulncheck)
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: go
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,37 +25,73 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: "^1.22"
-          cache-dependency-path: go/go.sum
+          cache-dependency-path: |
+            go/**/go.sum
 
-      - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
-
-      - name: Run gosec
+      - name: Install scanners
         run: |
-          gosec -fmt sarif -out gosec-results.sarif ./... || true
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          go install golang.org/x/vuln/cmd/govulncheck@latest
 
-      - name: Upload gosec SARIF
-        uses: github/codeql-action/upload-sarif@v3
-        with:
-          sarif_file: go/gosec-results.sarif
-          category: gosec
+      - name: Run gosec for each Go module
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t modules < <(find go -name go.mod -type f -print | sed 's#/go.mod$##' | sort -u)
+          if [ ${#modules[@]} -eq 0 ]; then
+            echo "No Go modules found under go/. Skipping gosec."
+            exit 0
+          fi
 
-      - name: Install govulncheck
-        run: go install golang.org/x/vuln/cmd/govulncheck@latest
+          for mod in "${modules[@]}"; do
+            echo "::group::gosec ${mod}"
+            (cd "$mod" && gosec ./...) || true
+            echo "::endgroup::"
+          done
 
-      - name: Run govulncheck
-        run: govulncheck ./...
+      - name: Run govulncheck for each Go module
+        shell: bash
+        run: |
+          set -euo pipefail
+          mapfile -t modules < <(find go -name go.mod -type f -print | sed 's#/go.mod$##' | sort -u)
+          if [ ${#modules[@]} -eq 0 ]; then
+            echo "No Go modules found under go/. Skipping govulncheck."
+            exit 0
+          fi
 
-  # ──────────────────────────────────────────────
-  # 2. CodeQL analysis (C++ + Go)
-  # ──────────────────────────────────────────────
-  codeql:
-    name: CodeQL Analysis
+          for mod in "${modules[@]}"; do
+            echo "::group::govulncheck ${mod}"
+            (cd "$mod" && govulncheck ./...)
+            echo "::endgroup::"
+          done
+
+  codeql-go:
+    name: CodeQL Analysis (Go)
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        language: [cpp, go]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: go
+          queries: security-extended
+          build-mode: none
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: "^1.22"
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+        with:
+          category: codeql-go
+
+  codeql-cpp:
+    name: CodeQL Analysis (C++)
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -72,26 +101,36 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
-          languages: ${{ matrix.language }}
+          languages: cpp
           queries: security-extended
+          build-mode: manual
 
-      - name: Setup Go (for Go analysis)
-        if: matrix.language == 'go'
-        uses: actions/setup-go@v5
-        with:
-          go-version: "^1.22"
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            cmake \
+            ninja-build \
+            qtbase5-dev \
+            qttools5-dev \
+            libqt5svg5-dev
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v3
+      - name: Build for CodeQL extraction
+        run: |
+          cmake -S . -B _codeql_build \
+            -GNinja \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DNKR_NO_GRPC=ON \
+            -DNKR_NO_YAML=ON \
+            -DNKR_NO_ZXING=ON \
+            -DNKR_NO_QHOTKEY=ON
+          cmake --build _codeql_build --parallel
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
         with:
-          category: codeql-${{ matrix.language }}
+          category: codeql-cpp
 
-  # ──────────────────────────────────────────────
-  # 3. Dependency vulnerability scan (Trivy)
-  # ──────────────────────────────────────────────
   trivy-scan:
     name: Trivy Dependency Scan
     runs-on: ubuntu-latest
@@ -107,7 +146,6 @@ jobs:
           format: "sarif"
           output: "trivy-results.sarif"
           severity: "CRITICAL,HIGH"
-          # Scan Go modules, C/C++ (via lock files), and configuration files
           scanners: "vuln,secret,misconfig"
 
       - name: Upload Trivy SARIF
@@ -116,9 +154,6 @@ jobs:
           sarif_file: trivy-results.sarif
           category: trivy
 
-  # ──────────────────────────────────────────────
-  # 4. Secret scanning (Gitleaks)
-  # ──────────────────────────────────────────────
   secret-scan:
     name: Secret Scanning (Gitleaks)
     runs-on: ubuntu-latest
@@ -126,7 +161,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # full history for secret scanning
+          fetch-depth: 0
 
       - name: Run Gitleaks
         uses: gitleaks/gitleaks-action@v2
