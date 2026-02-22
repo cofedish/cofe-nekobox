@@ -11,7 +11,6 @@
 #ifdef Q_OS_WIN
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
-#include <shellapi.h>
 #endif
 
 namespace {
@@ -136,7 +135,20 @@ int clearLinux(const QString &apIf, const QString &apCidr, const QString &tunIf)
 
 #ifdef Q_OS_WIN
 bool isAdmin() {
-    return IsUserAnAdmin() != FALSE;
+    SID_IDENTIFIER_AUTHORITY ntAuthority = SECURITY_NT_AUTHORITY;
+    PSID adminGroup = nullptr;
+    if (!AllocateAndInitializeSid(&ntAuthority,
+                                  2,
+                                  SECURITY_BUILTIN_DOMAIN_RID,
+                                  DOMAIN_ALIAS_RID_ADMINS,
+                                  0, 0, 0, 0, 0, 0,
+                                  &adminGroup)) {
+        return false;
+    }
+    BOOL isMember = FALSE;
+    const BOOL ok = CheckTokenMembership(nullptr, adminGroup, &isMember);
+    FreeSid(adminGroup);
+    return ok == TRUE && isMember == TRUE;
 }
 
 int runPowerShell(const QString &script, const QStringList &args) {

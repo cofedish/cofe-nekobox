@@ -292,6 +292,7 @@ add_executable(cofebox_net_helper
 target_link_libraries(cofebox_net_helper PRIVATE Qt${QT_VERSION_MAJOR}::Core)
 if (WIN32)
     target_link_libraries(cofebox_net_helper PRIVATE shell32)
+    target_link_libraries(cofebox_net_helper PRIVATE advapi32)
 endif ()
 set_target_properties(cofebox_net_helper PROPERTIES
         OUTPUT_NAME "cofebox-net-helper"
