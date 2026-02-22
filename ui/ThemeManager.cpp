@@ -377,7 +377,8 @@ void ThemeManager::ApplyTheme(const QString &theme) {
         }
         ThemeTokens tokens = TokensLight();
         if (normalized == "system") {
-            auto palette = qApp->palette();
+            auto palette = system_style != nullptr ? system_style->standardPalette() : qApp->palette();
+            qApp->setPalette(palette);
             tokens = TokensFromPalette(palette);
         } else if (normalized == "lucifer") {
             tokens = TokensLucifer();

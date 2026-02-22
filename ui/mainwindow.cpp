@@ -1008,7 +1008,7 @@ void MainWindow::setupHotspotUi() {
     connect(hotspotToggle_, &QCheckBox::clicked, this, [this](bool checked) {
         if (checked) {
             if (!NekoGui::dataStore->spmode_vpn) {
-                show_toast_error(tr("Hotspot is enabled, but internet is not shared: check tunnel connection."));
+                show_toast_error(tr("Enable TUN mode first, then start hotspot sharing."));
                 QSignalBlocker blocker(hotspotToggle_);
                 hotspotToggle_->setChecked(false);
                 return;
@@ -1030,7 +1030,7 @@ void MainWindow::setupHotspotUi() {
     });
     connect(hotspotStartButton_, &QPushButton::clicked, this, [this] {
         if (!NekoGui::dataStore->spmode_vpn) {
-            show_toast_error(tr("Hotspot is enabled, but internet is not shared: check tunnel connection."));
+            show_toast_error(tr("Enable TUN mode first, then start hotspot sharing."));
             return;
         }
         if (!hotspotService_->start()) {
@@ -1129,14 +1129,21 @@ void MainWindow::syncHotspotUi() {
 
     const bool busy = state == HotspotGatewayService::State::Starting || state == HotspotGatewayService::State::Stopping;
     const bool running = state == HotspotGatewayService::State::Running;
+    const bool tunEnabled = NekoGui::dataStore->spmode_vpn;
+
+    if (!tunEnabled && !running && state == HotspotGatewayService::State::Idle) {
+        statusText = tr("Enable TUN mode first, then start hotspot sharing.");
+        if (hotspotStatusLabel_ != nullptr) hotspotStatusLabel_->setText(statusText);
+    }
+
     if (hotspotToggle_ != nullptr) {
         QSignalBlocker blocker(hotspotToggle_);
         hotspotToggle_->setChecked(running);
-        hotspotToggle_->setEnabled(!busy);
+        hotspotToggle_->setEnabled(!busy && (tunEnabled || running));
     }
-    if (hotspotStartButton_ != nullptr) hotspotStartButton_->setEnabled(!busy && !running);
+    if (hotspotStartButton_ != nullptr) hotspotStartButton_->setEnabled(!busy && !running && tunEnabled);
     if (hotspotStopButton_ != nullptr) hotspotStopButton_->setEnabled(!busy && running);
-    if (hotspotDiagButton_ != nullptr) hotspotDiagButton_->setEnabled(!busy);
+    if (hotspotDiagButton_ != nullptr) hotspotDiagButton_->setEnabled(!busy && running);
     if (hotspotCopyPassButton_ != nullptr) hotspotCopyPassButton_->setEnabled(!runtime.password.isEmpty());
     if (hotspotRegenButton_ != nullptr) hotspotRegenButton_->setEnabled(!busy);
     if (hotspotQrButton_ != nullptr) hotspotQrButton_->setEnabled(!runtime.ssid.isEmpty() && !runtime.password.isEmpty());
