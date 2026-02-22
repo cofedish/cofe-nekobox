@@ -7,6 +7,11 @@
 #include <QElapsedTimer>
 #include <QRegularExpression>
 #include <QSet>
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+#include <QTextCodec>
+#else
+#include <QStringDecoder>
+#endif
 
 namespace {
 QString envKeyOf(const QString &entry) {
@@ -60,6 +65,26 @@ QStringList redactEnvForLog(const QStringList &env) {
     }
     return redacted;
 }
+
+QString decodeProcessOutput(const QByteArray &data) {
+    if (data.isEmpty()) return {};
+    const auto utf8 = QString::fromUtf8(data.constData(), data.size());
+    if (!utf8.contains(QChar::ReplacementCharacter)) {
+        return utf8;
+    }
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    QStringDecoder decoder(QStringDecoder::System);
+    const auto local = decoder.decode(data);
+    if (!local.isEmpty()) return local;
+#else
+    auto *codec = QTextCodec::codecForLocale();
+    if (codec != nullptr) {
+        const auto local = codec->toUnicode(data);
+        if (!local.isEmpty()) return local;
+    }
+#endif
+    return utf8;
+}
 } // namespace
 
 namespace NekoGui_sys {
@@ -79,12 +104,12 @@ namespace NekoGui_sys {
 
         if (managed) {
             connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-                auto log = readAllStandardOutput();
+                const auto log = decodeProcessOutput(readAllStandardOutput());
                 if (logCounter.fetchAndAddRelaxed(log.count("\n")) > NekoGui::dataStore->max_log_line) return;
                 MW_show_log_ext_vt100(log);
             });
             connect(this, &QProcess::readyReadStandardError, this, [&]() {
-                MW_show_log_ext_vt100(readAllStandardError().trimmed());
+                MW_show_log_ext_vt100(decodeProcessOutput(readAllStandardError()).trimmed());
             });
             connect(this, &QProcess::errorOccurred, this, [&](QProcess::ProcessError error) {
                 if (!killed) {
@@ -140,7 +165,7 @@ namespace NekoGui_sys {
         ExternalProcess::arguments = args;
 
         connect(this, &QProcess::readyReadStandardOutput, this, [&]() {
-            auto log = readAllStandardOutput();
+            const auto log = decodeProcessOutput(readAllStandardOutput());
             if (!NekoGui::dataStore->core_running) {
                 if (log.contains("grpc server listening")) {
                     // The core really started
@@ -158,7 +183,7 @@ namespace NekoGui_sys {
             MW_show_log(log);
         });
         connect(this, &QProcess::readyReadStandardError, this, [&]() {
-            auto log = readAllStandardError().trimmed();
+            const auto log = decodeProcessOutput(readAllStandardError()).trimmed();
             if (show_stderr) {
                 MW_show_log(log);
                 return;

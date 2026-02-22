@@ -17,6 +17,9 @@
 #include <QRegularExpression>
 #include <QDateTime>
 #include <QLocale>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QStringConverter>
+#endif
 
 #ifdef Q_OS_WIN
 #include "sys/windows/guihelper.h"
@@ -140,6 +143,11 @@ QString ReadFileText(const QString &path) {
     QFile file(path);
     file.open(QFile::ReadOnly | QFile::Text);
     QTextStream stream(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    stream.setEncoding(QStringConverter::Utf8);
+#else
+    stream.setCodec("UTF-8");
+#endif
     return stream.readAll();
 }
 
