@@ -14,6 +14,10 @@
 #include "sys/windows/guihelper.h"
 #endif
 
+#ifdef Q_OS_LINUX
+#include <unistd.h>
+#endif
+
 namespace {
 
 struct CommandResult {
@@ -96,6 +100,27 @@ QString tunDefaultName() {
     return QStringLiteral("cofebox-tun");
 #endif
 }
+
+QString firstUsefulLine(const QString &text) {
+    const auto lines = text.split('\n');
+    for (const auto &raw : lines) {
+        const auto line = raw.trimmed();
+        if (line.isEmpty()) continue;
+        if (line.startsWith('+') || line.startsWith("~")) continue;
+        if (line.startsWith("CategoryInfo", Qt::CaseInsensitive)) continue;
+        if (line.startsWith("FullyQualifiedErrorId", Qt::CaseInsensitive)) continue;
+        return line;
+    }
+    return text.trimmed();
+}
+
+#ifdef Q_OS_LINUX
+bool interfaceExistsLinux(const QString &ifName) {
+    if (!looksLikeInterfaceName(ifName)) return false;
+    const auto r = runCommand("ip", {"link", "show", "dev", ifName});
+    return r.exitCode == 0;
+}
+#endif
 
 // ----------------- Linux -----------------
 
@@ -259,6 +284,18 @@ public:
             if (error != nullptr) *error = QObject::tr("Invalid hotspot interfaces for routing.");
             return false;
         }
+        if (!interfaceExistsLinux(info.tunIf)) {
+            if (error != nullptr) {
+                *error = QObject::tr("TUN interface \"%1\" was not found. Start proxy in TUN mode first.").arg(info.tunIf);
+            }
+            return false;
+        }
+        if (!interfaceExistsLinux(info.apIf)) {
+            if (error != nullptr) {
+                *error = QObject::tr("Hotspot interface \"%1\" was not found.").arg(info.apIf);
+            }
+            return false;
+        }
 
         QStringList args = {
             helper,
@@ -308,30 +345,47 @@ public:
             if (!pass) success = false;
         };
 
+        if (info.apIf.trimmed().isEmpty()) {
+            if (ok != nullptr) *ok = false;
+            return QObject::tr("Hotspot is not running. Start hotspot first.");
+        }
+        if (info.tunIf.trimmed().isEmpty()) {
+            if (ok != nullptr) *ok = false;
+            return QObject::tr("TUN interface is not set. Enable TUN mode first.");
+        }
+
         const auto ap = runCommand("ip", {"-4", "addr", "show", "dev", info.apIf});
         addCheck(QObject::tr("Hotspot interface"),
                  ap.exitCode == 0 && ap.out.contains(info.gwIp),
-                 ap.exitCode == 0 ? info.apIf + " " + info.gwIp : ap.err);
+                 ap.exitCode == 0 ? info.apIf + " " + info.gwIp : firstUsefulLine(ap.err));
 
         const auto tun = runCommand("ip", {"link", "show", info.tunIf});
         addCheck(QObject::tr("TUN interface"),
                  tun.exitCode == 0,
-                 tun.exitCode == 0 ? info.tunIf : tun.err);
+                 tun.exitCode == 0 ? info.tunIf : firstUsefulLine(tun.err));
 
         const auto rules = runCommand("ip", {"rule", "show"});
         addCheck(QObject::tr("Policy rule"),
                  rules.exitCode == 0 && rules.out.contains("fwmark 0x1") && rules.out.contains("lookup 100"),
-                 rules.exitCode == 0 ? "fwmark 0x1 -> table 100" : rules.err);
+                 rules.exitCode == 0 ? "fwmark 0x1 -> table 100" : firstUsefulLine(rules.err));
 
         const auto rt = runCommand("ip", {"route", "show", "table", "100"});
         addCheck(QObject::tr("Routing table 100"),
                  rt.exitCode == 0 && rt.out.contains("default") && rt.out.contains(info.tunIf),
-                 rt.exitCode == 0 ? rt.out : rt.err);
+                 rt.exitCode == 0 ? rt.out : firstUsefulLine(rt.err));
 
-        const auto nat = runCommand("iptables", {"-t", "nat", "-S", "POSTROUTING"});
-        addCheck(QObject::tr("NAT"),
-                 nat.exitCode == 0 && nat.out.contains("MASQUERADE") && nat.out.contains(info.tunIf),
-                 nat.exitCode == 0 ? "MASQUERADE via " + info.tunIf : nat.err);
+#ifdef Q_OS_LINUX
+        if (geteuid() != 0) {
+            lines << QStringLiteral("[OK] %1: %2")
+                         .arg(QObject::tr("NAT"),
+                              QObject::tr("NAT check requires admin rights (run diagnostics as root)."));
+        } else {
+            const auto nat = runCommand("iptables", {"-t", "nat", "-S", "POSTROUTING"});
+            addCheck(QObject::tr("NAT"),
+                     nat.exitCode == 0 && nat.out.contains("MASQUERADE") && nat.out.contains(info.tunIf),
+                     nat.exitCode == 0 ? "MASQUERADE via " + info.tunIf : firstUsefulLine(nat.err));
+        }
+#endif
 
         lines << QObject::tr("Connected devices: %1").arg(devices.size());
 
@@ -349,6 +403,14 @@ public:
 CommandResult runPowerShell(QString script, int timeoutMs = 15000) {
     script.prepend("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; ");
     return runCommand("powershell", {"-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script}, timeoutMs);
+}
+
+bool interfaceExistsWindows(const QString &ifName) {
+    if (!looksLikeInterfaceName(ifName)) return false;
+    QString escaped = ifName;
+    escaped.replace("'", "''");
+    const auto r = runPowerShell(QStringLiteral("Get-NetAdapter -Name '%1' | Select-Object -First 1 -ExpandProperty Name").arg(escaped));
+    return r.exitCode == 0 && !r.out.trimmed().isEmpty();
 }
 
 bool parseWindowsApInfo(const QString &line, QString *ifName, QString *cidr, QString *ip) {
@@ -376,7 +438,12 @@ public:
         runCommand("netsh", {"wlan", "start", "hostednetwork"});
 
         auto detect = runPowerShell(
-            "$cfg = Get-NetIPConfiguration | Where-Object { $_.IPv4Address -and $_.IPv4Address.IPAddress -match '^192\\.168\\.' -and ($_.InterfaceDescription -match 'Wi-Fi Direct|Wireless|Hosted|Virtual') } | Select-Object -First 1;"
+            "$cfg = Get-NetIPConfiguration | Where-Object { $_.IPv4Address -and ("
+            "$_.IPv4Address.IPAddress -like '192.168.137.*' -or "
+            "$_.InterfaceAlias -like 'Local Area Connection*' -or "
+            "$_.InterfaceDescription -match 'Wi-Fi Direct|Wireless|Hosted|Virtual') } "
+            "| Sort-Object { if ($_.IPv4Address.IPAddress -like '192.168.137.*') { 0 } else { 1 } } "
+            "| Select-Object -First 1;"
             "if ($cfg) { \"$($cfg.InterfaceAlias)|$($cfg.IPv4Address.IPAddress)/$($cfg.IPv4Address.PrefixLength)|$($cfg.IPv4Address.IPAddress)\" }");
 
         QString apIf;
@@ -403,7 +470,12 @@ public:
 
     bool status(HotspotRuntimeInfo *info, QString *) override {
         auto detect = runPowerShell(
-            "$cfg = Get-NetIPConfiguration | Where-Object { $_.IPv4Address -and $_.IPv4Address.IPAddress -match '^192\\.168\\.' -and ($_.InterfaceDescription -match 'Wi-Fi Direct|Wireless|Hosted|Virtual') } | Select-Object -First 1;"
+            "$cfg = Get-NetIPConfiguration | Where-Object { $_.IPv4Address -and ("
+            "$_.IPv4Address.IPAddress -like '192.168.137.*' -or "
+            "$_.InterfaceAlias -like 'Local Area Connection*' -or "
+            "$_.InterfaceDescription -match 'Wi-Fi Direct|Wireless|Hosted|Virtual') } "
+            "| Sort-Object { if ($_.IPv4Address.IPAddress -like '192.168.137.*') { 0 } else { 1 } } "
+            "| Select-Object -First 1;"
             "if ($cfg) { \"$($cfg.InterfaceAlias)|$($cfg.IPv4Address.IPAddress)/$($cfg.IPv4Address.PrefixLength)|$($cfg.IPv4Address.IPAddress)\" }");
         QString apIf;
         QString apCidr;
@@ -473,6 +545,18 @@ public:
             if (error != nullptr) *error = QObject::tr("Network helper is missing.");
             return false;
         }
+        if (!interfaceExistsWindows(info.tunIf)) {
+            if (error != nullptr) {
+                *error = QObject::tr("TUN interface \"%1\" was not found. Start proxy in TUN mode first.").arg(info.tunIf);
+            }
+            return false;
+        }
+        if (!interfaceExistsWindows(info.apIf)) {
+            if (error != nullptr) {
+                *error = QObject::tr("Hotspot interface \"%1\" was not found. Enable Mobile Hotspot first.").arg(info.apIf);
+            }
+            return false;
+        }
         QStringList args = {"apply-windows-ics", "--public-if", info.tunIf, "--private-if", info.apIf};
         return runHelperWithElevation(helper, args, error);
     }
@@ -515,13 +599,22 @@ public:
             if (!pass) success = false;
         };
 
+        if (info.apIf.trimmed().isEmpty()) {
+            if (ok != nullptr) *ok = false;
+            return QObject::tr("Hotspot is not running. Start Mobile Hotspot first.");
+        }
+        if (info.tunIf.trimmed().isEmpty()) {
+            if (ok != nullptr) *ok = false;
+            return QObject::tr("TUN interface is not set. Enable TUN mode first.");
+        }
+
         QString escapedApIf = info.apIf;
         escapedApIf.replace("'", "''");
         const auto ap = runPowerShell(QStringLiteral("Get-NetIPAddress -InterfaceAlias '%1' -AddressFamily IPv4 | Select-Object -First 1 -ExpandProperty IPAddress")
                                           .arg(escapedApIf));
         addCheck(QObject::tr("Hotspot interface"),
                  ap.exitCode == 0 && !ap.out.trimmed().isEmpty(),
-                 ap.exitCode == 0 ? ap.out.trimmed() : ap.err);
+                 ap.exitCode == 0 ? ap.out.trimmed() : firstUsefulLine(ap.err));
 
         QString escapedTunIf = info.tunIf;
         escapedTunIf.replace("'", "''");
@@ -529,7 +622,7 @@ public:
                                            .arg(escapedTunIf));
         addCheck(QObject::tr("TUN interface"),
                  tun.exitCode == 0 && tun.out.contains("Up", Qt::CaseInsensitive),
-                 tun.exitCode == 0 ? tun.out.trimmed() : tun.err);
+                 tun.exitCode == 0 ? tun.out.trimmed() : firstUsefulLine(tun.err));
 
         const auto helper = appHelperPath();
         if (QFileInfo::exists(helper)) {
@@ -544,7 +637,7 @@ public:
                 if (code != 0) ics.err = QObject::tr("Failed to verify ICS in elevated helper.");
             }
             addCheck(QObject::tr("ICS sharing"), ics.exitCode == 0, ics.exitCode == 0 ? QStringLiteral("public=%1 private=%2").arg(info.tunIf, info.apIf)
-                                                                                       : (ics.err.isEmpty() ? ics.out : ics.err));
+                                                                                       : firstUsefulLine(ics.err.isEmpty() ? ics.out : ics.err));
         } else {
             addCheck(QObject::tr("ICS sharing"), false, QObject::tr("Network helper is missing."));
         }
@@ -700,8 +793,27 @@ void HotspotGatewayService::stop() {
 }
 
 void HotspotGatewayService::runDiagnostics() {
+    if (state_ != State::Running) {
+        emit diagReport(false, QObject::tr("Hotspot is not running. Start hotspot first."));
+        return;
+    }
+
+    HotspotRuntimeInfo snapshot = runtime_;
+    QString statusError;
+    if (hotspotManager_ != nullptr) {
+        hotspotManager_->status(&snapshot, &statusError);
+    }
+    if (snapshot.apIf.trimmed().isEmpty()) {
+        emit diagReport(false, QObject::tr("Hotspot interface was not detected. Restart hotspot and try again."));
+        return;
+    }
+    if (snapshot.tunIf.trimmed().isEmpty()) {
+        emit diagReport(false, QObject::tr("TUN interface was not detected. Enable TUN mode first."));
+        return;
+    }
+
     bool ok = false;
-    const auto report = diagnostics_->run(runtime_, devices_, &ok);
+    const auto report = diagnostics_->run(snapshot, devices_, &ok);
     emit diagReport(ok, report);
 }
 

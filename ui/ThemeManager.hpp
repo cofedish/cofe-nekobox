@@ -5,6 +5,8 @@
 #include <QColor>
 #include <QVector>
 
+class QEvent;
+
 struct ThemeOption {
     QString id;
     QString displayName;
@@ -18,6 +20,7 @@ class ThemeManager : public QObject {
     Q_OBJECT
 
 public:
+    ThemeManager() = default;
     QString system_style_name = "";
     QString current_theme = "0"; // int: 0:system 1+:builtin string: QStyleFactory
 
@@ -27,6 +30,13 @@ public:
 
 signals:
     void themeChanged(const QString &theme);
+
+protected:
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+private:
+    bool applying_theme_ = false;
+    bool event_filter_installed_ = false;
 };
 
 extern ThemeManager *themeManager;

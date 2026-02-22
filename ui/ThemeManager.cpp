@@ -5,6 +5,9 @@
 #include <QColor>
 #include <QFont>
 #include <QCoreApplication>
+#include <QEvent>
+#include <QScopedValueRollback>
+#include <QTimer>
 
 #include "ThemeManager.hpp"
 #include "Typography.hpp"
@@ -346,12 +349,20 @@ namespace {
 } // namespace
 
 void ThemeManager::ApplyTheme(const QString &theme) {
+    if (!event_filter_installed_ && qApp != nullptr) {
+        qApp->installEventFilter(this);
+        event_filter_installed_ = true;
+    }
+
+    if (applying_theme_) return;
+    QScopedValueRollback<bool> guard(applying_theme_, true);
+
     if (this->system_style_name.isEmpty()) {
         this->system_style_name = qApp->style()->objectName();
     }
 
     auto normalized = NormalizeThemeKey(theme);
-    if (this->current_theme == normalized) {
+    if (this->current_theme == normalized && normalized != "system") {
         return;
     }
 
@@ -366,9 +377,8 @@ void ThemeManager::ApplyTheme(const QString &theme) {
         }
         ThemeTokens tokens = TokensLight();
         if (normalized == "system") {
-            auto palette = system_style != nullptr ? system_style->standardPalette() : qApp->palette();
+            auto palette = qApp->palette();
             tokens = TokensFromPalette(palette);
-            qApp->setPalette(palette);
         } else if (normalized == "lucifer") {
             tokens = TokensLucifer();
             qApp->setPalette(BuildPalette(tokens));
@@ -451,6 +461,20 @@ void ThemeManager::ApplyTheme(const QString &theme) {
     } else {
         qApp->setStyleSheet(qApp->styleSheet().append("\n").append(cofebox_css));
     }
+}
+
+bool ThemeManager::eventFilter(QObject *watched, QEvent *event) {
+    if (watched == qApp && !applying_theme_ && NormalizeThemeKey(current_theme) == "system") {
+        const auto type = event->type();
+        if (type == QEvent::ApplicationPaletteChange || type == QEvent::ThemeChange || type == QEvent::StyleChange) {
+            QTimer::singleShot(0, this, [this] {
+                if (NormalizeThemeKey(current_theme) == "system") {
+                    ApplyTheme("system");
+                }
+            });
+        }
+    }
+    return QObject::eventFilter(watched, event);
 }
 
 ThemeOption ThemeManager::ThemeOptionFor(const QString &theme) const {
