@@ -86,6 +86,12 @@ DialogAppRouting::Mode modeFromKey(const QString &value) {
     return DialogAppRouting::Mode::AllThroughProxy;
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+constexpr auto kSkipEmptyParts = Qt::SkipEmptyParts;
+#else
+constexpr auto kSkipEmptyParts = QString::SkipEmptyParts;
+#endif
+
 QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
     QList<RunningProcessRow> rows;
     QSet<QString> dedupe;
@@ -110,7 +116,7 @@ QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
         return rows;
     }
     const auto text = QString::fromUtf8(process.readAllStandardOutput());
-    for (const auto &lineRaw : text.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
+    for (const auto &lineRaw : text.split(QRegularExpression("[\r\n]"), kSkipEmptyParts)) {
         const auto line = lineRaw.trimmed();
         const int delim = line.indexOf('|');
         if (delim <= 0) continue;
@@ -172,10 +178,10 @@ QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
         return rows;
     }
     const auto text = QString::fromUtf8(process.readAllStandardOutput());
-    for (const auto &lineRaw : text.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts)) {
+    for (const auto &lineRaw : text.split(QRegularExpression("[\r\n]"), kSkipEmptyParts)) {
         const auto line = lineRaw.trimmed();
         if (line.isEmpty()) continue;
-        const auto parts = line.split(QRegularExpression("\\s+"), Qt::SkipEmptyParts);
+        const auto parts = line.split(QRegularExpression("\\s+"), kSkipEmptyParts);
         if (parts.isEmpty()) continue;
         RunningProcessRow row;
         row.processName = parts.first();
@@ -199,6 +205,7 @@ QList<RunningProcessRow> queryRunningProcesses(QString *errorText) {
 class AddProcessDialog final : public QDialog {
 public:
     Q_DECLARE_TR_FUNCTIONS(AddProcessDialog)
+public:
 
     explicit AddProcessDialog(QWidget *parent = nullptr);
     QList<AppRoutingRules::Entry> selectedEntries() const;
@@ -335,7 +342,7 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
     connect(pasteButton, &QPushButton::clicked, this, [this] {
         auto text = QApplication::clipboard()->text().trimmed();
         if (text.isEmpty()) return;
-        text = text.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts).value(0).trimmed();
+        text = text.split(QRegularExpression("[\r\n]"), kSkipEmptyParts).value(0).trimmed();
         if (text.startsWith("\"") && text.endsWith("\"") && text.size() >= 2) {
             text = text.mid(1, text.size() - 2);
         }
@@ -344,7 +351,7 @@ AddProcessDialog::AddProcessDialog(QWidget *parent) : QDialog(parent) {
 
     auto clipText = QApplication::clipboard()->text().trimmed();
     if (!clipText.isEmpty()) {
-        clipText = clipText.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts).value(0).trimmed();
+        clipText = clipText.split(QRegularExpression("[\r\n]"), kSkipEmptyParts).value(0).trimmed();
         clipboardPreview_->setPlainText(clipText);
     }
 
@@ -460,7 +467,7 @@ void AddProcessDialog::addFromClipboard() {
         QMessageBox::warning(this, tr("Error"), tr("Clipboard is empty."));
         return;
     }
-    text = text.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts).value(0).trimmed();
+    text = text.split(QRegularExpression("[\r\n]"), kSkipEmptyParts).value(0).trimmed();
     if (text.startsWith("\"") && text.endsWith("\"") && text.size() >= 2) {
         text = text.mid(1, text.size() - 2);
     }

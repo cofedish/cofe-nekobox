@@ -85,6 +85,14 @@ bool isValidEntry(const AppRoutingRules::Entry &entry) {
     return true;
 }
 
+QStringList splitNonEmptyLines(const QString &raw) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 14, 0)
+    return raw.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts);
+#else
+    return raw.split(QRegularExpression("[\r\n]"), QString::SkipEmptyParts);
+#endif
+}
+
 } // namespace
 
 namespace AppRoutingRules {
@@ -93,7 +101,7 @@ QList<Entry> Parse(const QString &raw) {
     QList<Entry> entries;
     QSet<QString> dedupe;
 
-    const auto lines = raw.split(QRegularExpression("[\r\n]"), Qt::SkipEmptyParts);
+    const auto lines = splitNonEmptyLines(raw);
     for (auto line : lines) {
         line = line.trimmed();
         if (line.isEmpty() || line.startsWith('#')) continue;
