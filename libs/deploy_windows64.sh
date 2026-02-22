@@ -16,11 +16,13 @@ rm -rf translations
 rm -rf libEGL.dll libGLESv2.dll Qt6Pdf.dll
 
 if [ "$DL_QT_VER" != "5.15" ]; then
-  cp $SRC_ROOT/qtsdk/Qt/bin/libcrypto-3-x64.dll .
-  cp $SRC_ROOT/qtsdk/Qt/bin/libssl-3-x64.dll .
+  [ -f "$SRC_ROOT/qtsdk/Qt/bin/libcrypto-3-x64.dll" ] && cp "$SRC_ROOT/qtsdk/Qt/bin/libcrypto-3-x64.dll" .
+  [ -f "$SRC_ROOT/qtsdk/Qt/bin/libssl-3-x64.dll" ] && cp "$SRC_ROOT/qtsdk/Qt/bin/libssl-3-x64.dll" .
 fi
 
 popd
 
 #### prepare deployment ####
-cp $BUILD/*.pdb $DEPLOYMENT
+if compgen -G "$BUILD/*.pdb" > /dev/null; then
+  cp "$BUILD"/*.pdb "$DEPLOYMENT"
+fi

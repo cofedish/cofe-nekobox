@@ -559,9 +559,15 @@ DialogAppRouting::DialogAppRouting(QWidget *parent) : QDialog(parent) {
 
     connect(buttonBox, &QDialogButtonBox::accepted, this, &DialogAppRouting::accept);
     connect(buttonBox, &QDialogButtonBox::rejected, this, &QDialog::reject);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    connect(modeGroup_, &QButtonGroup::idClicked, this, [this](int) {
+        syncModeUi();
+    });
+#else
     connect(modeGroup_, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, [this](int) {
         syncModeUi();
     });
+#endif
     connect(searchEdit_, &QLineEdit::textChanged, this, [this] { updateFilter(); });
     connect(addButton_, &QPushButton::clicked, this, [this] { addRule(); });
     connect(removeButton_, &QPushButton::clicked, this, [this] { removeSelectedRules(); });
