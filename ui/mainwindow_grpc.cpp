@@ -455,7 +455,13 @@ void MainWindow::stopProxy(bool crash, bool sem) {
         running = nullptr;
 
         runOnUiThread([=] {
-            refresh_status();
+            // User stop/crash should not leave system proxy enabled.
+            // Internal stop with semaphore (profile switch / exit flow) keeps current mode logic.
+            if ((crash || !sem) && NekoGui::dataStore->spmode_system_proxy) {
+                setSystemProxyMode(false);
+            } else {
+                refresh_status();
+            }
             refresh_proxy_list(id);
         });
 
