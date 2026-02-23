@@ -1844,18 +1844,7 @@ void MainWindow::submit_home_subscription() {
     if (!can_start_add()) return;
     auto text = ui->home_sub_url->text().trimmed();
     if (text.isEmpty()) {
-        show_toast_error(tr("Please paste a subscription URL."));
-        return;
-    }
-
-    QUrl url(text);
-    const auto scheme = url.scheme().toLower();
-    if (!url.isValid()) {
-        show_toast_error(tr("Please paste a valid URL."));
-        return;
-    }
-    if (scheme != "http" && scheme != "https") {
-        show_toast_error(tr("Only http(s) URLs are allowed."));
+        show_toast_error(tr("Please paste a link or subscription URL."));
         return;
     }
 
