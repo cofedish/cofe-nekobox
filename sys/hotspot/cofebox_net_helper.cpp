@@ -152,7 +152,12 @@ bool isAdmin() {
 }
 
 int runPowerShell(const QString &script, const QStringList &args) {
-    QStringList cmdArgs = {"-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script};
+    const QString wrappedScript =
+        QStringLiteral("[Console]::InputEncoding=[System.Text.Encoding]::UTF8;")
+        + QStringLiteral("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;")
+        + QStringLiteral("$OutputEncoding=[System.Text.Encoding]::UTF8;")
+        + script;
+    QStringList cmdArgs = {"-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", wrappedScript};
     cmdArgs.append(args);
     const auto r = runCommand("powershell", cmdArgs, 25000);
     if (r.exitCode != 0) {
@@ -178,10 +183,41 @@ int applyWindowsIcs(const QString &publicIf, const QString &privateIf) {
         "$publicIf=$args[0];$privateIf=$args[1];"
         "$m=New-Object -ComObject HNetCfg.HNetShare;"
         "$all=@($m.EnumEveryConnection());"
-        "$pub=$null;$priv=$null;"
-        "foreach($c in $all){$p=$m.NetConnectionProps($c); if($p.Name -eq $publicIf){$pub=$c}; if($p.Name -eq $privateIf){$priv=$c}}"
-        "if(-not $pub){throw \"Public interface not found: $publicIf\"};"
-        "if(-not $priv){throw \"Private interface not found: $privateIf\"};"
+        "function Resolve-IcsConnection([string]$name){"
+        "  if([string]::IsNullOrWhiteSpace($name)){ return $null };"
+        "  $cands = New-Object System.Collections.Generic.List[string];"
+        "  $cands.Add($name) | Out-Null;"
+        "  try {"
+        "    $a = Get-NetAdapter -IncludeHidden | Where-Object { $_.Name -eq $name -or $_.InterfaceAlias -eq $name } | Select-Object -First 1;"
+        "    if($a){"
+        "      if($a.InterfaceDescription){ $cands.Add([string]$a.InterfaceDescription) | Out-Null };"
+        "      if($a.InterfaceGuid){ $cands.Add([string]$a.InterfaceGuid.Guid) | Out-Null };"
+        "    }"
+        "  } catch {};"
+        "  foreach($c in $all){"
+        "    $p=$m.NetConnectionProps($c);"
+        "    foreach($n in $cands){"
+        "      if($p.Name -eq $n -or $p.DeviceName -eq $n -or $p.Guid -eq $n){ return $c }"
+        "    }"
+        "  }"
+        "  foreach($c in $all){"
+        "    $p=$m.NetConnectionProps($c);"
+        "    foreach($n in $cands){"
+        "      if(($p.Name -like \"*$n*\") -or ($p.DeviceName -like \"*$n*\")){ return $c }"
+        "    }"
+        "  }"
+        "  return $null;"
+        "};"
+        "$pub=Resolve-IcsConnection $publicIf;"
+        "$priv=Resolve-IcsConnection $privateIf;"
+        "if(-not $pub){"
+        "  $known=@(); foreach($c in $all){ $p=$m.NetConnectionProps($c); $known += $p.Name };"
+        "  throw \"Public interface not found: $publicIf`nKnown: $($known -join ', ')\""
+        "};"
+        "if(-not $priv){"
+        "  $known=@(); foreach($c in $all){ $p=$m.NetConnectionProps($c); $known += $p.Name };"
+        "  throw \"Private interface not found: $privateIf`nKnown: $($known -join ', ')\""
+        "};"
         "foreach($c in $all){$cfg=$m.INetSharingConfigurationForINetConnection($c); if($cfg.SharingEnabled){$cfg.DisableSharing()}};"
         "$pubCfg=$m.INetSharingConfigurationForINetConnection($pub);"
         "$privCfg=$m.INetSharingConfigurationForINetConnection($priv);"
@@ -205,7 +241,18 @@ int clearWindowsIcs(const QString &publicIf, const QString &privateIf) {
         "$publicIf=$args[0];$privateIf=$args[1];"
         "$m=New-Object -ComObject HNetCfg.HNetShare;"
         "$all=@($m.EnumEveryConnection());"
-        "foreach($c in $all){$p=$m.NetConnectionProps($c); if($p.Name -eq $publicIf -or $p.Name -eq $privateIf){$cfg=$m.INetSharingConfigurationForINetConnection($c); if($cfg.SharingEnabled){$cfg.DisableSharing()}}};"
+        "function Resolve-IcsConnection([string]$name){"
+        "  if([string]::IsNullOrWhiteSpace($name)){ return $null };"
+        "  foreach($c in $all){"
+        "    $p=$m.NetConnectionProps($c);"
+        "    if($p.Name -eq $name -or $p.DeviceName -eq $name -or $p.Guid -eq $name){ return $c }"
+        "  }"
+        "  return $null;"
+        "};"
+        "$pub=Resolve-IcsConnection $publicIf;"
+        "$priv=Resolve-IcsConnection $privateIf;"
+        "if($pub){$cfg=$m.INetSharingConfigurationForINetConnection($pub); if($cfg.SharingEnabled){$cfg.DisableSharing()}};"
+        "if($priv){$cfg=$m.INetSharingConfigurationForINetConnection($priv); if($cfg.SharingEnabled){$cfg.DisableSharing()}};"
         "Write-Output 'OK';";
     return runPowerShell(script, {publicIf, privateIf});
 }
@@ -224,8 +271,16 @@ int diagWindowsIcs(const QString &publicIf, const QString &privateIf) {
         "$publicIf=$args[0];$privateIf=$args[1];"
         "$m=New-Object -ComObject HNetCfg.HNetShare;"
         "$all=@($m.EnumEveryConnection());"
-        "$pub=$null;$priv=$null;"
-        "foreach($c in $all){$p=$m.NetConnectionProps($c); if($p.Name -eq $publicIf){$pub=$c}; if($p.Name -eq $privateIf){$priv=$c}}"
+        "function Resolve-IcsConnection([string]$name){"
+        "  if([string]::IsNullOrWhiteSpace($name)){ return $null };"
+        "  foreach($c in $all){"
+        "    $p=$m.NetConnectionProps($c);"
+        "    if($p.Name -eq $name -or $p.DeviceName -eq $name -or $p.Guid -eq $name){ return $c }"
+        "  }"
+        "  return $null;"
+        "};"
+        "$pub=Resolve-IcsConnection $publicIf;"
+        "$priv=Resolve-IcsConnection $privateIf;"
         "if(-not $pub -or -not $priv){throw 'interface not found'};"
         "$pubCfg=$m.INetSharingConfigurationForINetConnection($pub);"
         "$privCfg=$m.INetSharingConfigurationForINetConnection($priv);"

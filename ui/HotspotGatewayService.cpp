@@ -502,7 +502,9 @@ public:
 #ifdef Q_OS_WIN
 
 CommandResult runPowerShell(QString script, int timeoutMs = 15000) {
-    script.prepend("[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; ");
+    script.prepend("[Console]::InputEncoding=[System.Text.Encoding]::UTF8; "
+                   "[Console]::OutputEncoding=[System.Text.Encoding]::UTF8; "
+                   "$OutputEncoding=[System.Text.Encoding]::UTF8; ");
     return runCommand("powershell", {"-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script}, timeoutMs);
 }
 
@@ -534,6 +536,29 @@ bool parseWindowsApInfo(const QString &line, QString *ifName, QString *cidr, QSt
 
 QString detectUplinkWindows() {
     const auto r = runPowerShell("(Get-NetRoute -DestinationPrefix '0.0.0.0/0' | Sort-Object RouteMetric,ifMetric | Select-Object -First 1 -ExpandProperty InterfaceAlias)");
+    return r.exitCode == 0 ? r.out.trimmed() : QString{};
+}
+
+QString detectTunInterfaceWindows(const QString &preferredName) {
+    QString escaped = preferredName;
+    escaped.replace("'", "''");
+    const auto r = runPowerShell(
+        QStringLiteral(
+            "$pref='%1';"
+            "$a=$null;"
+            "if($pref){"
+            "  $a=Get-NetAdapter -IncludeHidden | Where-Object { $_.Name -eq $pref -or $_.InterfaceAlias -eq $pref } "
+            "     | Select-Object -First 1"
+            "};"
+            "if(-not $a){"
+            "  $a=Get-NetAdapter -IncludeHidden | Where-Object {"
+            "    $_.InterfaceDescription -match 'Wintun|TUN|sing-box' -or "
+            "    $_.Name -match 'cofebox|sing|tun'"
+            "  } | Sort-Object @{Expression={if($_.Status -eq 'Up'){0}else{1}}} "
+            "    | Select-Object -First 1"
+            "};"
+            "if($a){ $a.Name }")
+            .arg(escaped));
     return r.exitCode == 0 ? r.out.trimmed() : QString{};
 }
 
@@ -651,7 +676,12 @@ public:
             if (error != nullptr) *error = QObject::tr("Network helper is missing.");
             return false;
         }
-        if (!interfaceExistsWindows(info.tunIf)) {
+        QString tunIf = info.tunIf;
+        if (!interfaceExistsWindows(tunIf)) {
+            const auto detected = detectTunInterfaceWindows(tunIf);
+            if (!detected.isEmpty()) tunIf = detected;
+        }
+        if (!interfaceExistsWindows(tunIf)) {
             if (error != nullptr) {
                 *error = QObject::tr("TUN interface \"%1\" was not found. Start proxy in TUN mode first.").arg(info.tunIf);
             }
@@ -663,14 +693,19 @@ public:
             }
             return false;
         }
-        QStringList args = {"apply-windows-ics", "--public-if", info.tunIf, "--private-if", info.apIf};
+        QStringList args = {"apply-windows-ics", "--public-if", tunIf, "--private-if", info.apIf};
         return runHelperWithElevation(helper, args, error);
     }
 
     bool clear(const HotspotRuntimeInfo &info, QString *error) override {
         const auto helper = appHelperPath();
         if (!QFileInfo::exists(helper)) return true;
-        QStringList args = {"clear-windows-ics", "--public-if", info.tunIf, "--private-if", info.apIf};
+        QString tunIf = info.tunIf;
+        if (!interfaceExistsWindows(tunIf)) {
+            const auto detected = detectTunInterfaceWindows(tunIf);
+            if (!detected.isEmpty()) tunIf = detected;
+        }
+        QStringList args = {"clear-windows-ics", "--public-if", tunIf, "--private-if", info.apIf};
         return runHelperWithElevation(helper, args, error);
     }
 
@@ -857,6 +892,12 @@ bool HotspotGatewayService::start(Mode mode) {
         return false;
     }
 
+#ifdef Q_OS_WIN
+    {
+        const auto detectedTun = detectTunInterfaceWindows(runtime_.tunIf);
+        if (!detectedTun.isEmpty()) runtime_.tunIf = detectedTun;
+    }
+#endif
     if (runtime_.tunIf.trimmed().isEmpty()) runtime_.tunIf = tunDefaultName();
     if (!trafficRouter_->applyFullTunnel(runtime_, &error)) {
         hotspotManager_->stop(runtime_, nullptr);
