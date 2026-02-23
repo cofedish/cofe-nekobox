@@ -24,6 +24,7 @@ struct HotspotRuntimeInfo {
     QString gwIp;
     QString uplinkIf;
     QString tunIf;
+    bool includeHostTraffic = false;
 };
 
 class HotspotManager {
@@ -79,6 +80,7 @@ public:
 
     void setCredentials(const QString &ssid, const QString &password);
     void regenerateCredentials();
+    void setRouteScope(bool includeHostTraffic);
 
     bool start(Mode mode = Mode::FullTunnelForHotspot);
     void stop();
@@ -91,6 +93,7 @@ public:
     [[nodiscard]] QString lastMessage() const;
     [[nodiscard]] QString maskedPassword() const;
     [[nodiscard]] QString wifiQrText() const;
+    [[nodiscard]] bool includeHostTraffic() const;
 
 signals:
     void stateChanged(HotspotGatewayService::State state, const QString &message);

@@ -71,6 +71,7 @@
 #include <QFrame>
 #include <QCheckBox>
 #include <QPushButton>
+#include <QComboBox>
 #include <QCursor>
 #include <QStyle>
 #include <QSizePolicy>
@@ -950,6 +951,7 @@ void MainWindow::setupHotspotUi() {
 
     hotspotService_ = new HotspotGatewayService(this);
     hotspotService_->setCredentials(NekoGui::dataStore->hotspot_ssid, NekoGui::dataStore->hotspot_password);
+    hotspotService_->setRouteScope(NekoGui::dataStore->hotspot_mode == 1);
 
     hotspotCard_ = new QFrame(ui->page_rules);
     hotspotCard_->setObjectName("hotspot_gateway_card");
@@ -983,9 +985,16 @@ void MainWindow::setupHotspotUi() {
     hotspotDevicesValue_ = new QLabel("0", hotspotCard_);
     grid->addWidget(hotspotDevicesValue_, 2, 1);
 
-    grid->addWidget(new QLabel(tr("Mode"), hotspotCard_), 3, 0);
+    grid->addWidget(new QLabel(tr("Traffic scope"), hotspotCard_), 3, 0);
+    hotspotScopeCombo_ = new QComboBox(hotspotCard_);
+    hotspotScopeCombo_->addItem(tr("Only hotspot devices"));
+    hotspotScopeCombo_->addItem(tr("Hotspot devices + this PC"));
+    hotspotScopeCombo_->setCurrentIndex(NekoGui::dataStore->hotspot_mode == 1 ? 1 : 0);
+    grid->addWidget(hotspotScopeCombo_, 3, 1);
+
+    grid->addWidget(new QLabel(tr("Mode"), hotspotCard_), 4, 0);
     hotspotModeValue_ = new QLabel(tr("Full-tunnel for Hotspot"), hotspotCard_);
-    grid->addWidget(hotspotModeValue_, 3, 1);
+    grid->addWidget(hotspotModeValue_, 4, 1);
     root->addLayout(grid);
 
     auto *buttons = new QHBoxLayout;
@@ -1060,6 +1069,13 @@ void MainWindow::setupHotspotUi() {
         syncHotspotUi();
     });
     connect(hotspotQrButton_, &QPushButton::clicked, this, [this] { showHotspotQrDialog(); });
+    connect(hotspotScopeCombo_, qOverload<int>(&QComboBox::currentIndexChanged), this, [this](int index) {
+        const bool includeHost = (index == 1);
+        hotspotService_->setRouteScope(includeHost);
+        NekoGui::dataStore->hotspot_mode = includeHost ? 1 : 0;
+        NekoGui::dataStore->Save();
+        syncHotspotUi();
+    });
 
     connect(hotspotService_, &HotspotGatewayService::stateChanged, this, [this](HotspotGatewayService::State state, const QString &message) {
         if (state == HotspotGatewayService::State::Failed) {
@@ -1102,7 +1118,15 @@ void MainWindow::syncHotspotUi() {
     if (hotspotSsidValue_ != nullptr) hotspotSsidValue_->setText(runtime.ssid);
     if (hotspotPasswordValue_ != nullptr) hotspotPasswordValue_->setText(hotspotService_->maskedPassword());
     if (hotspotDevicesValue_ != nullptr) hotspotDevicesValue_->setText(Int2String(devices.size()));
-    if (hotspotModeValue_ != nullptr) hotspotModeValue_->setText(tr("Full-tunnel for Hotspot"));
+    if (hotspotModeValue_ != nullptr) {
+        hotspotModeValue_->setText(hotspotService_->includeHostTraffic()
+                                       ? tr("Full-tunnel for Hotspot + this PC")
+                                       : tr("Full-tunnel for Hotspot devices only"));
+    }
+    if (hotspotScopeCombo_ != nullptr) {
+        QSignalBlocker blocker(hotspotScopeCombo_);
+        hotspotScopeCombo_->setCurrentIndex(hotspotService_->includeHostTraffic() ? 1 : 0);
+    }
 
     QString statusText;
     switch (state) {
@@ -1147,6 +1171,7 @@ void MainWindow::syncHotspotUi() {
     if (hotspotCopyPassButton_ != nullptr) hotspotCopyPassButton_->setEnabled(!runtime.password.isEmpty());
     if (hotspotRegenButton_ != nullptr) hotspotRegenButton_->setEnabled(!busy);
     if (hotspotQrButton_ != nullptr) hotspotQrButton_->setEnabled(!runtime.ssid.isEmpty() && !runtime.password.isEmpty());
+    if (hotspotScopeCombo_ != nullptr) hotspotScopeCombo_->setEnabled(!busy && !running);
 }
 
 void MainWindow::showHotspotQrDialog() {

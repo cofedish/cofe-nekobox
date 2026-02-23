@@ -40,6 +40,7 @@ class QLabel;
 class QCheckBox;
 class QPushButton;
 class QFrame;
+class QComboBox;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -199,6 +200,7 @@ private:
     QLabel *hotspotPasswordValue_ = nullptr;
     QLabel *hotspotDevicesValue_ = nullptr;
     QLabel *hotspotModeValue_ = nullptr;
+    QComboBox *hotspotScopeCombo_ = nullptr;
     QPushButton *hotspotStartButton_ = nullptr;
     QPushButton *hotspotStopButton_ = nullptr;
     QPushButton *hotspotDiagButton_ = nullptr;

@@ -150,16 +150,96 @@ QString detectUplinkLinux() {
     return {};
 }
 
-QString detectWiFiInterfaceLinux() {
+QString hotspotConnectionNameLinux() {
+    return QStringLiteral("CofeBox Hotspot");
+}
+
+QStringList hotspotConnectionAliasesLinux() {
+    return {
+        hotspotConnectionNameLinux(),
+        QStringLiteral("cofebox-hotspot") // legacy id
+    };
+}
+
+struct NmDeviceInfo {
+    QString dev;
+    QString type;
+    QString state;
+};
+
+QVector<NmDeviceInfo> listNmDevicesLinux() {
+    QVector<NmDeviceInfo> devices;
     const auto r = runCommand("nmcli", {"-t", "-f", "DEVICE,TYPE,STATE", "device", "status"});
-    if (r.exitCode != 0) return {};
+    if (r.exitCode != 0) return devices;
     for (const auto &line : r.out.split('\n')) {
         const auto parts = line.split(':');
         if (parts.size() < 3) continue;
         const auto dev = parts.at(0).trimmed();
-        const auto type = parts.at(1).trimmed();
-        if (type != "wifi") continue;
-        if (looksLikeInterfaceName(dev)) return dev;
+        if (!looksLikeInterfaceName(dev)) continue;
+        NmDeviceInfo info;
+        info.dev = dev;
+        info.type = parts.at(1).trimmed();
+        info.state = parts.at(2).trimmed();
+        devices.push_back(info);
+    }
+    return devices;
+}
+
+bool isWiFiInterfaceLinux(const QString &ifName) {
+    if (ifName.trimmed().isEmpty()) return false;
+    for (const auto &device : listNmDevicesLinux()) {
+        if (device.dev == ifName && device.type == "wifi") return true;
+    }
+    return false;
+}
+
+QString selectHotspotInterfaceLinux(const QString &uplinkIf, QString *error) {
+    QString fallbackDisconnected;
+    QString fallbackAny;
+    bool haveWifi = false;
+    int connectedWifiCount = 0;
+    for (const auto &device : listNmDevicesLinux()) {
+        if (device.type != "wifi") continue;
+        haveWifi = true;
+        const bool isConnected = device.state.contains("connected", Qt::CaseInsensitive);
+        if (isConnected) connectedWifiCount++;
+        if (fallbackAny.isEmpty()) fallbackAny = device.dev;
+        if (!isConnected && fallbackDisconnected.isEmpty()) fallbackDisconnected = device.dev;
+        if (!uplinkIf.isEmpty() && device.dev == uplinkIf) continue;
+        if (!isConnected) return device.dev;
+    }
+
+    if (!haveWifi) {
+        if (error != nullptr) {
+            *error = QObject::tr("Wi-Fi adapter does not support hotspot mode.");
+        }
+        return {};
+    }
+
+    if (!uplinkIf.isEmpty() && isWiFiInterfaceLinux(uplinkIf)) {
+        if (error != nullptr) {
+            *error = QObject::tr("Only one Wi-Fi adapter is available and it is already used for internet uplink (%1).\n"
+                                 "Hotspot would disconnect your current Wi-Fi. Use Ethernet or a second Wi-Fi adapter.")
+                         .arg(uplinkIf);
+        }
+        return {};
+    }
+
+    if (fallbackDisconnected.isEmpty() && connectedWifiCount > 0) {
+        if (error != nullptr) {
+            *error = QObject::tr("No free Wi-Fi adapter for hotspot. Your active Wi-Fi connection is in use.\n"
+                                 "Use Ethernet or connect a second Wi-Fi adapter for hotspot mode.");
+        }
+        return {};
+    }
+
+    return fallbackDisconnected.isEmpty() ? fallbackAny : fallbackDisconnected;
+}
+
+QString detectWiFiInterfaceLinux() {
+    for (const auto &device : listNmDevicesLinux()) {
+        if (device.type != "wifi") continue;
+        if (looksLikeInterfaceName(device.dev)) return device.dev;
     }
     return {};
 }
@@ -167,16 +247,21 @@ QString detectWiFiInterfaceLinux() {
 class HotspotManagerLinux final : public HotspotManager {
 public:
     bool start(const QString &ssid, const QString &password, HotspotRuntimeInfo *info, QString *error) override {
-        const auto ifName = detectWiFiInterfaceLinux();
+        const auto uplinkBefore = detectUplinkLinux();
+        const auto ifName = selectHotspotInterfaceLinux(uplinkBefore, error);
         if (ifName.isEmpty()) {
-            if (error != nullptr) *error = QObject::tr("Wi-Fi adapter does not support hotspot mode.");
+            if (error != nullptr && error->trimmed().isEmpty()) {
+                *error = QObject::tr("Wi-Fi adapter does not support hotspot mode.");
+            }
             return false;
         }
 
-        runCommand("nmcli", {"connection", "delete", "cofebox-hotspot"});
+        for (const auto &alias : hotspotConnectionAliasesLinux()) {
+            runCommand("nmcli", {"connection", "delete", alias});
+        }
 
         auto startRes = runCommand("nmcli",
-                                   {"device", "wifi", "hotspot", "ifname", ifName, "con-name", "cofebox-hotspot",
+                                   {"device", "wifi", "hotspot", "ifname", ifName, "con-name", hotspotConnectionNameLinux(),
                                     "ssid", ssid, "password", password},
                                    20000);
         if (startRes.exitCode != 0) {
@@ -199,15 +284,25 @@ public:
         info->apIf = ifName;
         info->apCidr = cidr;
         info->gwIp = ip;
-        info->uplinkIf = detectUplinkLinux();
+        info->uplinkIf = uplinkBefore.isEmpty() ? detectUplinkLinux() : uplinkBefore;
         return true;
     }
 
     bool stop(const HotspotRuntimeInfo &, QString *error) override {
-        auto down = runCommand("nmcli", {"connection", "down", "cofebox-hotspot"});
-        runCommand("nmcli", {"connection", "delete", "cofebox-hotspot"});
-        if (down.exitCode != 0 && !down.err.contains("unknown", Qt::CaseInsensitive)) {
-            if (error != nullptr) *error = down.err;
+        int lastExit = 0;
+        QString lastErr;
+        for (const auto &alias : hotspotConnectionAliasesLinux()) {
+            auto down = runCommand("nmcli", {"connection", "down", alias});
+            runCommand("nmcli", {"connection", "delete", alias});
+            if (down.exitCode != 0) {
+                lastExit = down.exitCode;
+                if (!down.err.trimmed().isEmpty()) {
+                    lastErr = down.err;
+                }
+            }
+        }
+        if (lastExit != 0 && !lastErr.contains("unknown", Qt::CaseInsensitive)) {
+            if (error != nullptr) *error = lastErr;
         }
         return true;
     }
@@ -215,10 +310,11 @@ public:
     bool status(HotspotRuntimeInfo *info, QString *) override {
         const auto r = runCommand("nmcli", {"-t", "-f", "NAME,DEVICE,TYPE", "connection", "show", "--active"});
         if (r.exitCode != 0) return false;
+        const auto names = hotspotConnectionAliasesLinux();
         for (const auto &line : r.out.split('\n')) {
             const auto parts = line.split(':');
             if (parts.size() < 3) continue;
-            if (parts.at(0).trimmed() != "cofebox-hotspot") continue;
+            if (!names.contains(parts.at(0).trimmed())) continue;
             const auto dev = parts.at(1).trimmed();
             if (!looksLikeInterfaceName(dev)) continue;
             info->active = true;
@@ -303,6 +399,7 @@ public:
             "--ap-if", info.apIf,
             "--ap-cidr", info.apCidr,
             "--tun-if", info.tunIf,
+            "--include-host", info.includeHostTraffic ? "1" : "0",
         };
         auto r = runCommand("pkexec", args, 20000);
         if (r.exitCode != 0) {
@@ -325,6 +422,7 @@ public:
             "--ap-if", info.apIf,
             "--ap-cidr", info.apCidr,
             "--tun-if", info.tunIf,
+            "--include-host", info.includeHostTraffic ? "1" : "0",
         };
         auto r = runCommand("pkexec", args, 15000);
         if (r.exitCode != 0 && error != nullptr) {
@@ -723,6 +821,10 @@ void HotspotGatewayService::setCredentials(const QString &ssid, const QString &p
     emit credentialsChanged(runtime_.ssid, maskedPassword());
 }
 
+void HotspotGatewayService::setRouteScope(bool includeHostTraffic) {
+    runtime_.includeHostTraffic = includeHostTraffic;
+}
+
 void HotspotGatewayService::regenerateCredentials() {
     runtime_.ssid = QStringLiteral("CofeBox-%1").arg(randomSsidSuffix());
     runtime_.password = randomAlphaNum(12);
@@ -845,6 +947,10 @@ QString HotspotGatewayService::wifiQrText() const {
     // WIFI:T:WPA;S:<ssid>;P:<pass>;H:false;;
     return QStringLiteral("WIFI:T:WPA;S:%1;P:%2;H:false;;")
         .arg(runtime_.ssid, runtime_.password);
+}
+
+bool HotspotGatewayService::includeHostTraffic() const {
+    return runtime_.includeHostTraffic;
 }
 
 void HotspotGatewayService::setState(State state, const QString &message) {
