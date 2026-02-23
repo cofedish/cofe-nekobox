@@ -78,11 +78,6 @@ QString argValue(const QStringList &args, const QString &name) {
     return args.at(idx + 1).trimmed();
 }
 
-bool argFlagTrue(const QStringList &args, const QString &name) {
-    const auto value = argValue(args, name).toLower();
-    return value == "1" || value == "true" || value == "yes" || value == "on";
-}
-
 int runOrPrint(const QString &program, const QStringList &args, bool failOnError, int timeoutMs = 15000) {
     const auto r = runCommand(program, args, timeoutMs);
     if (r.exitCode != 0 && failOnError) {
@@ -94,7 +89,7 @@ int runOrPrint(const QString &program, const QStringList &args, bool failOnError
 }
 
 #ifdef Q_OS_LINUX
-int applyLinux(const QString &apIf, const QString &apCidr, const QString &tunIf, bool includeHost) {
+int applyLinux(const QString &apIf, const QString &apCidr, const QString &tunIf) {
     if (!interfaceOk(apIf) || !interfaceOk(tunIf) || !cidrOk(apCidr)) {
         qerr << "invalid arguments\n";
         return 2;
@@ -106,16 +101,12 @@ int applyLinux(const QString &apIf, const QString &apCidr, const QString &tunIf,
 
     // Best-effort cleanup before apply (idempotent)
     runOrPrint("iptables", {"-t", "mangle", "-D", "PREROUTING", "-i", apIf, "-s", apCidr, "-j", "MARK", "--set-mark", "0x1"}, false);
-    runOrPrint("iptables", {"-t", "mangle", "-D", "OUTPUT", "-m", "addrtype", "!", "--dst-type", "LOCAL", "-j", "MARK", "--set-mark", "0x1"}, false);
     runOrPrint("iptables", {"-t", "nat", "-D", "POSTROUTING", "-o", tunIf, "-s", apCidr, "-j", "MASQUERADE"}, false);
     runOrPrint("ip", {"rule", "del", "fwmark", "0x1", "lookup", "100"}, false);
     runOrPrint("ip", {"route", "flush", "table", "100"}, false);
 
     if (runOrPrint("sysctl", {"-w", "net.ipv4.ip_forward=1"}, true) != 0) return 10;
     if (runOrPrint("iptables", {"-t", "mangle", "-A", "PREROUTING", "-i", apIf, "-s", apCidr, "-j", "MARK", "--set-mark", "0x1"}, true) != 0) return 11;
-    if (includeHost) {
-        if (runOrPrint("iptables", {"-t", "mangle", "-A", "OUTPUT", "-m", "addrtype", "!", "--dst-type", "LOCAL", "-j", "MARK", "--set-mark", "0x1"}, true) != 0) return 15;
-    }
     if (runOrPrint("ip", {"rule", "add", "fwmark", "0x1", "lookup", "100"}, true) != 0) return 12;
     if (runOrPrint("ip", {"route", "replace", "default", "dev", tunIf, "table", "100"}, true) != 0) return 13;
     if (runOrPrint("iptables", {"-t", "nat", "-A", "POSTROUTING", "-o", tunIf, "-s", apCidr, "-j", "MASQUERADE"}, true) != 0) return 14;
@@ -124,7 +115,7 @@ int applyLinux(const QString &apIf, const QString &apCidr, const QString &tunIf,
     return 0;
 }
 
-int clearLinux(const QString &apIf, const QString &apCidr, const QString &tunIf, bool /*includeHost*/) {
+int clearLinux(const QString &apIf, const QString &apCidr, const QString &tunIf) {
     if (!interfaceOk(apIf) || !interfaceOk(tunIf) || !cidrOk(apCidr)) {
         qerr << "invalid arguments\n";
         return 2;
@@ -134,7 +125,6 @@ int clearLinux(const QString &apIf, const QString &apCidr, const QString &tunIf,
         return 3;
     }
     runOrPrint("iptables", {"-t", "mangle", "-D", "PREROUTING", "-i", apIf, "-s", apCidr, "-j", "MARK", "--set-mark", "0x1"}, false);
-    runOrPrint("iptables", {"-t", "mangle", "-D", "OUTPUT", "-m", "addrtype", "!", "--dst-type", "LOCAL", "-j", "MARK", "--set-mark", "0x1"}, false);
     runOrPrint("iptables", {"-t", "nat", "-D", "POSTROUTING", "-o", tunIf, "-s", apCidr, "-j", "MASQUERADE"}, false);
     runOrPrint("ip", {"rule", "del", "fwmark", "0x1", "lookup", "100"}, false);
     runOrPrint("ip", {"route", "flush", "table", "100"}, false);
@@ -249,8 +239,8 @@ int diagWindowsIcs(const QString &publicIf, const QString &privateIf) {
 void printUsage(const QString &exe) {
     qerr << "Usage:\n";
 #ifdef Q_OS_LINUX
-    qerr << "  " << exe << " apply-linux --ap-if <if> --ap-cidr <cidr> --tun-if <if> [--include-host 0|1]\n";
-    qerr << "  " << exe << " clear-linux --ap-if <if> --ap-cidr <cidr> --tun-if <if> [--include-host 0|1]\n";
+    qerr << "  " << exe << " apply-linux --ap-if <if> --ap-cidr <cidr> --tun-if <if>\n";
+    qerr << "  " << exe << " clear-linux --ap-if <if> --ap-cidr <cidr> --tun-if <if>\n";
 #endif
 #ifdef Q_OS_WIN
     qerr << "  " << exe << " apply-windows-ics --public-if <if> --private-if <if>\n";
@@ -275,14 +265,12 @@ int main(int argc, char *argv[]) {
     if (cmd == "apply-linux") {
         return applyLinux(argValue(args, "--ap-if"),
                           argValue(args, "--ap-cidr"),
-                          argValue(args, "--tun-if"),
-                          argFlagTrue(args, "--include-host"));
+                          argValue(args, "--tun-if"));
     }
     if (cmd == "clear-linux") {
         return clearLinux(argValue(args, "--ap-if"),
                           argValue(args, "--ap-cidr"),
-                          argValue(args, "--tun-if"),
-                          argFlagTrue(args, "--include-host"));
+                          argValue(args, "--tun-if"));
     }
 #endif
 

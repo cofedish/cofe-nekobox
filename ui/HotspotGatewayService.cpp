@@ -59,8 +59,13 @@ CommandResult runCommand(const QString &program, const QStringList &args, int ti
 }
 
 bool looksLikeInterfaceName(const QString &value) {
+#ifdef Q_OS_WIN
+    if (value.trimmed().isEmpty() || value.size() > 128) return false;
+    return !value.contains('\r') && !value.contains('\n');
+#else
     static const QRegularExpression re("^[A-Za-z0-9_:\\.-]{1,64}$");
     return re.match(value).hasMatch();
+#endif
 }
 
 QString appHelperPath() {
@@ -399,7 +404,6 @@ public:
             "--ap-if", info.apIf,
             "--ap-cidr", info.apCidr,
             "--tun-if", info.tunIf,
-            "--include-host", info.includeHostTraffic ? "1" : "0",
         };
         auto r = runCommand("pkexec", args, 20000);
         if (r.exitCode != 0) {
@@ -422,7 +426,6 @@ public:
             "--ap-if", info.apIf,
             "--ap-cidr", info.apCidr,
             "--tun-if", info.tunIf,
-            "--include-host", info.includeHostTraffic ? "1" : "0",
         };
         auto r = runCommand("pkexec", args, 15000);
         if (r.exitCode != 0 && error != nullptr) {
@@ -507,7 +510,12 @@ bool interfaceExistsWindows(const QString &ifName) {
     if (!looksLikeInterfaceName(ifName)) return false;
     QString escaped = ifName;
     escaped.replace("'", "''");
-    const auto r = runPowerShell(QStringLiteral("Get-NetAdapter -Name '%1' | Select-Object -First 1 -ExpandProperty Name").arg(escaped));
+    const auto r = runPowerShell(QStringLiteral(
+        "$name='%1'; "
+        "$a=Get-NetAdapter -IncludeHidden | Where-Object { $_.Name -eq $name -or $_.InterfaceAlias -eq $name } "
+        "| Select-Object -First 1 -ExpandProperty Name; "
+        "if($a){$a}")
+                                     .arg(escaped));
     return r.exitCode == 0 && !r.out.trimmed().isEmpty();
 }
 
@@ -821,10 +829,6 @@ void HotspotGatewayService::setCredentials(const QString &ssid, const QString &p
     emit credentialsChanged(runtime_.ssid, maskedPassword());
 }
 
-void HotspotGatewayService::setRouteScope(bool includeHostTraffic) {
-    runtime_.includeHostTraffic = includeHostTraffic;
-}
-
 void HotspotGatewayService::regenerateCredentials() {
     runtime_.ssid = QStringLiteral("CofeBox-%1").arg(randomSsidSuffix());
     runtime_.password = randomAlphaNum(12);
@@ -947,10 +951,6 @@ QString HotspotGatewayService::wifiQrText() const {
     // WIFI:T:WPA;S:<ssid>;P:<pass>;H:false;;
     return QStringLiteral("WIFI:T:WPA;S:%1;P:%2;H:false;;")
         .arg(runtime_.ssid, runtime_.password);
-}
-
-bool HotspotGatewayService::includeHostTraffic() const {
-    return runtime_.includeHostTraffic;
 }
 
 void HotspotGatewayService::setState(State state, const QString &message) {

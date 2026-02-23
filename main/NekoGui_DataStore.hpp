@@ -157,7 +157,7 @@ namespace NekoGui {
 
         // Hotspot Gateway
         bool hotspot_enabled = false;
-        int hotspot_mode = 0; // 0: hotspot devices only, 1: hotspot devices + this PC
+        int hotspot_mode = 0; // reserved for future hotspot rule profiles (host traffic is never rerouted by hotspot)
         QString hotspot_ssid = "";
         QString hotspot_password = "";
 
