@@ -8,7 +8,6 @@ mkdir -p $DEST
 
 #### copy binary ####
 cp $BUILD/cofebox $DEST/cofebox-bin
-[ -f "$BUILD/cofebox-net-helper" ] && cp "$BUILD/cofebox-net-helper" "$DEST"
 
 cat >"$DEST/cofebox" <<'EOF'
 #!/bin/sh
