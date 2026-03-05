@@ -1,6 +1,10 @@
 #pragma once
 
+#if __has_include(<QtOpenGLWidgets/QOpenGLWidget>)
+#include <QtOpenGLWidgets/QOpenGLWidget>
+#else
 #include <QOpenGLWidget>
+#endif
 #include <QOpenGLFunctions>
 #include <QPointF>
 

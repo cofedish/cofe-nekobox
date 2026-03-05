@@ -19,7 +19,11 @@ endif ()
 if (NOT QT_VERSION_MAJOR)
     set(QT_VERSION_MAJOR 5)
 endif ()
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    find_package(Qt6 REQUIRED COMPONENTS Widgets Network Svg OpenGLWidgets LinguistTools)
+else ()
+    find_package(Qt5 REQUIRED COMPONENTS Widgets Network Svg LinguistTools)
+endif ()
 
 if (NKR_CROSS)
     set_property(TARGET Qt5::moc PROPERTY IMPORTED_LOCATION /usr/bin/moc)
@@ -321,6 +325,10 @@ target_link_libraries(cofebox PRIVATE
         ${NKR_EXTERNAL_TARGETS}
         ${PLATFORM_LIBRARIES}
 )
+
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    target_link_libraries(cofebox PRIVATE Qt6::OpenGLWidgets)
+endif ()
 
 if (QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(cofebox)
