@@ -10,9 +10,11 @@
 namespace {
 QStringList PreferredFamilies() {
 #ifdef Q_OS_WIN
-    return {"Segoe UI Variable", "Segoe UI", "Manrope", "Noto Sans"};
+    return {"Inter", "Segoe UI Variable", "Segoe UI", "Manrope", "Noto Sans"};
+#elif defined(Q_OS_MAC)
+    return {"Inter", "SF Pro Text", "SF Pro Display", "Manrope", "Helvetica Neue"};
 #else
-    return {"SF Pro Text", "Manrope", "Noto Sans", "DejaVu Sans"};
+    return {"Inter", "SF Pro Text", "Manrope", "Noto Sans", "DejaVu Sans"};
 #endif
 }
 
@@ -68,7 +70,7 @@ QFont FontForRole(Role role, const QFont &fallback) {
         case Role::HomeStatus:
             return MakeFont(16, QFont::Medium, fallback);
         case Role::ConnectButtonState:
-            return MakeFont(22, QFont::Medium, fallback);
+            return MakeFont(20, QFont::DemiBold, fallback);
     }
     return MakeFont(13, QFont::Normal, fallback);
 }

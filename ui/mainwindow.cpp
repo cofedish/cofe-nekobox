@@ -177,6 +177,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     themeManager->ApplyTheme(initialTheme);
     ui->setupUi(this);
+    setMouseTracking(true);
+    ui->centralwidget->setMouseTracking(true);
     toast = new ToastWidget(ui->centralwidget);
     toast->setAnchorRect(ui->centralwidget->rect());
     add_debounce_timer = new QTimer(this);
@@ -991,6 +993,17 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
     }
 }
 
+void MainWindow::mouseMoveEvent(QMouseEvent *event) {
+    if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
+        const QPointF center(width() * 0.5, height() * 0.5);
+        const QPointF raw = event->position() - center;
+        const QPointF norm(raw.x() / qMax(1.0, width() * 0.5),
+                           raw.y() / qMax(1.0, height() * 0.5));
+        wave->setParallaxOffset(norm);
+    }
+    QMainWindow::mouseMoveEvent(event);
+}
+
 void MainWindow::set_home_running_text(const QString &text, const QString &tooltip) {
     home_running_full_text = text;
     home_running_tooltip = tooltip;
@@ -1596,6 +1609,19 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         ui->drawer_nav->setIconSize(QSize(24, 24));
         ui->drawer_nav->setGridSize(QSize(64, 64));
         ui->drawer_nav->setSpacing(0);
+        // Enable tooltips showing item label in compact mode
+        for (int i = 0; i < ui->drawer_nav->count(); ++i) {
+            if (auto item = ui->drawer_nav->item(i)) {
+                item->setToolTip(item->text());
+            }
+        }
+    } else {
+        // Clear tooltips in expanded mode (label is visible)
+        for (int i = 0; i < ui->drawer_nav->count(); ++i) {
+            if (auto item = ui->drawer_nav->item(i)) {
+                item->setToolTip({});
+            }
+        }
     }
 
     const bool allow_animation = animated && !NekoGui::dataStore->reduce_motion;
