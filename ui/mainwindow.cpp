@@ -996,7 +996,11 @@ void MainWindow::resizeEvent(QResizeEvent *event) {
 void MainWindow::mouseMoveEvent(QMouseEvent *event) {
     if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
         const QPointF center(width() * 0.5, height() * 0.5);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         const QPointF raw = event->position() - center;
+#else
+        const QPointF raw = event->localPos() - center;
+#endif
         const QPointF norm(raw.x() / qMax(1.0, width() * 0.5),
                            raw.y() / qMax(1.0, height() * 0.5));
         wave->setParallaxOffset(norm);

@@ -25,6 +25,35 @@ namespace NekoGui_sub {
             return scheme == "http" || scheme == "https";
         }
 
+        QString NormalizeSubscriptionInput(const QString &raw, QString *displayName = nullptr) {
+            if (displayName != nullptr) displayName->clear();
+            const auto content = raw.trimmed();
+            if (content.isEmpty()) return content;
+
+            const QUrl url(content);
+            if (!url.isValid()) return content;
+
+            // sing-box://import-remote-profile?url=https%3A%2F%2F...#Name
+            if (url.scheme().compare("sing-box", Qt::CaseInsensitive) == 0) {
+                const auto host = url.host().toLower();
+                const auto path = url.path().toLower();
+                const bool isImportRemoteProfile = host == "import-remote-profile" || path == "/import-remote-profile";
+                if (isImportRemoteProfile) {
+                    const QUrlQuery query(url);
+                    const auto remote = query.queryItemValue("url", QUrl::FullyDecoded).trimmed();
+                    const QUrl remoteUrl(remote);
+                    if (IsAllowedSubscriptionUrl(remoteUrl)) {
+                        if (displayName != nullptr) {
+                            *displayName = url.fragment(QUrl::FullyDecoded).trimmed();
+                        }
+                        return remoteUrl.toString(QUrl::FullyEncoded);
+                    }
+                }
+            }
+
+            return content;
+        }
+
         QString SafeUrlForLog(const QString &raw) {
             const QUrl url(raw);
             if (!url.isValid()) return QStringLiteral("<invalid-url>");
@@ -480,7 +509,8 @@ namespace NekoGui_sub {
 
     // 在新的 thread 运行
     void GroupUpdater::AsyncUpdate(const QString &str, int _sub_gid, const std::function<void()> &finish) {
-        auto content = str.trimmed();
+        QString detectedName;
+        auto content = NormalizeSubscriptionInput(str, &detectedName);
         bool asURL = false;
         bool createNewGroup = false;
 
@@ -504,15 +534,18 @@ namespace NekoGui_sub {
             auto gid = _sub_gid;
             if (createNewGroup) {
                 auto group = NekoGui::ProfileManager::NewGroup();
-                const auto url = QUrl(str);
-                group->name = url.host();
-                group->url = str;
+                const auto url = QUrl(content);
+                group->name = !detectedName.isEmpty() ? detectedName : url.host();
+                if (group->name.isEmpty()) {
+                    group->name = SafeUrlForLog(content);
+                }
+                group->url = content;
                 group->sub_insecure = NekoGui::dataStore->sub_insecure;
                 NekoGui::profileManager->AddGroup(group);
                 gid = group->id;
                 MW_dialog_message("SubUpdater", "NewGroup");
             }
-            Update(str, gid, asURL);
+            Update(content, gid, asURL);
             emit asyncUpdateCallback(gid);
             if (finish != nullptr) finish();
         });
@@ -527,7 +560,7 @@ namespace NekoGui_sub {
         // 准备
         QString sub_user_info;
         bool asURL = _sub_gid >= 0 || _not_sub_as_url; // 把 _str 当作 url 处理（下载内容）
-        auto content = _str.trimmed();
+        auto content = NormalizeSubscriptionInput(_str);
         auto group = NekoGui::profileManager->GetGroup(_sub_gid);
         if (group != nullptr && group->archive) return;
 
