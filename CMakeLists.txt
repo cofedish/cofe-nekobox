@@ -238,8 +238,18 @@ set(PROJECT_SOURCES
         ui/widget/GroupItem.cpp
         ui/widget/GroupItem.h
         ui/widget/GroupItem.ui
+        ui/widget/AnimatedBackgroundWebGL.cpp
+        ui/widget/AnimatedBackgroundWebGL.h
         ui/widget/WaveBackground.cpp
         ui/widget/WaveBackground.h
+        ui/widget/Sidebar.cpp
+        ui/widget/Sidebar.h
+        ui/widget/TopBar.cpp
+        ui/widget/TopBar.h
+        ui/widget/RightInfoPanel.cpp
+        ui/widget/RightInfoPanel.h
+        ui/widget/InfoCard.cpp
+        ui/widget/InfoCard.h
         ui/widget/ConnectButton.cpp
         ui/widget/ConnectButton.h
         ui/widget/ToastWidget.cpp

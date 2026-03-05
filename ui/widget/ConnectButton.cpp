@@ -140,13 +140,20 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
 
     QColor accent = palette().color(QPalette::Highlight);
     QColor textColor = palette().color(QPalette::HighlightedText);
-    QColor coreDark = QColor(22, 8, 38);
-    QColor coreLight = accent.lighter(155);
+    const QColor baseColor = palette().color(QPalette::Base);
+    const QColor windowColor = palette().color(QPalette::Window);
+    QColor coreDark = windowColor.darker(178);
+    QColor coreLight = QColor::fromRgbF(qBound(0.0, accent.redF() * 0.72 + baseColor.redF() * 0.28, 1.0),
+                                        qBound(0.0, accent.greenF() * 0.72 + baseColor.greenF() * 0.28, 1.0),
+                                        qBound(0.0, accent.blueF() * 0.72 + baseColor.blueF() * 0.28, 1.0));
+    QColor coreEdge = windowColor.darker(210);
     QColor ringColor = accent.lighter(125);
     QColor glowColor = accent.lighter(110);
 
     if (current_state == State::Disconnected) {
-        coreLight = accent.darker(180);
+        coreLight = baseColor.darker(108);
+        coreDark = windowColor.darker(188);
+        coreEdge = windowColor.darker(220);
         textColor = palette().color(QPalette::WindowText);
         ringColor = accent;
         glowColor = accent.darker(130);
@@ -204,7 +211,7 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
     QRadialGradient coreGrad(gradientCenter, innerRadius * 1.2, innerRect.center());
     coreGrad.setColorAt(0.0, coreLight);
     coreGrad.setColorAt(0.72, coreDark);
-    coreGrad.setColorAt(1.0, QColor(9, 4, 19));
+    coreGrad.setColorAt(1.0, coreEdge);
     painter.setBrush(coreGrad);
     painter.drawEllipse(innerRect);
 

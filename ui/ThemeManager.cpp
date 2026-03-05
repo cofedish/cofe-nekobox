@@ -1,4 +1,4 @@
-#include <QStyle>
+﻿#include <QStyle>
 #include <QApplication>
 #include <QStyleFactory>
 #include <QPalette>
@@ -344,144 +344,121 @@ namespace {
         qss.replace("%WEIGHT_REGULAR%", QString::number(regular_weight));
         qss.replace("%WEIGHT_MEDIUM%", QString::number(medium_weight));
         qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
-        const auto glassSurface      = ToRgba(QColor(t.surface), 128);       // ~50% transparent — shows waves
-        const auto glassSurfaceSoft  = ToRgba(QColor(t.surface_alt), 108);
-        const auto glassBorder       = ToRgba(QColor(t.border), 190);
-        const auto accentBorderHover = ToRgba(QColor(t.accent), 200);
-        const auto mutedSoft         = ToRgba(QColor(t.text_muted), 112);
-        const auto shadowColor       = ToRgba(QColor(t.window).darker(170), 155);
-        const auto navItemHover      = ToRgba(QColor(t.accent), 32);
-        const auto navItemSelected   = ToRgba(QColor(t.accent), 55);
-        const auto sidebarBg         = ToRgba(QColor(t.surface).darker(108), 188);
-        const auto cardHoverBg       = ToRgba(QColor(t.surface).lighter(110), 160);
-        const auto topbarBg          = ToRgba(QColor(t.surface).darker(110), 200);
+        const auto glassSurfaceSoft = ToRgba(QColor(t.surface_alt), 148);
+        const auto glassBorder = ToRgba(QColor(t.border), 170);
+        const auto glassBorderSoft = ToRgba(QColor(t.border), 112);
+        const auto accentSoft = ToRgba(QColor(t.accent), 58);
+        const auto navHover = ToRgba(QColor(t.accent), 30);
+        const auto navSelected = ToRgba(QColor(t.accent), 54);
+        const auto sidebarBg = ToRgba(QColor(t.surface).darker(112), 176);
+        const auto topbarBg = ToRgba(QColor(t.surface_alt), 166);
+        const auto panelBgA = ToRgba(QColor(t.surface).darker(114), 168);
+        const auto panelBgB = ToRgba(QColor(t.surface_alt), 152);
+        const auto cardBg = ToRgba(QColor(t.surface), 130);
+        const auto cardHoverBg = ToRgba(QColor(t.surface_alt), 172);
+        const auto cardPressBg = ToRgba(QColor(t.surface).darker(108), 176);
+        const auto chipBg = ToRgba(QColor(t.surface), 142);
+        const auto chipCheckedBg = ToRgba(QColor(t.accent), 68);
+        const auto chipDotOff = ToRgba(QColor(t.text_muted), 160);
+        const auto separator = ToRgba(QColor(t.border), 128);
         qss += QString(
-            "QWidget#centralwidget { background: transparent; }"
-            "QWidget#main_container { background: transparent; }"
+            "QWidget#centralwidget, QWidget#main_container, QWidget#page_home { background: transparent; }"
 
-            // ===== Sidebar =====
+            // Sidebar
             "QFrame#drawer_container {"
-            "background: %1;"
-            "border-right: 1px solid %2; }"
-
-            // Nav items — compact icon-above-label mode
-            "QListWidget#drawer_nav { background: transparent; border: none; padding: 4px 0; outline: none; }"
+            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %1,stop:1 %2);"
+            "border-right: 1px solid %3; }"
+            "QListWidget#drawer_nav { background: transparent; border: none; padding: 3px 0; outline: none; }"
             "QListWidget#drawer_nav::item {"
-            "color: %3; border-radius: 12px; border: 1px solid transparent; }"
-            "QListWidget#drawer_nav::item:hover { background: %4; border-color: %5; color: %11; }"
-            "QListWidget#drawer_nav::item:selected {"
-            "background: %6; border: 1px solid %7; color: %8; }"
-            "QListWidget#drawer_nav::item:focus { outline: none; border: 1px solid transparent; }"
+            "color: %4; border-radius: 12px; border: 1px solid transparent;"
+            "padding: 8px 10px; margin: 1px 6px; min-height: 34px; }"
+            "QListWidget#drawer_nav::item:hover { background: %5; border-color: %6; color: %7; }"
+            "QListWidget#drawer_nav::item:selected { background: %8; border: 1px solid %9; color: %7; }"
+            "QToolButton#drawer_theme_button {"
+            "min-height: 24px; padding: 2px 6px; border-radius: 10px;"
+            "border: 1px solid %3; background: %14; color: %7; }"
+            "QToolButton#drawer_theme_button:hover { border-color: %6; background: %16; }"
 
-            // Theme picker button
-            "QToolButton#drawer_theme_button { min-height: 26px; padding: 2px 5px; }"
-
-            // ===== Top bar =====
+            // Top bar
             "QFrame#topbar {"
-            "background: %17;"
-            "border: 1px solid %2;"
-            "border-radius: 16px;"
-            "padding: 6px 14px; }"
-            "QLabel#topbar_title {"
-            "font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; letter-spacing: 0.3px; }"
-            "QToolButton#drawer_toggle { border-radius: 14px; }"
-
-            // ===== Home page =====
-            "QWidget#page_home { background: transparent; }"
-
-            // Center panel: semi-transparent glass showing waves through
-            "QFrame#home_center_panel {"
-            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %10,stop:0.6 %9,stop:1 %18);"
-            "border: 1px solid %2; border-radius: 28px; }"
-
-            // Side panel: slightly darker glass
-            "QFrame#home_side_panel {"
-            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %10,stop:1 %9);"
-            "border: 1px solid %2; border-radius: 24px; }"
-
-            // Running label (below connect button)
-            "QLabel#label_running {"
-            "font-size: %HOME_STATUS_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; color: %11; }"
-
-            // Side panel section headings
-            "QLabel#home_modes_title, QLabel#home_stats_title, QLabel#home_inbound_title {"
-            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %11;"
-            "padding-bottom: 2px; }"
-
-            // Side panel body text
-            "QLabel#label_speed, QLabel#label_inbound, QLabel#home_modes_text {"
-            "color: %3; }"
-
-            // Separators
-            "QFrame#home_side_sep_1, QFrame#home_side_sep_2 { color: %2; background: %2; max-height: 1px; }"
-
-            // ===== Server / Profile cards =====
-            "QToolButton#home_select_server, QToolButton#home_select_profile {"
-            "text-align: left; padding: 12px 16px; min-height: 58px;"
-            "background: %9;"
-            "border: 1px solid %2;"
-            "border-radius: 18px; color: %11; }"
-            "QToolButton#home_select_server:hover, QToolButton#home_select_profile:hover {"
-            "background: %19;"
-            "border: 1px solid %20; }"
-            "QToolButton#home_select_server:pressed, QToolButton#home_select_profile:pressed {"
-            "background: %6; border-color: %12; }"
-
-            // Logs button (hidden but styled just in case)
-            "QToolButton#home_open_logs {"
-            "text-align: center; min-width: 66px; min-height: 40px;"
-            "background: %9; border: 1px solid %2; border-radius: 12px; }"
-            "QToolButton#home_open_logs:hover { background: %4; border-color: %12; }"
-
-            // ===== Subscription row =====
-            "QLineEdit#home_sub_url {"
-            "background: %9; border: 1px solid %2; border-radius: 14px;"
-            "min-height: 42px; padding: 7px 12px; }"
-            "QLineEdit#home_sub_url:focus { border-color: %12; }"
-            "QPushButton#home_sub_add {"
-            "background: %12; color: %13; border: none; border-radius: 14px;"
-            "min-height: 42px; min-width: 100px; padding: 7px 18px;"
-            "font-weight: %WEIGHT_SEMIBOLD%; letter-spacing: 0.2px; }"
-            "QPushButton#home_sub_add:hover { background: %14; }"
-            "QPushButton#home_sub_add:pressed { background: %15; }"
-
-            // ===== Toggle switches =====
+            "background: qlineargradient(x1:0,y1:0,x2:1,y2:0,stop:0 %10,stop:1 %11);"
+            "border: 1px solid %3; border-radius: 16px; padding: 6px 10px; }"
+            "QToolButton#drawer_toggle {"
+            "min-width: 30px; max-width: 30px; min-height: 30px; max-height: 30px;"
+            "border-radius: 10px; border: 1px solid transparent; background: transparent; color: %7; }"
+            "QToolButton#drawer_toggle:hover { background: %5; border-color: %6; }"
+            "QLabel#topbar_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %7; }"
             "QCheckBox#checkBox_VPN, QCheckBox#checkBox_SystemProxy {"
-            "color: %11; padding: 0 6px; spacing: 7px; font-size: %NAV_FONT_PX%px; }"
+            "spacing: 6px; color: %7; font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%;"
+            "padding: 5px 10px; border-radius: 12px; border: 1px solid %3; background: %14; }"
+            "QCheckBox#checkBox_VPN:hover, QCheckBox#checkBox_SystemProxy:hover { border-color: %6; }"
             "QCheckBox#checkBox_VPN::indicator, QCheckBox#checkBox_SystemProxy::indicator {"
-            "width: 38px; height: 22px; border-radius: 11px; border: 1px solid %2; background: %10; }"
+            "width: 10px; height: 10px; border-radius: 5px; border: 1px solid transparent; background: %15; }"
             "QCheckBox#checkBox_VPN::indicator:checked, QCheckBox#checkBox_SystemProxy::indicator:checked {"
-            "background: %12; border-color: %12; }"
-            "QCheckBox#checkBox_VPN::indicator:hover, QCheckBox#checkBox_SystemProxy::indicator:hover {"
-            "border-color: %14; }"
+            "background: %9; border-color: %9; }"
+            "QCheckBox#checkBox_VPN:checked, QCheckBox#checkBox_SystemProxy:checked {"
+            "background: %16; border-color: %9; }"
 
-            // ===== Other page widgets =====
-            "QTabWidget::pane, QTextBrowser, QTableWidget {"
-            "background: %9; border: 1px solid %2; border-radius: 14px; }"
-            "QPushButton, QToolButton, QComboBox, QLineEdit, QTextEdit, QPlainTextEdit {"
-            "selection-background-color: %12; selection-color: %13; }"
-            "QMenu { background: %16; border: 1px solid %2; border-radius: 12px; }"
-            "QFrame#toast_widget { border-color: %2; }")
-                   .arg(sidebarBg)           // %1   sidebar bg
-                   .arg(glassBorder)         // %2   border
-                   .arg(t.text_muted)        // %3   muted text
-                   .arg(navItemHover)        // %4   nav hover bg
-                   .arg(mutedSoft)           // %5   nav hover border
-                   .arg(navItemSelected)     // %6   nav selected bg
-                   .arg(t.accent)            // %7   nav selected border
-                   .arg(t.text)              // %8   nav selected text
-                   .arg(glassSurface)        // %9   glass surface (50% transparent)
-                   .arg(shadowColor)         // %10  deep shadow / gradient dark
-                   .arg(t.text)              // %11  primary text
-                   .arg(t.accent)            // %12  accent color
-                   .arg(t.text_on_accent)    // %13  text on accent
-                   .arg(t.accent_hover)      // %14  accent hover
-                   .arg(t.accent_press)      // %15  accent press
-                   .arg(t.surface)           // %16  menu / popup bg
-                   .arg(topbarBg)            // %17  topbar glass bg
-                   .arg(glassSurfaceSoft)    // %18  gradient end (soft)
-                   .arg(cardHoverBg)         // %19  card hover bg
-                   .arg(accentBorderHover);  // %20  card hover border (accent)
+            // Center area
+            "QFrame#home_center_panel { background: transparent; border: none; }"
+            "QLabel#home_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %7; }"
+            "QLabel#label_running { font-size: %NAV_FONT_PX%px; color: %4; font-weight: %WEIGHT_MEDIUM%; }"
+
+            // Server/Profile cards
+            "QToolButton#home_select_server, QToolButton#home_select_profile {"
+            "text-align: left; padding: 12px 16px; min-height: 56px;"
+            "background: %17; border: 1px solid %3; border-radius: 16px; color: %7; }"
+            "QToolButton#home_select_server:hover, QToolButton#home_select_profile:hover {"
+            "background: %18; border-color: %9; }"
+            "QToolButton#home_select_server:pressed, QToolButton#home_select_profile:pressed {"
+            "background: %19; border-color: %6; }"
+
+            // Add button
+            "QPushButton#home_sub_add {"
+            "min-height: 34px; min-width: 118px; padding: 0 14px;"
+            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%;"
+            "background: %14; color: %7; border: 1px solid %3; border-radius: 17px; }"
+            "QPushButton#home_sub_add:hover { background: %16; border-color: %9; }"
+            "QPushButton#home_sub_add:pressed { background: %13; }"
+            "QLineEdit#home_sub_url { background: transparent; border: none; padding: 0; }"
+
+            // Right compact panel
+            "QFrame#home_side_panel {"
+            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %20,stop:1 %21);"
+            "border: 1px solid %3; border-radius: 18px; }"
+            "QLabel#home_modes_title, QLabel#home_stats_title, QLabel#home_inbound_title {"
+            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %7; }"
+            "QLabel#home_modes_text, QLabel#label_speed, QLabel#label_inbound {"
+            "font-size: %BODY_FONT_PX%px; color: %4; }"
+            "QFrame#home_side_sep_1, QFrame#home_side_sep_2 {"
+            "background: %22; color: %22; max-height: 1px; min-height: 1px; }"
+
+            // Existing panels
+            "QTabWidget::pane, QTextBrowser, QTableWidget { background: %17; border: 1px solid %3; border-radius: 14px; }"
+            "QMenu { background: %12; border: 1px solid %3; border-radius: 12px; }"
+            "QFrame#toast_widget { border-color: %3; }")
+                   .arg(sidebarBg)        // %1
+                   .arg(panelBgA)         // %2
+                   .arg(glassBorder)      // %3
+                   .arg(t.text_muted)     // %4
+                   .arg(navHover)         // %5
+                   .arg(glassBorderSoft)  // %6
+                   .arg(t.text)           // %7
+                   .arg(navSelected)      // %8
+                   .arg(t.accent)         // %9
+                   .arg(topbarBg)         // %10
+                   .arg(glassSurfaceSoft) // %11
+                   .arg(t.surface)        // %12
+                   .arg(accentSoft)       // %13
+                   .arg(chipBg)           // %14
+                   .arg(chipDotOff)       // %15
+                   .arg(chipCheckedBg)    // %16
+                   .arg(cardBg)           // %17
+                   .arg(cardHoverBg)      // %18
+                   .arg(cardPressBg)      // %19
+                   .arg(panelBgA)         // %20
+                   .arg(panelBgB)         // %21
+                   .arg(separator);       // %22
         qss.replace("%HOME_TITLE_FONT_PX%", QString::number(home_title_font_px));
         qss.replace("%HOME_STATUS_FONT_PX%", QString::number(home_status_font_px));
         qss.replace("%NAV_FONT_PX%", QString::number(nav_font_px));

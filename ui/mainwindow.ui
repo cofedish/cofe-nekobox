@@ -37,10 +37,10 @@
      <number>0</number>
     </property>
     <item>
-     <widget class="QFrame" name="drawer_container">
+     <widget class="Sidebar" name="drawer_container">
       <property name="minimumSize">
        <size>
-        <width>72</width>
+        <width>64</width>
         <height>0</height>
        </size>
       </property>
@@ -126,8 +126,8 @@
          </layout>
         </widget>
        </item>
-       <item>
-        <widget class="QListWidget" name="drawer_nav">
+         <item>
+          <widget class="QListWidget" name="drawer_nav">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
            <horstretch>0</horstretch>
@@ -154,42 +154,27 @@
          </property>
          <item>
           <property name="text">
-           <string>Home</string>
+           <string>Главная</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Servers</string>
+           <string>Профили</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Profiles</string>
+           <string>Маршруты</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Subscriptions</string>
+           <string>Логи</string>
           </property>
          </item>
          <item>
           <property name="text">
-           <string>Rules</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Logs</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Settings</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>About</string>
+           <string>Добавить</string>
           </property>
          </item>
         </widget>
@@ -254,19 +239,19 @@
      <widget class="QWidget" name="main_container" native="true">
       <layout class="QVBoxLayout" name="mainLayout">
        <property name="spacing">
-        <number>12</number>
+        <number>10</number>
        </property>
        <property name="leftMargin">
-        <number>16</number>
+        <number>14</number>
        </property>
        <property name="topMargin">
-        <number>16</number>
+        <number>14</number>
        </property>
        <property name="rightMargin">
-        <number>16</number>
+        <number>14</number>
        </property>
        <property name="bottomMargin">
-        <number>16</number>
+        <number>14</number>
        </property>
        <item>
         <widget class="QWidget" name="header_row" native="true">
@@ -284,54 +269,54 @@
            <number>0</number>
           </property>
           <property name="spacing">
-           <number>12</number>
+           <number>0</number>
           </property>
           <item>
-           <widget class="QToolButton" name="drawer_toggle">
-            <property name="minimumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>48</width>
-              <height>48</height>
-             </size>
-            </property>
-            <property name="text">
-             <string>Menu</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonIconOnly</enum>
-            </property>
-            <property name="autoRaise">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QFrame" name="topbar">
+           <widget class="TopBar" name="topbar">
             <property name="frameShape">
              <enum>QFrame::NoFrame</enum>
             </property>
             <layout class="QHBoxLayout" name="topbarLayout">
              <property name="leftMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="topMargin">
               <number>0</number>
              </property>
              <property name="rightMargin">
-              <number>0</number>
+              <number>4</number>
              </property>
              <property name="bottomMargin">
               <number>0</number>
              </property>
              <property name="spacing">
-              <number>12</number>
+              <number>10</number>
              </property>
+             <item>
+              <widget class="QToolButton" name="drawer_toggle">
+               <property name="minimumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>30</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="text">
+                <string>Menu</string>
+               </property>
+               <property name="toolButtonStyle">
+                <enum>Qt::ToolButtonIconOnly</enum>
+               </property>
+               <property name="autoRaise">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="topbar_title">
                <property name="text">
@@ -353,16 +338,16 @@
               </spacer>
              </item>
              <item>
-              <widget class="QCheckBox" name="checkBox_VPN">
+             <widget class="QCheckBox" name="checkBox_VPN">
                <property name="text">
-                <string>Tun Mode</string>
+                <string>Режим TUN</string>
                </property>
               </widget>
              </item>
              <item>
               <widget class="QCheckBox" name="checkBox_SystemProxy">
                <property name="text">
-                <string>System Proxy</string>
+                <string>Режим системного прокси</string>
                </property>
               </widget>
              </item>
@@ -378,9 +363,9 @@
           <number>0</number>
          </property>
          <widget class="QWidget" name="page_home">
-          <layout class="QHBoxLayout" name="homeRootLayout" stretch="7,3">
+         <layout class="QHBoxLayout" name="homeRootLayout" stretch="8,3">
            <property name="spacing">
-            <number>16</number>
+            <number>14</number>
            </property>
            <property name="leftMargin">
             <number>0</number>
@@ -399,22 +384,32 @@
              <property name="frameShape">
               <enum>QFrame::NoFrame</enum>
              </property>
-             <layout class="QVBoxLayout" name="homeCenterLayout">
+            <layout class="QVBoxLayout" name="homeCenterLayout">
               <property name="spacing">
-               <number>12</number>
+               <number>8</number>
               </property>
               <property name="leftMargin">
-               <number>16</number>
+               <number>12</number>
               </property>
               <property name="topMargin">
-               <number>16</number>
+               <number>8</number>
               </property>
               <property name="rightMargin">
-               <number>16</number>
+               <number>12</number>
               </property>
               <property name="bottomMargin">
-               <number>16</number>
+               <number>8</number>
               </property>
+              <item>
+               <widget class="QLabel" name="home_title">
+                <property name="text">
+                 <string>Главная</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
               <item>
                <widget class="QLabel" name="label_running">
                 <property name="text">
@@ -446,32 +441,32 @@
               </item>
               <item>
                <widget class="QWidget" name="home_cards" native="true">
-                <layout class="QHBoxLayout" name="homeCardsLayout">
+                <layout class="QVBoxLayout" name="homeCardsLayout">
                  <property name="spacing">
-                  <number>10</number>
+                  <number>8</number>
                  </property>
                  <property name="leftMargin">
-                  <number>24</number>
+                  <number>72</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>24</number>
+                  <number>72</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QToolButton" name="home_select_server">
+                  <widget class="InfoCard" name="home_select_server">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                      <horstretch>1</horstretch>
                      <verstretch>0</verstretch>
-                    </sizepolicy>
+                   </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>Server</string>
+                    <string>Сервер</string>
                    </property>
                    <property name="toolButtonStyle">
                     <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -479,15 +474,15 @@
                   </widget>
                  </item>
                  <item>
-                  <widget class="QToolButton" name="home_select_profile">
+                  <widget class="InfoCard" name="home_select_profile">
                    <property name="sizePolicy">
                     <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                      <horstretch>1</horstretch>
                      <verstretch>0</verstretch>
-                    </sizepolicy>
+                   </sizepolicy>
                    </property>
                    <property name="text">
-                    <string>Profile</string>
+                    <string>Профиль</string>
                    </property>
                    <property name="toolButtonStyle">
                     <enum>Qt::ToolButtonTextBesideIcon</enum>
@@ -501,19 +496,19 @@
                <widget class="QWidget" name="home_add_row" native="true">
                 <layout class="QHBoxLayout" name="homeAddRowLayout">
                  <property name="leftMargin">
-                  <number>24</number>
+                  <number>0</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>24</number>
+                  <number>0</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <property name="spacing">
-                  <number>10</number>
+                  <number>0</number>
                  </property>
                  <item>
                   <widget class="QToolButton" name="home_open_logs">
@@ -530,6 +525,15 @@
                  </item>
                  <item>
                   <widget class="QLineEdit" name="home_sub_url">
+                   <property name="visible">
+                    <bool>false</bool>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>0</width>
+                     <height>0</height>
+                    </size>
+                   </property>
                    <property name="placeholderText">
                     <string>Paste subscription URL</string>
                    </property>
@@ -541,7 +545,7 @@
                  <item>
                   <widget class="QPushButton" name="home_sub_add">
                    <property name="text">
-                    <string>+ Add</string>
+                    <string>+ Добавить</string>
                    </property>
                   </widget>
                  </item>
@@ -565,17 +569,17 @@
             </widget>
            </item>
            <item>
-            <widget class="QFrame" name="home_side_panel">
+            <widget class="RightInfoPanel" name="home_side_panel">
              <property name="minimumSize">
               <size>
-               <width>280</width>
+               <width>246</width>
                <height>0</height>
               </size>
              </property>
              <property name="maximumSize">
               <size>
-               <width>360</width>
-               <height>16777215</height>
+               <width>284</width>
+               <height>460</height>
               </size>
              </property>
              <property name="frameShape">
@@ -583,31 +587,32 @@
              </property>
              <layout class="QVBoxLayout" name="homeSideLayout">
               <property name="spacing">
-               <number>12</number>
+               <number>10</number>
               </property>
               <property name="leftMargin">
-               <number>16</number>
+               <number>14</number>
               </property>
               <property name="topMargin">
-               <number>16</number>
+               <number>14</number>
               </property>
               <property name="rightMargin">
-               <number>16</number>
+               <number>14</number>
               </property>
               <property name="bottomMargin">
-               <number>16</number>
+               <number>14</number>
               </property>
               <item>
                <widget class="QLabel" name="home_modes_title">
                 <property name="text">
-                 <string>Modes</string>
+                 <string>Режимы</string>
                 </property>
                </widget>
               </item>
               <item>
                <widget class="QLabel" name="home_modes_text">
                 <property name="text">
-                 <string>Use top switches for Tun and System Proxy.</string>
+                 <string>TUN: отключен
+Системный прокси: отключен</string>
                 </property>
                 <property name="wordWrap">
                  <bool>true</bool>
@@ -627,7 +632,7 @@
               <item>
                <widget class="QLabel" name="home_stats_title">
                 <property name="text">
-                 <string>Statistics</string>
+                 <string>Статистика</string>
                 </property>
                </widget>
               </item>
@@ -677,7 +682,7 @@ Direct: -</string>
                 <property name="sizeHint" stdset="0">
                  <size>
                   <width>20</width>
-                  <height>120</height>
+                  <height>24</height>
                  </size>
                 </property>
                </spacer>
@@ -1985,6 +1990,26 @@ Direct: -</string>
   <class>WaveBackground</class>
   <extends>QWidget</extends>
   <header>ui/widget/WaveBackground.h</header>
+ </customwidget>
+ <customwidget>
+  <class>Sidebar</class>
+  <extends>QFrame</extends>
+  <header>ui/widget/Sidebar.h</header>
+ </customwidget>
+ <customwidget>
+  <class>TopBar</class>
+  <extends>QFrame</extends>
+  <header>ui/widget/TopBar.h</header>
+ </customwidget>
+ <customwidget>
+  <class>InfoCard</class>
+  <extends>QToolButton</extends>
+  <header>ui/widget/InfoCard.h</header>
+ </customwidget>
+ <customwidget>
+  <class>RightInfoPanel</class>
+  <extends>QFrame</extends>
+  <header>ui/widget/RightInfoPanel.h</header>
  </customwidget>
  <customwidget>
   <class>ConnectButton</class>

@@ -10,11 +10,11 @@
 namespace {
 QStringList PreferredFamilies() {
 #ifdef Q_OS_WIN
-    return {"Inter", "Segoe UI Variable", "Segoe UI", "Manrope", "Noto Sans"};
+    return {"Inter", "Segoe UI", "Segoe UI Variable", "Roboto", "Noto Sans"};
 #elif defined(Q_OS_MAC)
-    return {"Inter", "SF Pro Text", "SF Pro Display", "Manrope", "Helvetica Neue"};
+    return {"Inter", "SF Pro Text", "SF Pro Display", "Roboto", "Helvetica Neue"};
 #else
-    return {"Inter", "SF Pro Text", "Manrope", "Noto Sans", "DejaVu Sans"};
+    return {"Inter", "Roboto", "Noto Sans", "DejaVu Sans"};
 #endif
 }
 
@@ -57,6 +57,7 @@ QString QssFamilyChain() {
     for (const auto &family : PreferredFamilies()) {
         chain << QStringLiteral("\"%1\"").arg(family);
     }
+    chain << QStringLiteral("system-ui");
     chain << QStringLiteral("sans-serif");
     return chain.join(',');
 }

@@ -193,6 +193,7 @@ private:
     int add_base_count = 0;
     QString home_running_full_text;
     QString home_running_tooltip;
+    int drawer_last_content_row = 0;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 

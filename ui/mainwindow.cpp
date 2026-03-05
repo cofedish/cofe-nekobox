@@ -11,6 +11,7 @@
 #include "ui/ThemeManager.hpp"
 #include "ui/UpdateService.hpp"
 #include "ui/Icon.hpp"
+#include "ui/Typography.hpp"
 #include "ui/widget/WaveBackground.h"
 #include "ui/widget/ConnectButton.h"
 #include "ui/edit/dialog_edit_profile.h"
@@ -219,12 +220,26 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     if (ui->homeCenterLayout != nullptr) {
         ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
+        ui->homeCenterLayout->setAlignment(ui->home_cards, Qt::AlignHCenter);
+        ui->homeCenterLayout->setAlignment(ui->home_add_row, Qt::AlignHCenter);
+    }
+    if (ui->home_cards != nullptr) {
+        ui->home_cards->setMaximumWidth(Typography::ScalePx(560));
+    }
+    if (ui->home_add_row != nullptr) {
+        ui->home_add_row->setMaximumWidth(Typography::ScalePx(220));
+    }
+    if (ui->homeAddRowLayout != nullptr) {
+        ui->homeAddRowLayout->setAlignment(ui->home_sub_add, Qt::AlignHCenter);
+    }
+    if (ui->homeRootLayout != nullptr) {
+        ui->homeRootLayout->setAlignment(ui->home_side_panel, Qt::AlignTop);
     }
     if (ui->home_select_server != nullptr) {
-        ui->home_select_server->setToolButtonStyle(Qt::ToolButtonTextOnly);
+        ui->home_select_server->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     }
     if (ui->home_select_profile != nullptr) {
-        ui->home_select_profile->setToolButtonStyle(Qt::ToolButtonTextOnly);
+        ui->home_select_profile->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
     }
     if (ui->home_open_logs != nullptr) {
         ui->home_open_logs->setToolButtonStyle(Qt::ToolButtonTextOnly);
@@ -325,24 +340,43 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     drawer_theme_menu->close();
                 }
             });
-    // Start in compact icon-above-label mode (24px, IconMode)
+    const auto titleHome = QString::fromUtf8(u8"Главная");
+    const auto titleProfiles = QString::fromUtf8(u8"Профили");
+    const auto titleRoutes = QString::fromUtf8(u8"Маршруты");
+    const auto titleLogs = QString::fromUtf8(u8"Логи");
+    const auto titleAdd = QString::fromUtf8(u8"Добавить");
+    const QStringList drawerTitles = {titleHome, titleProfiles, titleRoutes, titleLogs, titleAdd};
+    for (int i = 0; i < ui->drawer_nav->count() && i < drawerTitles.size(); ++i) {
+        if (auto item = ui->drawer_nav->item(i)) {
+            item->setText(drawerTitles.at(i));
+            item->setData(Qt::UserRole, drawerTitles.at(i));
+        }
+    }
+    ui->topbar_title->setText(drawerTitles.value(0));
+    if (ui->home_title != nullptr) ui->home_title->setText(titleHome);
+    if (ui->home_modes_title != nullptr) ui->home_modes_title->setText(QString::fromUtf8(u8"Режимы"));
+    if (ui->home_stats_title != nullptr) ui->home_stats_title->setText(QString::fromUtf8(u8"Статистика"));
+    if (ui->home_sub_add != nullptr) ui->home_sub_add->setText(QString::fromUtf8(u8"+ Добавить"));
+    if (ui->checkBox_VPN != nullptr) ui->checkBox_VPN->setText(QString::fromUtf8(u8"Режим TUN"));
+    if (ui->checkBox_SystemProxy != nullptr) {
+        ui->checkBox_SystemProxy->setText(QString::fromUtf8(u8"Режим системного прокси"));
+    }
+
+    // Start collapsed: icon-only sidebar
     ui->drawer_nav->setViewMode(QListView::IconMode);
-    ui->drawer_nav->setIconSize(QSize(24, 24));
-    ui->drawer_nav->setGridSize(QSize(64, 64));
-    ui->drawer_nav->setSpacing(0);
+    ui->drawer_nav->setIconSize(QSize(20, 20));
+    ui->drawer_nav->setGridSize(QSize(56, 56));
+    ui->drawer_nav->setSpacing(2);
     const auto applyNavIcon = [&](int row, QStyle::StandardPixmap pixmap) {
         auto item = ui->drawer_nav->item(row);
         if (item == nullptr) return;
         item->setIcon(style()->standardIcon(pixmap));
     };
     applyNavIcon(0, QStyle::SP_DesktopIcon);
-    applyNavIcon(1, QStyle::SP_ComputerIcon);
-    applyNavIcon(2, QStyle::SP_DirHomeIcon);
-    applyNavIcon(3, QStyle::SP_BrowserReload);
-    applyNavIcon(4, QStyle::SP_FileDialogDetailedView);
-    applyNavIcon(5, QStyle::SP_FileDialogListView);
-    applyNavIcon(6, QStyle::SP_FileDialogContentsView);
-    applyNavIcon(7, QStyle::SP_MessageBoxInformation);
+    applyNavIcon(1, QStyle::SP_DirHomeIcon);
+    applyNavIcon(2, QStyle::SP_FileDialogDetailedView);
+    applyNavIcon(3, QStyle::SP_FileDialogListView);
+    applyNavIcon(4, QStyle::SP_FileDialogNewFolder);
     ui->home_select_server->setIcon(style()->standardIcon(QStyle::SP_ComputerIcon));
     ui->home_select_profile->setIcon(style()->standardIcon(QStyle::SP_DirHomeIcon));
     ui->home_open_logs->setIcon(style()->standardIcon(QStyle::SP_FileDialogDetailedView));
@@ -350,16 +384,45 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->home_select_profile->setIconSize(QSize(16, 16));
     ui->home_open_logs->setIconSize(QSize(16, 16));
     connect(ui->drawer_nav, &QListWidget::currentRowChanged, this, [=](int row) {
-        ui->stacked_pages->setCurrentIndex(row);
-        if (auto item = ui->drawer_nav->item(row)) {
-            ui->topbar_title->setText(item->text());
+        if (row < 0) return;
+        if (row == 4) {
+            on_menu_add_from_input_triggered();
+            QSignalBlocker blocker(ui->drawer_nav);
+            ui->drawer_nav->setCurrentRow(drawer_last_content_row);
+            return;
         }
+
+        int pageIndex = 0;
+        QString title = titleHome;
+        switch (row) {
+            case 0:
+                pageIndex = 0;
+                title = titleHome;
+                break;
+            case 1:
+                pageIndex = 2;
+                title = titleProfiles;
+                break;
+            case 2:
+                pageIndex = 4;
+                title = titleRoutes;
+                break;
+            case 3:
+                pageIndex = 5;
+                title = titleLogs;
+                break;
+            default:
+                break;
+        }
+        drawer_last_content_row = row;
+        ui->stacked_pages->setCurrentIndex(pageIndex);
+        ui->topbar_title->setText(title);
         if (drawer_open && this->width() < 1040) {
             set_drawer_open(false);
         }
     });
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
-    connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(5); });
+    connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(3); });
     connect(ui->home_sub_add, &QPushButton::clicked, this, [=] { submit_home_subscription(); });
     connect(ui->home_sub_url, &QLineEdit::returnPressed, this, [=] { submit_home_subscription(); });
     ui->home_sub_url->installEventFilter(this);
@@ -413,7 +476,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             action->setCheckable(true);
             action->setChecked(NekoGui::dataStore->current_group == gid);
             connect(action, &QAction::triggered, this, [=] {
-                ui->drawer_nav->setCurrentRow(1);
+                ui->stacked_pages->setCurrentIndex(1);
+                ui->topbar_title->setText(tr("Серверы"));
                 ui->tabWidget->setCurrentIndex(groupId2TabIndex(gid));
                 show_group(gid);
             });
@@ -425,7 +489,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->profiles_delete, &QPushButton::clicked, this, &MainWindow::on_menu_delete_triggered);
     connect(ui->profiles_import_clipboard, &QPushButton::clicked, this, &MainWindow::on_menu_add_from_clipboard_triggered);
     connect(ui->profiles_export, &QPushButton::clicked, this, &MainWindow::on_menu_export_config_triggered);
-    connect(ui->profiles_open_servers, &QPushButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(1); });
+    connect(ui->profiles_open_servers, &QPushButton::clicked, this, [=] {
+        ui->stacked_pages->setCurrentIndex(1);
+        ui->topbar_title->setText(tr("Серверы"));
+    });
     connect(ui->profiles_edit, &QPushButton::clicked, this, [=] {
         auto items = ui->proxyListTable->selectedItems();
         if (items.isEmpty()) return;
@@ -621,14 +688,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             ui->drawer_nav->setViewMode(QListView::ListMode);
             ui->drawer_nav->setIconSize(QSize(20, 20));
             ui->drawer_nav->setGridSize(QSize());
-            ui->drawer_nav->setSpacing(4);
+            ui->drawer_nav->setSpacing(2);
         }
         if (drawer_scrim) drawer_scrim->setVisible(false);
     });
     connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
         set_drawer_open(!drawer_open);
     });
-    set_drawer_open(false, false); // start compact (72px icon mode)
+    set_drawer_open(false, false); // start compact (64px icon mode)
 
     // Setup log UI
     qvLogDocument->setUndoRedoEnabled(false);
@@ -1436,20 +1503,23 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         if (group != nullptr) group_name = group->name;
     }
     const auto currentGroup = NekoGui::profileManager->CurrentGroup();
-    const QString profileName = currentGroup != nullptr ? currentGroup->name : tr("Default");
-    const QString serverName = running != nullptr ? running->bean->DisplayTypeAndName() : tr("No active server");
+    const QString profileName = currentGroup != nullptr ? currentGroup->name : QString::fromUtf8(u8"По умолчанию");
+    const QString serverName =
+        running != nullptr ? running->bean->DisplayTypeAndName() : QString::fromUtf8(u8"[По умолчанию] Нет активного сервера");
     if (ui->home_select_server != nullptr) {
-        ui->home_select_server->setText(tr("Server\n%1").arg(serverName));
+        ui->home_select_server->setText(QString::fromUtf8(u8"Сервер\n%1").arg(serverName));
         ui->home_select_server->setToolTip(serverName);
     }
     if (ui->home_select_profile != nullptr) {
-        ui->home_select_profile->setText(tr("Profile\n%1").arg(profileName));
+        ui->home_select_profile->setText(QString::fromUtf8(u8"Профиль\n%1").arg(profileName));
         ui->home_select_profile->setToolTip(profileName);
     }
     if (ui->home_modes_text != nullptr) {
         QStringList modes;
-        modes << (NekoGui::dataStore->spmode_vpn ? tr("TUN: enabled") : tr("TUN: disabled"));
-        modes << (NekoGui::dataStore->spmode_system_proxy ? tr("System proxy: enabled") : tr("System proxy: disabled"));
+        modes << (NekoGui::dataStore->spmode_vpn ? QString::fromUtf8(u8"TUN: включен")
+                                                 : QString::fromUtf8(u8"TUN: отключен"));
+        modes << (NekoGui::dataStore->spmode_system_proxy ? QString::fromUtf8(u8"Системный прокси: включен")
+                                                          : QString::fromUtf8(u8"Системный прокси: отключен"));
         ui->home_modes_text->setText(modes.join("\n"));
     }
 
@@ -1595,37 +1665,39 @@ void MainWindow::update_connect_button() {
 
 void MainWindow::set_drawer_open(bool open, bool animated) {
     drawer_open = open;
+    ui->drawer_nav->setProperty("compact", !open);
+    ui->drawer_nav->style()->unpolish(ui->drawer_nav);
+    ui->drawer_nav->style()->polish(ui->drawer_nav);
     if (drawer_anim != nullptr) {
         drawer_anim->stop();
     }
 
-    const int compact_w = 72;
-    const int expanded_w = 200;
+    const int compact_w = 64;
+    const int expanded_w = 220;
     const int target = open ? expanded_w : compact_w;
 
     // Sidebar is always visible — never hide it
     ui->drawer_container->setVisible(true);
     if (drawer_scrim) drawer_scrim->setVisible(false);
 
-    // Switch to compact icon mode immediately when closing
+    // Toggle icon-only collapsed text/tooltip mode
+    for (int i = 0; i < ui->drawer_nav->count(); ++i) {
+        auto item = ui->drawer_nav->item(i);
+        if (item == nullptr) continue;
+        const auto full = item->data(Qt::UserRole).toString();
+        if (!open) {
+            item->setText({});
+            item->setToolTip(full);
+        } else {
+            item->setText(full);
+            item->setToolTip({});
+        }
+    }
     if (!open) {
         ui->drawer_nav->setViewMode(QListView::IconMode);
-        ui->drawer_nav->setIconSize(QSize(24, 24));
-        ui->drawer_nav->setGridSize(QSize(64, 64));
-        ui->drawer_nav->setSpacing(0);
-        // Enable tooltips showing item label in compact mode
-        for (int i = 0; i < ui->drawer_nav->count(); ++i) {
-            if (auto item = ui->drawer_nav->item(i)) {
-                item->setToolTip(item->text());
-            }
-        }
-    } else {
-        // Clear tooltips in expanded mode (label is visible)
-        for (int i = 0; i < ui->drawer_nav->count(); ++i) {
-            if (auto item = ui->drawer_nav->item(i)) {
-                item->setToolTip({});
-            }
-        }
+        ui->drawer_nav->setIconSize(QSize(20, 20));
+        ui->drawer_nav->setGridSize(QSize(56, 56));
+        ui->drawer_nav->setSpacing(2);
     }
 
     const bool allow_animation = animated && !NekoGui::dataStore->reduce_motion;
@@ -1643,7 +1715,7 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
             ui->drawer_nav->setViewMode(QListView::ListMode);
             ui->drawer_nav->setIconSize(QSize(20, 20));
             ui->drawer_nav->setGridSize(QSize());
-            ui->drawer_nav->setSpacing(4);
+            ui->drawer_nav->setSpacing(2);
         }
     }
 }
@@ -1659,8 +1731,18 @@ void MainWindow::submit_home_subscription() {
     if (!can_start_add()) return;
     auto text = ui->home_sub_url->text().trimmed();
     if (text.isEmpty()) {
-        show_toast_error(tr("Please paste a link or subscription URL."));
-        return;
+        bool ok = false;
+        auto seed = QApplication::clipboard()->text().trimmed();
+        text = QInputDialog::getText(this,
+                                     tr("Добавить"),
+                                     tr("Вставьте ссылку подписки:"),
+                                     QLineEdit::Normal,
+                                     seed,
+                                     &ok).trimmed();
+        if (!ok || text.isEmpty()) {
+            show_toast_error(tr("Please paste a link or subscription URL."));
+            return;
+        }
     }
 
     add_in_progress = true;
