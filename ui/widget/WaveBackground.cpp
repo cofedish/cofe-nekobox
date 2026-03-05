@@ -13,10 +13,10 @@ WaveBackground::WaveBackground(QWidget *parent)
     setAutoFillBackground(false);
 
     timer = new QTimer(this);
-    timer->setInterval(33);
+    timer->setInterval(16); // ~60 fps
     connect(timer, &QTimer::timeout, this, [=] {
         if (!reduce_motion) {
-            phase += 0.025;
+            phase += 0.013;
             if (phase > M_PI * 2) phase = 0.0;
             update();
         }
@@ -123,9 +123,11 @@ void WaveBackground::paintEvent(QPaintEvent *event) {
         painter.fillPath(ribbon, grad);
     };
 
-    drawRibbon(0.42, qMin(height * 0.07, 58.0), qMin(height * 0.16, 74.0), 1.1, accent.lighter(140), violet.lighter(130), 0.33);
-    drawRibbon(0.47, qMin(height * 0.075, 65.0), qMin(height * 0.12, 60.0), -0.9, accent, violet, 0.42);
-    drawRibbon(0.53, qMin(height * 0.06, 48.0), qMin(height * 0.1, 52.0), 0.65, violet, accent.darker(115), 0.28);
+    drawRibbon(0.38, qMin(height * 0.065, 54.0), qMin(height * 0.14, 68.0), 1.3,  accent.lighter(160), violet.lighter(145), 0.22);
+    drawRibbon(0.43, qMin(height * 0.08, 66.0),  qMin(height * 0.18, 84.0), 1.1,  accent.lighter(140), violet.lighter(130), 0.42);
+    drawRibbon(0.48, qMin(height * 0.085, 72.0), qMin(height * 0.14, 68.0), -0.9, accent, violet, 0.52);
+    drawRibbon(0.54, qMin(height * 0.07, 56.0),  qMin(height * 0.11, 56.0), 0.65, violet, accent.darker(115), 0.35);
+    drawRibbon(0.59, qMin(height * 0.055, 44.0), qMin(height * 0.09, 48.0), -0.5, accent.darker(120), violet.darker(110), 0.20);
 
     // Vignette.
     QRadialGradient vignette(width * 0.5, height * 0.5, qMax(width, height) * 0.72);

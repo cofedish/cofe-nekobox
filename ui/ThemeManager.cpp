@@ -344,96 +344,124 @@ namespace {
         qss.replace("%WEIGHT_REGULAR%", QString::number(regular_weight));
         qss.replace("%WEIGHT_MEDIUM%", QString::number(medium_weight));
         qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
-        const auto glassSurface = ToRgba(QColor(t.surface), 148);
-        const auto glassSurfaceSoft = ToRgba(QColor(t.surface_alt), 122);
-        const auto glassBorder = ToRgba(QColor(t.border), 196);
-        const auto accentGlow = ToRgba(QColor(t.accent), 92);
-        const auto accentGlowStrong = ToRgba(QColor(t.accent_hover), 138);
-        const auto mutedSoft = ToRgba(QColor(t.text_muted), 118);
+        const auto glassSurface = ToRgba(QColor(t.surface), 156);
+        const auto glassSurfaceSoft = ToRgba(QColor(t.surface_alt), 130);
+        const auto glassBorder = ToRgba(QColor(t.border), 200);
+        const auto accentGlow = ToRgba(QColor(t.accent), 100);
+        const auto accentGlowStrong = ToRgba(QColor(t.accent_hover), 148);
+        const auto mutedSoft = ToRgba(QColor(t.text_muted), 120);
         const auto shadowColor = ToRgba(QColor(t.window).darker(160), 140);
+        const auto navItemHover = ToRgba(QColor(t.accent), 28);
+        const auto navItemSelected = ToRgba(QColor(t.accent), 48);
+        const auto sidebarBg = ToRgba(QColor(t.surface).darker(105), 200);
         qss += QString(
             "QWidget#centralwidget { background: transparent; }"
             "QWidget#main_container { background: transparent; }"
+
+            // --- Sidebar ---
             "QFrame#drawer_container {"
-            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %1,stop:1 %2);"
-            "border-right: 1px solid %3; }"
-            "QWidget#drawer_header { background: %4; border: 1px solid %3; border-radius: 14px; }"
-            "QListWidget#drawer_nav { background: transparent; border: none; padding: 2px; }"
+            "background: %1;"
+            "border-right: 1px solid %2; }"
+
+            // Compact icon mode: center icons, no text overflow
+            "QListWidget#drawer_nav { background: transparent; border: none; padding: 4px 0; outline: none; }"
             "QListWidget#drawer_nav::item {"
-            "padding: 10px 8px; margin: 3px 0; min-height: 38px;"
-            "border-radius: 12px; border: 1px solid transparent; color: %5; }"
-            "QListWidget#drawer_nav::item:hover { background: %6; border-color: %7; }"
-            "QListWidget#drawer_nav::item:selected { background: %8; border: 1px solid %9; color: %10; }"
-            "QToolButton#drawer_theme_button { min-height: 30px; padding: 4px 8px; }"
+            "color: %3; border-radius: 12px; border: 1px solid transparent; }"
+            "QListWidget#drawer_nav::item:hover { background: %4; border-color: %5; }"
+            "QListWidget#drawer_nav::item:selected {"
+            "background: %6; border: 1px solid %7; color: %8; }"
+            "QListWidget#drawer_nav::item:focus { outline: none; }"
+
+            // Theme button in sidebar footer
+            "QToolButton#drawer_theme_button { min-height: 28px; padding: 3px 6px; }"
+
+            // --- Top bar ---
             "QFrame#topbar {"
-            "background: %4; border: 1px solid %3; border-radius: 14px; padding: 4px 10px; }"
+            "background: %9; border: 1px solid %2; border-radius: 14px; padding: 4px 12px; }"
             "QLabel#topbar_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; }"
             "QToolButton#drawer_toggle { border-radius: 14px; }"
+
+            // --- Home page ---
             "QWidget#page_home { background: transparent; }"
             "QFrame#home_center_panel {"
-            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %11,stop:1 %4);"
-            "border: 1px solid %3; border-radius: 24px; }"
+            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %10,stop:1 %9);"
+            "border: 1px solid %2; border-radius: 24px; }"
             "QFrame#home_side_panel {"
-            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %11,stop:1 %4);"
-            "border: 1px solid %3; border-radius: 20px; }"
-            "QLabel#home_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %10; }"
-            "QLabel#label_running { font-size: %HOME_STATUS_FONT_PX%px; color: %10; }"
-            "QLabel#label_speed, QLabel#label_inbound, QLabel#home_modes_text { color: %12; line-height: 1.4em; }"
+            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %10,stop:1 %9);"
+            "border: 1px solid %2; border-radius: 20px; }"
+
+            // Center panel labels
+            "QLabel#label_running {"
+            "font-size: %HOME_STATUS_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; color: %11; }"
+
+            // Side panel labels
+            "QLabel#label_speed, QLabel#label_inbound, QLabel#home_modes_text { color: %3; line-height: 1.4em; }"
             "QLabel#home_modes_title, QLabel#home_stats_title, QLabel#home_inbound_title {"
-            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %10; }"
-            "QFrame#home_side_sep_1, QFrame#home_side_sep_2 { color: %3; background: %3; max-height: 1px; }"
+            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %11; }"
+            "QFrame#home_side_sep_1, QFrame#home_side_sep_2 { color: %2; background: %2; max-height: 1px; }"
+
+            // Server / Profile cards (horizontal side-by-side)
             "QToolButton#home_select_server, QToolButton#home_select_profile {"
-            "text-align: left; padding: 12px 14px; min-height: 50px;"
-            "background: %4; border: 1px solid %3; border-radius: 14px; color: %10; }"
+            "text-align: left; padding: 12px 14px; min-height: 56px;"
+            "background: %9; border: 1px solid %2; border-radius: 16px; color: %11; }"
             "QToolButton#home_select_server:hover, QToolButton#home_select_profile:hover {"
-            "background: %6; border-color: %9; }"
+            "background: %4; border-color: %12; }"
             "QToolButton#home_select_server:pressed, QToolButton#home_select_profile:pressed {"
-            "background: %8; }"
+            "background: %6; }"
+
+            // Subscription add row
             "QToolButton#home_open_logs {"
             "text-align: center; min-width: 66px; min-height: 40px;"
-            "background: %4; border: 1px solid %3; border-radius: 12px; }"
-            "QToolButton#home_open_logs:hover { background: %6; border-color: %9; }"
+            "background: %9; border: 1px solid %2; border-radius: 12px; }"
+            "QToolButton#home_open_logs:hover { background: %4; border-color: %12; }"
             "QLineEdit#home_sub_url {"
-            "background: %4; border: 1px solid %3; border-radius: 12px; min-height: 40px; padding: 6px 10px; }"
-            "QLineEdit#home_sub_url:focus { border-color: %9; }"
+            "background: %9; border: 1px solid %2; border-radius: 12px; min-height: 40px; padding: 6px 10px; }"
+            "QLineEdit#home_sub_url:focus { border-color: %12; }"
             "QPushButton#home_sub_add {"
-            "background: %9; color: %13; border: none; border-radius: 12px;"
-            "min-height: 40px; min-width: 88px; padding: 6px 14px; }"
+            "background: %12; color: %13; border: none; border-radius: 12px;"
+            "min-height: 40px; min-width: 96px; padding: 6px 16px;"
+            "font-weight: %WEIGHT_SEMIBOLD%; }"
             "QPushButton#home_sub_add:hover { background: %14; }"
             "QPushButton#home_sub_add:pressed { background: %15; }"
-            "QCheckBox#checkBox_VPN, QCheckBox#checkBox_SystemProxy { color: %10; padding: 0 4px; }"
+
+            // Toggle switches (pill style)
+            "QCheckBox#checkBox_VPN, QCheckBox#checkBox_SystemProxy {"
+            "color: %11; padding: 0 5px; spacing: 6px; }"
             "QCheckBox#checkBox_VPN::indicator, QCheckBox#checkBox_SystemProxy::indicator {"
-            "width: 34px; height: 18px; border-radius: 9px; border: 1px solid %3; background: %11; }"
+            "width: 36px; height: 20px; border-radius: 10px; border: 1px solid %2; background: %10; }"
             "QCheckBox#checkBox_VPN::indicator:checked, QCheckBox#checkBox_SystemProxy::indicator:checked {"
-            "background: %9; border-color: %9; }"
+            "background: %12; border-color: %12; }"
             "QCheckBox#checkBox_VPN::indicator:hover, QCheckBox#checkBox_SystemProxy::indicator:hover {"
             "border-color: %14; }"
+
+            // Other widgets
             "QTabWidget::pane, QTextBrowser, QTableWidget {"
-            "background: %4; border: 1px solid %3; border-radius: 14px; }"
+            "background: %9; border: 1px solid %2; border-radius: 14px; }"
             "QPushButton, QToolButton, QComboBox, QLineEdit, QTextEdit, QPlainTextEdit {"
-            "selection-background-color: %9; selection-color: %13; }"
-            "QMenu { background: %1; border: 1px solid %3; border-radius: 12px; }"
-            "QFrame#toast_widget { border-color: %3; }")
-                   .arg(t.surface)
-                   .arg(t.surface_alt)
-                   .arg(glassBorder)
-                   .arg(glassSurface)
-                   .arg(t.text_muted)
-                   .arg(glassSurfaceSoft)
-                   .arg(mutedSoft)
-                   .arg(accentGlow)
-                   .arg(t.accent)
-                   .arg(t.text)
-                   .arg(shadowColor)
-                   .arg(t.text_muted)
-                   .arg(t.text_on_accent)
-                   .arg(t.accent_hover)
-                   .arg(t.accent_press)
-                   .arg(accentGlowStrong);
+            "selection-background-color: %12; selection-color: %13; }"
+            "QMenu { background: %16; border: 1px solid %2; border-radius: 12px; }"
+            "QFrame#toast_widget { border-color: %2; }")
+                   .arg(sidebarBg)          // %1  sidebar bg
+                   .arg(glassBorder)        // %2  border
+                   .arg(t.text_muted)       // %3  muted text / nav icon color
+                   .arg(navItemHover)       // %4  nav hover bg
+                   .arg(mutedSoft)          // %5  nav hover border
+                   .arg(navItemSelected)    // %6  nav selected bg
+                   .arg(t.accent)           // %7  nav selected border
+                   .arg(t.text)             // %8  nav selected text
+                   .arg(glassSurface)       // %9  glass surface
+                   .arg(shadowColor)        // %10 shadow/gradient start
+                   .arg(t.text)             // %11 primary text
+                   .arg(t.accent)           // %12 accent
+                   .arg(t.text_on_accent)   // %13 text on accent
+                   .arg(t.accent_hover)     // %14 accent hover
+                   .arg(t.accent_press)     // %15 accent press
+                   .arg(t.surface);         // %16 menu bg
         qss.replace("%HOME_TITLE_FONT_PX%", QString::number(home_title_font_px));
         qss.replace("%HOME_STATUS_FONT_PX%", QString::number(home_status_font_px));
         qss.replace("%NAV_FONT_PX%", QString::number(nav_font_px));
         qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
+        qss.replace("%WEIGHT_MEDIUM%", QString::number(medium_weight));
         return qss;
     }
 } // namespace

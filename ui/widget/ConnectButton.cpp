@@ -17,9 +17,9 @@ ConnectButton::ConnectButton(QWidget *parent)
     refreshMetrics();
 
     timer = new QTimer(this);
-    timer->setInterval(33);
+    timer->setInterval(16); // ~60 fps
     connect(timer, &QTimer::timeout, this, [=] {
-        phase += 0.08;
+        phase += 0.04;
         if (phase > M_PI * 2) phase = 0.0;
         update();
     });
@@ -140,13 +140,13 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
 
     QColor accent = palette().color(QPalette::Highlight);
     QColor textColor = palette().color(QPalette::HighlightedText);
-    QColor coreDark = QColor(26, 11, 45);
-    QColor coreLight = accent.lighter(135);
-    QColor ringColor = accent.lighter(110);
-    QColor glowColor = accent;
+    QColor coreDark = QColor(22, 8, 38);
+    QColor coreLight = accent.lighter(155);
+    QColor ringColor = accent.lighter(125);
+    QColor glowColor = accent.lighter(110);
 
     if (current_state == State::Disconnected) {
-        coreLight = accent.darker(170);
+        coreLight = accent.darker(180);
         textColor = palette().color(QPalette::WindowText);
         ringColor = accent;
         glowColor = accent.darker(130);
@@ -154,12 +154,12 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
     if (isDown()) {
         coreLight = coreLight.darker(112);
     } else if (underMouse()) {
-        coreLight = coreLight.lighter(108);
+        coreLight = coreLight.lighter(110);
     }
 
     qreal pulse = 1.0;
     if (!reduce_motion) {
-        pulse = 1.0 + 0.028 * qSin(phase * 1.1);
+        pulse = 1.0 + 0.035 * qSin(phase * 0.9);
     }
 
     const qreal outerRadius = (size * 0.5 - Typography::ScalePx(8)) * pulse;
@@ -167,21 +167,37 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
     const QRectF outerRect(center.x() - outerRadius, center.y() - outerRadius, outerRadius * 2.0, outerRadius * 2.0);
     const QRectF innerRect(center.x() - innerRadius, center.y() - innerRadius, innerRadius * 2.0, innerRadius * 2.0);
 
+    // Outer diffuse bloom (wide, soft)
+    if (current_state != State::Disconnected) {
+        const qreal bloomR = outerRadius + Typography::ScalePx(52);
+        QRadialGradient bloomGrad(center, bloomR);
+        QColor bloomC = glowColor;
+        bloomC.setAlpha(static_cast<int>(54 * pulse));
+        QColor bloomZ = bloomC; bloomZ.setAlpha(0);
+        bloomGrad.setColorAt(0.0, bloomC);
+        bloomGrad.setColorAt(0.6, QColor(bloomC.red(), bloomC.green(), bloomC.blue(), 18));
+        bloomGrad.setColorAt(1.0, bloomZ);
+        painter.setPen(Qt::NoPen);
+        painter.setBrush(bloomGrad);
+        const qreal br = bloomR;
+        painter.drawEllipse(center, br, br);
+    }
+
     // Glow halo
     QRadialGradient glowGrad(center, outerRadius + Typography::ScalePx(24));
     QColor glowOuter = glowColor;
     glowOuter.setAlpha(0);
     QColor glowInner = glowColor;
-    glowInner.setAlpha(current_state == State::Disconnected ? 72 : 136);
+    glowInner.setAlpha(current_state == State::Disconnected ? 60 : static_cast<int>(180 * pulse));
     glowGrad.setColorAt(0.0, glowInner);
-    glowGrad.setColorAt(0.75, QColor(glowInner.red(), glowInner.green(), glowInner.blue(), 44));
+    glowGrad.setColorAt(0.55, QColor(glowInner.red(), glowInner.green(), glowInner.blue(), static_cast<int>(72 * pulse)));
     glowGrad.setColorAt(1.0, glowOuter);
     painter.setPen(Qt::NoPen);
     painter.setBrush(glowGrad);
-    painter.drawEllipse(outerRect.adjusted(-Typography::ScalePx(14),
-                                           -Typography::ScalePx(14),
-                                           Typography::ScalePx(14),
-                                           Typography::ScalePx(14)));
+    painter.drawEllipse(outerRect.adjusted(-Typography::ScalePx(18),
+                                           -Typography::ScalePx(18),
+                                           Typography::ScalePx(18),
+                                           Typography::ScalePx(18)));
 
     // Inner sphere
     const QPointF gradientCenter(innerRect.center().x() - innerRect.width() * 0.18, innerRect.center().y() - innerRect.height() * 0.22);

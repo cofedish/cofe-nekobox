@@ -40,7 +40,7 @@
      <widget class="QFrame" name="drawer_container">
       <property name="minimumSize">
        <size>
-        <width>0</width>
+        <width>72</width>
         <height>0</height>
        </size>
       </property>
@@ -61,19 +61,19 @@
       </property>
       <layout class="QVBoxLayout" name="drawerLayout" stretch="0,1,0,0">
        <property name="leftMargin">
-        <number>12</number>
+        <number>4</number>
        </property>
        <property name="topMargin">
-        <number>16</number>
+        <number>12</number>
        </property>
        <property name="rightMargin">
-        <number>12</number>
+        <number>4</number>
        </property>
        <property name="bottomMargin">
-        <number>16</number>
+        <number>12</number>
        </property>
        <property name="spacing">
-        <number>12</number>
+        <number>8</number>
        </property>
        <item>
         <widget class="QWidget" name="drawer_header" native="true">
@@ -401,30 +401,20 @@
              </property>
              <layout class="QVBoxLayout" name="homeCenterLayout">
               <property name="spacing">
-               <number>14</number>
+               <number>12</number>
               </property>
               <property name="leftMargin">
-               <number>18</number>
+               <number>16</number>
               </property>
               <property name="topMargin">
-               <number>20</number>
+               <number>16</number>
               </property>
               <property name="rightMargin">
-               <number>18</number>
+               <number>16</number>
               </property>
               <property name="bottomMargin">
-               <number>20</number>
+               <number>16</number>
               </property>
-              <item>
-               <widget class="QLabel" name="home_title">
-                <property name="text">
-                 <string>Home</string>
-                </property>
-                <property name="alignment">
-                 <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
-                </property>
-               </widget>
-              </item>
               <item>
                <widget class="QLabel" name="label_running">
                 <property name="text">
@@ -456,24 +446,30 @@
               </item>
               <item>
                <widget class="QWidget" name="home_cards" native="true">
-                <layout class="QVBoxLayout" name="homeCardsLayout">
+                <layout class="QHBoxLayout" name="homeCardsLayout">
                  <property name="spacing">
                   <number>10</number>
                  </property>
                  <property name="leftMargin">
-                  <number>40</number>
+                  <number>24</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>40</number>
+                  <number>24</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item>
                   <widget class="QToolButton" name="home_select_server">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>1</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="text">
                     <string>Server</string>
                    </property>
@@ -484,6 +480,12 @@
                  </item>
                  <item>
                   <widget class="QToolButton" name="home_select_profile">
+                   <property name="sizePolicy">
+                    <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                     <horstretch>1</horstretch>
+                     <verstretch>0</verstretch>
+                    </sizepolicy>
+                   </property>
                    <property name="text">
                     <string>Profile</string>
                    </property>
@@ -499,13 +501,13 @@
                <widget class="QWidget" name="home_add_row" native="true">
                 <layout class="QHBoxLayout" name="homeAddRowLayout">
                  <property name="leftMargin">
-                  <number>40</number>
+                  <number>24</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>40</number>
+                  <number>24</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
@@ -515,6 +517,9 @@
                  </property>
                  <item>
                   <widget class="QToolButton" name="home_open_logs">
+                   <property name="visible">
+                    <bool>false</bool>
+                   </property>
                    <property name="text">
                     <string>Logs</string>
                    </property>
@@ -536,7 +541,7 @@
                  <item>
                   <widget class="QPushButton" name="home_sub_add">
                    <property name="text">
-                    <string>Add</string>
+                    <string>+ Add</string>
                    </property>
                   </widget>
                  </item>

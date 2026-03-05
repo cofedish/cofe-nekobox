@@ -48,6 +48,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QListWidgetItem>
+#include <QListView>
 #include <QTextBlock>
 #include <QScrollBar>
 #include <QScreen>
@@ -322,7 +323,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     drawer_theme_menu->close();
                 }
             });
-    ui->drawer_nav->setIconSize(QSize(18, 18));
+    // Start in compact icon-above-label mode (24px, IconMode)
+    ui->drawer_nav->setViewMode(QListView::IconMode);
+    ui->drawer_nav->setIconSize(QSize(24, 24));
+    ui->drawer_nav->setGridSize(QSize(64, 64));
+    ui->drawer_nav->setSpacing(0);
     const auto applyNavIcon = [&](int row, QStyle::StandardPixmap pixmap) {
         auto item = ui->drawer_nav->item(row);
         if (item == nullptr) return;
@@ -609,15 +614,19 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     drawer_anim_max->setEasingCurve(QEasingCurve::InOutCubic);
     drawer_anim_min->setEasingCurve(QEasingCurve::InOutCubic);
     connect(drawer_anim, &QParallelAnimationGroup::finished, this, [=] {
-        if (!drawer_open) {
-            ui->drawer_container->setVisible(false);
-            if (drawer_scrim) drawer_scrim->setVisible(false);
+        // Apply nav view mode after animation completes for smooth transition
+        if (drawer_open) {
+            ui->drawer_nav->setViewMode(QListView::ListMode);
+            ui->drawer_nav->setIconSize(QSize(20, 20));
+            ui->drawer_nav->setGridSize(QSize());
+            ui->drawer_nav->setSpacing(4);
         }
+        if (drawer_scrim) drawer_scrim->setVisible(false);
     });
     connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
         set_drawer_open(!drawer_open);
     });
-    set_drawer_open(true, false);
+    set_drawer_open(false, false); // start compact (72px icon mode)
 
     // Setup log UI
     qvLogDocument->setUndoRedoEnabled(false);
@@ -1573,13 +1582,20 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         drawer_anim->stop();
     }
 
-    const int target = open ? 136 : 0;
-    if (open) {
-        ui->drawer_container->setVisible(true);
-        if (drawer_scrim) {
-            drawer_scrim->setVisible(false);
-            update_drawer_scrim();
-        }
+    const int compact_w = 72;
+    const int expanded_w = 200;
+    const int target = open ? expanded_w : compact_w;
+
+    // Sidebar is always visible — never hide it
+    ui->drawer_container->setVisible(true);
+    if (drawer_scrim) drawer_scrim->setVisible(false);
+
+    // Switch to compact icon mode immediately when closing
+    if (!open) {
+        ui->drawer_nav->setViewMode(QListView::IconMode);
+        ui->drawer_nav->setIconSize(QSize(24, 24));
+        ui->drawer_nav->setGridSize(QSize(64, 64));
+        ui->drawer_nav->setSpacing(0);
     }
 
     const bool allow_animation = animated && !NekoGui::dataStore->reduce_motion;
@@ -1592,11 +1608,12 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
     } else {
         ui->drawer_container->setMaximumWidth(target);
         ui->drawer_container->setMinimumWidth(target);
-        if (!open) {
-            ui->drawer_container->setVisible(false);
-        }
-        if (drawer_scrim) {
-            drawer_scrim->setVisible(false);
+        // When opening without animation, apply list mode right away
+        if (open) {
+            ui->drawer_nav->setViewMode(QListView::ListMode);
+            ui->drawer_nav->setIconSize(QSize(20, 20));
+            ui->drawer_nav->setGridSize(QSize());
+            ui->drawer_nav->setSpacing(4);
         }
     }
 }
