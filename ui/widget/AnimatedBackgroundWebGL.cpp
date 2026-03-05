@@ -17,13 +17,11 @@ void main() {
 }
 )";
 
-// 3D volumetric silk-ribbon background shader.
-// Each layer uses smooth-noise FBM for organic wave shape, analytical fake
-// normals from finite-difference slope, and Blinn-Phong + silk-shimmer
-// specular for a lustrous, fabric-like appearance.
+// Silk ribbon shader: sharp isobands with pseudo-normals and minimal bloom.
 constexpr auto kFragmentShader = R"(
 #ifdef GL_ES
 precision highp float;
+#extension GL_OES_standard_derivatives : enable
 #endif
 
 varying vec2 v_uv;
@@ -32,165 +30,137 @@ uniform vec3 u_accent;
 uniform vec3 u_window;
 uniform vec3 u_surface;
 uniform vec2 u_parallax;
-uniform float u_connected;   // 0=disconnected .. 1=connected
-uniform float u_traffic;     // 0=idle .. 1=peak
-
-// ── Noise primitives ────────────────────────────────────────────────────────
+uniform float u_connected;
+uniform float u_traffic;
 
 float hash21(vec2 p) {
-    p = fract(p * vec2(127.1, 311.7));
-    p += dot(p, p.yx + 19.19);
+    p = fract(p * vec2(234.34, 435.35));
+    p += dot(p, p + 34.345);
     return fract(p.x * p.y);
 }
 
-float vnoise(vec2 p) {
+float noise2(vec2 p) {
     vec2 i = floor(p);
     vec2 f = fract(p);
     f = f * f * (3.0 - 2.0 * f);
     return mix(
-        mix(hash21(i),             hash21(i + vec2(1.0, 0.0)), f.x),
+        mix(hash21(i), hash21(i + vec2(1.0, 0.0)), f.x),
         mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), f.x),
         f.y);
 }
 
-// 4-octave FBM — organic wave shape
-float fbm4(vec2 p) {
-    float v = 0.0, a = 0.5;
-    for (int i = 0; i < 4; i++) {
-        v += a * vnoise(p);
-        p = p * 2.03 + vec2(3.71, 1.93);
+float fbm(vec2 p) {
+    float v = 0.0;
+    float a = 0.55;
+    for (int i = 0; i < 4; ++i) {
+        v += noise2(p) * a;
+        p = p * 2.04 + vec2(1.7, 4.2);
         a *= 0.5;
     }
     return v;
 }
 
-// Wave height + X-slope via finite difference (one extra FBM sample)
-vec2 waveHS(float x, float t, float layerSeed) {
-    const float eps = 0.012;
-    vec2 base = vec2(x,       t + layerSeed * 4.37);
-    vec2 offt = vec2(x + eps, t + layerSeed * 4.37);
-    float h  = fbm4(base);
-    float hr = fbm4(offt);
-    return vec2(h, (hr - h) / eps);
+float waveField(vec2 p, float t, float seed) {
+    float primary = sin(p.x * 1.7 + t * 0.62 + seed * 1.4) * 0.16;
+    float secondary = sin(p.x * 3.4 - t * 0.31 + seed * 2.1) * 0.08;
+    float diagonal = sin((p.x + p.y * 0.85) * 4.9 + t * 0.43 + seed * 0.9) * 0.05;
+    float tertiary = sin((p.x - p.y * 0.45) * 6.7 - t * 0.24 + seed * 2.9) * 0.03;
+    float organic = (fbm(p * 1.9 + vec2(seed * 2.3, -t * 0.14)) - 0.5) * 0.11;
+    return p.y + primary + secondary + diagonal + tertiary + organic;
 }
 
-// ── Single silk-ribbon layer ─────────────────────────────────────────────────
-//   depth: 0=foreground (bright, thick, fast)   1=background (dim, thin, slow)
-vec3 silkLayer(vec2 uv, float yBase, float speed, float depth) {
-    float t  = u_time * speed;
-    float px = u_parallax.x * 0.048 * (1.0 - depth * 0.55);
-    float py = u_parallax.y * 0.032 * (1.0 - depth * 0.55);
-
-    // Amplitude: calmer when disconnected, breathes with traffic
-    float ampMod   = mix(0.55, 1.0, u_connected) * (1.0 + u_traffic * 0.20);
-    float thickness = mix(0.040, 0.082, 1.0 - depth);
-
-    // Wave position & slope
-    vec2 hs    = waveHS(uv.x * 2.7 + px, t, depth + 0.1);
-    float waveY = yBase + py + (hs.x - 0.5) * 0.30 * ampMod;
-    float slope = hs.y * 2.7 * 0.30 * ampMod;   // dY/dX (analytical from FD)
-
-    float dy   = uv.y - waveY;
-    float dist = abs(dy);
-
-    // Early-out: pixel is far from this ribbon
-    if (dist > thickness * 2.6) return vec3(0.0);
-
-    // ── Fake 3-D normal from wave slope ──────────────────────────────────────
-    // Tangent along X: (1, slope, 0).  Normal = perpendicular in XY + Z bias.
-    vec3 normal = normalize(vec3(-slope * 2.3, 1.0, 0.80));
-
-    // ── Lighting ──────────────────────────────────────────────────────────────
-    vec3 lightDir = normalize(vec3(-0.22, 0.88, 0.42));
-    float diff    = clamp(dot(normal, lightDir), 0.0, 1.0);
-
-    // Blinn-Phong specular
-    vec3  halfV = normalize(lightDir + vec3(0.0, 0.0, 1.0));
-    float spec  = pow(clamp(dot(normal, halfV), 0.0, 1.0), 24.0);
-
-    // Silk shimmer: modulate specular with a fine high-freq ripple so the
-    // highlight breaks into narrow shimmering bands (characteristic of silk).
-    float ripple = vnoise(vec2(uv.x * 20.0 + t * 3.8, waveY * 10.0));
-    spec *= max(0.0, 0.5 + ripple * 1.0);   // [0 .. 1.5] range, mostly 0–1
-
-    // ── Cross-section profile ─────────────────────────────────────────────────
-    float normDist = dist / thickness;
-    float profile  = pow(max(0.0, 1.0 - normDist), 1.65);
-
-    // Top face (negative dy = pixel is above ribbon center line)
-    float topFace = clamp((-dy / thickness) * 0.65 + 0.55, 0.0, 1.0);
-
-    // ── Color construction ────────────────────────────────────────────────────
-    float bright      = 1.0 - depth * 0.72;
-    vec3  accentBright = mix(u_accent, vec3(1.0), 0.36 + bright * 0.12);
-    vec3  accentDark   = u_accent * bright * 0.26;
-
-    // Surface: lighter top-lit face, darker bottom-shadowed face
-    vec3 baseColor = mix(accentDark, accentBright, topFace * 0.65 + diff * 0.35);
-
-    // Specular sheen (silk anisotropic highlight)
-    baseColor += mix(accentBright, vec3(1.0), 0.42) * spec * 0.48 * bright;
-
-    // Crest glint: bright thin stripe along the very top edge
-    float edgeGlint = smoothstep(0.55, 0.0, normDist) * topFace;
-    baseColor += accentBright * edgeGlint * 0.38;
-
-    // ── Glow halo beyond the physical ribbon ─────────────────────────────────
-    float halo     = exp(-dist * dist / (thickness * thickness * 1.3));
-    vec3  glowColor = u_accent * halo * bright * 0.32;
-
-    // ── Dim when VPN is disconnected ─────────────────────────────────────────
-    float dimFactor = mix(0.22, 1.0, u_connected);
-
-    return (baseColor * profile + glowColor) * dimFactor;
+float ribbonMask(float field, float offset, float width) {
+    return 1.0 - smoothstep(width * 0.72, width, abs(field - offset));
 }
 
-// ── Main ─────────────────────────────────────────────────────────────────────
+vec3 shadeRibbon(float field, float offset, float width, vec3 accentDark, vec3 accentLight, vec3 accentEdge, float diffuse, float depthFade) {
+    float dist = abs(field - offset) / width;
+    float ribbon = ribbonMask(field, offset, width);
+    float core = 1.0 - smoothstep(0.0, 0.42, dist);
+    float edge = smoothstep(1.0, 0.58, dist) * smoothstep(0.14, 0.46, dist);
+    float translucency = smoothstep(1.0, 0.18, dist);
+
+    vec3 ribbonColor = mix(accentDark, accentLight, clamp(diffuse * 0.82 + 0.12, 0.0, 1.0));
+    ribbonColor = mix(ribbonColor, accentDark * 0.86, core * 0.48);
+    ribbonColor += accentEdge * edge * 0.76;
+    ribbonColor += accentEdge * pow(clamp(1.0 - dist, 0.0, 1.0), 4.0) * 0.12;
+
+    vec3 glow = accentEdge * ribbon * (1.0 - core) * 0.12;
+    return (ribbonColor * translucency + glow) * depthFade;
+}
+
+vec3 ribbonLayer(vec2 uv, float yBase, float scale, float speed, float width, float depth) {
+    float t = u_time * speed;
+    vec2 parallax = u_parallax * mix(0.06, 0.16, 1.0 - depth);
+    float amplitude = mix(0.82, 1.08, u_connected) * (1.0 + u_traffic * 0.12);
+
+    vec2 p = vec2(
+        (uv.x - 0.5) * scale + parallax.x * 0.12,
+        (uv.y - yBase) * mix(2.6, 3.4, 1.0 - depth) + parallax.y * 0.08
+    );
+    p.y /= amplitude;
+
+    float field = waveField(p, t, depth * 4.0 + 1.0);
+    vec2 grad = vec2(dFdx(field), dFdy(field));
+    vec3 normal = normalize(vec3(-grad.x * 3.1, -grad.y * 3.1, 1.0));
+    vec3 lightDir = normalize(vec3(0.2, 0.4, 1.0));
+    float diffuse = clamp(dot(normal, lightDir), 0.0, 1.0);
+
+    float shimmer = noise2(vec2(uv.x * 18.0 + t * 1.4, uv.y * 12.0 - t * 0.6 + depth * 3.1));
+    vec3 accentDark = mix(u_window * 0.26, u_accent * 0.48, 0.68) * mix(0.70, 1.0, 1.0 - depth);
+    vec3 accentLight = mix(u_accent, vec3(1.0), 0.24 + diffuse * 0.12);
+    vec3 accentEdge = mix(accentLight, vec3(1.0), 0.18 + shimmer * 0.16);
+    float depthFade = mix(1.06, 0.46, depth) * mix(0.42, 1.0, u_connected);
+
+    vec3 color = vec3(0.0);
+    color += shadeRibbon(field, -0.26, width, accentDark, accentLight, accentEdge, diffuse, depthFade);
+    color += shadeRibbon(field, 0.00, width, accentDark, accentLight, accentEdge, diffuse, depthFade);
+    color += shadeRibbon(field, 0.24, width, accentDark, accentLight, accentEdge, diffuse, depthFade);
+    return color;
+}
+
+vec3 dustLayer(vec2 uv) {
+    vec3 dustColor = mix(u_accent, vec3(1.0), 0.54);
+    vec3 color = vec3(0.0);
+    float dim = mix(0.26, 1.0, u_connected);
+    for (int i = 0; i < 20; ++i) {
+        float fi = float(i);
+        vec2 seed = vec2(fi * 1.723, fi * 3.117);
+        float depth = hash21(seed + 7.2);
+        vec2 pos = vec2(
+            fract(hash21(seed + 2.0) + u_time * (0.004 + depth * 0.010) + u_parallax.x * depth * 0.015),
+            fract(hash21(seed + 5.0) - u_time * (0.0015 + depth * 0.004) + u_parallax.y * depth * 0.010)
+        );
+        float size = mix(0.0025, 0.0085, depth);
+        float d = length(uv - pos);
+        float alpha = exp(-d * d / (size * size)) * mix(0.04, 0.22, depth);
+        color += dustColor * alpha * dim;
+    }
+    return color;
+}
+
 void main() {
     vec2 uv = v_uv;
+    float conn = mix(0.72, 1.0, u_connected);
+    vec3 bgTop = mix(u_window * 0.30, u_surface * 0.72, 0.35) * conn;
+    vec3 bgMid = mix(u_window * 0.12, u_surface * 0.44, 0.55) * conn;
+    vec3 bgBottom = u_window * 0.06 * conn;
+    vec3 color = mix(bgTop, bgMid, smoothstep(0.08, 0.52, uv.y));
+    color = mix(color, bgBottom, smoothstep(0.48, 1.0, uv.y));
+    color += u_accent * 0.016 * smoothstep(0.18, 0.78, uv.y);
 
-    // Deep background gradient (darker when disconnected)
-    float connFac = mix(0.72, 1.0, u_connected);
-    vec3  bgTop   = u_window * 0.22 * connFac;
-    vec3  bgBot   = u_window * 0.07 * connFac;
-    vec3  color   = mix(bgTop, bgBot, uv.y + u_parallax.y * 0.015);
+    float starNoise = noise2(uv * vec2(180.0, 120.0) + vec2(u_time * 0.04, 0.0));
+    color += vec3(1.0) * smoothstep(0.985, 1.0, starNoise) * 0.07;
 
-    // Faint ambient accent tint drifting from the mid-screen upward
-    color += u_accent * 0.022 * smoothstep(0.25, 0.65, uv.y) * connFac;
+    color += ribbonLayer(uv, 0.72, 2.4, 0.08, 0.072, 0.88);
+    color += ribbonLayer(uv, 0.56, 2.9, 0.12, 0.064, 0.58);
+    color += ribbonLayer(uv, 0.42, 3.5, 0.18, 0.056, 0.22);
+    color += dustLayer(uv);
 
-    // ── Silk ribbon layers (far → near, additive blend) ──────────────────────
-    //           yBase   speed   depth
-    color += silkLayer(uv, 0.21,  0.045,  0.93);   // deepest, slowest, dimmest
-    color += silkLayer(uv, 0.37,  0.072,  0.73);
-    color += silkLayer(uv, 0.51,  0.112,  0.48);
-    color += silkLayer(uv, 0.64,  0.162,  0.22);
-    color += silkLayer(uv, 0.75,  0.213,  0.05);   // closest, fastest, brightest
-
-    // ── Soft glowing dust particles ───────────────────────────────────────────
-    vec3  dustColor = mix(u_accent, vec3(1.0), 0.58);
-    float dimFactor = mix(0.22, 1.0, u_connected);
-
-    for (int i = 0; i < 22; ++i) {
-        float fi   = float(i);
-        vec2  seed = vec2(fi * 2.71828, fi * 4.97311);
-        float depth = hash21(seed + 8.31);
-        vec2  sp    = vec2(hash21(seed), hash21(seed + 5.51));
-        vec2  pos   = vec2(
-            fract(sp.x + u_time * (0.005 + depth * 0.013) + u_parallax.x * depth * 0.010),
-            fract(sp.y - u_time * (0.002 + depth * 0.005) + u_parallax.y * depth * 0.007)
-        );
-        float d          = length(uv - pos);
-        float sz         = mix(0.003, 0.011, depth);
-        float brightness = exp(-d * d / (sz * sz)) * mix(0.08, 0.44, depth);
-        color += dustColor * brightness * dimFactor;
-    }
-
-    // ── Vignette ──────────────────────────────────────────────────────────────
-    color *= mix(0.42, 1.0, smoothstep(0.90, 0.28, distance(uv, vec2(0.5))));
-
-    // ── Filmic tone mapping + gentle gamma ────────────────────────────────────
-    color  = color / (color + vec3(0.88));
-    color  = pow(max(color, vec3(0.0)), vec3(0.90));
+    float vignette = smoothstep(1.05, 0.24, distance(uv, vec2(0.5)));
+    color *= mix(0.36, 1.0, vignette);
+    color = color / (color + vec3(0.92));
+    color = pow(max(color, vec3(0.0)), vec3(0.94));
 
     gl_FragColor = vec4(color, 1.0);
 }

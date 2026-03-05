@@ -65,9 +65,9 @@ void InfoCard::setHoverProgress(qreal progress) {
     hover_progress_ = qBound(0.0, progress, 1.0);
     if (shadow_ == nullptr) return;
 
-    const qreal lift = 1.0 + hover_progress_ * 1.6;
+    const qreal lift = 1.0 + hover_progress_ * 1.0;
     shadow_->setOffset(0.0, lift);
-    shadow_->setBlurRadius(10.0 + hover_progress_ * 14.0);
+    shadow_->setBlurRadius(10.0 + hover_progress_ * 10.0);
 
     QColor glow = palette().color(QPalette::Highlight);
     glow.setAlpha(24 + static_cast<int>(hover_progress_ * 92.0));

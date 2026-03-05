@@ -164,8 +164,11 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
         coreLight = coreLight.lighter(110);
     }
 
+    const bool pulseActive = current_state == State::Connected ||
+                             current_state == State::Connecting ||
+                             current_state == State::Disconnecting;
     qreal pulse = 1.0;
-    if (!reduce_motion) {
+    if (!reduce_motion && pulseActive) {
         pulse = 1.0 + 0.035 * qSin(phase * 0.9);
     }
 
@@ -210,10 +213,26 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
     const QPointF gradientCenter(innerRect.center().x() - innerRect.width() * 0.18, innerRect.center().y() - innerRect.height() * 0.22);
     QRadialGradient coreGrad(gradientCenter, innerRadius * 1.2, innerRect.center());
     coreGrad.setColorAt(0.0, coreLight);
+    coreGrad.setColorAt(0.18, QColor::fromRgbF(qMin(1.0, coreLight.redF() * 1.08),
+                                               qMin(1.0, coreLight.greenF() * 1.08),
+                                               qMin(1.0, coreLight.blueF() * 1.08),
+                                               1.0));
     coreGrad.setColorAt(0.72, coreDark);
     coreGrad.setColorAt(1.0, coreEdge);
     painter.setBrush(coreGrad);
     painter.drawEllipse(innerRect);
+
+    QRadialGradient innerGlow(gradientCenter, innerRadius * 0.82, innerRect.center());
+    QColor innerGlowColor = ringColor.lighter(125);
+    innerGlowColor.setAlpha(current_state == State::Disconnected ? 28 : 86);
+    innerGlow.setColorAt(0.0, innerGlowColor);
+    innerGlow.setColorAt(1.0, QColor(innerGlowColor.red(), innerGlowColor.green(), innerGlowColor.blue(), 0));
+    painter.setBrush(innerGlow);
+    painter.setPen(Qt::NoPen);
+    painter.drawEllipse(innerRect.adjusted(Typography::ScalePx(10),
+                                           Typography::ScalePx(10),
+                                           -Typography::ScalePx(10),
+                                           -Typography::ScalePx(10)));
 
     // Neon ring
     QConicalGradient ringGrad(center, -qRadiansToDegrees(phase) * 1.2);

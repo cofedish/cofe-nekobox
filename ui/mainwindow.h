@@ -1,5 +1,6 @@
 #pragma once
 
+#include <QHash>
 #include <QMainWindow>
 
 #include "main/NekoGui.hpp"
@@ -37,6 +38,8 @@ class QButtonGroup;
 class ToastWidget;
 class UpdateService;
 class QLabel;
+class QTreeWidgetItem;
+class SidebarNavigation;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -194,6 +197,8 @@ private:
     QString home_running_full_text;
     QString home_running_tooltip;
     int drawer_last_content_row = 0;
+    SidebarNavigation *drawer_tree_ = nullptr;
+    QHash<int, QTreeWidgetItem *> drawer_page_items_;
 
     QList<std::shared_ptr<NekoGui::ProxyEntity>> get_now_selected_list();
 
@@ -222,6 +227,11 @@ private:
     void sync_drawer_theme(const QString &themeKey);
     void set_home_running_text(const QString &text, const QString &tooltip = {});
     void update_home_running_elide();
+    void setup_drawer_navigation();
+    void rebuild_drawer_dynamic_sections();
+    void open_drawer_page(int pageIndex, bool fromDrawer = false);
+    void select_drawer_page(int pageIndex);
+    void handle_drawer_action(int actionId, int dynamicIndex = -1);
 
     void keyPressEvent(QKeyEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;

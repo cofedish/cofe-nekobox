@@ -248,6 +248,8 @@ set(PROJECT_SOURCES
         ui/widget/WaveBackground.h
         ui/widget/Sidebar.cpp
         ui/widget/Sidebar.h
+        ui/widget/SidebarNavigation.cpp
+        ui/widget/SidebarNavigation.h
         ui/widget/TopBar.cpp
         ui/widget/TopBar.h
         ui/widget/RightInfoPanel.cpp

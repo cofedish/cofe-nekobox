@@ -1,3 +1,11 @@
+# Release 1.6.0
+
+- Sidebar now renders every real top-level page from `stacked_pages` instead of the reduced 5-item drawer.
+- Added second-level navigation for server groups, log tabs, and page-specific actions without removing any existing product sections.
+- Replaced menu and quick-action icons with theme-aware vector glyphs driven by palette tokens for normal, hover, and active states.
+- Reworked the animated background shader to render sharper silk ribbon bands with edge highlights, thickness, and layered depth instead of blurred fog.
+- Unified card radius/borders and refined the central connect orb glow/pulse for the new release polish.
+
 # Release 1.5.1
 
 - Full redesign of the main window to a premium glass/neon dashboard style.

@@ -209,6 +209,9 @@ namespace {
         pal.setColor(QPalette::ButtonText, QColor(t.text));
         pal.setColor(QPalette::Highlight, QColor(t.accent));
         pal.setColor(QPalette::HighlightedText, QColor(t.text_on_accent));
+        pal.setColor(QPalette::Disabled, QPalette::WindowText, QColor(t.text_muted));
+        pal.setColor(QPalette::Disabled, QPalette::Text, QColor(t.text_muted));
+        pal.setColor(QPalette::Disabled, QPalette::ButtonText, QColor(t.text_muted));
         return pal;
     }
 
@@ -234,11 +237,21 @@ namespace {
                    "QListWidget#drawer_nav::item:hover { background: %7; border-color: %11; }"
                    "QListWidget#drawer_nav::item:pressed { background: %13; border-color: %11; }"
                    "QListWidget#drawer_nav::item:selected { background: %7; color: %6; border: 1px solid %11; border-left: 3px solid %11; padding-left: 11px; font-weight: %WEIGHT_SEMIBOLD%; }"
+                   "QTreeWidget#drawer_tree { background: transparent; border: none; padding: 4px 0; outline: none; }"
+                   "QTreeWidget#drawer_tree::item { padding: 8px 10px; margin: 2px 0; min-height: 36px; border-radius: 14px; color: %6; font-size: %NAV_FONT_PX%px; background: %9; border: 1px solid transparent; }"
+                   "QTreeWidget#drawer_tree::item:hover { background: %7; border-color: %11; color: %2; }"
+                   "QTreeWidget#drawer_tree::item:selected { background: %7; color: %2; border: 1px solid %11; font-weight: %WEIGHT_SEMIBOLD%; }"
+                   "QTreeWidget#drawer_tree::branch { background: transparent; }"
                    "QListWidget#drawer_nav QScrollBar:vertical { background: transparent; width: 10px; margin: 6px 0 6px 0; }"
                    "QListWidget#drawer_nav QScrollBar::handle:vertical { background: %5; min-height: 28px; border-radius: 5px; }"
                    "QListWidget#drawer_nav QScrollBar::handle:vertical:hover { background: %10; }"
                    "QListWidget#drawer_nav QScrollBar::add-line:vertical, QListWidget#drawer_nav QScrollBar::sub-line:vertical { height: 0px; width: 0px; border: none; background: transparent; }"
                    "QListWidget#drawer_nav QScrollBar::add-page:vertical, QListWidget#drawer_nav QScrollBar::sub-page:vertical { background: transparent; }"
+                   "QTreeWidget#drawer_tree QScrollBar:vertical { background: transparent; width: 10px; margin: 6px 0 6px 0; }"
+                   "QTreeWidget#drawer_tree QScrollBar::handle:vertical { background: %5; min-height: 28px; border-radius: 5px; }"
+                   "QTreeWidget#drawer_tree QScrollBar::handle:vertical:hover { background: %10; }"
+                   "QTreeWidget#drawer_tree QScrollBar::add-line:vertical, QTreeWidget#drawer_tree QScrollBar::sub-line:vertical { height: 0px; width: 0px; border: none; background: transparent; }"
+                   "QTreeWidget#drawer_tree QScrollBar::add-page:vertical, QTreeWidget#drawer_tree QScrollBar::sub-page:vertical { background: transparent; }"
                    "QFrame#topbar { background: %9; border: 1px solid %5; border-radius: 12px; padding: 6px; }"
                    "QToolButton#drawer_toggle { background: %9; border: 1px solid %5; border-radius: 12px; font-size: %DRAWER_TOGGLE_FONT_PX%px; font-weight: %WEIGHT_MEDIUM%; }"
                    "QToolButton#drawer_toggle:hover { background: %7; }"
@@ -310,7 +323,7 @@ namespace {
                    "background: %7; }"
                    "QWidget#page_profiles QPushButton, QWidget#page_subscriptions QPushButton, QWidget#page_rules QPushButton, "
                    "QWidget#page_settings QPushButton, QWidget#page_about QPushButton {"
-                   "background: %9; border: 1px solid %5; border-radius: 10px; padding: 6px 10px; }"
+                   "background: %9; border: 1px solid rgba(255,255,255,0.08); border-radius: 16px; padding: 8px 12px; }"
                    "QWidget#page_profiles QPushButton:hover, QWidget#page_subscriptions QPushButton:hover, QWidget#page_rules QPushButton:hover, "
                    "QWidget#page_settings QPushButton:hover, QWidget#page_about QPushButton:hover {"
                    "background: %7; }");
@@ -374,6 +387,14 @@ namespace {
             "padding: 8px 10px; margin: 1px 6px; min-height: 34px; }"
             "QListWidget#drawer_nav::item:hover { background: %5; border-color: %6; color: %7; }"
             "QListWidget#drawer_nav::item:selected { background: %8; border: 1px solid %9; color: %7; }"
+            "QTreeWidget#drawer_tree { background: transparent; border: none; padding: 3px 0; outline: none; }"
+            "QTreeWidget#drawer_tree::item {"
+            "color: %4; border-radius: 14px; border: 1px solid transparent;"
+            "padding: 8px 10px; margin: 1px 6px; min-height: 36px; }"
+            "QTreeWidget#drawer_tree::item:hover { background: %5; border-color: %6; color: %7; }"
+            "QTreeWidget#drawer_tree::item:selected { background: %8; border: 1px solid %9; color: %7; }"
+            "QTreeWidget#drawer_tree[compact=\"true\"]::item { padding: 10px 0px; margin: 2px 8px; min-height: 40px; }"
+            "QTreeWidget#drawer_tree::branch { background: transparent; }"
             "QToolButton#drawer_theme_button {"
             "min-height: 24px; padding: 2px 6px; border-radius: 10px;"
             "border: 1px solid %3; background: %14; color: %7; }"
@@ -407,7 +428,7 @@ namespace {
             // Server/Profile cards
             "QToolButton#home_select_server, QToolButton#home_select_profile {"
             "text-align: left; padding: 12px 16px; min-height: 56px;"
-            "background: %17; border: 1px solid %3; border-radius: 16px; color: %7; }"
+            "background: %17; border: 1px solid %23; border-radius: 17px; color: %7; }"
             "QToolButton#home_select_server:hover, QToolButton#home_select_profile:hover {"
             "background: %18; border-color: %9; }"
             "QToolButton#home_select_server:pressed, QToolButton#home_select_profile:pressed {"
@@ -434,7 +455,7 @@ namespace {
             "background: %22; color: %22; max-height: 1px; min-height: 1px; }"
 
             // Existing panels
-            "QTabWidget::pane, QTextBrowser, QTableWidget { background: %17; border: 1px solid %3; border-radius: 14px; }"
+            "QTabWidget::pane, QTextBrowser, QTableWidget { background: %17; border: 1px solid %23; border-radius: 16px; }"
             "QMenu { background: %12; border: 1px solid %3; border-radius: 12px; }"
             "QFrame#toast_widget { border-color: %3; }")
                    .arg(sidebarBg)        // %1
@@ -458,7 +479,8 @@ namespace {
                    .arg(cardPressBg)      // %19
                    .arg(panelBgA)         // %20
                    .arg(panelBgB)         // %21
-                   .arg(separator);       // %22
+                   .arg(separator)        // %22
+                   .arg(ToRgba(QColor(255, 255, 255), 20)); // %23
         qss.replace("%HOME_TITLE_FONT_PX%", QString::number(home_title_font_px));
         qss.replace("%HOME_STATUS_FONT_PX%", QString::number(home_status_font_px));
         qss.replace("%NAV_FONT_PX%", QString::number(nav_font_px));

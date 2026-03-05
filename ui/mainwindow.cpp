@@ -13,6 +13,7 @@
 #include "ui/Icon.hpp"
 #include "ui/Typography.hpp"
 #include "ui/widget/WaveBackground.h"
+#include "ui/widget/SidebarNavigation.h"
 #include "ui/widget/ConnectButton.h"
 #include "ui/edit/dialog_edit_profile.h"
 #include "ui/dialog_basic_settings.h"
@@ -50,6 +51,8 @@
 #include <QLabel>
 #include <QListWidgetItem>
 #include <QListView>
+#include <QTreeWidget>
+#include <QTreeWidgetItem>
 #include <QTextBlock>
 #include <QScrollBar>
 #include <QScreen>
@@ -91,6 +94,52 @@ inline int tabIndex2GroupId(int index);
 inline int groupId2TabIndex(int gid);
 
 namespace {
+    enum DrawerActionId {
+        DrawerActionNone = 0,
+        DrawerActionProfilesAdd,
+        DrawerActionProfilesImport,
+        DrawerActionProfilesClone,
+        DrawerActionProfilesDelete,
+        DrawerActionProfilesExport,
+        DrawerActionSubscriptionsNew,
+        DrawerActionSubscriptionsUpdateAll,
+        DrawerActionRoutingSettings,
+        DrawerActionAppRouting,
+        DrawerActionLogsOutput,
+        DrawerActionLogsConnections,
+        DrawerActionSettingsBasic,
+        DrawerActionSettingsTun,
+        DrawerActionSettingsHotkey,
+        DrawerActionSettingsConfigFolder,
+        DrawerActionSettingsRestartProxy,
+        DrawerActionSettingsRestartProgram,
+        DrawerActionAboutCheckUpdates,
+        DrawerActionServerGroup
+    };
+
+    QString DrawerPageTitle(const QString &pageObjectName) {
+        if (pageObjectName == "page_home") return QString::fromUtf8(u8"Главная");
+        if (pageObjectName == "page_servers") return QString::fromUtf8(u8"Серверы");
+        if (pageObjectName == "page_profiles") return QString::fromUtf8(u8"Профили");
+        if (pageObjectName == "page_subscriptions") return QString::fromUtf8(u8"Подписки");
+        if (pageObjectName == "page_rules") return QString::fromUtf8(u8"Маршруты");
+        if (pageObjectName == "page_logs") return QString::fromUtf8(u8"Логи");
+        if (pageObjectName == "page_settings") return QString::fromUtf8(u8"Настройки");
+        if (pageObjectName == "page_about") return QString::fromUtf8(u8"О программе");
+        return pageObjectName;
+    }
+
+    Icon::SidebarGlyph DrawerPageGlyph(const QString &pageObjectName) {
+        if (pageObjectName == "page_home") return Icon::SidebarGlyph::Home;
+        if (pageObjectName == "page_servers") return Icon::SidebarGlyph::Servers;
+        if (pageObjectName == "page_profiles") return Icon::SidebarGlyph::Profiles;
+        if (pageObjectName == "page_subscriptions") return Icon::SidebarGlyph::Subscriptions;
+        if (pageObjectName == "page_rules") return Icon::SidebarGlyph::Routes;
+        if (pageObjectName == "page_logs") return Icon::SidebarGlyph::Logs;
+        if (pageObjectName == "page_settings") return Icon::SidebarGlyph::Settings;
+        return Icon::SidebarGlyph::About;
+    }
+
     QString NormalizeThemeKey(const QString &value) {
         const auto key = value.trimmed().toLower();
         if (key == "0" || key == "system") return "system";
@@ -340,6 +389,41 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     drawer_theme_menu->close();
                 }
             });
+    const auto titleHome = DrawerPageTitle("page_home");
+    ui->topbar_title->setText(titleHome);
+    if (ui->home_title != nullptr) ui->home_title->setText(titleHome);
+    if (ui->home_modes_title != nullptr) ui->home_modes_title->setText(QString::fromUtf8(u8"Режимы"));
+    if (ui->home_stats_title != nullptr) ui->home_stats_title->setText(QString::fromUtf8(u8"Статистика"));
+    if (ui->home_sub_add != nullptr) ui->home_sub_add->setText(QString::fromUtf8(u8"+ Добавить"));
+    if (ui->checkBox_VPN != nullptr) ui->checkBox_VPN->setText(QString::fromUtf8(u8"Режим TUN"));
+    if (ui->checkBox_SystemProxy != nullptr) {
+        ui->checkBox_SystemProxy->setText(QString::fromUtf8(u8"Режим системного прокси"));
+    }
+
+    setup_drawer_navigation();
+
+    const auto refreshThemedIcons = [=]() {
+        if (drawer_tree_ != nullptr) {
+            drawer_tree_->refreshThemeIcons();
+        }
+        if (ui->home_select_server != nullptr) {
+            ui->home_select_server->setIcon(Icon::GetSidebarIcon(Icon::SidebarGlyph::Servers, ui->home_select_server->palette(), 18));
+            ui->home_select_server->setIconSize(QSize(18, 18));
+        }
+        if (ui->home_select_profile != nullptr) {
+            ui->home_select_profile->setIcon(Icon::GetSidebarIcon(Icon::SidebarGlyph::Profiles, ui->home_select_profile->palette(), 18));
+            ui->home_select_profile->setIconSize(QSize(18, 18));
+        }
+        if (ui->home_open_logs != nullptr) {
+            ui->home_open_logs->setIcon(Icon::GetSidebarIcon(Icon::SidebarGlyph::Logs, ui->home_open_logs->palette(), 18));
+            ui->home_open_logs->setIconSize(QSize(18, 18));
+        }
+    };
+    refreshThemedIcons();
+    connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &) {
+        refreshThemedIcons();
+    });
+#if 0
     const auto titleHome = QString::fromUtf8(u8"Главная");
     const auto titleProfiles = QString::fromUtf8(u8"Профили");
     const auto titleRoutes = QString::fromUtf8(u8"Маршруты");
@@ -421,8 +505,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             set_drawer_open(false);
         }
     });
+#endif
     connect(ui->toolButton_url_test, &QToolButton::clicked, this, [=] { speedtest_current_group(1, true); });
-    connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { ui->drawer_nav->setCurrentRow(3); });
+    connect(ui->home_open_logs, &QToolButton::clicked, this, [=] { open_drawer_page(5); });
     connect(ui->home_sub_add, &QPushButton::clicked, this, [=] { submit_home_subscription(); });
     connect(ui->home_sub_url, &QLineEdit::returnPressed, this, [=] { submit_home_subscription(); });
     ui->home_sub_url->installEventFilter(this);
@@ -476,8 +561,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
             action->setCheckable(true);
             action->setChecked(NekoGui::dataStore->current_group == gid);
             connect(action, &QAction::triggered, this, [=] {
-                ui->stacked_pages->setCurrentIndex(1);
-                ui->topbar_title->setText(tr("Серверы"));
+                open_drawer_page(1);
                 ui->tabWidget->setCurrentIndex(groupId2TabIndex(gid));
                 show_group(gid);
             });
@@ -490,8 +574,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->profiles_import_clipboard, &QPushButton::clicked, this, &MainWindow::on_menu_add_from_clipboard_triggered);
     connect(ui->profiles_export, &QPushButton::clicked, this, &MainWindow::on_menu_export_config_triggered);
     connect(ui->profiles_open_servers, &QPushButton::clicked, this, [=] {
-        ui->stacked_pages->setCurrentIndex(1);
-        ui->topbar_title->setText(tr("Серверы"));
+        open_drawer_page(1);
     });
     connect(ui->profiles_edit, &QPushButton::clicked, this, [=] {
         auto items = ui->proxyListTable->selectedItems();
@@ -683,12 +766,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     drawer_anim_max->setEasingCurve(QEasingCurve::InOutCubic);
     drawer_anim_min->setEasingCurve(QEasingCurve::InOutCubic);
     connect(drawer_anim, &QParallelAnimationGroup::finished, this, [=] {
-        // Apply nav view mode after animation completes for smooth transition
-        if (drawer_open) {
-            ui->drawer_nav->setViewMode(QListView::ListMode);
-            ui->drawer_nav->setIconSize(QSize(20, 20));
-            ui->drawer_nav->setGridSize(QSize());
-            ui->drawer_nav->setSpacing(2);
+        if (drawer_tree_ != nullptr) {
+            drawer_tree_->setCollapsed(!drawer_open);
+            drawer_tree_->refreshThemeIcons();
         }
         if (drawer_scrim) drawer_scrim->setVisible(false);
     });
@@ -1134,6 +1214,7 @@ inline int groupId2TabIndex(int gid) {
 
 void MainWindow::on_tabWidget_currentChanged(int index) {
     if (NekoGui::dataStore->refreshing_group_list) return;
+    rebuild_drawer_dynamic_sections();
     if (tabIndex2GroupId(index) == NekoGui::dataStore->current_group) return;
     show_group(tabIndex2GroupId(index));
 }
@@ -1675,11 +1756,257 @@ void MainWindow::update_connect_button() {
     }
 }
 
+void MainWindow::setup_drawer_navigation() {
+    if (drawer_tree_ != nullptr) return;
+
+    drawer_page_items_.clear();
+    ui->drawer_nav->setVisible(false);
+
+    drawer_tree_ = new SidebarNavigation(ui->drawer_container);
+    drawer_tree_->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    ui->drawerLayout->insertWidget(1, drawer_tree_, 1);
+
+    const auto addChild = [&](QTreeWidgetItem *parent,
+                              const QString &label,
+                              Icon::SidebarGlyph glyph,
+                              int actionId,
+                              int dynamicIndex = -1) {
+        if (parent == nullptr || label.trimmed().isEmpty()) return;
+        auto *item = new QTreeWidgetItem(parent);
+        item->setData(0, SidebarNavigation::LabelRole, label.trimmed());
+        item->setData(0, SidebarNavigation::GlyphRole, static_cast<int>(glyph));
+        item->setData(0, SidebarNavigation::PageIndexRole, parent->data(0, SidebarNavigation::PageIndexRole));
+        item->setData(0, SidebarNavigation::ActionRole, actionId);
+        item->setData(0, SidebarNavigation::DynamicIndexRole, dynamicIndex);
+        item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    };
+
+    for (int pageIndex = 0; pageIndex < ui->stacked_pages->count(); ++pageIndex) {
+        auto *page = ui->stacked_pages->widget(pageIndex);
+        if (page == nullptr) continue;
+
+        auto *root = new QTreeWidgetItem(drawer_tree_);
+        root->setData(0, SidebarNavigation::LabelRole, DrawerPageTitle(page->objectName()));
+        root->setData(0, SidebarNavigation::GlyphRole, static_cast<int>(DrawerPageGlyph(page->objectName())));
+        root->setData(0, SidebarNavigation::PageIndexRole, pageIndex);
+        root->setData(0, SidebarNavigation::ActionRole, DrawerActionNone);
+        root->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        drawer_page_items_.insert(pageIndex, root);
+
+        if (page->objectName() == "page_profiles") {
+            addChild(root, ui->profiles_new->text(), Icon::SidebarGlyph::Add, DrawerActionProfilesAdd);
+            addChild(root, ui->profiles_import_clipboard->text(), Icon::SidebarGlyph::Subscriptions, DrawerActionProfilesImport);
+            addChild(root, ui->profiles_clone->text(), Icon::SidebarGlyph::Group, DrawerActionProfilesClone);
+            addChild(root, ui->profiles_delete->text(), Icon::SidebarGlyph::Restart, DrawerActionProfilesDelete);
+            addChild(root, ui->profiles_export->text(), Icon::SidebarGlyph::Folder, DrawerActionProfilesExport);
+        } else if (page->objectName() == "page_subscriptions") {
+            addChild(root, ui->subscriptions_new->text(), Icon::SidebarGlyph::Add, DrawerActionSubscriptionsNew);
+            addChild(root, ui->subscriptions_update_all->text(), Icon::SidebarGlyph::Refresh, DrawerActionSubscriptionsUpdateAll);
+        } else if (page->objectName() == "page_rules") {
+            addChild(root, ui->rules_open->text(), Icon::SidebarGlyph::Routes, DrawerActionRoutingSettings);
+            addChild(root, ui->rules_app_routing->text(), Icon::SidebarGlyph::Apps, DrawerActionAppRouting);
+        } else if (page->objectName() == "page_settings") {
+            addChild(root, ui->settings_basic->text(), Icon::SidebarGlyph::Settings, DrawerActionSettingsBasic);
+            addChild(root, ui->settings_vpn->text(), Icon::SidebarGlyph::Routes, DrawerActionSettingsTun);
+            addChild(root, ui->settings_hotkey->text(), Icon::SidebarGlyph::Hotkey, DrawerActionSettingsHotkey);
+            addChild(root, ui->settings_open_config->text(), Icon::SidebarGlyph::Folder, DrawerActionSettingsConfigFolder);
+            addChild(root, ui->settings_restart_proxy->text(), Icon::SidebarGlyph::Refresh, DrawerActionSettingsRestartProxy);
+            addChild(root, ui->settings_restart_app->text(), Icon::SidebarGlyph::Restart, DrawerActionSettingsRestartProgram);
+        } else if (page->objectName() == "page_about") {
+            addChild(root, ui->about_check_updates->text(), Icon::SidebarGlyph::Refresh, DrawerActionAboutCheckUpdates);
+        }
+    }
+
+    rebuild_drawer_dynamic_sections();
+    drawer_tree_->refreshThemeIcons();
+    drawer_tree_->setCollapsed(true);
+
+    connect(drawer_tree_, &QTreeWidget::currentItemChanged, this, [=](QTreeWidgetItem *current, QTreeWidgetItem *) {
+        if (current == nullptr) return;
+
+        const int actionId = current->data(0, SidebarNavigation::ActionRole).toInt();
+        if (actionId != DrawerActionNone) {
+            auto *root = current->parent();
+            handle_drawer_action(actionId, current->data(0, SidebarNavigation::DynamicIndexRole).toInt());
+            if (root != nullptr) {
+                QSignalBlocker blocker(drawer_tree_);
+                drawer_tree_->setCurrentItem(root);
+                drawer_tree_->refreshThemeIcons();
+            }
+            return;
+        }
+
+        open_drawer_page(current->data(0, SidebarNavigation::PageIndexRole).toInt(), true);
+    });
+
+    select_drawer_page(ui->stacked_pages->currentIndex());
+}
+
+void MainWindow::rebuild_drawer_dynamic_sections() {
+    if (drawer_tree_ == nullptr) return;
+
+    const auto refillChildren = [&](int pageIndex, const std::function<void(QTreeWidgetItem *)> &builder) {
+        auto *root = drawer_page_items_.value(pageIndex, nullptr);
+        if (root == nullptr) return;
+
+        QList<QTreeWidgetItem *> removable;
+        for (int i = 0; i < root->childCount(); ++i) {
+            auto *child = root->child(i);
+            if (child != nullptr && child->data(0, SidebarNavigation::DynamicIndexRole).toInt() >= 0) {
+                removable << child;
+            }
+        }
+        for (auto *child : removable) {
+            delete child;
+        }
+        builder(root);
+    };
+
+    refillChildren(1, [&](QTreeWidgetItem *root) {
+        for (int i = 0; i < ui->tabWidget->count(); ++i) {
+            const int gid = ui->tabWidget->tabBar()->tabData(i).toInt();
+            if (!NekoGui::profileManager->groupsTabOrder.contains(gid)) continue;
+            auto *item = new QTreeWidgetItem(root);
+            item->setData(0, SidebarNavigation::LabelRole, ui->tabWidget->tabText(i));
+            item->setData(0, SidebarNavigation::GlyphRole, static_cast<int>(Icon::SidebarGlyph::Group));
+            item->setData(0, SidebarNavigation::PageIndexRole, 1);
+            item->setData(0, SidebarNavigation::ActionRole, DrawerActionServerGroup);
+            item->setData(0, SidebarNavigation::DynamicIndexRole, gid);
+            item->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+        }
+    });
+
+    refillChildren(5, [&](QTreeWidgetItem *root) {
+        auto *logsItem = new QTreeWidgetItem(root);
+        logsItem->setData(0, SidebarNavigation::LabelRole, ui->down_tab->tabText(0));
+        logsItem->setData(0, SidebarNavigation::GlyphRole, static_cast<int>(Icon::SidebarGlyph::Logs));
+        logsItem->setData(0, SidebarNavigation::PageIndexRole, 5);
+        logsItem->setData(0, SidebarNavigation::ActionRole, DrawerActionLogsOutput);
+        logsItem->setData(0, SidebarNavigation::DynamicIndexRole, 0);
+        logsItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+
+        auto *connItem = new QTreeWidgetItem(root);
+        connItem->setData(0, SidebarNavigation::LabelRole, ui->down_tab->tabText(1));
+        connItem->setData(0, SidebarNavigation::GlyphRole, static_cast<int>(Icon::SidebarGlyph::Connection));
+        connItem->setData(0, SidebarNavigation::PageIndexRole, 5);
+        connItem->setData(0, SidebarNavigation::ActionRole, DrawerActionLogsConnections);
+        connItem->setData(0, SidebarNavigation::DynamicIndexRole, 1);
+        connItem->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+    });
+
+    drawer_tree_->refreshThemeIcons();
+    drawer_tree_->setCollapsed(!drawer_open);
+}
+
+void MainWindow::open_drawer_page(int pageIndex, bool fromDrawer) {
+    if (pageIndex < 0 || pageIndex >= ui->stacked_pages->count()) return;
+
+    ui->stacked_pages->setCurrentIndex(pageIndex);
+    auto *page = ui->stacked_pages->widget(pageIndex);
+    if (page != nullptr) {
+        ui->topbar_title->setText(DrawerPageTitle(page->objectName()));
+    }
+    drawer_last_content_row = pageIndex;
+    select_drawer_page(pageIndex);
+
+    if (fromDrawer && drawer_open && this->width() < 1040) {
+        set_drawer_open(false);
+    }
+}
+
+void MainWindow::select_drawer_page(int pageIndex) {
+    if (drawer_tree_ == nullptr) return;
+    auto *item = drawer_page_items_.value(pageIndex, nullptr);
+    if (item == nullptr) return;
+
+    QSignalBlocker blocker(drawer_tree_);
+    drawer_tree_->setCurrentItem(item);
+    item->setSelected(true);
+    if (!drawer_tree_->isCollapsed()) {
+        item->setExpanded(true);
+    }
+    drawer_tree_->refreshThemeIcons();
+}
+
+void MainWindow::handle_drawer_action(int actionId, int dynamicIndex) {
+    switch (actionId) {
+        case DrawerActionProfilesAdd:
+            ui->profiles_new->click();
+            break;
+        case DrawerActionProfilesImport:
+            ui->profiles_import_clipboard->click();
+            break;
+        case DrawerActionProfilesClone:
+            ui->profiles_clone->click();
+            break;
+        case DrawerActionProfilesDelete:
+            ui->profiles_delete->click();
+            break;
+        case DrawerActionProfilesExport:
+            ui->profiles_export->click();
+            break;
+        case DrawerActionSubscriptionsNew:
+            ui->subscriptions_new->click();
+            break;
+        case DrawerActionSubscriptionsUpdateAll:
+            ui->subscriptions_update_all->click();
+            break;
+        case DrawerActionRoutingSettings:
+            ui->rules_open->click();
+            break;
+        case DrawerActionAppRouting:
+            ui->rules_app_routing->click();
+            break;
+        case DrawerActionLogsOutput:
+            open_drawer_page(5);
+            ui->down_tab->setCurrentIndex(0);
+            break;
+        case DrawerActionLogsConnections:
+            open_drawer_page(5);
+            ui->down_tab->setCurrentIndex(1);
+            break;
+        case DrawerActionSettingsBasic:
+            ui->settings_basic->click();
+            break;
+        case DrawerActionSettingsTun:
+            ui->settings_vpn->click();
+            break;
+        case DrawerActionSettingsHotkey:
+            ui->settings_hotkey->click();
+            break;
+        case DrawerActionSettingsConfigFolder:
+            ui->settings_open_config->click();
+            break;
+        case DrawerActionSettingsRestartProxy:
+            ui->settings_restart_proxy->click();
+            break;
+        case DrawerActionSettingsRestartProgram:
+            ui->settings_restart_app->click();
+            break;
+        case DrawerActionAboutCheckUpdates:
+            ui->about_check_updates->click();
+            break;
+        case DrawerActionServerGroup:
+            open_drawer_page(1);
+            if (dynamicIndex >= 0) {
+                ui->tabWidget->setCurrentIndex(groupId2TabIndex(dynamicIndex));
+                show_group(dynamicIndex);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
 void MainWindow::set_drawer_open(bool open, bool animated) {
     drawer_open = open;
-    ui->drawer_nav->setProperty("compact", !open);
-    ui->drawer_nav->style()->unpolish(ui->drawer_nav);
-    ui->drawer_nav->style()->polish(ui->drawer_nav);
+    if (drawer_tree_ != nullptr) {
+        drawer_tree_->setProperty("compact", !open);
+        drawer_tree_->style()->unpolish(drawer_tree_);
+        drawer_tree_->style()->polish(drawer_tree_);
+        drawer_tree_->setCollapsed(!open);
+        drawer_tree_->refreshThemeIcons();
+    }
     if (drawer_anim != nullptr) {
         drawer_anim->stop();
     }
@@ -1692,26 +2019,6 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
     ui->drawer_container->setVisible(true);
     if (drawer_scrim) drawer_scrim->setVisible(false);
 
-    // Toggle icon-only collapsed text/tooltip mode
-    for (int i = 0; i < ui->drawer_nav->count(); ++i) {
-        auto item = ui->drawer_nav->item(i);
-        if (item == nullptr) continue;
-        const auto full = item->data(Qt::UserRole).toString();
-        if (!open) {
-            item->setText({});
-            item->setToolTip(full);
-        } else {
-            item->setText(full);
-            item->setToolTip({});
-        }
-    }
-    if (!open) {
-        ui->drawer_nav->setViewMode(QListView::IconMode);
-        ui->drawer_nav->setIconSize(QSize(20, 20));
-        ui->drawer_nav->setGridSize(QSize(56, 56));
-        ui->drawer_nav->setSpacing(2);
-    }
-
     const bool allow_animation = animated && !NekoGui::dataStore->reduce_motion;
     if (allow_animation && drawer_anim_max != nullptr && drawer_anim_min != nullptr) {
         drawer_anim_max->setStartValue(ui->drawer_container->maximumWidth());
@@ -1722,13 +2029,6 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
     } else {
         ui->drawer_container->setMaximumWidth(target);
         ui->drawer_container->setMinimumWidth(target);
-        // When opening without animation, apply list mode right away
-        if (open) {
-            ui->drawer_nav->setViewMode(QListView::ListMode);
-            ui->drawer_nav->setIconSize(QSize(20, 20));
-            ui->drawer_nav->setGridSize(QSize());
-            ui->drawer_nav->setSpacing(2);
-        }
     }
 }
 
@@ -1885,6 +2185,7 @@ void MainWindow::refresh_groups() {
 
     NekoGui::dataStore->refreshing_group_list = false;
     refresh_subscriptions_list();
+    rebuild_drawer_dynamic_sections();
 }
 
 void MainWindow::refresh_subscriptions_list() {
