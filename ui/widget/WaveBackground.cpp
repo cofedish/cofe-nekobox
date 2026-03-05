@@ -2,8 +2,10 @@
 
 #include <QPainter>
 #include <QPainterPath>
+#include <QPainterPathStroker>
 #include <QTimer>
 #include <QtMath>
+#include <cmath>
 
 WaveBackground::WaveBackground(QWidget *parent)
     : QWidget(parent) {
@@ -46,10 +48,14 @@ void WaveBackground::paintEvent(QPaintEvent *event) {
     const QColor base = palette().color(QPalette::Window);
     const QColor surface = palette().color(QPalette::Base);
     const QColor accent = palette().color(QPalette::Highlight);
+    QColor violet = accent;
+    violet = violet.lighter(120);
+    violet.setHsv((violet.hsvHue() + 24 + 360) % 360, qBound(90, violet.hsvSaturation() + 20, 255), qBound(35, violet.value(), 255));
 
     QLinearGradient bg(bounds.topLeft(), bounds.bottomRight());
-    bg.setColorAt(0.0, base.lighter(105));
-    bg.setColorAt(1.0, surface.darker(110));
+    bg.setColorAt(0.0, base.darker(118));
+    bg.setColorAt(0.5, surface.darker(170));
+    bg.setColorAt(1.0, base.darker(140));
     painter.fillRect(bounds, bg);
 
     const qreal width = bounds.width();
@@ -58,50 +64,72 @@ void WaveBackground::paintEvent(QPaintEvent *event) {
         return;
     }
 
-    const qreal base_y = height * 0.58;
-    const qreal amplitude = qMin(height * 0.08, 60.0);
-    const int steps = 48;
-    const qreal step_x = width / steps;
-    const qreal phase_a = phase;
-    const qreal phase_b = -phase * 1.4;
+    // Deep ambient blooms.
+    QRadialGradient bloom1(width * 0.22, height * 0.18, qMax(width, height) * 0.62);
+    QColor bloom1Color = accent;
+    bloom1Color.setAlpha(62);
+    bloom1.setColorAt(0.0, bloom1Color);
+    bloom1.setColorAt(1.0, QColor(bloom1Color.red(), bloom1Color.green(), bloom1Color.blue(), 0));
+    painter.fillRect(bounds, bloom1);
 
-    auto waveColorA = accent;
-    waveColorA.setAlpha(46);
-    auto waveColorB = accent;
-    waveColorB.setAlpha(28);
+    QRadialGradient bloom2(width * 0.78, height * 0.8, qMax(width, height) * 0.55);
+    QColor bloom2Color = violet;
+    bloom2Color.setAlpha(54);
+    bloom2.setColorAt(0.0, bloom2Color);
+    bloom2.setColorAt(1.0, QColor(bloom2Color.red(), bloom2Color.green(), bloom2Color.blue(), 0));
+    painter.fillRect(bounds, bloom2);
 
-    QPainterPath waveA;
-    waveA.moveTo(0, base_y);
-    for (int i = 0; i <= steps; ++i) {
-        const qreal x = i * step_x;
-        const qreal t = (x / width) * M_PI * 2.0;
-        const qreal y = base_y + amplitude * qSin(t + phase_a);
-        waveA.lineTo(x, y);
+    // Star dust.
+    painter.setPen(Qt::NoPen);
+    for (int i = 0; i < 130; ++i) {
+        const qreal noise = qSin(i * 12.9898 + phase * 7.3) * 43758.5453;
+        const qreal fract = noise - std::floor(noise);
+        const qreal x = (i * 91 % 997) / 997.0 * width;
+        const qreal y = fract * height;
+        const qreal twinkle = reduce_motion ? 0.75 : 0.5 + 0.5 * qSin(phase * 1.8 + i * 0.37);
+        QColor dot = i % 3 == 0 ? violet : accent;
+        dot.setAlpha(static_cast<int>(36 + 94 * twinkle));
+        painter.setBrush(dot);
+        const qreal r = (i % 7 == 0) ? 1.7 : 1.0;
+        painter.drawEllipse(QPointF(x, y), r, r);
     }
-    waveA.lineTo(width, height);
-    waveA.lineTo(0, height);
-    waveA.closeSubpath();
 
-    QLinearGradient waveGradA(0, base_y - amplitude, 0, height);
-    waveGradA.setColorAt(0.0, waveColorA);
-    waveGradA.setColorAt(1.0, QColor(waveColorA.red(), waveColorA.green(), waveColorA.blue(), 0));
-    painter.fillPath(waveA, waveGradA);
+    auto drawRibbon = [&](qreal yFactor, qreal amp, qreal widthPx, qreal speed, const QColor &c1, const QColor &c2, qreal opacity) {
+        QPainterPath centerLine;
+        const int steps = 110;
+        const qreal baseY = height * yFactor;
+        centerLine.moveTo(0, baseY);
+        for (int i = 1; i <= steps; ++i) {
+            const qreal x = width * (static_cast<qreal>(i) / steps);
+            const qreal t = (x / width) * (M_PI * 3.0);
+            const qreal y = baseY + amp * qSin(t + phase * speed);
+            centerLine.lineTo(x, y);
+        }
 
-    const qreal base_y_b = base_y + amplitude * 0.35;
-    QPainterPath waveB;
-    waveB.moveTo(0, base_y_b);
-    for (int i = 0; i <= steps; ++i) {
-        const qreal x = i * step_x;
-        const qreal t = (x / width) * M_PI * 2.0;
-        const qreal y = base_y_b + amplitude * 0.65 * qSin(t + phase_b);
-        waveB.lineTo(x, y);
-    }
-    waveB.lineTo(width, height);
-    waveB.lineTo(0, height);
-    waveB.closeSubpath();
+        QPainterPathStroker stroker;
+        stroker.setWidth(widthPx);
+        stroker.setCapStyle(Qt::RoundCap);
+        stroker.setJoinStyle(Qt::RoundJoin);
+        QPainterPath ribbon = stroker.createStroke(centerLine);
 
-    QLinearGradient waveGradB(0, base_y_b - amplitude, 0, height);
-    waveGradB.setColorAt(0.0, waveColorB);
-    waveGradB.setColorAt(1.0, QColor(waveColorB.red(), waveColorB.green(), waveColorB.blue(), 0));
-    painter.fillPath(waveB, waveGradB);
+        QLinearGradient grad(0, baseY - amp, width, baseY + amp);
+        QColor a = c1;
+        QColor b = c2;
+        a.setAlphaF(opacity);
+        b.setAlphaF(opacity * 0.78);
+        grad.setColorAt(0.0, a);
+        grad.setColorAt(0.5, b);
+        grad.setColorAt(1.0, a);
+        painter.fillPath(ribbon, grad);
+    };
+
+    drawRibbon(0.42, qMin(height * 0.07, 58.0), qMin(height * 0.16, 74.0), 1.1, accent.lighter(140), violet.lighter(130), 0.33);
+    drawRibbon(0.47, qMin(height * 0.075, 65.0), qMin(height * 0.12, 60.0), -0.9, accent, violet, 0.42);
+    drawRibbon(0.53, qMin(height * 0.06, 48.0), qMin(height * 0.1, 52.0), 0.65, violet, accent.darker(115), 0.28);
+
+    // Vignette.
+    QRadialGradient vignette(width * 0.5, height * 0.5, qMax(width, height) * 0.72);
+    vignette.setColorAt(0.6, QColor(0, 0, 0, 0));
+    vignette.setColorAt(1.0, QColor(0, 0, 0, 130));
+    painter.fillRect(bounds, vignette);
 }

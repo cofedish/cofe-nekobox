@@ -58,22 +58,22 @@ namespace {
 
     ThemeTokens TokensLight() {
         ThemeTokens t;
-        t.window = "#F6F4EF";
+        t.window = "#F8F2FF";
         t.surface = "#FFFFFF";
-        t.surface_alt = "#F0ECE5";
-        t.border = "#E0DACD";
-        t.text = "#1C1914";
-        t.text_muted = "#6D655B";
-        t.accent = "#2F7D70";
-        t.accent_hover = "#296D62";
-        t.accent_press = "#235E55";
-        t.accent_soft = "#D7EAE6";
+        t.surface_alt = "#F3E8FF";
+        t.border = "#DCC9F2";
+        t.text = "#20142E";
+        t.text_muted = "#725E89";
+        t.accent = "#D946EF";
+        t.accent_hover = "#C026D3";
+        t.accent_press = "#A21CAF";
+        t.accent_soft = "#F5D9FA";
         t.text_on_accent = "#FFFFFF";
-        t.success = "#2F7D70";
+        t.success = "#B832E2";
         t.success_text = "#FFFFFF";
-        t.warning = "#C08B2E";
-        t.warning_text = "#1C1914";
-        t.error = "#C44C4C";
+        t.warning = "#C17A2B";
+        t.warning_text = "#20142E";
+        t.error = "#D14B7E";
         t.error_text = "#FFFFFF";
         t.font_family = Typography::QssFamilyChain();
         return t;
@@ -81,45 +81,45 @@ namespace {
 
     ThemeTokens TokensDark() {
         ThemeTokens t;
-        t.window = "#101214";
-        t.surface = "#15181B";
-        t.surface_alt = "#1B1F23";
-        t.border = "#2A3036";
-        t.text = "#E9ECEF";
-        t.text_muted = "#9AA3AB";
-        t.accent = "#4CC2B2";
-        t.accent_hover = "#3BA89A";
-        t.accent_press = "#2F8F83";
-        t.accent_soft = "#1C3A38";
-        t.text_on_accent = "#0C1114";
-        t.success = "#4CC2B2";
-        t.success_text = "#0C1114";
-        t.warning = "#D1A14A";
-        t.warning_text = "#0C1114";
-        t.error = "#D16060";
-        t.error_text = "#0C1114";
+        t.window = "#090612";
+        t.surface = "#130B22";
+        t.surface_alt = "#1B1030";
+        t.border = "#3E2561";
+        t.text = "#F7F1FF";
+        t.text_muted = "#BCAAD3";
+        t.accent = "#FF4CCF";
+        t.accent_hover = "#FF6AD8";
+        t.accent_press = "#E53FB8";
+        t.accent_soft = "#3A184E";
+        t.text_on_accent = "#FFF6FF";
+        t.success = "#FF4CCF";
+        t.success_text = "#120816";
+        t.warning = "#F2AB4B";
+        t.warning_text = "#120816";
+        t.error = "#FF5D96";
+        t.error_text = "#120816";
         t.font_family = Typography::QssFamilyChain();
         return t;
     }
 
     ThemeTokens TokensLucifer() {
         ThemeTokens t;
-        t.window = "#0B0B0E";
-        t.surface = "#141418";
-        t.surface_alt = "#1B1B21";
-        t.border = "#2A242C";
-        t.text = "#F1E9EA";
-        t.text_muted = "#B8A4A8";
-        t.accent = "#8B1E3F";
-        t.accent_hover = "#9E2447";
-        t.accent_press = "#741B35";
-        t.accent_soft = "#2A0F18";
-        t.text_on_accent = "#FCEFF1";
-        t.success = "#3E7C5A";
-        t.success_text = "#F1E9EA";
-        t.warning = "#B27E3C";
+        t.window = "#0A0510";
+        t.surface = "#160A1F";
+        t.surface_alt = "#200E2E";
+        t.border = "#4A1D53";
+        t.text = "#F9F1FF";
+        t.text_muted = "#C7A8CE";
+        t.accent = "#FF2F8F";
+        t.accent_hover = "#FF53A5";
+        t.accent_press = "#DE2A7D";
+        t.accent_soft = "#3A1239";
+        t.text_on_accent = "#FFF0F8";
+        t.success = "#DB3CB7";
+        t.success_text = "#FFF2FA";
+        t.warning = "#D59D46";
         t.warning_text = "#0B0B0E";
-        t.error = "#B04646";
+        t.error = "#D25580";
         t.error_text = "#FCEFF1";
         t.font_family = Typography::QssFamilyChain();
         return t;
@@ -127,10 +127,10 @@ namespace {
 
     ThemeTokens TokensBad600Light() {
         ThemeTokens t;
-        t.window = "#FBFAF3";
+        t.window = "#F9FBEF";
         t.surface = "#FFFFFF";
-        t.surface_alt = "#F1EFDF";
-        t.border = "#D8D5C4";
+        t.surface_alt = "#EEF3D7";
+        t.border = "#CDD9A7";
         t.text = "#1A190F";
         t.text_muted = "#66624F";
         t.accent = "#BAD600";
@@ -150,16 +150,16 @@ namespace {
 
     ThemeTokens TokensBad600Dark() {
         ThemeTokens t;
-        t.window = "#0F110D";
-        t.surface = "#151913";
-        t.surface_alt = "#1D2219";
-        t.border = "#2D3524";
-        t.text = "#E6EBD4";
-        t.text_muted = "#A4AB8D";
+        t.window = "#0B1107";
+        t.surface = "#121A0D";
+        t.surface_alt = "#1A2613";
+        t.border = "#324A1C";
+        t.text = "#EAF2CF";
+        t.text_muted = "#B0B997";
         t.accent = "#BAD600";
         t.accent_hover = "#A4BE00";
         t.accent_press = "#8FA700";
-        t.accent_soft = "#2A3210";
+        t.accent_soft = "#283612";
         t.text_on_accent = "#101207";
         t.success = "#BAD600";
         t.success_text = "#101207";
@@ -343,6 +343,96 @@ namespace {
         qss.replace("%THEME_FONT_PX%", QString::number(theme_font_px));
         qss.replace("%WEIGHT_REGULAR%", QString::number(regular_weight));
         qss.replace("%WEIGHT_MEDIUM%", QString::number(medium_weight));
+        qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
+        const auto glassSurface = ToRgba(QColor(t.surface), 148);
+        const auto glassSurfaceSoft = ToRgba(QColor(t.surface_alt), 122);
+        const auto glassBorder = ToRgba(QColor(t.border), 196);
+        const auto accentGlow = ToRgba(QColor(t.accent), 92);
+        const auto accentGlowStrong = ToRgba(QColor(t.accent_hover), 138);
+        const auto mutedSoft = ToRgba(QColor(t.text_muted), 118);
+        const auto shadowColor = ToRgba(QColor(t.window).darker(160), 140);
+        qss += QString(
+            "QWidget#centralwidget { background: transparent; }"
+            "QWidget#main_container { background: transparent; }"
+            "QFrame#drawer_container {"
+            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %1,stop:1 %2);"
+            "border-right: 1px solid %3; }"
+            "QWidget#drawer_header { background: %4; border: 1px solid %3; border-radius: 14px; }"
+            "QListWidget#drawer_nav { background: transparent; border: none; padding: 2px; }"
+            "QListWidget#drawer_nav::item {"
+            "padding: 10px 8px; margin: 3px 0; min-height: 38px;"
+            "border-radius: 12px; border: 1px solid transparent; color: %5; }"
+            "QListWidget#drawer_nav::item:hover { background: %6; border-color: %7; }"
+            "QListWidget#drawer_nav::item:selected { background: %8; border: 1px solid %9; color: %10; }"
+            "QToolButton#drawer_theme_button { min-height: 30px; padding: 4px 8px; }"
+            "QFrame#topbar {"
+            "background: %4; border: 1px solid %3; border-radius: 14px; padding: 4px 10px; }"
+            "QLabel#topbar_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; }"
+            "QToolButton#drawer_toggle { border-radius: 14px; }"
+            "QWidget#page_home { background: transparent; }"
+            "QFrame#home_center_panel {"
+            "background: qlineargradient(x1:0,y1:0,x2:1,y2:1,stop:0 %11,stop:1 %4);"
+            "border: 1px solid %3; border-radius: 24px; }"
+            "QFrame#home_side_panel {"
+            "background: qlineargradient(x1:0,y1:0,x2:0,y2:1,stop:0 %11,stop:1 %4);"
+            "border: 1px solid %3; border-radius: 20px; }"
+            "QLabel#home_title { font-size: %HOME_TITLE_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %10; }"
+            "QLabel#label_running { font-size: %HOME_STATUS_FONT_PX%px; color: %10; }"
+            "QLabel#label_speed, QLabel#label_inbound, QLabel#home_modes_text { color: %12; line-height: 1.4em; }"
+            "QLabel#home_modes_title, QLabel#home_stats_title, QLabel#home_inbound_title {"
+            "font-size: %NAV_FONT_PX%px; font-weight: %WEIGHT_SEMIBOLD%; color: %10; }"
+            "QFrame#home_side_sep_1, QFrame#home_side_sep_2 { color: %3; background: %3; max-height: 1px; }"
+            "QToolButton#home_select_server, QToolButton#home_select_profile {"
+            "text-align: left; padding: 12px 14px; min-height: 50px;"
+            "background: %4; border: 1px solid %3; border-radius: 14px; color: %10; }"
+            "QToolButton#home_select_server:hover, QToolButton#home_select_profile:hover {"
+            "background: %6; border-color: %9; }"
+            "QToolButton#home_select_server:pressed, QToolButton#home_select_profile:pressed {"
+            "background: %8; }"
+            "QToolButton#home_open_logs {"
+            "text-align: center; min-width: 66px; min-height: 40px;"
+            "background: %4; border: 1px solid %3; border-radius: 12px; }"
+            "QToolButton#home_open_logs:hover { background: %6; border-color: %9; }"
+            "QLineEdit#home_sub_url {"
+            "background: %4; border: 1px solid %3; border-radius: 12px; min-height: 40px; padding: 6px 10px; }"
+            "QLineEdit#home_sub_url:focus { border-color: %9; }"
+            "QPushButton#home_sub_add {"
+            "background: %9; color: %13; border: none; border-radius: 12px;"
+            "min-height: 40px; min-width: 88px; padding: 6px 14px; }"
+            "QPushButton#home_sub_add:hover { background: %14; }"
+            "QPushButton#home_sub_add:pressed { background: %15; }"
+            "QCheckBox#checkBox_VPN, QCheckBox#checkBox_SystemProxy { color: %10; padding: 0 4px; }"
+            "QCheckBox#checkBox_VPN::indicator, QCheckBox#checkBox_SystemProxy::indicator {"
+            "width: 34px; height: 18px; border-radius: 9px; border: 1px solid %3; background: %11; }"
+            "QCheckBox#checkBox_VPN::indicator:checked, QCheckBox#checkBox_SystemProxy::indicator:checked {"
+            "background: %9; border-color: %9; }"
+            "QCheckBox#checkBox_VPN::indicator:hover, QCheckBox#checkBox_SystemProxy::indicator:hover {"
+            "border-color: %14; }"
+            "QTabWidget::pane, QTextBrowser, QTableWidget {"
+            "background: %4; border: 1px solid %3; border-radius: 14px; }"
+            "QPushButton, QToolButton, QComboBox, QLineEdit, QTextEdit, QPlainTextEdit {"
+            "selection-background-color: %9; selection-color: %13; }"
+            "QMenu { background: %1; border: 1px solid %3; border-radius: 12px; }"
+            "QFrame#toast_widget { border-color: %3; }")
+                   .arg(t.surface)
+                   .arg(t.surface_alt)
+                   .arg(glassBorder)
+                   .arg(glassSurface)
+                   .arg(t.text_muted)
+                   .arg(glassSurfaceSoft)
+                   .arg(mutedSoft)
+                   .arg(accentGlow)
+                   .arg(t.accent)
+                   .arg(t.text)
+                   .arg(shadowColor)
+                   .arg(t.text_muted)
+                   .arg(t.text_on_accent)
+                   .arg(t.accent_hover)
+                   .arg(t.accent_press)
+                   .arg(accentGlowStrong);
+        qss.replace("%HOME_TITLE_FONT_PX%", QString::number(home_title_font_px));
+        qss.replace("%HOME_STATUS_FONT_PX%", QString::number(home_status_font_px));
+        qss.replace("%NAV_FONT_PX%", QString::number(nav_font_px));
         qss.replace("%WEIGHT_SEMIBOLD%", QString::number(semibold_weight));
         return qss;
     }

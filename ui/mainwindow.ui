@@ -378,7 +378,7 @@
           <number>0</number>
          </property>
          <widget class="QWidget" name="page_home">
-          <layout class="QVBoxLayout" name="homeLayout">
+          <layout class="QHBoxLayout" name="homeRootLayout" stretch="7,3">
            <property name="spacing">
             <number>16</number>
            </property>
@@ -395,285 +395,162 @@
             <number>0</number>
            </property>
            <item>
-            <spacer name="home_top_spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
+            <widget class="QFrame" name="home_center_panel">
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
              </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>80</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QWidget" name="home_center_row" native="true">
-             <layout class="QHBoxLayout" name="homeCenterRowLayout">
+             <layout class="QVBoxLayout" name="homeCenterLayout">
+              <property name="spacing">
+               <number>14</number>
+              </property>
               <property name="leftMargin">
-               <number>0</number>
+               <number>18</number>
               </property>
               <property name="topMargin">
-               <number>0</number>
+               <number>20</number>
               </property>
               <property name="rightMargin">
-               <number>0</number>
+               <number>18</number>
               </property>
               <property name="bottomMargin">
-               <number>0</number>
-              </property>
-              <property name="spacing">
-               <number>0</number>
+               <number>20</number>
               </property>
               <item>
-               <spacer name="home_center_left_spacer">
-                <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+               <widget class="QLabel" name="home_title">
+                <property name="text">
+                 <string>Home</string>
                 </property>
-                <property name="sizeHint" stdset="0">
-                 <size>
-                  <width>40</width>
-                  <height>20</height>
-                 </size>
+                <property name="alignment">
+                 <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
                 </property>
-               </spacer>
+               </widget>
               </item>
               <item>
-                <widget class="QWidget" name="home_center" native="true">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                  <layout class="QVBoxLayout" name="homeCenterLayout">
+               <widget class="QLabel" name="label_running">
+                <property name="text">
+                 <string>Not Running</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="ConnectButton" name="home_connect_button">
+                <property name="text">
+                 <string>Connect</string>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>220</width>
+                  <height>220</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>300</width>
+                  <height>300</height>
+                 </size>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QWidget" name="home_cards" native="true">
+                <layout class="QVBoxLayout" name="homeCardsLayout">
                  <property name="spacing">
-                  <number>16</number>
+                  <number>10</number>
                  </property>
                  <property name="leftMargin">
-                  <number>0</number>
+                  <number>40</number>
                  </property>
                  <property name="topMargin">
                   <number>0</number>
                  </property>
                  <property name="rightMargin">
-                  <number>0</number>
+                  <number>40</number>
                  </property>
                  <property name="bottomMargin">
                   <number>0</number>
                  </property>
                  <item>
-                  <widget class="QLabel" name="home_title">
+                  <widget class="QToolButton" name="home_select_server">
                    <property name="text">
-                    <string>Home</string>
+                    <string>Server</string>
                    </property>
-                   <property name="alignment">
-                    <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
                    </property>
                   </widget>
                  </item>
                  <item>
-                  <widget class="QLabel" name="label_running">
+                  <widget class="QToolButton" name="home_select_profile">
                    <property name="text">
-                    <string>Not Running</string>
+                    <string>Profile</string>
                    </property>
-                   <property name="alignment">
-                    <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
                    </property>
                   </widget>
                  </item>
-                 <item>
-                  <widget class="QLabel" name="label_inbound">
-                   <property name="text">
-                    <string>Mixed: 127.0.0.1:2080</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <widget class="QLabel" name="label_speed">
-                   <property name="text">
-                    <string>Proxy: -
-Direct: -</string>
-                   </property>
-                   <property name="alignment">
-                    <set>Qt::AlignHCenter|Qt::AlignVCenter</set>
-                   </property>
-                  </widget>
-                 </item>
-                 <item>
-                  <spacer name="home_button_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>12</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                  <widget class="ConnectButton" name="home_connect_button">
-                    <property name="text">
-                     <string>Connect</string>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>180</width>
-                      <height>180</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>260</width>
-                      <height>260</height>
-                     </size>
-                    </property>
-                   </widget>
-                 </item>
-                 <item>
-                  <spacer name="home_actions_spacer">
-                   <property name="orientation">
-                    <enum>Qt::Vertical</enum>
-                   </property>
-                   <property name="sizeHint" stdset="0">
-                    <size>
-                     <width>20</width>
-                     <height>10</height>
-                    </size>
-                   </property>
-                  </spacer>
-                 </item>
-                 <item>
-                 <widget class="QWidget" name="home_actions" native="true">
-                  <layout class="QHBoxLayout" name="homeActionsLayout">
-                    <property name="leftMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="topMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="rightMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="bottomMargin">
-                     <number>0</number>
-                    </property>
-                    <property name="spacing">
-                     <number>12</number>
-                    </property>
-                    <item>
-                     <spacer name="home_actions_left_spacer">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="home_select_server">
-                      <property name="text">
-                       <string>Select server</string>
-                      </property>
-                      <property name="toolButtonStyle">
-                       <enum>Qt::ToolButtonTextBesideIcon</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="home_select_profile">
-                      <property name="text">
-                       <string>Select profile</string>
-                      </property>
-                      <property name="toolButtonStyle">
-                       <enum>Qt::ToolButtonTextBesideIcon</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <widget class="QToolButton" name="home_open_logs">
-                      <property name="text">
-                       <string>Open logs</string>
-                      </property>
-                      <property name="toolButtonStyle">
-                       <enum>Qt::ToolButtonTextBesideIcon</enum>
-                      </property>
-                     </widget>
-                    </item>
-                    <item>
-                     <spacer name="home_actions_right_spacer">
-                      <property name="orientation">
-                       <enum>Qt::Horizontal</enum>
-                      </property>
-                      <property name="sizeHint" stdset="0">
-                       <size>
-                        <width>20</width>
-                        <height>20</height>
-                       </size>
-                      </property>
-                     </spacer>
-                    </item>
-                  </layout>
-                 </widget>
-                </item>
-                <item>
-                 <widget class="QWidget" name="home_add_row" native="true">
-                  <layout class="QHBoxLayout" name="homeAddRowLayout">
-                   <property name="leftMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="topMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="rightMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="bottomMargin">
-                    <number>0</number>
-                   </property>
-                   <property name="spacing">
-                    <number>8</number>
-                   </property>
-                   <item>
-                    <widget class="QLineEdit" name="home_sub_url">
-                     <property name="placeholderText">
-                      <string>Paste subscription URL</string>
-                     </property>
-                     <property name="clearButtonEnabled">
-                      <bool>true</bool>
-                     </property>
-                    </widget>
-                   </item>
-                   <item>
-                    <widget class="QPushButton" name="home_sub_add">
-                     <property name="text">
-                      <string>Add</string>
-                     </property>
-                    </widget>
-                   </item>
-                  </layout>
-                 </widget>
-                </item>
                 </layout>
                </widget>
               </item>
               <item>
-               <spacer name="home_center_right_spacer">
+               <widget class="QWidget" name="home_add_row" native="true">
+                <layout class="QHBoxLayout" name="homeAddRowLayout">
+                 <property name="leftMargin">
+                  <number>40</number>
+                 </property>
+                 <property name="topMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="rightMargin">
+                  <number>40</number>
+                 </property>
+                 <property name="bottomMargin">
+                  <number>0</number>
+                 </property>
+                 <property name="spacing">
+                  <number>10</number>
+                 </property>
+                 <item>
+                  <widget class="QToolButton" name="home_open_logs">
+                   <property name="text">
+                    <string>Logs</string>
+                   </property>
+                   <property name="toolButtonStyle">
+                    <enum>Qt::ToolButtonTextBesideIcon</enum>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QLineEdit" name="home_sub_url">
+                   <property name="placeholderText">
+                    <string>Paste subscription URL</string>
+                   </property>
+                   <property name="clearButtonEnabled">
+                    <bool>true</bool>
+                   </property>
+                  </widget>
+                 </item>
+                 <item>
+                  <widget class="QPushButton" name="home_sub_add">
+                   <property name="text">
+                    <string>Add</string>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
+               </widget>
+              </item>
+              <item>
+               <spacer name="home_center_spacer_bottom">
                 <property name="orientation">
-                 <enum>Qt::Horizontal</enum>
+                 <enum>Qt::Vertical</enum>
                 </property>
                 <property name="sizeHint" stdset="0">
                  <size>
-                  <width>40</width>
+                  <width>20</width>
                   <height>20</height>
                  </size>
                 </property>
@@ -683,17 +560,125 @@ Direct: -</string>
             </widget>
            </item>
            <item>
-            <spacer name="home_bottom_spacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
+            <widget class="QFrame" name="home_side_panel">
+             <property name="minimumSize">
               <size>
-               <width>20</width>
-               <height>80</height>
+               <width>280</width>
+               <height>0</height>
               </size>
              </property>
-            </spacer>
+             <property name="maximumSize">
+              <size>
+               <width>360</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <layout class="QVBoxLayout" name="homeSideLayout">
+              <property name="spacing">
+               <number>12</number>
+              </property>
+              <property name="leftMargin">
+               <number>16</number>
+              </property>
+              <property name="topMargin">
+               <number>16</number>
+              </property>
+              <property name="rightMargin">
+               <number>16</number>
+              </property>
+              <property name="bottomMargin">
+               <number>16</number>
+              </property>
+              <item>
+               <widget class="QLabel" name="home_modes_title">
+                <property name="text">
+                 <string>Modes</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="home_modes_text">
+                <property name="text">
+                 <string>Use top switches for Tun and System Proxy.</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="home_side_sep_1">
+                <property name="frameShape">
+                 <enum>QFrame::HLine</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="home_stats_title">
+                <property name="text">
+                 <string>Statistics</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_speed">
+                <property name="text">
+                 <string>Proxy: -
+Direct: -</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QFrame" name="home_side_sep_2">
+                <property name="frameShape">
+                 <enum>QFrame::HLine</enum>
+                </property>
+                <property name="frameShadow">
+                 <enum>QFrame::Plain</enum>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="home_inbound_title">
+                <property name="text">
+                 <string>Inbound</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QLabel" name="label_inbound">
+                <property name="text">
+                 <string>Mixed: 127.0.0.1:2080</string>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <spacer name="home_side_spacer_bottom">
+                <property name="orientation">
+                 <enum>Qt::Vertical</enum>
+                </property>
+                <property name="sizeHint" stdset="0">
+                 <size>
+                  <width>20</width>
+                  <height>120</height>
+                 </size>
+                </property>
+               </spacer>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </widget>

@@ -1,3 +1,12 @@
+# Release 1.5.1
+
+- Full redesign of the main window to a premium glass/neon dashboard style.
+- New Home layout: central connect orb, server/profile cards, right-side modes and statistics panel.
+- Upgraded animated background (space gradient, ribbon waves, star field) with `Reduce motion` support.
+- Refined `ConnectButton` visuals and animation states for a cleaner connected/connecting experience.
+- Unified redesign behavior across all built-in themes: `System`, `Light`, `Dark`, `Lucifer`, `BAD600 Light`, `BAD600 Dark`.
+- Updated theme typography fallback chain for a more consistent premium look on Windows/Linux.
+
 # Release 1.4.3
 
 - Linux zip: fixed right-click behavior on tray icon (context menu now opens reliably).

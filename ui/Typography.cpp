@@ -10,9 +10,9 @@
 namespace {
 QStringList PreferredFamilies() {
 #ifdef Q_OS_WIN
-    return {"Segoe UI", "Inter", "Noto Sans", "Arial"};
+    return {"Segoe UI Variable", "Segoe UI", "Manrope", "Noto Sans"};
 #else
-    return {"Noto Sans", "DejaVu Sans", "Inter", "Arial"};
+    return {"SF Pro Text", "Manrope", "Noto Sans", "DejaVu Sans"};
 #endif
 }
 

@@ -3,6 +3,7 @@
 #include "ui/Typography.hpp"
 
 #include <QPainter>
+#include <QPainterPath>
 #include <QTimer>
 #include <QSizePolicy>
 #include <QtMath>
@@ -62,11 +63,11 @@ QString ConnectButton::stateText() const {
 }
 
 int ConnectButton::minimumDiameter() const {
-    return Typography::ScalePx(180);
+    return Typography::ScalePx(210);
 }
 
 int ConnectButton::maximumDiameter() const {
-    return Typography::ScalePx(260);
+    return Typography::ScalePx(300);
 }
 
 int ConnectButton::targetDiameter() const {
@@ -137,63 +138,106 @@ void ConnectButton::paintEvent(QPaintEvent *event) {
     const qreal size = qMin(bounds.width(), bounds.height());
     const QPointF center = bounds.center();
 
-    qreal pulse = 1.0;
-    if (!reduce_motion && (current_state == State::Disconnected || current_state == State::Connected)) {
-        pulse = 1.0 + 0.02 * qSin(phase);
-    }
-
-    const qreal ringInset = Typography::ScalePx(10);
-    const qreal radius = (size * 0.5 - ringInset) * pulse;
-    QRectF circleRect(center.x() - radius, center.y() - radius, radius * 2.0, radius * 2.0);
-
     QColor accent = palette().color(QPalette::Highlight);
-    QColor base = palette().color(QPalette::Button);
-    QColor textColor = palette().color(QPalette::ButtonText);
-    QColor ringColor = accent;
-    QColor ringSoft = accent;
-    ringSoft.setAlpha(60);
+    QColor textColor = palette().color(QPalette::HighlightedText);
+    QColor coreDark = QColor(26, 11, 45);
+    QColor coreLight = accent.lighter(135);
+    QColor ringColor = accent.lighter(110);
+    QColor glowColor = accent;
 
-    if (current_state == State::Connected || current_state == State::Connecting || current_state == State::Disconnecting) {
-        base = accent;
-        textColor = palette().color(QPalette::HighlightedText);
+    if (current_state == State::Disconnected) {
+        coreLight = accent.darker(170);
+        textColor = palette().color(QPalette::WindowText);
+        ringColor = accent;
+        glowColor = accent.darker(130);
     }
-
     if (isDown()) {
-        base = base.darker(110);
+        coreLight = coreLight.darker(112);
     } else if (underMouse()) {
-        base = base.lighter(105);
+        coreLight = coreLight.lighter(108);
     }
 
-    painter.setPen(Qt::NoPen);
-    painter.setBrush(base);
-    painter.drawEllipse(circleRect);
+    qreal pulse = 1.0;
+    if (!reduce_motion) {
+        pulse = 1.0 + 0.028 * qSin(phase * 1.1);
+    }
 
-    QPen ringPen(ringColor, Typography::ScalePx(6));
+    const qreal outerRadius = (size * 0.5 - Typography::ScalePx(8)) * pulse;
+    const qreal innerRadius = outerRadius - Typography::ScalePx(12);
+    const QRectF outerRect(center.x() - outerRadius, center.y() - outerRadius, outerRadius * 2.0, outerRadius * 2.0);
+    const QRectF innerRect(center.x() - innerRadius, center.y() - innerRadius, innerRadius * 2.0, innerRadius * 2.0);
+
+    // Glow halo
+    QRadialGradient glowGrad(center, outerRadius + Typography::ScalePx(24));
+    QColor glowOuter = glowColor;
+    glowOuter.setAlpha(0);
+    QColor glowInner = glowColor;
+    glowInner.setAlpha(current_state == State::Disconnected ? 72 : 136);
+    glowGrad.setColorAt(0.0, glowInner);
+    glowGrad.setColorAt(0.75, QColor(glowInner.red(), glowInner.green(), glowInner.blue(), 44));
+    glowGrad.setColorAt(1.0, glowOuter);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(glowGrad);
+    painter.drawEllipse(outerRect.adjusted(-Typography::ScalePx(14),
+                                           -Typography::ScalePx(14),
+                                           Typography::ScalePx(14),
+                                           Typography::ScalePx(14)));
+
+    // Inner sphere
+    const QPointF gradientCenter(innerRect.center().x() - innerRect.width() * 0.18, innerRect.center().y() - innerRect.height() * 0.22);
+    QRadialGradient coreGrad(gradientCenter, innerRadius * 1.2, innerRect.center());
+    coreGrad.setColorAt(0.0, coreLight);
+    coreGrad.setColorAt(0.72, coreDark);
+    coreGrad.setColorAt(1.0, QColor(9, 4, 19));
+    painter.setBrush(coreGrad);
+    painter.drawEllipse(innerRect);
+
+    // Neon ring
+    QConicalGradient ringGrad(center, -qRadiansToDegrees(phase) * 1.2);
+    QColor ringA = ringColor;
+    QColor ringB = ringColor.lighter(160);
+    ringA.setAlpha(220);
+    ringB.setAlpha(250);
+    ringGrad.setColorAt(0.0, ringA);
+    ringGrad.setColorAt(0.35, ringB);
+    ringGrad.setColorAt(0.7, ringA.darker(110));
+    ringGrad.setColorAt(1.0, ringA);
+
+    QPen ringPen(QBrush(ringGrad), Typography::ScalePx(6));
     ringPen.setCapStyle(Qt::RoundCap);
     painter.setBrush(Qt::NoBrush);
-
     if (current_state == State::Connecting || current_state == State::Disconnecting) {
-        qreal startDeg = qRadiansToDegrees(phase) * 16.0;
-        qreal spanDeg = 270.0 * 16.0;
+        const int startDeg = static_cast<int>(qRadiansToDegrees(phase * 1.8) * 16.0);
         painter.setPen(ringPen);
-        const int arcInset = Typography::ScalePx(6);
-        painter.drawArc(circleRect.adjusted(arcInset, arcInset, -arcInset, -arcInset), static_cast<int>(startDeg),
-                        static_cast<int>(spanDeg));
-    } else if (current_state == State::Connected) {
-        ringPen.setColor(ringSoft);
-        painter.setPen(ringPen);
-        const int arcInset = Typography::ScalePx(6);
-        painter.drawEllipse(circleRect.adjusted(arcInset, arcInset, -arcInset, -arcInset));
+        painter.drawArc(outerRect.adjusted(Typography::ScalePx(5),
+                                           Typography::ScalePx(5),
+                                           -Typography::ScalePx(5),
+                                           -Typography::ScalePx(5)),
+                        startDeg,
+                        2880);
     } else {
-        ringPen.setColor(ringSoft);
         painter.setPen(ringPen);
-        const int arcInset = Typography::ScalePx(8);
-        painter.drawEllipse(circleRect.adjusted(arcInset, arcInset, -arcInset, -arcInset));
+        painter.drawEllipse(outerRect.adjusted(Typography::ScalePx(5),
+                                               Typography::ScalePx(5),
+                                               -Typography::ScalePx(5),
+                                               -Typography::ScalePx(5)));
     }
 
     const auto text = stateText();
-    QFont font = resolveTextFont(text, circleRect.width());
+    QFont font = resolveTextFont(text, innerRect.width());
     painter.setFont(font);
-    painter.setPen(textColor);
-    painter.drawText(circleRect, Qt::AlignCenter, text);
+    QPainterPath textPath;
+    textPath.addText(0, 0, font, text);
+    const QRectF textRect = textPath.boundingRect();
+    QTransform tf;
+    tf.translate(innerRect.center().x() - textRect.width() * 0.5, innerRect.center().y() + textRect.height() * 0.32);
+    const auto centeredPath = tf.map(textPath);
+
+    QColor textGlow = ringColor;
+    textGlow.setAlpha(96);
+    painter.setPen(QPen(textGlow, Typography::ScalePx(3), Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.drawPath(centeredPath);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(textColor);
+    painter.drawPath(centeredPath);
 }

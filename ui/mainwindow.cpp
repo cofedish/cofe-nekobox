@@ -181,6 +181,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     add_debounce_timer = new QTimer(this);
     add_debounce_timer->setSingleShot(true);
     ui->drawer_app_name->setText(software_name);
+    ui->drawer_header->setVisible(false);
+    ui->drawer_app_name->setVisible(false);
+    ui->drawer_status->setVisible(false);
+    ui->drawer_profile->setVisible(false);
     ui->about_title->setText(software_name);
     if (ui->about_logo != nullptr) {
         const int logoSize = 200;
@@ -205,10 +209,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
         setWindowIcon(appIcon);
     }
     ui->drawer_toggle->setText(QString(QChar(0x2630)));
-    if (ui->home_center != nullptr) {
-        ui->home_center->setMaximumWidth(QWIDGETSIZE_MAX);
-        ui->home_center->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
-    }
     if (ui->label_running != nullptr) {
         ui->label_running->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
         ui->label_running->setMinimumWidth(0);
@@ -216,6 +216,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     }
     if (ui->homeCenterLayout != nullptr) {
         ui->homeCenterLayout->setAlignment(ui->home_connect_button, Qt::AlignHCenter);
+    }
+    if (ui->home_select_server != nullptr) {
+        ui->home_select_server->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    }
+    if (ui->home_select_profile != nullptr) {
+        ui->home_select_profile->setToolButtonStyle(Qt::ToolButtonTextOnly);
+    }
+    if (ui->home_open_logs != nullptr) {
+        ui->home_open_logs->setToolButtonStyle(Qt::ToolButtonTextOnly);
     }
     if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
         wave->setReduceMotion(NekoGui::dataStore->reduce_motion);
@@ -286,12 +295,14 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     drawer_theme_menu->addAction(themeMenuAction);
     ui->drawer_theme_button->setMenu(drawer_theme_menu);
     ui->drawer_theme_button->setPopupMode(QToolButton::InstantPopup);
-    ui->drawer_theme_button->setText(tr("Theme"));
-    ui->drawer_theme_button->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
+    ui->drawer_theme_button->setText({});
+    ui->drawer_theme_button->setToolTip(tr("Theme"));
+    ui->drawer_theme_button->setToolButtonStyle(Qt::ToolButtonIconOnly);
     ui->drawer_theme_button->setLayoutDirection(Qt::RightToLeft);
     ui->drawer_theme_button->setIcon(style()->standardIcon(QStyle::SP_ArrowDown));
-    ui->drawer_theme_button->setIconSize(QSize(10, 10));
+    ui->drawer_theme_button->setIconSize(QSize(12, 12));
     ui->drawer_theme_button->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Fixed);
+    ui->drawer_theme_label->setVisible(false);
     connect(ui->drawer_theme_button, &QToolButton::clicked, ui->drawer_theme_button, &QToolButton::showMenu);
     sync_drawer_theme(NekoGui::dataStore->theme);
     connect(themeManager, &ThemeManager::themeChanged, this, [=](const QString &themeKey) {
@@ -311,12 +322,32 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
                     drawer_theme_menu->close();
                 }
             });
+    ui->drawer_nav->setIconSize(QSize(18, 18));
+    const auto applyNavIcon = [&](int row, QStyle::StandardPixmap pixmap) {
+        auto item = ui->drawer_nav->item(row);
+        if (item == nullptr) return;
+        item->setIcon(style()->standardIcon(pixmap));
+    };
+    applyNavIcon(0, QStyle::SP_DesktopIcon);
+    applyNavIcon(1, QStyle::SP_ComputerIcon);
+    applyNavIcon(2, QStyle::SP_DirHomeIcon);
+    applyNavIcon(3, QStyle::SP_BrowserReload);
+    applyNavIcon(4, QStyle::SP_FileDialogDetailedView);
+    applyNavIcon(5, QStyle::SP_FileDialogListView);
+    applyNavIcon(6, QStyle::SP_FileDialogContentsView);
+    applyNavIcon(7, QStyle::SP_MessageBoxInformation);
+    ui->home_select_server->setIcon(style()->standardIcon(QStyle::SP_ComputerIcon));
+    ui->home_select_profile->setIcon(style()->standardIcon(QStyle::SP_DirHomeIcon));
+    ui->home_open_logs->setIcon(style()->standardIcon(QStyle::SP_FileDialogDetailedView));
+    ui->home_select_server->setIconSize(QSize(16, 16));
+    ui->home_select_profile->setIconSize(QSize(16, 16));
+    ui->home_open_logs->setIconSize(QSize(16, 16));
     connect(ui->drawer_nav, &QListWidget::currentRowChanged, this, [=](int row) {
         ui->stacked_pages->setCurrentIndex(row);
         if (auto item = ui->drawer_nav->item(row)) {
             ui->topbar_title->setText(item->text());
         }
-        if (drawer_open) {
+        if (drawer_open && this->width() < 1040) {
             set_drawer_open(false);
         }
     });
@@ -586,7 +617,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->drawer_toggle, &QToolButton::clicked, this, [=] {
         set_drawer_open(!drawer_open);
     });
-    set_drawer_open(false, false);
+    set_drawer_open(true, false);
 
     // Setup log UI
     qvLogDocument->setUndoRedoEnabled(false);
@@ -985,6 +1016,9 @@ void MainWindow::sync_drawer_theme(const QString &themeKey) {
     }
     const auto option = themeManager->ThemeOptionFor(normalized);
     ui->drawer_theme_label->setText(tr("Theme: %1").arg(option.displayName));
+    if (ui->drawer_theme_button != nullptr) {
+        ui->drawer_theme_button->setToolTip(tr("Theme: %1").arg(option.displayName));
+    }
 }
 
 MainWindow::~MainWindow() {
@@ -1375,6 +1409,23 @@ void MainWindow::refresh_status(const QString &traffic_update) {
         auto group = NekoGui::profileManager->GetGroup(running->gid);
         if (group != nullptr) group_name = group->name;
     }
+    const auto currentGroup = NekoGui::profileManager->CurrentGroup();
+    const QString profileName = currentGroup != nullptr ? currentGroup->name : tr("Default");
+    const QString serverName = running != nullptr ? running->bean->DisplayTypeAndName() : tr("No active server");
+    if (ui->home_select_server != nullptr) {
+        ui->home_select_server->setText(tr("Server\n%1").arg(serverName));
+        ui->home_select_server->setToolTip(serverName);
+    }
+    if (ui->home_select_profile != nullptr) {
+        ui->home_select_profile->setText(tr("Profile\n%1").arg(profileName));
+        ui->home_select_profile->setToolTip(profileName);
+    }
+    if (ui->home_modes_text != nullptr) {
+        QStringList modes;
+        modes << (NekoGui::dataStore->spmode_vpn ? tr("TUN: enabled") : tr("TUN: disabled"));
+        modes << (NekoGui::dataStore->spmode_system_proxy ? tr("System proxy: enabled") : tr("System proxy: disabled"));
+        ui->home_modes_text->setText(modes.join("\n"));
+    }
 
     if (connect_state == ConnectState::Connecting) {
         set_home_running_text(tr("Connecting"));
@@ -1522,11 +1573,11 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         drawer_anim->stop();
     }
 
-    const int target = open ? 300 : 0;
+    const int target = open ? 136 : 0;
     if (open) {
         ui->drawer_container->setVisible(true);
         if (drawer_scrim) {
-            drawer_scrim->setVisible(true);
+            drawer_scrim->setVisible(false);
             update_drawer_scrim();
         }
     }
@@ -1543,7 +1594,9 @@ void MainWindow::set_drawer_open(bool open, bool animated) {
         ui->drawer_container->setMinimumWidth(target);
         if (!open) {
             ui->drawer_container->setVisible(false);
-            if (drawer_scrim) drawer_scrim->setVisible(false);
+        }
+        if (drawer_scrim) {
+            drawer_scrim->setVisible(false);
         }
     }
 }
