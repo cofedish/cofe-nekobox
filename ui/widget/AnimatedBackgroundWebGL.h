@@ -23,6 +23,11 @@ public:
     [[nodiscard]] bool reduceMotion() const;
     void setParallaxOffset(QPointF offset);
 
+    // connected: 0.0 = fully disconnected, 1.0 = fully connected
+    void setConnected(float connected);
+    // traffic: 0.0 = idle, 1.0 = peak traffic (modulates wave amplitude)
+    void setTraffic(float traffic);
+
 protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
@@ -38,6 +43,8 @@ private:
 
     bool reduce_motion_ = false;
     float time_ = 0.0f;
+    float connected_ = 0.0f;
+    float traffic_ = 0.0f;
     QPointF parallax_target_;
     QPointF parallax_current_;
 };

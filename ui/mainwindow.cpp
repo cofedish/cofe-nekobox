@@ -1661,6 +1661,18 @@ void MainWindow::update_connect_button() {
     button->refreshMetrics();
     const bool busy = connect_state == ConnectState::Connecting || connect_state == ConnectState::Disconnecting;
     button->setEnabled(!busy);
+
+    // Sync background ribbon state: smoothly lit when connected, dim when not
+    if (auto wave = qobject_cast<WaveBackground *>(ui->centralwidget)) {
+        float connectedValue = 0.0f;
+        switch (connect_state) {
+            case ConnectState::Disconnected:   connectedValue = 0.0f; break;
+            case ConnectState::Connecting:     connectedValue = 0.4f; break;
+            case ConnectState::Connected:      connectedValue = 1.0f; break;
+            case ConnectState::Disconnecting:  connectedValue = 0.6f; break;
+        }
+        wave->setConnected(connectedValue);
+    }
 }
 
 void MainWindow::set_drawer_open(bool open, bool animated) {
