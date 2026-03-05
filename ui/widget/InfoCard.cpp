@@ -1,6 +1,9 @@
 #include "InfoCard.h"
 
 #include <QEvent>
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+#include <QEnterEvent>
+#endif
 #include <QGraphicsDropShadowEffect>
 #include <QVariantAnimation>
 #include <QEasingCurve>
@@ -28,7 +31,11 @@ InfoCard::InfoCard(QWidget *parent)
     setHoverProgress(0.0);
 }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+void InfoCard::enterEvent(QEnterEvent *event) {
+#else
 void InfoCard::enterEvent(QEvent *event) {
+#endif
     animateTo(1.0);
     QToolButton::enterEvent(event);
 }
@@ -73,4 +80,3 @@ void InfoCard::syncShadowColor() {
     glow.setAlpha(24 + static_cast<int>(hover_progress_ * 92.0));
     shadow_->setColor(glow);
 }
-
